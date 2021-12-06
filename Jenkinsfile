@@ -5,7 +5,7 @@ pipeline {
         stage('Git Clone') {
             steps {
                 cleanWs()
-                git branch: 'main',url: 'https://github.com/SimonHope/APS-frontend.git'
+                git branch: 'main',url: 'https://github.com/Academic-Petition-Service-Prototype/APS-frontend.git'
             }
         }
         
