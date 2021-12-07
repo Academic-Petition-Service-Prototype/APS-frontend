@@ -1,11 +1,11 @@
 <template>
   <v-app>
     <div>
-      <Navbar v-if="roluser == 'null'"></Navbar>
-      <!-- <NavbarStudent v-if="roluser == 'User'"></NavbarStudent>
-      <NavbarHOF v-if="roluser == 'chief'"></NavbarHOF>
-      <NavbarOF v-if="roluser == 'officer'"></NavbarOF>
-      <NavbarSuper v-if="roluser == 'admin'"></NavbarSuper> -->
+      <!-- <NavbarHOF v-if="roluser == 'null'"></NavbarHOF> -->
+      <!-- <NavbarHOF v-if="roluser == 'officer'"></NavbarHOF> -->
+      <!-- <NavbarHOF v-if="roluser == 'chief'"></NavbarHOF> -->
+      <!-- <NavbarOF v-if="roluser == 'officer'"></NavbarOF> -->
+      <!-- <NavbarSuper v-if="roluser == 'admin'"></NavbarSuper> -->
     </div>
     <v-main>
       <router-view />
@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import Navbar from "./components/Navbar.vue";
+// import Navbar from "./components/Navbar.vue";
 // import NavbarStudent from "./components/NavbarUser.vue";
 // import NavbarOF from "./components/NavbarOfficer.vue";
 // import NavbarHOF from "./components/NavbarChief.vue";
@@ -23,7 +23,7 @@ import Navbar from "./components/Navbar.vue";
 export default {
   name: "App",
   components: {
-    Navbar,
+    // Navbar,
     // NavbarStudent,
     // NavbarOF,
     // NavbarHOF,
@@ -32,7 +32,7 @@ export default {
   beforeCreate() {},
   data() {
     return {
-      // roluser: "officer",
+      // roluser: "null",
     };
   },
   created() {
