@@ -4,6 +4,7 @@ node_modules
 package-lock copy.json
 
 # local env files
+.env
 .env.local
 .env.*.local
 
