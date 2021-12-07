@@ -1,7 +1,7 @@
 <template>
   <!-- ส่วนจัดเเสดง -->
-  <div id="DashboardHOffice">
-    <NavbarHOF />
+  <div id="ChiefDashboard">
+    <NavbarChief />
     <v-card class="cardshow">
       <h1>
         Dashboard Chief
@@ -91,11 +91,11 @@
 </template>
 
 <script>
-import NavbarHOF from "../../components/NavbarChief.vue";
+import NavbarChief from "../../components/NavbarChief.vue";
 export default {
-  name: "DashboardHOffice",
+  name: "ChiefDashboard",
   components: {
-    NavbarHOF,
+    NavbarChief,
   },
   data() {
     return {
