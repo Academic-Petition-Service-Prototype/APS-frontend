@@ -63,7 +63,7 @@ export default {
   methods: {
     sentreport() {
       axios
-        .post("http://localhost:3000/api/reports", {
+        .post(process.env.VUE_APP_URL + "reports", {
           report_title: this.report_title,
           report_detail: this.report_detail,
         })
