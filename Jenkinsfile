@@ -6,6 +6,7 @@ pipeline {
             steps {
                 cleanWs()
                 git branch: 'main',url: 'https://github.com/Academic-Petition-Service-Prototype/APS-frontend.git'
+                sh 'cp /var/lib/jenkins/workspace/env/frontend.env ./.env'
             }
         }
         
