@@ -93,4 +93,22 @@ export default {
   font-size: 50px;
   margin: 0px 0px 90px 99px;
 }
+section {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  padding: 100px;
+  display: flex;
+  /* justify-content: center; */
+  /* align-items: center; */
+}
+section img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
 </style>
