@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import Navbar from "./components/Navbar.vue";
+// import Navbar from "./components/Navbar.vue";
 // import NavbarStudent from "./components/NavbarUser.vue";
 // import NavbarOF from "./components/NavbarOfficer.vue";
 // import NavbarHOF from "./components/NavbarChief.vue";
@@ -23,7 +23,7 @@ import Navbar from "./components/Navbar.vue";
 export default {
   name: "App",
   components: {
-    Navbar,
+    // Navbar,
     // NavbarStudent,
     // NavbarOF,
     // NavbarHOF,
