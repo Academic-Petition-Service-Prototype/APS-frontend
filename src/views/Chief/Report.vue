@@ -67,7 +67,7 @@ export default {
   methods: {
     getreport() {
       axios
-        .get("http://localhost:3000/api/reports")
+        .get(process.env.VUE_APP_URL + "reports")
         .then((response) => {
           // handle success
           this.reports = response.data;
@@ -80,7 +80,7 @@ export default {
     chageState(id) {
       console.log(id);
       axios
-        .put("http://localhost:3000/api/reports", {
+        .put(process.env.VUE_APP_URL + "reports", {
           id: id,
         })
         .then(() => {
