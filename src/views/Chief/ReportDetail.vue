@@ -53,7 +53,7 @@ export default {
     },
     getreportbyid() {
       axios
-        .get("http://localhost:3000/api/reports/" + this.$route.params.id)
+        .get(process.env.VUE_APP_URL + "reports/" + this.$route.params.id)
         .then((response) => {
           // handle success
           this.report_title = response.data.report_title;
