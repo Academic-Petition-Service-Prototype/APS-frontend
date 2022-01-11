@@ -11,51 +11,66 @@
         <v-col>
           <!-- รายงานเอกสารที่ทำไป -->
 
-          <b-card :img-src="require('../../assets/Docicon.png')" 
-            img-width=100
-            img-height=100
-            img-left=true
+          <b-card
+            :img-src="require('../../assets/Docicon.png')"
+            img-width="130"
+            img-height="130"
+            img-left="true"
             class="mb-3 box-margin"
           >
-            <b-card-text>
-              คำร้องที่ส่ง
-            </b-card-text>
+            <b-card-text> คำร้องที่ส่งทั้งหมด </b-card-text>
+            <h5>{{ sumpentition }}</h5>
           </b-card>
-          
+
           <!-- รายงานเอกสารที่ทำไป -->
         </v-col>
         <v-col>
           <!-- รายงานเอกสารที่ทำไป -->
 
-          <b-card :img-src="require('../../assets/Docicon2.png')" 
-            img-width=100
-            img-height=100
-            img-left=true
+          <b-card
+            :img-src="require('../../assets/Docicon2.png')"
+            img-width="130"
+            img-height="130"
+            img-left="true"
             class="mb-3 box-margin"
           >
-            <b-card-text>
-              รายงานปัญหา
-            </b-card-text>
+            <b-card-text> รายงานปัญหาทั้งหมด </b-card-text>
+            <h5>{{ sumreport }}</h5>
           </b-card>
-         
+
           <!-- รายงานเอกสารที่ทำไป -->
         </v-col>
 
         <v-col>
           <!-- รายงานเอกสารที่ทำไป -->
 
-          <b-card :img-src="require('../../assets/Docicon3.png')" 
-            img-width=100
-            img-height=100
-            img-left=true
+          <b-card
+            :img-src="require('../../assets/Docicon3.png')"
+            img-width="130"
+            img-height="130"
+            img-left="true"
             class="mb-3 box-margin"
           >
-            <b-card-text>
-              คำร้องที่สำเร็จ
-            </b-card-text>
+            <b-card-text> คำร้องที่สำเร็จทั้งหมด </b-card-text>
+            <h5>{{ sumrsuccess }}</h5>
           </b-card>
-         
+
           <!-- รายงานเอกสารที่ทำไป -->
+        </v-col>
+      </v-row>
+
+      <v-row>
+        <v-col>
+          <h2>
+            จำนวณคำร้อง / รายงาน
+            <v-divider></v-divider>
+          </h2>
+          <GChart
+            type="ColumnChart"
+            :data="chartData"
+            :options="chartOptions"
+            
+          />
         </v-col>
       </v-row>
     </v-card>
@@ -64,11 +79,13 @@
 </template>
 
 <script>
+import { GChart } from "vue-google-charts";
 import NavbarStu from "../../components/NavbarUser.vue";
 export default {
   name: "DashboardSTU",
   components: {
     NavbarStu,
+    GChart,
   },
   data() {
     return {
@@ -76,12 +93,28 @@ export default {
         {
           id: "01",
           Fname: "Chayanin Buasala",
-          petition: 50,
+          sumpentition: 50,
           report: 10,
           tarcking: 9,
         },
       ],
       username: "",
+      sumpentition: 10,
+      sumreport: 10,
+      sumrsuccess: 10,
+      chartData: [
+        ["Year", "Sales", "Expenses", "Profit"],
+        ["2014", 1000, 400, 200],
+        ["2015", 1170, 460, 250],
+        ["2016", 660, 1120, 300],
+        ["2017", 1030, 540, 350],
+      ],
+      chartOptions: {
+        chart: {
+          title: "Company Performance",
+          subtitle: "Sales, Expenses, and Profit: 2014-2017",
+        },
+      },
     };
   },
 };
@@ -99,7 +132,8 @@ h2 {
 .cardshow {
   margin: 2%;
 }
-.box-margin{
+.box-margin {
   margin: 5%;
 }
 </style>
+
