@@ -104,7 +104,7 @@ export default {
       sumrsuccess: 10,
       chartData: [
         ["month", "คำร้องที่ส่งทั้งหมด", "รายงานปัญหาทั้งหมด", "คำร้องที่สำเร็จทั้งหมด"],
-        ["มกราคม", 80, 400, 200],
+        ["มกราคม", 80, 400, 200,],
         ["กุมภาพันธ์", 1170, 460, 250],
         ["มีนาคม", 660, 1120, 300],
         ["เมษายน", 1030, 540, 350],
@@ -121,7 +121,10 @@ export default {
         chart: {
           title: "Company Performance",
           subtitle: "Sales, Expenses, and Profit: 2014-2017",
+          
         },
+        colors: ['#31BDDC', '#FE6666', '#72D362'],
+         bars: 'horizontal',
       },
     };
   },
