@@ -80,11 +80,11 @@
 
 <script>
 import { GChart } from "vue-google-charts";
-import NavbarStu from "../../components/NavbarUser.vue";
+import NavbarUser from "../../components/NavbarUser.vue";
 export default {
   name: "DashboardSTU",
   components: {
-    NavbarStu,
+    NavbarUser,
     GChart,
   },
   data() {
