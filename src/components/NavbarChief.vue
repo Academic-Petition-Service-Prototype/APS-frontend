@@ -1,4 +1,4 @@
-<template>
+// <template>
   <div id="NavbarChief">
     <!-- Navbar -->
     <v-app-bar color="#FFA726">
