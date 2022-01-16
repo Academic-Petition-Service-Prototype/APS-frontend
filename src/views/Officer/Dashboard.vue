@@ -91,14 +91,10 @@ export default {
   background: #f0f0f0;
   height: 100%;
 }
-h2 {
-  text-align: center;
-  padding: 10px;
-}
-.cardshow {
+.cardmargin {
   margin: 2%;
 }
-.box-margin{
+.box-margin {
   margin: 5%;
 }
 </style>
