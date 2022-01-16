@@ -63,25 +63,68 @@
                   </v-stepper-content>
                 </v-stepper-items>
               </v-stepper> -->
-              <v-stepper alt-labels>
+              <v-stepper alt-labels v-model="listtracking.checktracking">
                 <v-stepper-header>
-                  <v-stepper-step step="3" complete> Ad type </v-stepper-step>
+                  <v-stepper-step 
+                  :complete="listtracking.checktracking > 1"
+                  step="1"
+                  color="green"
+                   > ส่งยื่นคำร้อง </v-stepper-step>
 
                   <v-divider></v-divider>
 
-                  <v-stepper-step step="4" complete> Ad style </v-stepper-step>
+                  <v-stepper-step
+                  :complete="listtracking.checktracking > 2"
+                  step="2" 
+                  color="green"
+                  > รับคำร้องเข้าระบบ </v-stepper-step>
 
                   <v-divider></v-divider>
 
-                  <v-stepper-step :rules="[() => false]" step="5">
-                    Custom channels
-                    <small>Alert message</small>
+                  <v-stepper-step 
+                  :complete="listtracking.checktracking > 3"
+                  step="3"
+                  color="green">
+                    การอนุมัติคำร้อง
                   </v-stepper-step>
 
                   <v-divider></v-divider>
 
-                  <v-stepper-step step="6" complete> Get code </v-stepper-step>
+                  <v-stepper-step 
+                  :complete="listtracking.checktracking > 4"
+                  step="4"
+                  color="green"> ยื่นคำร้องสำเร็จ </v-stepper-step>
+
+                  
                 </v-stepper-header>
+                <v-stepper-items>
+                  <v-stepper-content step="1">
+                    <v-card class="mb-12" color="grey lighten-1" height="200px">
+                      <h2 class="cardshow">รายละเอียด</h2>
+                    </v-card>
+                  </v-stepper-content>
+
+                  <v-stepper-content step="2">
+                    <v-card class="mb-12" color="grey lighten-1" height="200px">
+                      <h2 class="cardshow">รายละเอียด</h2>
+                    </v-card>
+                  </v-stepper-content>
+
+                  <v-stepper-content step="3">
+                    <v-card class="mb-12" color="grey lighten-1" height="200px">
+                      <h2 class="cardshow">รายละเอียด</h2>
+                    </v-card>
+                  </v-stepper-content>
+
+
+                  <v-stepper-content step="4">
+                    <v-card class="mb-12" color="grey lighten-1" height="200px">
+                      <h2 class="cardshow">รายละเอียด</h2>
+                    </v-card>
+                  </v-stepper-content>
+
+
+                </v-stepper-items>
               </v-stepper>
             </v-container>
 

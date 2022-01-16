@@ -7,7 +7,7 @@
         Dashboard
         <v-divider></v-divider>
       </h1>
-      <v-divider></v-divider>
+      
       <v-row>
         <v-col>
           <!-- รายงานเอกสารที่ทำไป -->
@@ -62,10 +62,12 @@
 
       <v-row>
         <v-col>
-          <h2>
+          <h1>
             จำนวณคำร้อง / รายงาน
             <v-divider></v-divider>
-          </h2>
+          </h1>
+
+         
           <GChart
             type="ColumnChart"
             :data="chartData"
