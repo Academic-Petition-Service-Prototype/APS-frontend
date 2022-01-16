@@ -1,12 +1,12 @@
+
 <template>
-  <!-- ส่วนจัดเเสดง -->
-  <div id="Trackingofficer">
+  <div id="Trackingofficer" class="bg-color">
     <NavbarOF />
-    <v-card class="cardshow">
-      <h1 class="text-center">
-        สถานะเอกสาร / คำร้อง
+    <v-card class="cardmargin">
+      <h2 class="text-center pa-5">
+        สถานะคำร้อง
         <v-divider></v-divider>
-      </h1>
+      </h2>
 
       <!-- วนเเสดงรายการสถาณะเอสาร -->
 
@@ -19,23 +19,20 @@
             {{ listtracking.title }}
             <!-- เเสดงชื่อเอกสาร -->
             <v-spacer></v-spacer>
-            
-            {{ listtracking.checktracking }} / {{ listtracking.pointracking }}
+
             <!-- เเสดงขั้นนตอน-->
           </v-expansion-panel-header>
           <v-expansion-panel-content>
             <!-- เเสดงเนื้อหาข้างใน -->
 
-
             <v-container id="inspire">
-              <!-- ส่วนเเสดงเวลากดดู -->
               <v-stepper alt-labels v-model="listtracking.checktracking">
                 <v-stepper-header>
                   <v-stepper-step 
                   :complete="listtracking.checktracking > 1"
                   step="1"
                   color="green"
-                   > Ad type </v-stepper-step>
+                   > ส่งยื่นคำร้อง </v-stepper-step>
 
                   <v-divider></v-divider>
 
@@ -43,7 +40,7 @@
                   :complete="listtracking.checktracking > 2"
                   step="2" 
                   color="green"
-                  > Ad style </v-stepper-step>
+                  > รับคำร้องเข้าระบบ </v-stepper-step>
 
                   <v-divider></v-divider>
 
@@ -51,7 +48,7 @@
                   :complete="listtracking.checktracking > 3"
                   step="3"
                   color="green">
-                    Ad style
+                    การอนุมัติคำร้อง
                   </v-stepper-step>
 
                   <v-divider></v-divider>
@@ -59,20 +56,39 @@
                   <v-stepper-step 
                   :complete="listtracking.checktracking > 4"
                   step="4"
-                  color="green"> Ad style </v-stepper-step>
+                  color="green"> ยื่นคำร้องสำเร็จ </v-stepper-step>
 
                   
                 </v-stepper-header>
-                <v-row>
-               <v-col align="center">
-                 <v-btn color="#31BDDC" to="/viewpentitiontrackingbyofficer">
-                   ดูข้อมูล
-                 </v-btn>
-               </v-col>
-             </v-row>
+                <v-stepper-items>
+                  <v-stepper-content step="1">
+                    <v-card class="mb-12" color="grey lighten-1" height="200px">
+                      <h2 class="cardshow">รายละเอียด</h2>
+                    </v-card>
+                  </v-stepper-content>
+
+                  <v-stepper-content step="2">
+                    <v-card class="mb-12" color="grey lighten-1" height="200px">
+                      <h2 class="cardshow">รายละเอียด</h2>
+                    </v-card>
+                  </v-stepper-content>
+
+                  <v-stepper-content step="3">
+                    <v-card class="mb-12" color="grey lighten-1" height="200px">
+                      <h2 class="cardshow">รายละเอียด</h2>
+                    </v-card>
+                  </v-stepper-content>
+
+
+                  <v-stepper-content step="4">
+                    <v-card class="mb-12" color="grey lighten-1" height="200px">
+                      <h2 class="cardshow">รายละเอียด</h2>
+                    </v-card>
+                  </v-stepper-content>
+
+
+                </v-stepper-items>
               </v-stepper>
-             
-              <!-- ส่วนเเสดงเวลากดดู -->
             </v-container>
 
             <!-- เเสดงเนื้อหาข้างใน -->
@@ -81,7 +97,6 @@
       </v-expansion-panels>
     </v-card>
   </div>
-  <!-- ส่วนจัดเเสดง -->
 </template>
 
 <script>
@@ -94,33 +109,40 @@ export default {
   data() {
     return {
       listtracking: [
-        { num: 1, title: "เอกสารที่1", pointracking: 1, checktracking: 2 },
-        { num: 2, title: "เอกสารที่2", pointracking: 2, checktracking: 2 },
-        { num: 3, title: "เอกสารที่2", pointracking: 2, checktracking: 5 },
+        {
+          num: 1,
+          title: "เอกสารที่1",
+          pointracking: 6,
+          checktracking: 3,
+          e1: 1,
+        },
+        {
+          num: 2,
+          title: "เอกสารที่2",
+          pointracking: 2,
+          checktracking: 3,
+          e1: 1,
+        },
+        {
+          num: 3,
+          title: "เอกสารที่2",
+          pointracking: 2,
+          checktracking: 1,
+          e1: 1,
+        },
       ],
+      
     };
   },
 };
 </script>
 
 <style scoped>
-h1 {
-  text-align: left;
-  padding: 10px;
+.bg-color {
+  background: #f0f0f0;
+  height: 100%;
 }
-.cardshow {
+.cardmargin {
   margin: 2%;
-}
-.trackcrad {
-  text-align: center;
-}
-.text-right {
-  text-align: left;
-}
-.tarkingbtn {
-  margin: 10px;
-}
-.checkingbtn {
-  margin: 10px;
 }
 </style>
