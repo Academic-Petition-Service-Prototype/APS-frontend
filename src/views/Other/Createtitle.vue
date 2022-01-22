@@ -49,7 +49,7 @@
               </v-row>
 
               <v-row v-if="forms.specifics == true">
-                <v-row v-for="numspecifics in numspecifics" :key="numspecifics">
+                <!-- <v-row v-for="numspecifics in numspecifics" :key="numspecifics">
                   <v-col class="cardshow" align="center">
                     <v-text-field
                       v-model="forms.numspecifics"
@@ -59,15 +59,42 @@
                       class="cardshow"
                     ></v-text-field>
                   </v-col>
-                </v-row>
-                <v-row>
-                  <v-col class="cardshow" align="center">
-                    <v-btn @click="submit">กดเพื่อเพิ่มหัวข้อเฉพาะ</v-btn>
-                    {{ forms.title }}
-                    {{ forms.specifics }}
-                    {{ numspecifics }}
-                  </v-col>
-                </v-row>
+                </v-row> -->
+
+                <div>
+                  <form v-on:submit.prevent="addNewtitle">
+                    <v-col class="cardshow" align="center">
+                      <v-text-field
+                        v-model="newtitleText"
+                        label="ชื่อหัวข้อเฉพาะ"
+                        id="new-todo"
+                        required
+                        class="cardshow"
+                      ></v-text-field>
+                      <v-btn type="submit">เพิ่ม</v-btn>
+                    </v-col>
+
+                    <!-- <label for="new-todo">Add a todo</label>
+                    <input
+                      v-model="newTodoText"
+                      id="new-todo"
+                      placeholder="E.g. Feed the cat"
+                    />
+                    <button>Add</button> -->
+                  </form>
+                  <v-row v-for="(title,index) in title" :key="title.id">
+                    <v-col class="cardshow" align="center">
+                      {{ title.id }}
+                    </v-col>
+                    <v-col class="cardshow" align="center">
+                      {{ title.title }}
+                    </v-col>
+                    <v-col class="cardshow" align="center">
+                      <v-btn @click="removeTodo(index)"> ลบ </v-btn>
+                    </v-col>
+                  </v-row>
+                  {{ title }}
+                </div>
               </v-row>
 
               <!-- หน้าสร้างหัวข้อ -->
@@ -120,7 +147,7 @@
             <v-card class="mb-12" color="#ECEFF1">
               <!-- ส่วนเเสดงหน้าการเเสดงตัวอย่าง -->
               <h1>
-                {{forms.title}} 
+                {{ forms.title }}
               </h1>
               <v-form v-model="valid" v-for="profile in profile" :key="profile">
                 <v-container>
@@ -195,7 +222,7 @@
                   </v-row>
 
                   <v-row v-for="heard in heard" :key="heard">
-                    <v-col align="center" v-if="heard.hasSpecificsDetail">
+                    <v-col align="center" v-if="heard.hastodos">
                       <v-row v-for="specifics in specifics" :key="specifics">
                         <v-col>
                           {{ specifics.titleheard }}
@@ -268,18 +295,22 @@ export default {
           approver: true,
         },
       ],
-      
+      newtitleText: "",
+      title: [],
+      nextTodoId: 1,
     };
   },
   methods: {
-    addForm: function () {
-      let form = {
-        name: this.name,
-      };
-      this.forms.push(form);
+    addNewtitle: function () {
+      this.title.push({
+        id: this.nextTodoId++,
+        title: this.newtitleText,
+      });
+      this.newtitleText = "";
     },
-    submit: function () {
-      this.numspecifics = this.numspecifics + 1;
+    removeTodo: function (index) {
+      console.log(index)
+      this.title.splice(index, 1);
     },
   },
 };
