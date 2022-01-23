@@ -49,40 +49,19 @@
               </v-row>
 
               <v-row v-if="forms.specifics == true">
-                <!-- <v-row v-for="numspecifics in numspecifics" :key="numspecifics">
-                  <v-col class="cardshow" align="center">
-                    <v-text-field
-                      v-model="forms.numspecifics"
-                      label="ชื่อหัวข้อเฉพาะ"
-                      id="v-model"
-                      required
-                      class="cardshow"
-                    ></v-text-field>
-                  </v-col>
-                </v-row> -->
-
                 <div>
                   <form v-on:submit.prevent="addNewtitle">
                     <v-col class="cardshow" align="center">
                       <v-text-field
                         v-model="newtitleText"
                         label="ชื่อหัวข้อเฉพาะ"
-                        id="new-todo"
                         required
                         class="cardshow"
                       ></v-text-field>
                       <v-btn type="submit">เพิ่ม</v-btn>
                     </v-col>
-
-                    <!-- <label for="new-todo">Add a todo</label>
-                    <input
-                      v-model="newTodoText"
-                      id="new-todo"
-                      placeholder="E.g. Feed the cat"
-                    />
-                    <button>Add</button> -->
                   </form>
-                  <v-row v-for="(title,index) in title" :key="title.id">
+                  <v-row v-for="(title, index) in title" :key="title.id">
                     <v-col class="cardshow" align="center">
                       {{ title.id }}
                     </v-col>
@@ -90,7 +69,7 @@
                       {{ title.title }}
                     </v-col>
                     <v-col class="cardshow" align="center">
-                      <v-btn @click="removeTodo(index)"> ลบ </v-btn>
+                      <v-btn @click="removetitle(index)"> ลบ </v-btn>
                     </v-col>
                   </v-row>
                   {{ title }}
@@ -116,25 +95,36 @@
               </v-row>
 
               <v-row v-if="forms.approver == true">
-                <v-row v-for="numspecifics in numspecifics" :key="numspecifics">
-                  <v-col class="cardshow" align="center">
-                    <v-text-field
-                      v-model="forms.numspecifics"
-                      label="อีเมล์ผู้อนุมัติ"
-                      id="v-model"
-                      required
-                      class="cardshow"
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-                <v-row>
-                  <v-col class="cardshow" align="center">
-                    <v-btn @click="submit">กดเพื่อเพิ่มหัวข้อเฉพาะ</v-btn>
-                    {{ forms.title }}
-                    {{ forms.specifics }}
-                    {{ numspecifics }}
-                  </v-col>
-                </v-row>
+                <!-- ส่วนของเพิ่มหน้าผู้อนุมัติ -->
+                <div>
+                  <form v-on:submit.prevent="addapprovertitle">
+                    <v-col class="cardshow" align="center">
+                      <v-text-field
+                        v-model="newapproverText"
+                        label="ชื่อผู้อนุมัติ"
+                        required
+                        class="cardshow"
+                      ></v-text-field>
+                      <v-btn type="submit">เพิ่ม</v-btn>
+                    </v-col>
+                  </form>
+                  <v-row
+                    v-for="(listapprover, index) in listapprover"
+                    :key="listapprover.id"
+                  >
+                    <v-col class="cardshow" align="center">
+                      {{ listapprover.id }}
+                    </v-col>
+                    <v-col class="cardshow" align="center">
+                      {{ listapprover.title }}
+                    </v-col>
+                    <v-col class="cardshow" align="center">
+                      <v-btn @click="removeapprover(index)"> ลบ </v-btn>
+                    </v-col>
+                  </v-row>
+                  {{ listapprover }}
+                </div>
+                <!-- ส่วนของเพิ่มหน้าผู้อนุมัติ -->
               </v-row>
             </v-card>
 
@@ -221,21 +211,25 @@
                     </v-col>
                   </v-row>
 
-                  <v-row v-for="heard in heard" :key="heard">
-                    <v-col align="center" v-if="heard.hastodos">
-                      <v-row v-for="specifics in specifics" :key="specifics">
-                        <v-col>
-                          {{ specifics.titleheard }}
+                  <v-row v-if="forms.specifics == true">
+                    <div >
+                      <v-row
+                        v-for="title in title"
+                        :key="title.id"
+                      >
+                        <v-col class="cardshow" align="center">
+                          <h3>{{title.title}}</h3>
                           <v-text-field
-                            v-model="specifics.specificsdetail"
-                            :rules="emailRules"
-                            label="ใส่ข้อมูลลงที่นี้"
+                            
+                            label="กรุณาใส่ข่อมูล"
                             required
-                          >
-                          </v-text-field>
+                            class="cardshow"
+                          ></v-text-field>
                         </v-col>
                       </v-row>
-                    </v-col>
+
+                      {{ title }}
+                    </div>
                   </v-row>
 
                   <v-row>
@@ -296,8 +290,11 @@ export default {
         },
       ],
       newtitleText: "",
+      newapproverText: "",
       title: [],
+      listapprover: [],
       nextTodoId: 1,
+      nextapproverId: 1,
     };
   },
   methods: {
@@ -308,9 +305,20 @@ export default {
       });
       this.newtitleText = "";
     },
-    removeTodo: function (index) {
-      console.log(index)
+    addapprovertitle: function () {
+      this.listapprover.push({
+        id: this.nextapproverId++,
+        title: this.newapproverText,
+      });
+      this.newapproverText = "";
+    },
+    removetitle: function (index) {
+      console.log(index);
       this.title.splice(index, 1);
+    },
+    removeapprover: function (index) {
+      console.log(index);
+      this.listapprover.splice(index, 1);
     },
   },
 };
