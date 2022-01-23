@@ -15,7 +15,7 @@
 <script>
 import NavbarChief from "../../components/NavbarChief.vue";
 export default {
-  name: "DashboardOffice",
+  name: "Approval",
   components: {
     NavbarChief,
   },
