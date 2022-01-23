@@ -1,12 +1,12 @@
+
 <template>
-  <!-- ส่วนจัดเเสดง -->
-  <div id="TrackingHOffice">
-    <NavbarHOF />
-    <v-card class="cardshow">
-      <h1>
-        สถานะเอกสาร / คำร้อง
+  <div id="Trackingofficer" class="bg-color">
+    <NavbarChief />
+    <v-card class="cardmargin">
+      <h2 class="text-center pa-5">
+        สถานะคำร้อง
         <v-divider></v-divider>
-      </h1>
+      </h2>
 
       <!-- วนเเสดงรายการสถาณะเอสาร -->
 
@@ -19,23 +19,75 @@
             {{ listtracking.title }}
             <!-- เเสดงชื่อเอกสาร -->
             <v-spacer></v-spacer>
-            {{ listtracking.checktracking }} / {{ listtracking.pointracking }}
+
             <!-- เเสดงขั้นนตอน-->
           </v-expansion-panel-header>
           <v-expansion-panel-content>
             <!-- เเสดงเนื้อหาข้างใน -->
 
             <v-container id="inspire">
-              <v-stepper alt-labels>
+              <v-stepper alt-labels v-model="listtracking.checktracking">
                 <v-stepper-header>
+                  <v-stepper-step 
+                  :complete="listtracking.checktracking > 1"
+                  step="1"
+                  color="green"
+                   > ส่งยื่นคำร้อง </v-stepper-step>
+
+                  <v-divider></v-divider>
+
                   <v-stepper-step
-                    step="1"
-                    v-for="listtracking in listtracking.pointracking"
-                    :key="listtracking.pointracking"
-                  >
-                    รับข้อมูล
+                  :complete="listtracking.checktracking > 2"
+                  step="2" 
+                  color="green"
+                  > รับคำร้องเข้าระบบ </v-stepper-step>
+
+                  <v-divider></v-divider>
+
+                  <v-stepper-step 
+                  :complete="listtracking.checktracking > 3"
+                  step="3"
+                  color="green">
+                    การอนุมัติคำร้อง
                   </v-stepper-step>
+
+                  <v-divider></v-divider>
+
+                  <v-stepper-step 
+                  :complete="listtracking.checktracking > 4"
+                  step="4"
+                  color="green"> ยื่นคำร้องสำเร็จ </v-stepper-step>
+
+                  
                 </v-stepper-header>
+                <v-stepper-items>
+                  <v-stepper-content step="1">
+                    <v-card class="mb-12" color="grey lighten-1" height="200px">
+                      <h2 class="cardshow">รายละเอียด</h2>
+                    </v-card>
+                  </v-stepper-content>
+
+                  <v-stepper-content step="2">
+                    <v-card class="mb-12" color="grey lighten-1" height="200px">
+                      <h2 class="cardshow">รายละเอียด</h2>
+                    </v-card>
+                  </v-stepper-content>
+
+                  <v-stepper-content step="3">
+                    <v-card class="mb-12" color="grey lighten-1" height="200px">
+                      <h2 class="cardshow">รายละเอียด</h2>
+                    </v-card>
+                  </v-stepper-content>
+
+
+                  <v-stepper-content step="4">
+                    <v-card class="mb-12" color="grey lighten-1" height="200px">
+                      <h2 class="cardshow">รายละเอียด</h2>
+                    </v-card>
+                  </v-stepper-content>
+
+
+                </v-stepper-items>
               </v-stepper>
             </v-container>
 
@@ -45,50 +97,52 @@
       </v-expansion-panels>
     </v-card>
   </div>
-  <!-- ส่วนจัดเเสดง -->
 </template>
 
 <script>
-import NavbarHOF from "../../components/NavbarChief.vue";
+import NavbarChief from "../../components/NavbarChief.vue";
 export default {
-  name: "TrackingHOffice",
+  name: "TrackingChief",
   components: {
-    NavbarHOF,
+    NavbarChief,
   },
   data() {
     return {
       listtracking: [
-        { num: 1, title: "เอกสารที่1", pointracking: 6, checktracking: 3 },
-        { num: 2, title: "เอกสารที่2", pointracking: 2, checktracking: 2 },
-        { num: 3, title: "เอกสารที่2", pointracking: 2, checktracking: 1 },
+        {
+          num: 1,
+          title: "เอกสารที่1",
+          pointracking: 6,
+          checktracking: 3,
+          e1: 1,
+        },
+        {
+          num: 2,
+          title: "เอกสารที่2",
+          pointracking: 2,
+          checktracking: 3,
+          e1: 1,
+        },
+        {
+          num: 3,
+          title: "เอกสารที่2",
+          pointracking: 2,
+          checktracking: 1,
+          e1: 1,
+        },
       ],
+      
     };
   },
 };
 </script>
 
 <style scoped>
-h1 {
-  text-align: center;
-  padding: 10px;
+.bg-color {
+  background: #f0f0f0;
+  height: 100%;
 }
-h2 {
-  text-align: center;
-  padding: 10px;
-}
-.cardshow {
-  margin: 8%;
-}
-.trackcrad {
-  text-align: center;
-}
-.text-right {
-  text-align: left;
-}
-.tarkingbtn {
-  margin: 10px;
-}
-.checkingbtn {
-  margin: 10px;
+.cardmargin {
+  margin: 2%;
 }
 </style>
