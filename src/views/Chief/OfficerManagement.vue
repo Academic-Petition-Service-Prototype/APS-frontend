@@ -23,7 +23,7 @@
         </v-row>
 
         <v-data-iterator
-          :items="items"
+          :items="listofficer"
           :items-per-page.sync="itemsPerPage"
           :page.sync="page"
           :search="search"
@@ -46,7 +46,7 @@
             </v-toolbar>
           </template>
 
-          <template v-slot:default="props">
+          <template >
             <v-row>
               <v-col align="center"> ลำดับ </v-col>
               <v-col align="center"> ชื่อ - สกุล </v-col>
@@ -56,7 +56,7 @@
             </v-row>
 
             <v-row
-              v-for="item in props.items"
+              v-for="item in listofficer"
               :key="item.text"
               cols="12"
               sm="6"
@@ -67,22 +67,23 @@
                 <v-card>
                   <v-card-title class="subheading font-weight-bold">
                     <v-row>
-                      <v-col align="center"> {{ item.no }} </v-col>
-                      <v-col align="center"> {{ item.text }} </v-col>
+                      <v-col align="center"> {{ item.id }} </v-col>
+                      <v-col align="center"> {{ item.Fname }} {{item.Lname }} </v-col>
 
-                      <v-col align="center"> {{ item.datecreation }} </v-col>
+                      <v-col align="center"> {{ item.gender }} </v-col>
                       <v-col align="center">
                         <v-btn icon
                           ><v-icon color="yellow">mdi-pencil</v-icon></v-btn
                         >
                         <v-btn icon
-                          ><v-icon color="red">mdi-delete</v-icon></v-btn
+                          ><v-icon color="red" @click="dialogdel=!dialogdel">mdi-delete</v-icon></v-btn
                         >
                       </v-col>
                     </v-row>
                   </v-card-title>
 
                   <v-divider></v-divider>
+                  {{listofficer}}
                 </v-card>
               </v-col>
             </v-row>
@@ -198,6 +199,8 @@
               ยกเลิก
             </v-btn>
           </form> -->
+
+          <form v-on:submit.prevent="addNewofficer">
           <v-container>
             <v-row>
               <v-col>
@@ -213,19 +216,53 @@
               <v-col>
                 <v-text-field
                   class="cardmargin"
-                  v-model="newapproverText"
-                  label="ชื่อผู้อนุมัติ"
+                  v-model="Fname"
+                  label="ชื่อ"
                   required
                 ></v-text-field>
                 <v-text-field
                   class="cardmargin"
-                  v-model="newapproverText"
+                  v-model="Lname"
                   label="นามสกุล"
                   required
                 ></v-text-field>
+                <v-radio-group v-model="gender" mandatory row>
+                  <v-radio label="ชาย" value="ขาย"></v-radio>
+                  <v-radio
+                    label="หญิง"
+                    value="หญง"
+                    color="#E91E63"
+                  ></v-radio>
+                </v-radio-group>
+                <v-text-field
+                  class="cardmargin"
+                  v-model="email"
+                  label="E-mail"
+                  required
+                ></v-text-field>
+                <v-text-field
+                  class="cardmargin"
+                  v-model="tell"
+                  label="เบอร์โทร"
+                  required
+                ></v-text-field>
+
+                <v-text-field
+                  class="cardmargin"
+                  v-model="address"
+                  label="ที่อยู่"
+                  required
+                ></v-text-field>
+
+                
               </v-col>
             </v-row>
+            <v-btn color="green darken-1" type="submit"> ตกลง </v-btn>
+            <v-btn color="red darken-1" text @click="dialogadd = false">
+              ยกเลิก
+            </v-btn>
           </v-container>
+          </form> 
         </v-card>
       </v-dialog>
 
@@ -239,7 +276,7 @@
           <h2>ต้องการลบข้อมูลของ {{ "ตรงนี้ใส่ index คนที่จะลบ" }}</h2>
 
           <v-divider></v-divider>
-          <v-btn color="green darken-1" text @click="dialogdel = false">
+          <v-btn color="green darken-1" text @click="removeofficer">
             ตกลง
           </v-btn>
           <v-btn color="red darken-1" text @click="dialogdel = false">
@@ -272,22 +309,23 @@ export default {
 
       dialog: false,
       dialogadd: false,
+      dialogdel: false,
 
-      items: [
-        {
-          no: "1",
-          text: "ฟรอมที่ 1",
-          agency: "ศึกษาทั่วไป",
-          satatus: true,
-          switch: false,
-          datecreation: "6/12/2564",
-        },
-      ],
+      Fname:"",
+      Lname:"",
+      gender:"",
+      email:"",
+      address:"",
+      nextOfficerId: 1,
+
+
+
+      listofficer: [],
     };
   },
   computed: {
     numberOfPages() {
-      return Math.ceil(this.items.length / this.itemsPerPage);
+      return Math.ceil(this.listofficer.length / this.itemsPerPage);
     },
     filteredKeys() {
       return this.keys.filter((key) => key !== "Name");
@@ -302,6 +340,29 @@ export default {
     },
     updateItemsPerPage(number) {
       this.itemsPerPage = number;
+    },
+
+    addNewofficer: function () {
+      this.listofficer.push({
+        id: this.nextOfficerId++,
+        Fname: this.Fname,
+        Lname: this.Lname,
+        gender: this.gender,
+        email: this.email,
+        address: this.address,
+      });
+      this.Fname = "";
+      this.Lname = "";
+      this.gender = "";
+      this.email = "";
+      this.address = "";
+      this.newtitleText = "";
+      this.dialogadd = false;
+    },
+    removeofficer: function (index) {
+      console.log(index);
+      this.listofficer.splice(index, 1);
+      this.dialogdel = false;
     },
   },
 };
