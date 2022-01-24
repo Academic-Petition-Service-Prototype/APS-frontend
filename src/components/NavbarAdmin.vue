@@ -10,6 +10,7 @@
       <v-btn icon disabled>
         <v-img height="160px" width="160px" src="../assets/logo.png"> </v-img>
       </v-btn>
+      <div class="text-white title ml-4">{{ menu[0].text }}</div>
       <v-spacer></v-spacer>
       <div class="text-white title mr-4">Last login:{{ lastlogin }}</div>
       <v-btn elevation="2" color="error" @click="slideexit = !slideexit">
@@ -37,8 +38,8 @@
 
       <v-row>
         <v-col class="text-white" align="center">
-          ชื่อ : <br />
-          สถานะ :
+          ชื่อ : {{ firstname }} {{ lastname }}<br />
+          สถานะ : {{ status }}
         </v-col>
       </v-row>
       <v-divider></v-divider>
@@ -93,7 +94,10 @@ export default {
   data: () => ({
     drawer: null,
     slideexit: false,
-    lastlogin: "12 October 2021",
+    firstname: "",
+    lastname: "",
+    status: "",
+    lastlogin: "",
     menu: [
       {
         menu: "1",
@@ -105,19 +109,19 @@ export default {
         menu: "2",
         text: "ติดตามสถานะคำร้อง/ปัญหา",
         route: "/AdminTracking",
-        icon: "account-group",
+        icon: "marker-check",
       },
       {
         menu: "3",
         text: "การอนุมัติ",
         route: "/AdminViewApproval",
-        icon: "form-select",
+        icon: "text-box-check",
       },
       {
         menu: "4",
         text: "การรายงานปัญหา",
         route: "/AdminViewReport",
-        icon: "account-check",
+        icon: "alert-octagon",
       },
       {
         menu: "5",
@@ -129,28 +133,31 @@ export default {
         menu: "6",
         text: "จัดการ Secretary",
         route: "/AdminSecretaryManagement",
-        icon: "book",
+        icon: "book-account",
       },
       {
         menu: "7",
         text: "จัดการ Officer",
         route: "/AdminOfficerManagement",
-        icon: "book",
+        icon: "account-tie",
       },
       {
         menu: "8",
         text: "จัดการ User",
         route: "/AdminUserManagement",
-        icon: "book",
+        icon: "account-multiple",
       },
-      { menu: "9", text: "โปรไฟล์", route: "/AdminProfile", icon: "book" },
+      { menu: "9", text: "โปรไฟล์", route: "/AdminProfile", icon: "account" },
     ],
   }),
   async created() {
     if (!this.$store.getters.isLoggedIn) {
       this.$router.push("/login");
     }
-    this.username = this.$store.getters.getUser.username;
+    this.firstname = this.$store.getters.getUser.f_name;
+    this.lastname = this.$store.getters.getUser.l_name;
+    this.status = this.$store.getters.getUser.status;
+    this.lastlogin = this.$store.getters.getUser.last_login;
     this.secretMessage = await AuthService.getSecretContent();
   },
   methods: {

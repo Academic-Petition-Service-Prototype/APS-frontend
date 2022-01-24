@@ -944,6 +944,11 @@
     "cssnano-preset-default" "^4.0.0"
     "postcss" "^7.0.0"
 
+"@mdi/font@^6.5.95":
+  "integrity" "sha512-ES5rj6J39FUkHe/b3C9SJs8bqIungYhuU7rBINTBaHOv/Ce4RCb3Gw08CZVl32W33UEkgRkzyWaIedV4at+QHg=="
+  "resolved" "https://registry.npmjs.org/@mdi/font/-/font-6.5.95.tgz"
+  "version" "6.5.95"
+
 "@mrmlnc/readdir-enhanced@^2.2.1":
   "integrity" "sha1-UkryQNGjYFJ7cwR17PoTRKpUDd4="
   "resolved" "https://registry.npm.taobao.org/@mrmlnc/readdir-enhanced/download/@mrmlnc/readdir-enhanced-2.2.1.tgz"
@@ -965,11 +970,6 @@
     "chalk" "^4.1.0"
     "consola" "^2.15.0"
     "node-fetch" "^2.6.1"
-
-"@popperjs/core@^2.10.2":
-  "integrity" "sha512-zrsUxjLOKAzdewIDRWy9nsV1GQsKBCWaGwsZQlCgr6/q+vjyZhFgqedLfFBuI9anTPEUT4APq9Mu0SZBTzIcGQ=="
-  "resolved" "https://registry.npmjs.org/@popperjs/core/-/core-2.11.0.tgz"
-  "version" "2.11.0"
 
 "@soda/friendly-errors-webpack-plugin@^1.7.1":
   "integrity" "sha1-hHUdgqkwGdXJLAzw5FrFkIfNIkA="
@@ -3055,6 +3055,11 @@
   "resolved" "https://registry.npm.taobao.org/de-indent/download/de-indent-1.0.2.tgz"
   "version" "1.0.2"
 
+"debounce@^1.1.0":
+  "integrity" "sha512-XRRe6Glud4rd/ZGQfiV1ruXSfbvfJedlV9Y6zOlP+2K04vBYiJEte6stfFkCP03aMnY5tsipamumUjL14fofug=="
+  "resolved" "https://registry.npmjs.org/debounce/-/debounce-1.2.1.tgz"
+  "version" "1.2.1"
+
 "debug@^2.2.0":
   "integrity" "sha1-XRKFFd8TT/Mn6QpMk/Tgd6U2NB8="
   "resolved" "https://registry.nlark.com/debug/download/debug-2.6.9.tgz?cache=0&sync_timestamp=1625374735764&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fdebug%2Fdownload%2Fdebug-2.6.9.tgz"
@@ -5119,11 +5124,6 @@
   "resolved" "https://registry.npm.taobao.org/javascript-stringify/download/javascript-stringify-2.1.0.tgz"
   "version" "2.1.0"
 
-"jquery@1.9.1 - 3":
-  "integrity" "sha512-JVzAR/AjBvVt2BmYhxRCSYysDsPcssdmTFnzyLEts9qNwmjmu4JTAMYubEfwVOSwpQ1I1sKKFcxhZCI2buerfw=="
-  "resolved" "https://registry.npmjs.org/jquery/-/jquery-3.6.0.tgz"
-  "version" "3.6.0"
-
 "js-message@1.0.7":
   "integrity" "sha1-+93QU8ekcCGHG7iyyVOXzBfCDkc="
   "resolved" "https://registry.npm.taobao.org/js-message/download/js-message-1.0.7.tgz?cache=0&sync_timestamp=1605129528052&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fjs-message%2Fdownload%2Fjs-message-1.0.7.tgz"
@@ -5335,9 +5335,9 @@
     "json5" "^1.0.1"
 
 "loader-utils@^2.0.0":
-  "integrity" "sha512-rP4F0h2RaWSvPEkD7BLDFQnvSf+nK+wr3ESUjNTyAGobqrijmW92zc+SO6d4p4B1wh7+B/Jg1mkQe5NYUEHtHQ=="
-  "resolved" "https://registry.npmjs.org/loader-utils/-/loader-utils-2.0.0.tgz"
-  "version" "2.0.0"
+  "integrity" "sha512-TM57VeHptv569d/GKh6TAYdzKblwDNiumOdkFnejjD0XwTH87K90w3O7AiJRqdQoXygvi1VQTJTLGhJl7WqA7A=="
+  "resolved" "https://registry.npmjs.org/loader-utils/-/loader-utils-2.0.2.tgz"
+  "version" "2.0.2"
   dependencies:
     "big.js" "^5.2.2"
     "emojis-list" "^3.0.0"
@@ -8485,6 +8485,13 @@
   "integrity" "sha512-leT4kdJVQyeZNY1kmnS1xiUlQ9z1B/kdBFCILIjYYQDqZgLqCLa0UhjSSeRX6c3mUe6U5qYeM8LrEqkHJ1B4LA=="
   "resolved" "https://registry.npmjs.org/vue-functional-data-merge/-/vue-functional-data-merge-3.1.0.tgz"
   "version" "3.1.0"
+
+"vue-google-charts@^0.3.3":
+  "integrity" "sha512-dvp5C0m3uAfB7PbAWPOqnYGJLUKyK0NPmnjOE8FDUhVySeErojOPZVd5zNOq4m9RhhwmNFP31bsxVYNb+0+f9w=="
+  "resolved" "https://registry.npmjs.org/vue-google-charts/-/vue-google-charts-0.3.3.tgz"
+  "version" "0.3.3"
+  dependencies:
+    "debounce" "^1.1.0"
 
 "vue-hot-reload-api@^2.3.0":
   "integrity" "sha1-UylVzB6yCKPZkLOp+acFdGV+CPI="
