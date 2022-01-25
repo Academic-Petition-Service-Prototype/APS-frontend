@@ -31,6 +31,7 @@ import ChiefReport from '../views/Chief/Report.vue'
 import ChiefSecretaryManagement from '../views/Chief/SecretaryManagement.vue'
 import ChiefTracking from '../views/Chief/Tracking.vue'
 import ChiefReportDetail from '../views/Chief/ReportDetail.vue'
+import Approvaldetaill from '../views/Chief/Approvaldetaill.vue'
 //Chief
 
 //Secretary
@@ -182,6 +183,13 @@ const routes = [
     name: 'ChiefReportDetail',
     component: ChiefReportDetail 
   },
+  {
+    path: '/Approvaldetaill/:id',
+    name: 'Approvaldetaill',
+    component: Approvaldetaill 
+  },
+
+  
   //Chief
 
   //Secretary
