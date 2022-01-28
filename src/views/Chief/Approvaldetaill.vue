@@ -136,16 +136,39 @@
                 {{ title }}
               </div>
             </v-row>
-
             <v-row>
+              <v-col>
+                {{statuscheck}}
+                <v-row v-if="statuscheck==null">
               <v-col align="center">
-                <v-btn class="ma-2" color="success"> อนุมัติ </v-btn>
+                <v-btn class="ma-2" color="success" @click="statuscheck=true"> อนุมัติ </v-btn>
               </v-col>
 
               <v-col align="center">
-                <v-btn class="ma-2" outlined color="error"> ไม่อนุมัติ </v-btn>
+                <v-btn class="ma-2" outlined color="error" @click="statuscheck=false"> ไม่อนุมัติ </v-btn>
               </v-col>
             </v-row>
+
+            <v-row v-if="statuscheck==true">
+              <v-col align="center">
+                <v-btn class="ma-2" color="success" width="500" height="80"> อนุมัติ </v-btn>
+              </v-col>
+
+              
+            </v-row>
+
+            <v-row v-if="statuscheck==false">
+              <v-col align="center">
+                <v-btn class="ma-2" outlined color="error" width="500" height="80"> ไม่อนุมัติ </v-btn>
+              </v-col>
+
+              
+            </v-row>
+
+
+              </v-col>
+            </v-row>
+            
           </v-container>
         </v-form>
         <!-- ส่วนเเสดงหน้าการเเสดงตัวอย่าง -->
@@ -191,6 +214,7 @@ export default {
       listapprover: [],
       nextTodoId: 1,
       nextapproverId: 1,
+      statuscheck:null,
     };
   },
   mounted() {
