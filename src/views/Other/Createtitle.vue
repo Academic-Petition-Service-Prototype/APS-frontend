@@ -34,9 +34,9 @@
               <v-row>
                 <v-col>
                   <v-text-field
+                    name="title"
                     v-model="forms.title"
                     label="ชื่อหัวข้อ"
-                    required
                     class="cardshow"
                   ></v-text-field>
                 </v-col>
@@ -144,7 +144,7 @@
                   <v-row>
                     <v-col cols="12" md="4">
                       <v-text-field
-                        v-model="profile.Fname"
+                        v-model="profile.f_name"
                         :rules="nameRules"
                         :counter="10"
                         label="ชื่อ"
@@ -155,7 +155,7 @@
 
                     <v-col cols="12" md="4">
                       <v-text-field
-                        v-model="profile.Lname"
+                        v-model="profile.l_name"
                         :rules="nameRules"
                         :counter="10"
                         label="นามสกุล"
@@ -190,7 +190,7 @@
                   <v-row>
                     <v-col>
                       <v-text-field
-                        v-model="profile.tell"
+                        v-model="profile.tel_num"
                         :rules="emailRules"
                         label="เบอร์โทร"
                         required
@@ -202,7 +202,7 @@
                   <v-row>
                     <v-col>
                       <v-text-field
-                        v-model="profile.addess"
+                        v-model="profile.address"
                         :rules="emailRules"
                         label="ที่อยู่"
                         required
@@ -212,15 +212,11 @@
                   </v-row>
 
                   <v-row v-if="forms.specifics == true">
-                    <div >
-                      <v-row
-                        v-for="title in title"
-                        :key="title.id"
-                      >
+                    <div>
+                      <v-row v-for="title in title" :key="title.id">
                         <v-col class="cardshow" align="center">
-                          <h3>{{title.title}}</h3>
+                          <h3>{{ title.title }}</h3>
                           <v-text-field
-                            
                             label="กรุณาใส่ข่อมูล"
                             required
                             class="cardshow"
@@ -248,7 +244,9 @@
               <!-- ส่วนเเสดงหน้าการเเสดงตัวอย่าง -->
             </v-card>
 
-            <v-btn color="primary"> ต่อไป </v-btn>
+            <v-btn color="primary" @click="createpetition()">
+              สร้างคำร้อง
+            </v-btn>
 
             <v-btn text @click="stepprocess = 2"> ย้อนกลับ </v-btn>
           </v-stepper-content>
@@ -262,6 +260,7 @@
 
 <script>
 import NavbarOF from "../../components/NavbarOfficer.vue";
+import axios from "axios";
 export default {
   name: "Createtitle",
   components: {
@@ -273,18 +272,17 @@ export default {
       numspecifics: 1,
       profile: [
         {
-          Fname: "ณัฐภูมิ",
-          Lname: "ผาจิต",
-          gender: "ชาย",
-          email: "62015011@kmit.ac.th",
-          tell: "0856937521",
-          addess:
-            "เลขที่ 1 ซอยฉลองกรุง 1แขวงลาดกระบัง เขตลาดกระบังกรุงเทพฯ 10520",
+          f_name: this.$store.getters.getUser.f_name,
+          l_name: this.$store.getters.getUser.l_name,
+          gender: this.$store.getters.getUser.gender,
+          email: this.$store.getters.getUser.email,
+          tel_num: this.$store.getters.getUser.tel_num,
+          address: this.$store.getters.getUser.address,
         },
       ],
       forms: [
         {
-          title: "",
+          title: " ",
           specifics: true,
           approver: true,
         },
@@ -298,27 +296,54 @@ export default {
     };
   },
   methods: {
-    addNewtitle: function () {
+    addNewtitle: function() {
       this.title.push({
         id: this.nextTodoId++,
         title: this.newtitleText,
       });
       this.newtitleText = "";
     },
-    addapprovertitle: function () {
+    addapprovertitle: function() {
       this.listapprover.push({
         id: this.nextapproverId++,
         title: this.newapproverText,
       });
       this.newapproverText = "";
     },
-    removetitle: function (index) {
+    removetitle: function(index) {
       console.log(index);
       this.title.splice(index, 1);
     },
-    removeapprover: function (index) {
+    removeapprover: function(index) {
       console.log(index);
       this.listapprover.splice(index, 1);
+    },
+
+    createpetition() {
+      axios
+        .post(process.env.VUE_APP_URL + "forms", {
+          form_name: this.forms.title,
+          form_specific: this.title,
+          f_name: this.$store.getters.getUser.f_name,
+          l_name: this.$store.getters.getUser.l_name,
+          approval_name: this.listapprover,
+        })
+        .then((response) => {
+          if (response.data == "กรุณากรอกชื่อคำร้อง") {
+            alert("กรุณากรอกชื่อคำร้อง");
+          } 
+          else if (response.data == "ชื่อคำร้องนี้มีอยู่ในระบบแล้ว") {
+            alert("ชื่อคำร้องนี้มีอยู่ในระบบแล้ว");
+          } 
+          else {
+            this.textsnackbar = "รายงานปัญหาสำเร็จ";
+            this.colorsnackbar = "#2E7D32";
+            this.snackbar = true;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
 };
