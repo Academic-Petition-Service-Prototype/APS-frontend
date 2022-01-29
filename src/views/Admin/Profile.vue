@@ -27,7 +27,7 @@
             <v-col cols="12" md="4">
               <v-text-field
                 class="text-black"
-                v-model="profile.Fname"
+                v-model="profile.f_name"
                 label="ชื่อ"
                 readonly
               ></v-text-field>
@@ -35,7 +35,7 @@
 
             <v-col cols="12" md="4">
               <v-text-field
-                v-model="profile.Lname"
+                v-model="profile.l_name"
                 label="นามสกุล"
                 readonly
               ></v-text-field>
@@ -73,7 +73,7 @@
           <v-row>
             <v-col>
               <v-text-field
-                v-model="profile.tell"
+                v-model="profile.num_tel"
                 label="เบอร์โทร"
                 readonly
               ></v-text-field>
@@ -83,7 +83,7 @@
           <v-row>
             <v-col>
               <v-text-field
-                v-model="profile.addess"
+                v-model="profile.address"
                 label="ที่อยู่"
                 readonly
               ></v-text-field>
@@ -107,14 +107,13 @@ export default {
       detail: "",
       profile: [
         {
-          Fname: "ณัฐภูมิ",
-          Lname: "ผาจิต",
-          gender: "ชาย",
-          email: "62015011@kmit.ac.th",
-          tell: "0856937521",
-          addess:
-            "เลขที่ 1 ซอยฉลองกรุง 1แขวงลาดกระบัง เขตลาดกระบังกรุงเทพฯ 10520",
-          status: "Officer",
+          f_name: this.$store.getters.getUser.f_name,
+          l_name: this.$store.getters.getUser.l_name,
+          gender: this.$store.getters.getUser.gender,
+          email: this.$store.getters.getUser.email,
+          tel_num: this.$store.getters.getUser.tel_num,
+          address: this.$store.getters.getUser.address,
+          status: this.$store.getters.getUser.status,
         },
       ],
     };
