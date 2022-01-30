@@ -1,7 +1,7 @@
 <template>
   <div id="UserPetition" class="bg-color">
     <NavbarUser />
-    <v-card class="cardmargin text-center">
+    <v-card class="cardmargin">
       <h1>
         เลือกแบบคำร้อง / ยื่นเรื่อง
         <v-divider></v-divider>
@@ -23,7 +23,7 @@
             filled
             rounded
             label="ค้นหาเอกสาร"
-            class="cardshow"
+            class="cardshow magintextfind "
           ></v-text-field>
         </template>
 
@@ -33,18 +33,13 @@
             :key="item.name"
             router
             :to="item.route"
-            class="cardshow"
+            style="padding: 0px 30px 0px 30px ;"
           >
-            <v-col>
-              <v-btn block height="200" router :to="item.route">
+            <v-col align="">
+              
+              <v-btn outlined block height="100" router :to="item.route">
                 <v-row>
                   <v-col align="center">
-                    <v-btn color="secondary" width="100" height="100">
-                      <v-icon>mdi-{{ item.icon }}</v-icon>
-                    </v-btn>
-                    
-                  </v-col>
-                  <v-col>
                     <h2>{{ item.name }}</h2>
                     <h2>{{ item.detail }}</h2>
                   </v-col>
@@ -79,61 +74,31 @@ export default {
           name: "เอกสารความกก้าวหน้า",
           route: "/Sentpentition",
           icon: "file-document-outline",
-          detail:"ส่งความก้าวหน้าการทำโครงการ",
+          detail: "ส่งความก้าวหน้าการทำโครงการ",
         },
         {
           name: "Ice cream sandwich",
           route: "/Sentpentition",
           icon: "file-document-outline",
-          detail:"ส่งความก้าวหน้าการทำโครงการ",
+          detail: "ส่งความก้าวหน้าการทำโครงการ",
         },
         {
           name: "Eclair",
           route: "/Sentpentition",
           icon: "file-document-outline",
-          detail:"ส่งความก้าวหน้าการทำโครงการ",
+          detail: "ส่งความก้าวหน้าการทำโครงการ",
         },
         {
           name: "Cupcake",
           route: "/Sentpentition",
           icon: "file-document-outline",
-          detail:"ส่งความก้าวหน้าการทำโครงการ",
+          detail: "ส่งความก้าวหน้าการทำโครงการ",
         },
         {
           name: "Gingerbread",
           route: "/Sentpentition",
           icon: "file-document-outline",
-          detail:"ส่งความก้าวหน้าการทำโครงการ",
-        },
-        {
-          name: "Jelly bean",
-          route: "/Sentpentition",
-          icon: "file-document-outline",
-          detail:"ส่งความก้าวหน้าการทำโครงการ",
-        },
-        {
-          name: "Lollipop",
-          route: "/Sentpentition",
-          icon: "file-document-outline",
-          detail:"ส่งความก้าวหน้าการทำโครงการ",
-        },
-        {
-          name: "Honeycomb",
-          route: "/Sentpentition",
-          icon: "file-document-outline",
-          detail:"ส่งความก้าวหน้าการทำโครงการ",
-        },
-        {
-          name: "Donut",
-          route: "/Sentpentition",
-          icon: "file-document-outline",
-          detail:"ส่งความก้าวหน้าการทำโครงการ",
-        },
-        {
-          name: "KitKat",
-          route: "/Sentpentition",
-          icon: "file-document-outline",
-          detail:"ส่งความก้าวหน้าการทำโครงการ",
+          detail: "ส่งความก้าวหน้าการทำโครงการ",
         },
       ],
     };
@@ -148,5 +113,8 @@ export default {
 }
 .cardmargin {
   margin: 2%;
+}
+.magintextfind {
+  padding: 2%;
 }
 </style>

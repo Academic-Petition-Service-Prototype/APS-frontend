@@ -1,9 +1,11 @@
 <template>
-  <!-- ส่วนจัดเเสดง -->
+  
   <v-app>
+    <!-- ส่วนจัดเเสดง -->
     <NavbarStu />
+
     <v-card class="cardshow">
-      <h1 >
+      <h1>
         ข้อมูลผู้ใช้งาน
         <v-divider></v-divider>
       </h1>
@@ -26,9 +28,8 @@
           <v-row>
             <v-col cols="12" md="4">
               <v-text-field
-                v-model="profile.Fname"
+                v-model="profile.f_name"
                 :rules="nameRules"
-                :counter="10"
                 label="ชื่อ"
                 required
                 disabled
@@ -37,9 +38,8 @@
 
             <v-col cols="12" md="4">
               <v-text-field
-                v-model="profile.Lname"
+                v-model="profile.l_name"
                 :rules="nameRules"
-                :counter="10"
                 label="นามสกุล"
                 required
                 disabled
@@ -60,7 +60,7 @@
           <v-row>
             <v-col>
               <v-text-field
-                v-model="profile.satus"
+                v-model="profile.status"
                 :rules="emailRules"
                 label="สถานะผู้ใช้งาน"
                 required
@@ -81,11 +81,10 @@
             </v-col>
           </v-row>
 
-
           <v-row>
             <v-col>
               <v-text-field
-                v-model="profile.tell"
+                v-model="profile.tel_num"
                 :rules="emailRules"
                 label="เบอร์โทร"
                 required
@@ -97,7 +96,7 @@
           <v-row>
             <v-col>
               <v-text-field
-                v-model="profile.addess"
+                v-model="profile.address"
                 :rules="emailRules"
                 label="ที่อยู่"
                 required
@@ -110,7 +109,7 @@
             <v-col align="center" v-if="heard.type == 1">
               <v-row v-for="specifics in specifics" :key="specifics">
                 <v-col>
-                    {{specifics.titleheard}}
+                  {{ specifics.titleheard }}
                   <v-text-field
                     v-model="specifics.specificsdetail"
                     :rules="emailRules"
@@ -124,11 +123,9 @@
           </v-row>
         </v-container>
       </v-form>
-
-      
-        
-      
     </v-card>
+    <!-- ส่วนจัดเเสดง -->
+
     <!-- ส่วนจัดเเสดง -->
   </v-app>
 </template>
@@ -145,27 +142,14 @@ export default {
       detail: "",
       profile: [
         {
-          Fname: "ณัฐภูมิ",
-          Lname: "ผาจิต",
-          gender: "ชาย",
-          email: "62015011@kmit.ac.th",
-          tell: "0856937521",
-          addess:
-            "เลขที่ 1 ซอยฉลองกรุง 1แขวงลาดกระบัง เขตลาดกระบังกรุงเทพฯ 10520",
-          satus:"General User",
+          f_name: this.$store.getters.getUser.f_name,
+          l_name: this.$store.getters.getUser.l_name,
+          gender: this.$store.getters.getUser.gender,
+          email: this.$store.getters.getUser.email,
+          tel_num: this.$store.getters.getUser.tel_num,
+          address: this.$store.getters.getUser.address,
+          status: this.$store.getters.getUser.status,
         },
-      ],
-      heard: [
-        {
-          title: "การขอสอบย้อนหลัง",
-          type: 2,
-        },
-      ],
-      specifics: [
-        { titleheard: "ข้อมูลรายวิชา", specificsdetail: "" },
-        { titleheard: "เหตุผล", specificsdetail: "" },
-        { titleheard: "เหตุผล", specificsdetail: "" },
-        { titleheard: "เหตุผล", specificsdetail: "" },
       ],
     };
   },
