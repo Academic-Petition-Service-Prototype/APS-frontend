@@ -321,7 +321,7 @@ export default {
     computed:{
       form () {
         return {
-          name: this.name,
+          name: this.forms.title,
           
         }
       },
@@ -366,9 +366,11 @@ export default {
             this.formHasErrors = true
           this.$refs[f].validate(true)
           }
+          
           else{
             this.stepprocess = 2;
           }
+          console.log(this.form)
         })
         
       },
