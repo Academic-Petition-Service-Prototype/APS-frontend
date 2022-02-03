@@ -3,10 +3,10 @@
   <div id="DashboardSTU">
     <NavbarSecretary />
     <v-card class="cardshow">
-      <h1>
-        Dashboard
-        <v-divider></v-divider>
-      </h1>
+      <v-toolbar dark prominent color="#FFAB40">
+        <h1 class="text-center pa-5">Dashboard</h1>
+        <v-spacer></v-spacer>
+      </v-toolbar>
       
       <v-row>
         <v-col>
@@ -62,10 +62,7 @@
 
       <v-row>
         <v-col>
-          <h1>
-            จำนวณคำร้อง / รายงาน
-            <v-divider></v-divider>
-          </h1>
+          
 
          
           <GChart
@@ -74,6 +71,11 @@
             :options="chartOptions"
             
           />
+          
+          <v-toolbar dark prominent color="#FFAB40">
+        <h1 class="text-center pa-5">แผนภูมิวงกลม</h1>
+        <v-spacer></v-spacer>
+      </v-toolbar>
 
           <GChart
             type="PieChart"
