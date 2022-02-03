@@ -4,7 +4,7 @@
     <NavbarChief />
     <v-card class="cardshow">
       <v-toolbar dark prominent color="#FFAB40">
-        <h1>Dashboard Chief</h1>
+        <h1>Dashboard</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
 
@@ -223,5 +223,9 @@ export default {
 }
 .box-margin {
   margin: 5%;
+}
+h1 {
+  font-size: 50px;
+  padding: 2% 0% 0% 0%;
 }
 </style>

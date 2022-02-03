@@ -4,7 +4,12 @@
     <!-- สถานะคำร้อง -->
     <v-card class="cardshow">
       <v-toolbar dark prominent color="#FFAB40">
-        <h1 class="text-center pa-5">สถานะคำร้อง</h1>
+        <h1
+          class="text-center pa-5"
+          style="font-size: 50px; padding: 2% 0% 0% 0%"
+        >
+          สถานะคำร้อง
+        </h1>
         <v-spacer></v-spacer>
       </v-toolbar>
 
@@ -46,10 +51,10 @@
             <v-expansion-panels>
               <v-expansion-panel>
                 <v-expansion-panel-header>
-                  <v-row class="text-center" >
-                  <v-col> {{ item.num }} </v-col>
-                  <v-col> {{ item.title }} </v-col>
-                  <v-col> </v-col>
+                  <v-row class="text-center">
+                    <v-col> {{ item.num }} </v-col>
+                    <v-col> {{ item.title }} </v-col>
+                    <v-col> </v-col>
                   </v-row>
 
                   <!-- เเสดงชื่อเอกสาร -->
@@ -212,7 +217,6 @@
         <template v-slot:header>
           <v-row>
             <v-col>
-             
               <template v-if="$vuetify.breakpoint.mdAndUp"> </template>
             </v-col>
           </v-row>
@@ -228,10 +232,10 @@
             <v-expansion-panels>
               <v-expansion-panel>
                 <v-expansion-panel-header>
-                  <v-row class="text-center" >
-                  <v-col> {{ item.num }} </v-col>
-                  <v-col> {{ item.title }} </v-col>
-                  <v-col> </v-col>
+                  <v-row class="text-center">
+                    <v-col> {{ item.num }} </v-col>
+                    <v-col> {{ item.title }} </v-col>
+                    <v-col> </v-col>
                   </v-row>
 
                   <!-- เเสดงชื่อเอกสาร -->
@@ -241,78 +245,95 @@
                 </v-expansion-panel-header>
 
                 <v-expansion-panel-content>
-            <!-- เเสดงเนื้อหาข้างใน -->
+                  <!-- เเสดงเนื้อหาข้างใน -->
 
-            <v-container id="inspire">
-              <v-stepper alt-labels v-model="listtracking.checktracking">
-                <v-stepper-header>
-                  <v-stepper-step 
-                  :complete="listtracking.checktracking > 1"
-                  step="1"
-                  color="green"
-                   > ส่งยื่นคำร้อง </v-stepper-step>
+                  <v-container id="inspire">
+                    <v-stepper alt-labels v-model="listtracking.checktracking">
+                      <v-stepper-header>
+                        <v-stepper-step
+                          :complete="listtracking.checktracking > 1"
+                          step="1"
+                          color="green"
+                        >
+                          ส่งยื่นคำร้อง
+                        </v-stepper-step>
 
-                  <v-divider></v-divider>
+                        <v-divider></v-divider>
 
-                  <v-stepper-step
-                  :complete="listtracking.checktracking > 2"
-                  step="2" 
-                  color="green"
-                  > รับคำร้องเข้าระบบ </v-stepper-step>
+                        <v-stepper-step
+                          :complete="listtracking.checktracking > 2"
+                          step="2"
+                          color="green"
+                        >
+                          รับคำร้องเข้าระบบ
+                        </v-stepper-step>
 
-                  <v-divider></v-divider>
+                        <v-divider></v-divider>
 
-                  <v-stepper-step 
-                  :complete="listtracking.checktracking > 3"
-                  step="3"
-                  color="green">
-                    การอนุมัติคำร้อง
-                  </v-stepper-step>
+                        <v-stepper-step
+                          :complete="listtracking.checktracking > 3"
+                          step="3"
+                          color="green"
+                        >
+                          การอนุมัติคำร้อง
+                        </v-stepper-step>
 
-                  <v-divider></v-divider>
+                        <v-divider></v-divider>
 
-                  <v-stepper-step 
-                  :complete="listtracking.checktracking > 4"
-                  step="4"
-                  color="green"> ยื่นคำร้องสำเร็จ </v-stepper-step>
+                        <v-stepper-step
+                          :complete="listtracking.checktracking > 4"
+                          step="4"
+                          color="green"
+                        >
+                          ยื่นคำร้องสำเร็จ
+                        </v-stepper-step>
+                      </v-stepper-header>
+                      <v-stepper-items>
+                        <v-stepper-content step="1">
+                          <v-card
+                            class="mb-12"
+                            color="grey lighten-1"
+                            height="200px"
+                          >
+                            <h2 class="cardshow">รายละเอียด</h2>
+                          </v-card>
+                        </v-stepper-content>
 
-                  
-                </v-stepper-header>
-                <v-stepper-items>
-                  <v-stepper-content step="1">
-                    <v-card class="mb-12" color="grey lighten-1" height="200px">
-                      <h2 class="cardshow">รายละเอียด</h2>
-                    </v-card>
-                  </v-stepper-content>
+                        <v-stepper-content step="2">
+                          <v-card
+                            class="mb-12"
+                            color="grey lighten-1"
+                            height="200px"
+                          >
+                            <h2 class="cardshow">รายละเอียด</h2>
+                          </v-card>
+                        </v-stepper-content>
 
-                  <v-stepper-content step="2">
-                    <v-card class="mb-12" color="grey lighten-1" height="200px">
-                      <h2 class="cardshow">รายละเอียด</h2>
-                    </v-card>
-                  </v-stepper-content>
+                        <v-stepper-content step="3">
+                          <v-card
+                            class="mb-12"
+                            color="grey lighten-1"
+                            height="200px"
+                          >
+                            <h2 class="cardshow">รายละเอียด</h2>
+                          </v-card>
+                        </v-stepper-content>
 
-                  <v-stepper-content step="3">
-                    <v-card class="mb-12" color="grey lighten-1" height="200px">
-                      <h2 class="cardshow">รายละเอียด</h2>
-                    </v-card>
-                  </v-stepper-content>
+                        <v-stepper-content step="4">
+                          <v-card
+                            class="mb-12"
+                            color="grey lighten-1"
+                            height="200px"
+                          >
+                            <h2 class="cardshow">รายละเอียด</h2>
+                          </v-card>
+                        </v-stepper-content>
+                      </v-stepper-items>
+                    </v-stepper>
+                  </v-container>
 
-
-                  <v-stepper-content step="4">
-                    <v-card class="mb-12" color="grey lighten-1" height="200px">
-                      <h2 class="cardshow">รายละเอียด</h2>
-                    </v-card>
-                  </v-stepper-content>
-
-
-                </v-stepper-items>
-              </v-stepper>
-            </v-container>
-
-            <!-- เเสดงเนื้อหาข้างใน -->
-          </v-expansion-panel-content>
-
-                
+                  <!-- เเสดงเนื้อหาข้างใน -->
+                </v-expansion-panel-content>
               </v-expansion-panel>
             </v-expansion-panels>
           </v-row>
@@ -378,7 +399,6 @@ export default {
       itemsPerPage: 4,
       sortBy: "name",
 
-      
       listtracking: [
         {
           num: 1,

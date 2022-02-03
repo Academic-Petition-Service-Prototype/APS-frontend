@@ -145,5 +145,9 @@ export default {
 .box-margin {
   margin: 5%;
 }
+h1 {
+  font-size: 50px;
+  padding: 2% 0% 0% 0%;
+}
 </style>
 

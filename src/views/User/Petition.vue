@@ -171,4 +171,8 @@ export default {
 .magintextfind {
   padding: 2%;
 }
+h1 {
+  font-size: 50px;
+  padding: 2% 0% 0% 0%;
+}
 </style>
