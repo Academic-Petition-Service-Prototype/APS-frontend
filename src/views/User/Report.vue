@@ -2,10 +2,12 @@
   <div id="UserReport" class="bg-color">
     <NavbarUser />
     <v-card class="cardmargin">
-      <h1 class="text-center p-3">
-        รายงานปัญหาไม่ระบุตัวตน
-        <v-divider></v-divider>
-      </h1>
+      
+
+      <v-toolbar dark prominent color="#FFAB40">
+        <h1 class="text-center pa-5">รายงานปัญหาไม่ระบุตัวตน</h1>
+        <v-spacer></v-spacer>
+      </v-toolbar>
 
       <v-form>
         <v-container>

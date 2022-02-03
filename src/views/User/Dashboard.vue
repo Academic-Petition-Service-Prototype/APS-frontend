@@ -3,11 +3,10 @@
   <div id="DashboardSTU">
     <NavbarUser />
     <v-card class="cardshow">
-      <h1>
-        Dashboard
-        <v-divider></v-divider>
-      </h1>
-      
+      <v-toolbar dark prominent color="#FFAB40">
+        <h1>Dashboard</h1>
+        <v-spacer></v-spacer>
+      </v-toolbar>
       <v-row>
         <v-col>
           <!-- รายงานเอกสารที่ทำไป -->
@@ -62,17 +61,15 @@
 
       <v-row>
         <v-col>
-          <h1>
-            จำนวณคำร้อง / รายงาน
-            <v-divider></v-divider>
-          </h1>
+          <v-toolbar dark prominent color="#FFAB40">
+            <h1>จำนวณคำร้อง / รายงาน</h1>
+            <v-spacer></v-spacer>
+          </v-toolbar>
 
-         
           <GChart
             type="ColumnChart"
             :data="chartData"
             :options="chartOptions"
-            
           />
         </v-col>
       </v-row>
@@ -105,8 +102,13 @@ export default {
       sumreport: 10,
       sumrsuccess: 10,
       chartData: [
-        ["month", "คำร้องที่ส่งทั้งหมด", "รายงานปัญหาทั้งหมด", "คำร้องที่สำเร็จทั้งหมด"],
-        ["มกราคม", 80, 400, 200,],
+        [
+          "month",
+          "คำร้องที่ส่งทั้งหมด",
+          "รายงานปัญหาทั้งหมด",
+          "คำร้องที่สำเร็จทั้งหมด",
+        ],
+        ["มกราคม", 80, 400, 200],
         ["กุมภาพันธ์", 1170, 460, 250],
         ["มีนาคม", 660, 1120, 300],
         ["เมษายน", 1030, 540, 350],
@@ -123,10 +125,9 @@ export default {
         chart: {
           title: "Company Performance",
           subtitle: "Sales, Expenses, and Profit: 2014-2017",
-          
         },
-        colors: ['#31BDDC', '#FE6666', '#72D362'],
-         bars: 'horizontal',
+        colors: ["#31BDDC", "#FE6666", "#72D362"],
+        bars: "horizontal",
       },
     };
   },
