@@ -21,36 +21,31 @@
         </v-col>
       </v-row>
 
-      <v-form v-model="valid" v-for="profile in profile" :key="profile">
+      <v-form v-for="profile in profile" :key="profile">
         <v-container>
           <v-row>
             <v-col cols="12" md="4">
               <v-text-field
+                class="text-black"
                 v-model="profile.f_name"
-                :rules="nameRules"
                 label="ชื่อ"
-                required
-                disabled
+                readonly
               ></v-text-field>
             </v-col>
 
             <v-col cols="12" md="4">
               <v-text-field
                 v-model="profile.l_name"
-                :rules="nameRules"
                 label="นามสกุล"
-                required
-                disabled
+                readonly
               ></v-text-field>
             </v-col>
 
             <v-col cols="12" md="4">
               <v-text-field
                 v-model="profile.gender"
-                :rules="emailRules"
                 label="เพศ"
-                required
-                disabled
+                readonly
               ></v-text-field>
             </v-col>
           </v-row>
@@ -59,10 +54,8 @@
             <v-col>
               <v-text-field
                 v-model="profile.status"
-                :rules="emailRules"
                 label="สถานะผู้ใช้งาน"
-                required
-                disabled
+                readonly
               ></v-text-field>
             </v-col>
           </v-row>
@@ -71,10 +64,8 @@
             <v-col>
               <v-text-field
                 v-model="profile.email"
-                :rules="emailRules"
                 label="E-mail"
-                required
-                disabled
+                readonly
               ></v-text-field>
             </v-col>
           </v-row>
@@ -82,11 +73,9 @@
           <v-row>
             <v-col>
               <v-text-field
-                v-model="profile.tel_num"
-                :rules="emailRules"
+                v-model="profile.num_tel"
                 label="เบอร์โทร"
-                required
-                disabled
+                readonly
               ></v-text-field>
             </v-col>
           </v-row>
@@ -95,28 +84,9 @@
             <v-col>
               <v-text-field
                 v-model="profile.address"
-                :rules="emailRules"
                 label="ที่อยู่"
-                required
-                disabled
+                readonly
               ></v-text-field>
-            </v-col>
-          </v-row>
-
-          <v-row v-for="heard in heard" :key="heard">
-            <v-col align="center" v-if="heard.type == 1">
-              <v-row v-for="specifics in specifics" :key="specifics">
-                <v-col>
-                  {{ specifics.titleheard }}
-                  <v-text-field
-                    v-model="specifics.specificsdetail"
-                    :rules="emailRules"
-                    label="ใส่ข้อมูลลงที่นี้"
-                    required
-                  >
-                  </v-text-field>
-                </v-col>
-              </v-row>
             </v-col>
           </v-row>
         </v-container>
