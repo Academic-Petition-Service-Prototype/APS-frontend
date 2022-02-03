@@ -3,20 +3,123 @@
   <div id="Formmanagement">
     <NavbarChief />
     <v-card class="cardshow">
-      <h1>
+      <v-toolbar dark prominent color="#FFAB40">
+        <h1>จัดการคำร้อง/ยื่นเรื่อง</h1>
+        <v-spacer></v-spacer>
+        <v-btn color="success" style="margin: 35px" to="/Createtitle">
+          สร้างคำร้อง
+        </v-btn>
+      </v-toolbar>
+
+      <v-data-iterator
+        :items="items"
+        :items-per-page.sync="itemsPerPage"
+        :page.sync="page"
+        :search="search"
+        :sort-by="sortBy.toLowerCase()"
+        :sort-desc="sortDesc"
+        hide-default-footer
+      >
+        <template v-slot:header>
+          <v-row>
+            <v-col>
+              <v-text-field
+                prepend-inner-icon="mdi-magnify"
+                label="ชื่อคำร้อง / ยื่นเรื่อง"
+                placeholder="ชื่อคำร้อง / ยื่นเรื่อง"
+                filled
+                rounded
+                dense
+                v-model="search"
+                class="cardshow"
+              >
+              </v-text-field>
+              <template v-if="$vuetify.breakpoint.mdAndUp"> </template>
+            </v-col>
+          </v-row>
+        </template>
+
+        <template v-slot:default="props">
+          <v-row class="text-center">
+            <v-col> ลำดับ </v-col>
+            <v-col> รายการ </v-col>
+            <v-col> สถานะ </v-col>
+            <v-col> วันที่สร้าง </v-col>
+            <v-col> Action </v-col>
+          </v-row>
+
+          <v-row v-for="item in props.items" :key="item.text">
+            
+            <v-card-title>
+             
+
+              
+              <v-row class="text-center" align="center">
+                <v-col> {{ item.no }} </v-col>
+                <v-col> {{ item.text }} </v-col>
+                <v-col >  <v-switch inset  v-model="item.switch" style="margin: 0px 0px 0px 40%;"></v-switch> </v-col>
+                <v-col> {{ item.datecreation }} </v-col>
+                <v-col>
+                  <v-btn icon><v-icon color="yellow">mdi-pencil</v-icon></v-btn>
+                  <v-btn icon><v-icon color="red">mdi-delete</v-icon></v-btn>
+                </v-col>
+              </v-row>
+            </v-card-title>
+            <v-divider style="margin: 0px 10px 0px 10px;"></v-divider>
+            
+          </v-row>
+        </template>
+
+        <template v-slot:footer>
+            <v-row class="mt-2" align="center" justify="center">
+              <v-menu offset-y> </v-menu>
+
+              <v-spacer></v-spacer>
+              <v-row>
+                <v-col align="center">
+                  <span class="mr-4 grey--text">
+                    Page {{ page }} of {{ numberOfPages }}
+                  </span>
+                </v-col>
+              </v-row>
+            </v-row>
+            <v-row>
+              <v-col align="center">
+                <v-btn
+                  fab
+                  dark
+                  color="blue darken-3"
+                  class="mr-1"
+                  @click="formerPage"
+                >
+                  <v-icon>mdi-chevron-left</v-icon>
+                </v-btn>
+                <v-btn
+                  fab
+                  dark
+                  color="blue darken-3"
+                  class="ml-1"
+                  @click="nextPage"
+                >
+                  <v-icon>mdi-chevron-right</v-icon>
+                </v-btn>
+              </v-col>
+            </v-row>
+          </template>
+      </v-data-iterator>
+      <!-- <h1>
         จัดการคำร้อง/ยื่นเรื่อง
         <v-divider></v-divider>
-      </h1>
+      </h1> -->
 
-      <v-container fluid>
-        <v-row>
-          <v-col> </v-col>
+      <!-- <v-container fluid> -->
+      <!-- <v-row>
           <v-col align="right">
-            <v-btn class="btn-margin" color="success" to="/Createtitle"> + สร้างคำร้อง </v-btn>
+            <v-btn class="btn-margin" color="success" to="/Createtitle"> สร้างคำร้อง </v-btn>
           </v-col>
-        </v-row>
+        </v-row> -->
 
-        <v-data-iterator
+      <!-- <v-data-iterator
           :items="items"
           :items-per-page.sync="itemsPerPage"
           :page.sync="page"
@@ -120,8 +223,8 @@
               </v-col>
             </v-row>
           </template>
-        </v-data-iterator>
-      </v-container>
+        </v-data-iterator> -->
+      <!-- </v-container> -->
     </v-card>
   </div>
   <!-- ส่วนจัดเเสดง -->
@@ -130,9 +233,9 @@
 <script>
 import NavbarChief from "../../components/NavbarChief.vue";
 export default {
-  name: "Formmanagementchief",
+  name: "FormmanagementChief ",
   components: {
-    NavbarChief,
+    NavbarChief 
   },
   data() {
     return {
@@ -308,8 +411,8 @@ export default {
 
 <style scoped>
 h1 {
-  text-align: center;
-  padding: 10px;
+  font-size: 50px;
+  padding: 2% 0% 0% 0%;
 }
 .cardshow {
   margin: 2%;
