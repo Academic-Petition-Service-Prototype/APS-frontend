@@ -78,6 +78,8 @@ export default {
             this.textsnackbar = "รายงานปัญหาสำเร็จ";
             this.colorsnackbar = "#2E7D32";
             this.snackbar = true;
+            this.report_title = "";
+            this.report_detail = "";
           }
         })
         .catch((error) => {
