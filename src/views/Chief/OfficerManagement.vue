@@ -1,95 +1,84 @@
 <template>
   <!-- ส่วนจัดเเสดง -->
-  <div id="Officermanagement">
+  <div id="Formmanagement">
     <NavbarChief />
     <v-card class="cardshow">
-      <h1>
-        จัดการ Officer
-        <v-divider></v-divider>
-      </h1>
+      <v-toolbar dark prominent color="#FFAB40">
+        <h1>จัดการ Officer</h1>
+        <v-spacer></v-spacer>
+        <v-btn color="success" style="margin: 35px" @click="dialogadd = !dialogadd">
+          เพิ่ม Officer
+        </v-btn>
+      </v-toolbar>
 
-      <v-container fluid>
-        <v-row>
-          <v-col> </v-col>
-          <v-col align="right">
-            <v-btn
-              class="btn-margin"
-              color="success"
-              @click="dialogadd = !dialogadd"
-            >
-              + เพิ่ม
-            </v-btn>
-          </v-col>
-        </v-row>
-
-        <v-data-iterator
-          :items="listofficer"
-          :items-per-page.sync="itemsPerPage"
-          :page.sync="page"
-          :search="search"
-          :sort-by="sortBy.toLowerCase()"
-          :sort-desc="sortDesc"
-          hide-default-footer
-        >
-          <template v-slot:header>
-            <v-toolbar dark color="blue darken-3" class="mb-1">
+      <v-data-iterator
+        :items="listofficer"
+        :items-per-page.sync="itemsPerPage"
+        :page.sync="page"
+        :search="search"
+        :sort-by="sortBy.toLowerCase()"
+        :sort-desc="sortDesc"
+        hide-default-footer
+      >
+        <template v-slot:header>
+          <v-row>
+            <v-col>
               <v-text-field
-                v-model="search"
-                clearable
-                flat
-                solo-inverted
-                hide-details
                 prepend-inner-icon="mdi-magnify"
-                label="Search"
-              ></v-text-field>
+                label="ชื่อ Officer"
+                placeholder="ชื่อ Officer"
+                filled
+                rounded
+                dense
+                v-model="search"
+                class="cardshow"
+              >
+              </v-text-field>
               <template v-if="$vuetify.breakpoint.mdAndUp"> </template>
-            </v-toolbar>
-          </template>
+            </v-col>
+          </v-row>
+        </template>
 
-          <template >
-            <v-row>
-              <v-col align="center"> ลำดับ </v-col>
-              <v-col align="center"> ชื่อ - สกุล </v-col>
-              <v-col align="center"> เพศ </v-col>
+        <template v-slot:default="props">
+          <v-row>
+            <v-col align="center"> ลำดับ </v-col>
+            <v-col align="center"> ชื่อ - สกุล </v-col>
+            <v-col align="center"> เพศ </v-col>
 
-              <v-col align="center"> Action </v-col>
-            </v-row>
+            <v-col align="center"> Action </v-col>
+          </v-row>
 
-            <v-row
-              v-for="item in listofficer"
-              :key="item.text"
-              cols="12"
-              sm="6"
-              md="4"
-              lg="3"
-            >
-              <v-col>
-                <v-card>
-                  <v-card-title class="subheading font-weight-bold">
-                    <v-row>
-                      <v-col align="center"> {{ item.id }} </v-col>
-                      <v-col align="center"> {{ item.Fname }} {{item.Lname }} </v-col>
+          <v-row v-for="item in props.items" :key="item.text">
+            
+            <v-card-title>
+             
 
-                      <v-col align="center"> {{ item.gender }} </v-col>
-                      <v-col align="center">
-                        <v-btn icon
-                          ><v-icon color="yellow">mdi-pencil</v-icon></v-btn
-                        >
-                        <v-btn icon
-                          ><v-icon color="red" @click="dialogdel=!dialogdel">mdi-delete</v-icon></v-btn
-                        >
-                      </v-col>
-                    </v-row>
-                  </v-card-title>
+              
+              <v-row>
+                    <v-col align="center"> {{ item.id }} </v-col>
+                    <v-col align="center">
+                      {{ item.Fname }} {{ item.Lname }}
+                    </v-col>
 
-                  <v-divider></v-divider>
-                  {{listofficer}}
-                </v-card>
-              </v-col>
-            </v-row>
-          </template>
+                    <v-col align="center"> {{ item.gender }} </v-col>
+                    <v-col align="center">
+                      <v-btn icon
+                        ><v-icon color="yellow">mdi-pencil</v-icon></v-btn
+                      >
+                      <v-btn icon
+                        ><v-icon color="red" @click="dialogdel = !dialogdel"
+                          >mdi-delete</v-icon
+                        ></v-btn
+                      >
+                    </v-col>
+                  </v-row>
+            </v-card-title>
+            <v-divider style="margin: 0px 10px 0px 10px;"></v-divider>
+            
+          </v-row>
+        </template>
 
-          <template v-slot:footer>
+        <template v-slot:footer>
             <v-row class="mt-2" align="center" justify="center">
               <v-menu offset-y> </v-menu>
 
@@ -125,11 +114,9 @@
               </v-col>
             </v-row>
           </template>
-        </v-data-iterator>
-      </v-container>
+      </v-data-iterator>
 
       <!-- ส่วนจัดเเสดงเวลากดเเก้ไข -->
-
       <v-dialog v-model="dialog" persistent width="800">
         <v-card align="center">
           <h1>จัดการข้อมูล Officer</h1>
@@ -177,103 +164,78 @@
         </v-card>
       </v-dialog>
       <!-- ส่วนจัดเเสดงเวลากดเเก้ไข -->
-
-      <!-- เพิ่มข้อมูล officer -->
+       <!-- เพิ่มข้อมูล officer -->
       <v-dialog v-model="dialogadd" persistent max-width="1000px">
         <v-card align="center">
           <h1>เพิ่มข้อมูล officer</h1>
-
           <v-divider></v-divider>
-
-          <!-- <form v-on:submit.prevent="addapprovertitle">
-            <v-btn fab width="150" height="150">Profile</v-btn>
-
-            <v-text-field
-              class="cardmargin"
-              v-model="newapproverText"
-              label="ชื่อผู้อนุมัติ"
-              required
-            ></v-text-field>
-            <v-btn color="green darken-1" type="submit"> ตกลง </v-btn>
-            <v-btn color="red darken-1" text @click="dialogadd = false">
-              ยกเลิก
-            </v-btn>
-          </form> -->
-
           <form v-on:submit.prevent="addNewofficer">
-          <v-container>
-            <v-row>
-              <v-col>
-                <v-btn fab width="150" height="150"> </v-btn>
-                <v-file-input
-                  :rules="rules"
-                  accept="image/png, image/jpeg, image/bmp"
-                  placeholder="Pick an avatar"
-                  prepend-icon="mdi-camera"
-                  label="Avatar"
-                ></v-file-input>
-              </v-col>
-              <v-col>
-                <v-text-field
-                  class="cardmargin"
-                  v-model="Fname"
-                  label="ชื่อ"
-                  required
-                ></v-text-field>
-                <v-text-field
-                  class="cardmargin"
-                  v-model="Lname"
-                  label="นามสกุล"
-                  required
-                ></v-text-field>
-                <v-radio-group v-model="gender" mandatory row>
-                  <v-radio label="ชาย" value="ขาย"></v-radio>
-                  <v-radio
-                    label="หญิง"
-                    value="หญง"
-                    color="#E91E63"
-                  ></v-radio>
-                </v-radio-group>
-                <v-text-field
-                  class="cardmargin"
-                  v-model="email"
-                  label="E-mail"
-                  required
-                ></v-text-field>
-                <v-text-field
-                  class="cardmargin"
-                  v-model="tell"
-                  label="เบอร์โทร"
-                  required
-                ></v-text-field>
+            <v-container>
+              <v-row>
+                <v-col>
+                  <v-btn fab width="150" height="150"> </v-btn>
+                  <v-file-input
+                    :rules="rules"
+                    accept="image/png, image/jpeg, image/bmp"
+                    placeholder="Pick an avatar"
+                    prepend-icon="mdi-camera"
+                    label="Avatar"
+                  ></v-file-input>
+                </v-col>
+                <v-col>
+                  <v-text-field
+                    class="cardmargin"
+                    v-model="Fname"
+                    label="ชื่อ"
+                    required
+                  ></v-text-field>
+                  <v-text-field
+                    class="cardmargin"
+                    v-model="Lname"
+                    label="นามสกุล"
+                    required
+                  ></v-text-field>
+                  <v-radio-group v-model="gender" mandatory row>
+                    <v-radio label="ชาย" value="ขาย"></v-radio>
+                    <v-radio label="หญิง" value="หญง" color="#E91E63"></v-radio>
+                  </v-radio-group>
+                  <v-text-field
+                    class="cardmargin"
+                    v-model="email"
+                    label="E-mail"
+                    required
+                  ></v-text-field>
+                  <v-text-field
+                    class="cardmargin"
+                    v-model="tell"
+                    label="เบอร์โทร"
+                    required
+                  ></v-text-field>
 
-                <v-text-field
-                  class="cardmargin"
-                  v-model="address"
-                  label="ที่อยู่"
-                  required
-                ></v-text-field>
-
-                
-              </v-col>
-            </v-row>
-            <v-btn color="green darken-1" type="submit"> ตกลง </v-btn>
-            <v-btn color="red darken-1" text @click="dialogadd = false">
-              ยกเลิก
-            </v-btn>
-          </v-container>
-          </form> 
+                  <v-text-field
+                    class="cardmargin"
+                    v-model="address"
+                    label="ที่อยู่"
+                    required
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+              <v-btn color="green darken-1" type="submit"> ตกลง </v-btn>
+              <v-btn color="red darken-1" text @click="dialogadd = false">
+                ยกเลิก
+              </v-btn>
+            </v-container>
+          </form>
         </v-card>
       </v-dialog>
-
-      <!-- ลบ  officer -->
-
+      <!-- เพิ่มข้อมูล officer -->
+       <!-- ลบ  officer -->
       <v-dialog v-model="dialogdel" persistent width="800">
         <v-card align="center">
           <h1>ยืนยัน</h1>
 
           <v-divider></v-divider>
-          <h2>ต้องการลบข้อมูลของ {{ "ตรงนี้ใส่ index คนที่จะลบ" }}</h2>
+          <h2>ต้องการลบข้อมูลของ Secretary คนนี้</h2>
 
           <v-divider></v-divider>
           <v-btn color="green darken-1" text @click="removeofficer">
@@ -284,8 +246,10 @@
           </v-btn>
         </v-card>
       </v-dialog>
-
       <!-- ลบ  officer -->
+
+
+      
     </v-card>
   </div>
   <!-- ส่วนจัดเเสดง -->
@@ -294,38 +258,181 @@
 <script>
 import NavbarChief from "../../components/NavbarChief.vue";
 export default {
-  name: "Officermanagement",
+  name: "FormmanagementChief ",
   components: {
-    NavbarChief,
+    NavbarChief 
   },
   data() {
     return {
+      // ของตัวตาราง
+      itemsPerPageArray: [4, 8, 12],
       search: "",
       filter: {},
       sortDesc: false,
       page: 1,
       itemsPerPage: 4,
       sortBy: "name",
+      // ของตัวตาราง
 
+      // ของตัวไดอล็อค
       dialog: false,
       dialogadd: false,
       dialogdel: false,
+      // ของตัวไดอล็อค
 
-      Fname:"",
-      Lname:"",
-      gender:"",
-      email:"",
-      address:"",
+      // ของตัวไเพิ่มข้อมูล
+      Fname: "",
+      Lname: "",
+      gender: "",
+      email: "",
+      address: "",
       nextOfficerId: 1,
-
-
-
       listofficer: [],
-    };
+      // ของตัวไเพิ่มข้อมูล
+
+      items: [
+        {
+          no: "1",
+          text: "ฟรอมที่ 1",
+          agency: "ศึกษาทั่วไป",
+          satatus: true,
+          switch: false,
+          datecreation: "6/12/2564",
+        },
+        {
+          no: "2",
+          text: "ฟรอมที่ 2",
+          agency: "ศึกษาทั่วไป",
+          satatus: true,
+          switch: true,
+          datecreation: "6/12/2564",
+        },
+        {
+          no: "3",
+          text: "ฟรอมที่ 3",
+          agency: "ศึกษาทั่วไป",
+          satatus: false,
+          switch: true,
+          datecreation: "6/12/2564",
+        },
+        {
+          no: "4",
+          text: "ฟรอมที่ 4",
+          agency: "ศึกษาทั่วไป",
+          satatus: true,
+          switch: true,
+          datecreation: "6/12/2564",
+        },
+        {
+          no: "4",
+          text: "ฟรอมที่ 4",
+          agency: "ศึกษาทั่วไป",
+          satatus: true,
+          switch: true,
+          datecreation: "6/12/2564",
+        },
+        {
+          no: "4",
+          text: "ฟรอมที่ 4",
+          agency: "ศึกษาทั่วไป",
+          satatus: true,
+          switch: true,
+          datecreation: "6/12/2564",
+        },
+        {
+          no: "4",
+          text: "ฟรอมที่ 4",
+          agency: "ศึกษาทั่วไป",
+          satatus: true,
+          switch: true,
+          datecreation: "6/12/2564",
+        },
+        {
+          no: "4",
+          text: "ฟรอมที่ 4",
+          agency: "ศึกษาทั่วไป",
+          satatus: true,
+          switch: true,
+          datecreation: "6/12/2564",
+        },
+        {
+          no: "4",
+          text: "ฟรอมที่ 4",
+          agency: "ศึกษาทั่วไป",
+          satatus: true,
+          switch: true,
+          datecreation: "6/12/2564",
+        },
+        {
+          no: "4",
+          text: "ฟรอมที่ 4",
+          agency: "ศึกษาทั่วไป",
+          satatus: true,
+          switch: true,
+          datecreation: "6/12/2564",
+        },
+        {
+          no: "4",
+          text: "ฟรอมที่ 4",
+          agency: "ศึกษาทั่วไป",
+          satatus: true,
+          switch: true,
+          datecreation: "6/12/2564",
+        },
+        {
+          no: "4",
+          text: "ฟรอมที่ 4",
+          agency: "ศึกษาทั่วไป",
+          satatus: true,
+          switch: true,
+          datecreation: "6/12/2564",
+        },
+        {
+          no: "4",
+          text: "ฟรอมที่ 36",
+          agency: "ศึกษาทั่วไป",
+          satatus: true,
+          switch: true,
+          datecreation: "6/12/2564",
+        },
+        {
+          no: "4",
+          text: "ฟรอมที่ 4",
+          agency: "ศึกษาทั่วไป",
+          satatus: true,
+          switch: true,
+          datecreation: "6/12/2564",
+        },
+        {
+          no: "4",
+          text: "ฟรอมที่ 4",
+          agency: "ศึกษาทั่วไป",
+          satatus: true,
+          switch: true,
+          datecreation: "6/12/2564",
+        },
+        {
+          no: "4",
+          text: "ฟรอมที่ 4",
+          agency: "ศึกษาทั่วไป",
+          satatus: true,
+          switch: true,
+          datecreation: "6/12/2564",
+        },
+        {
+          no: "4",
+          text: "ฟรอมที่ 4",
+          agency: "ศึกษาทั่วไป",
+          satatus: true,
+          switch: true,
+          datecreation: "6/12/2564",
+        },
+      ],
+    }
   },
   computed: {
     numberOfPages() {
-      return Math.ceil(this.listofficer.length / this.itemsPerPage);
+      return Math.ceil(this.items.length / this.itemsPerPage);
     },
     filteredKeys() {
       return this.keys.filter((key) => key !== "Name");
@@ -341,7 +448,6 @@ export default {
     updateItemsPerPage(number) {
       this.itemsPerPage = number;
     },
-
     addNewofficer: function () {
       this.listofficer.push({
         id: this.nextOfficerId++,
@@ -369,14 +475,14 @@ export default {
 </script>
 
 <style scoped>
-.bg-color {
-  background: #f0f0f0;
-  height: 100%;
+h1 {
+  font-size: 50px;
+  padding: 2% 0% 0% 0%;
 }
-.cardmargin {
+.cardshow {
   margin: 2%;
 }
-.box-margin {
-  margin: 5%;
+.btn-margin {
+  margin: 3%;
 }
 </style>

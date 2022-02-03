@@ -3,10 +3,12 @@
   <div id="ChiefDashboard">
     <NavbarChief />
     <v-card class="cardshow">
-      <h1 class="text-center">
-        Dashboard Chief
-        <v-divider></v-divider>
-      </h1>
+      <v-toolbar dark prominent color="#FFAB40">
+        <h1>Dashboard Chief</h1>
+        <v-spacer></v-spacer>
+      </v-toolbar>
+
+      
       <v-row>
         <v-col>
           <!-- จำนวนคำร้องที่ส่งเข้ามาทั้งหมด -->
@@ -62,10 +64,6 @@
       <!-- chart -->
       <v-row>
         <v-col>
-          <h1>
-            จำนวณคำร้อง / รายงาน
-            <v-divider></v-divider>
-          </h1>
 
           <GChart
             type="ColumnChart"
@@ -76,67 +74,13 @@
       </v-row>
       <!-- chart -->
 
-      <!-- แถว2 -->
-      <v-row>
-        <v-col>
-          <!-- คำร้องที่สำเร็จทั้งหมด -->
-
-          <b-card
-            :img-src="require('../../assets/Docicon.png')"
-            img-width="130"
-            img-height="130"
-            img-left="true"
-            class="mb-3 box-margin"
-          >
-            <b-card-text> คำร้องที่สำเร็จทั้งหมด </b-card-text>
-            <h5>{{ sumpentition }}</h5>
-          </b-card>
-
-          <!-- คำร้องที่สำเร็จทั้งหมด -->
-        </v-col>
-        <v-col>
-          <!-- คำร้องที่ยกเลิกทั้งหมด -->
-
-          <b-card
-            :img-src="require('../../assets/Docicon.png')"
-            img-width="130"
-            img-height="130"
-            img-left="true"
-            class="mb-3 box-margin"
-          >
-            <b-card-text> คำร้องที่ยกเลิกทั้งหมด </b-card-text>
-            <h5>{{ pentitionapprove }}</h5>
-          </b-card>
-
-          <!-- คำร้องที่ยกเลิกทั้งหมด -->
-        </v-col>
-
-        <v-col>
-          <!-- รายงานที่่อ่านแล้ว -->
-
-          <b-card
-            :img-src="require('../../assets/Docicon.png')"
-            img-width="130"
-            img-height="130"
-            img-left="true"
-            class="mb-3 box-margin"
-          >
-            <b-card-text> รายงานที่ยังไม่ได้อ่าน </b-card-text>
-            <h5>{{ pentitionsuccess }}</h5>
-          </b-card>
-
-          <!-- รายงานที่่อ่านแล้ว -->
-        </v-col>
-      </v-row>
-
       <!-- chart -->
       <v-row>
         <v-col>
-          <h1>
-            จำนวณคำร้อง / รายงาน
-            <v-divider></v-divider>
-          </h1>
-
+          <v-toolbar dark prominent color="#FFAB40">
+        <h1>จำนวณคำร้อง / รายงาน</h1>
+        <v-spacer></v-spacer>
+      </v-toolbar>
           <GChart
             type="ColumnChart"
             :data="chartData2"
@@ -150,10 +94,10 @@
       <!-- เเุถว3 -->
       <v-row>
         <v-col>
-          <h1>
-            จำนวณบุคคลกร
-            <v-divider></v-divider>
-          </h1>
+          <v-toolbar dark prominent color="#FFAB40">
+        <h1>จำนวณบุคคลกร</h1>
+        <v-spacer></v-spacer>
+      </v-toolbar>
 
           <GChart
             type="PieChart"
