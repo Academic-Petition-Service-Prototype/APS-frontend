@@ -28,7 +28,6 @@
               <v-text-field
                 v-model="profile.f_name"
                 :rules="nameRules"
-                :counter="10"
                 label="ชื่อ"
                 required
                 disabled
@@ -39,7 +38,6 @@
               <v-text-field
                 v-model="profile.l_name"
                 :rules="nameRules"
-                :counter="10"
                 label="นามสกุล"
                 required
                 disabled
@@ -147,18 +145,6 @@ export default {
           address: this.$store.getters.getUser.address,
           status: this.$store.getters.getUser.status,
         },
-      ],
-      heard: [
-        {
-          title: "การขอสอบย้อนหลัง",
-          type: 2,
-        },
-      ],
-      specifics: [
-        { titleheard: "ข้อมูลรายวิชา", specificsdetail: "" },
-        { titleheard: "เหตุผล", specificsdetail: "" },
-        { titleheard: "เหตุผล", specificsdetail: "" },
-        { titleheard: "เหตุผล", specificsdetail: "" },
       ],
     };
   },

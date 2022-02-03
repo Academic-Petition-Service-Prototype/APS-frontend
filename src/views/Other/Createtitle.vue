@@ -28,16 +28,22 @@
         </v-stepper-header>
 
         <v-stepper-items>
-          <v-stepper-content step="1">
+          <v-stepper-content step="1" ref="form">
             <v-card class="mb-12" color="#ECEFF1">
               <!-- หน้าสร้างหัวข้อ -->
+
               <v-row>
                 <v-col>
+                  <h1>สร้างหัวข้อคำร้อง</h1>
                   <v-text-field
+                    ref="name"
                     name="title"
                     v-model="forms.title"
                     label="ชื่อหัวข้อ"
                     class="cardshow"
+                    required
+                    :error-messages="errorMessages"
+                    :rules="[() => !!name || 'กรุณาใส่ชื่อหัวข้อ']"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -73,38 +79,51 @@
                     </v-col>
                   </v-row>
                   {{ title }}
+                  {{ forms }}
                 </div>
               </v-row>
 
               <!-- หน้าสร้างหัวข้อ -->
             </v-card>
 
-            <v-btn color="primary" @click="stepprocess = 2"> ต่อไป </v-btn>
+            <v-btn type="submit" color="primary" @click="nextstepfirst">
+              ต่อไป
+            </v-btn>
 
             <v-btn text> ยกเลิก </v-btn>
           </v-stepper-content>
 
-          <v-stepper-content step="2">
+          <v-stepper-content step="2" ref="Selectionapprover">
             <v-card class="mb-12" color="#ECEFF1">
               <v-row>
                 <v-col class="cardshow">
                   <h1>เพิ่มผู้อนุมัติ</h1>
-                  เลื่อนเพิ่อเพิ่มผู้อนุมัติในคำร้องนี้
-                  <v-switch v-model="forms.approver"></v-switch>
                 </v-col>
               </v-row>
 
-              <v-row v-if="forms.approver == true">
+              <v-row>
                 <!-- ส่วนของเพิ่มหน้าผู้อนุมัติ -->
                 <div>
                   <form v-on:submit.prevent="addapprovertitle">
                     <v-col class="cardshow" align="center">
-                      <v-text-field
+                      <!-- <v-text-field
                         v-model="newapproverText"
                         label="ชื่อผู้อนุมัติ"
                         required
                         class="cardshow"
-                      ></v-text-field>
+                      ></v-text-field> -->
+
+                      <v-autocomplete
+                        ref="approver"
+                        v-model="newapproverText"
+                        :rules="[() => !!approver || 'กรุณาเลือกผู้อนุมัติ']"
+                        :items="approverlist"
+                        :error-messages="approvererrorMessages"
+                        label="เลือกผู้อนุมัติ"
+                        placeholder="Select..."
+                        required
+                        class="cardshow"
+                      ></v-autocomplete>
                       <v-btn type="submit">เพิ่ม</v-btn>
                     </v-col>
                   </form>
@@ -128,13 +147,14 @@
               </v-row>
             </v-card>
 
-            <v-btn color="primary" @click="stepprocess = 3"> ต่อไป </v-btn>
+            <v-btn color="primary"  @click="nextstepsecond"> ต่อไป </v-btn>
 
             <v-btn text @click="stepprocess = 1"> ย้อนกลับ </v-btn>
           </v-stepper-content>
 
           <v-stepper-content step="3">
             <v-card class="mb-12" color="#ECEFF1">
+              <h1>ตัวอย่างคำร้อง</h1>
               <!-- ส่วนเเสดงหน้าการเเสดงตัวอย่าง -->
               <h1>
                 {{ forms.title }}
@@ -146,7 +166,6 @@
                       <v-text-field
                         v-model="profile.f_name"
                         :rules="nameRules"
-                        :counter="10"
                         label="ชื่อ"
                         required
                         disabled
@@ -157,7 +176,6 @@
                       <v-text-field
                         v-model="profile.l_name"
                         :rules="nameRules"
-                        :counter="10"
                         label="นามสกุล"
                         required
                         disabled
@@ -254,6 +272,17 @@
       </v-stepper>
       <!-- ส่วนสร้างเอกสาร -->
     </v-card>
+
+    <!-- เเจ้งเตือน  -->
+    <v-snackbar v-model="snackbar">
+      {{ text }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn color="pink" text v-bind="attrs" @click="snackbar = false">
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </div>
   <!-- ส่วนจัดเเสดง -->
 </template>
@@ -269,6 +298,8 @@ export default {
   data() {
     return {
       stepprocess: 1,
+      snackbar: false,
+      text: ``,
       numspecifics: 1,
       profile: [
         {
@@ -293,30 +324,86 @@ export default {
       listapprover: [],
       nextTodoId: 1,
       nextapproverId: 1,
+      formHasErrors: false,
+      approverError: false,
+      approverlist :['ชญานิน','บัวสละ',]
     };
   },
+  watch: {
+    name() {
+      this.errorMessages = "";
+    },
+    approver() {
+      this.approvererrorMessages = "";
+    },
+  },
+  computed: {
+    form() {
+      return {
+        name: this.forms.title,
+      };
+    },
+    Selectionapprover(){
+      return{
+        approver:this.listapprover,
+      }
+    }
+  },
   methods: {
-    addNewtitle: function() {
+    addNewtitle: function () {
       this.title.push({
         id: this.nextTodoId++,
         title: this.newtitleText,
       });
       this.newtitleText = "";
     },
-    addapprovertitle: function() {
+    addapprovertitle: function () {
       this.listapprover.push({
         id: this.nextapproverId++,
         title: this.newapproverText,
       });
       this.newapproverText = "";
     },
-    removetitle: function(index) {
+    removetitle: function (index) {
       console.log(index);
       this.title.splice(index, 1);
     },
-    removeapprover: function(index) {
+    removeapprover: function (index) {
       console.log(index);
       this.listapprover.splice(index, 1);
+    },
+
+    nextstepfirst() {
+      this.formHasErrors = false;
+
+      Object.keys(this.form).forEach((f) => {
+        if (!this.form[f]) {
+          this.formHasErrors = true;
+          this.$refs[f].validate(true);
+        } else {
+          this.stepprocess = 2;
+        }
+        console.log(this.form);
+      });
+    },
+
+    nextstepsecond() {
+      this.approver = false;
+
+      Object.keys(this.Selectionapprover).forEach((f) => {
+        if (this.listapprover >= 0) {
+          this.approverError = true;
+          this.$refs[f].validate(true);
+          
+        } else {
+        this.stepprocess = 3;
+         
+            
+          
+          
+        }
+        console.log(this.Selectionapprover);
+      });
     },
 
     createpetition() {
@@ -331,11 +418,9 @@ export default {
         .then((response) => {
           if (response.data == "กรุณากรอกชื่อคำร้อง") {
             alert("กรุณากรอกชื่อคำร้อง");
-          } 
-          else if (response.data == "ชื่อคำร้องนี้มีอยู่ในระบบแล้ว") {
+          } else if (response.data == "ชื่อคำร้องนี้มีอยู่ในระบบแล้ว") {
             alert("ชื่อคำร้องนี้มีอยู่ในระบบแล้ว");
-          } 
-          else {
+          } else {
             this.textsnackbar = "รายงานปัญหาสำเร็จ";
             this.colorsnackbar = "#2E7D32";
             this.snackbar = true;
