@@ -3,11 +3,11 @@
   <div id="DashboardOffice">
     <NavbarOF />
     <v-card class="cardshow">
-      <h1>
-        Dashboard Officer
-        <v-divider></v-divider>
-      </h1>
-      
+      <v-toolbar dark prominent color="#FFAB40">
+        <h1>Dashboard</h1>
+        <v-spacer></v-spacer>
+      </v-toolbar>
+
       <v-row>
         <v-col>
           <!-- รายงานเอกสารที่ทำไป -->
@@ -26,9 +26,9 @@
           <!-- รายงานเอกสารที่ทำไป -->
         </v-col>
         <!-- <v-col> -->
-          <!-- รายงานเอกสารที่ทำไป -->
+        <!-- รายงานเอกสารที่ทำไป -->
 
-          <!-- <b-card
+        <!-- <b-card
             :img-src="require('../../assets/Docicon2.png')"
             img-width="130"
             img-height="130"
@@ -39,7 +39,7 @@
             <h5>{{ sumreport }}</h5>
           </b-card> -->
 
-          <!-- รายงานเอกสารที่ทำไป -->
+        <!-- รายงานเอกสารที่ทำไป -->
         <!-- </v-col> -->
 
         <v-col>
@@ -62,17 +62,15 @@
 
       <v-row>
         <v-col>
-          <h1>
-            จำนวณคำร้อง / รายงาน
-            <v-divider></v-divider>
-          </h1>
+          <v-toolbar dark prominent color="#FFAB40">
+            <h1>จำนวณคำร้อง / รายงาน</h1>
+            <v-spacer></v-spacer>
+          </v-toolbar>
 
-         
           <GChart
             type="ColumnChart"
             :data="chartData"
             :options="chartOptions"
-            
           />
         </v-col>
       </v-row>
@@ -106,27 +104,26 @@ export default {
       sumrsuccess: 10,
       chartData: [
         ["month", "คำร้องที่ส่งทั้งหมด", "คำร้องที่สำเร็จทั้งหมด"],
-        ["มกราคม", 80,  200,],
-        ["กุมภาพันธ์", 1170,  250],
-        ["มีนาคม", 660,  300],
-        ["เมษายน", 1030,  350],
-        ["พฤษภาคม", 1030,  350],
-        ["มิถุนายน", 1030,  350],
-        ["กรกฎาคม", 1030,  350],
-        ["สิงหาคม", 1030,  350],
-        ["กันยายน", 1030,  350],
-        ["ตุลาคม", 1030,  350],
-        ["พฤศจิกายน", 1030,  350],
-        ["ธันวาคม", 1030,  350],
+        ["มกราคม", 80, 200],
+        ["กุมภาพันธ์", 1170, 250],
+        ["มีนาคม", 660, 300],
+        ["เมษายน", 1030, 350],
+        ["พฤษภาคม", 1030, 350],
+        ["มิถุนายน", 1030, 350],
+        ["กรกฎาคม", 1030, 350],
+        ["สิงหาคม", 1030, 350],
+        ["กันยายน", 1030, 350],
+        ["ตุลาคม", 1030, 350],
+        ["พฤศจิกายน", 1030, 350],
+        ["ธันวาคม", 1030, 350],
       ],
       chartOptions: {
         chart: {
           title: "Company Performance",
           subtitle: "Sales, Expenses, and Profit: 2014-2017",
-          
         },
-        colors: ['#31BDDC', '#72D362'],
-         bars: 'horizontal',
+        colors: ["#31BDDC", "#72D362"],
+        bars: "horizontal",
       },
     };
   },
@@ -134,16 +131,14 @@ export default {
 </script>
 
 <style scoped>
-.bg-color {
-  background: #f0f0f0;
-  height: 100%;
+h1 {
+  font-size: 50px;
+  padding: 2% 0% 0% 0%;
 }
-.cardmargin {
+.cardshow {
   margin: 2%;
 }
 .box-margin {
   margin: 5%;
 }
 </style>
-
-

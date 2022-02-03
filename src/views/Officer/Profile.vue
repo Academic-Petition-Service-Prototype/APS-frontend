@@ -3,13 +3,12 @@
   <v-app>
     <NavbarOF />
     <v-card class="cardshow">
-      <h1>
-        ข้อมูลผู้ใช้งาน
-        <v-divider></v-divider>
-      </h1>
+      
+        <h1 >ข้อมูลผู้ใช้งาน</h1>
+<v-divider></v-divider>
       <v-row>
         <v-col align="center">
-          <v-btn fab width="auto" height="auto" class="">
+          <v-btn fab width="auto" height="auto" class="cardshow">
             <v-img
               class="rounded-circle"
               width="150"
