@@ -2,10 +2,10 @@
   <div id="UserPetition" class="bg-color">
     <NavbarUser />
     <v-card class="cardmargin">
-      <h1>
-        เลือกแบบคำร้อง / ยื่นเรื่อง
-        <v-divider></v-divider>
-      </h1>
+      <v-toolbar dark prominent color="#FFAB40">
+        <h1>เลือกแบบคำร้อง / ยื่นเรื่อง</h1>
+        <v-spacer></v-spacer>
+      </v-toolbar>
 
       <v-data-iterator
         :items="items"
@@ -23,7 +23,7 @@
             filled
             rounded
             label="ค้นหาเอกสาร"
-            class="cardshow magintextfind "
+            class="cardshow magintextfind"
           ></v-text-field>
         </template>
 
@@ -33,10 +33,9 @@
             :key="item.name"
             router
             :to="item.route"
-            style="padding: 0px 30px 0px 30px ;"
+            style="padding: 0px 30px 0px 30px"
           >
             <v-col align="">
-              
               <v-btn outlined block height="100" router :to="item.route">
                 <v-row>
                   <v-col align="center">
@@ -44,6 +43,43 @@
                     <h2>{{ item.detail }}</h2>
                   </v-col>
                 </v-row>
+              </v-btn>
+            </v-col>
+          </v-row>
+        </template>
+
+         <template v-slot:footer>
+          <v-row class="mt-2" align="center" justify="center">
+            <v-menu offset-y> </v-menu>
+
+            <v-spacer></v-spacer>
+            <v-row>
+              <v-col align="center">
+                <span class="mr-4 grey--text">
+                  Page {{ page }} of {{ numberOfPages }}
+                </span>
+              </v-col>
+            </v-row>
+          </v-row>
+          <v-row>
+            <v-col align="center">
+              <v-btn
+                fab
+                dark
+                color="blue darken-3"
+                class="mr-1"
+                @click="formerPage"
+              >
+                <v-icon>mdi-chevron-left</v-icon>
+              </v-btn>
+              <v-btn
+                fab
+                dark
+                color="blue darken-3"
+                class="ml-1"
+                @click="nextPage"
+              >
+                <v-icon>mdi-chevron-right</v-icon>
               </v-btn>
             </v-col>
           </v-row>
@@ -102,6 +138,24 @@ export default {
         },
       ],
     };
+  },computed: {
+    numberOfPages() {
+      return Math.ceil(this.items.length / this.itemsPerPage);
+    },
+    filteredKeys() {
+      return this.keys.filter((key) => key !== "Name");
+    },
+  },
+  methods: {
+    nextPage() {
+      if (this.page + 1 <= this.numberOfPages) this.page += 1;
+    },
+    formerPage() {
+      if (this.page - 1 >= 1) this.page -= 1;
+    },
+    updateItemsPerPage(number) {
+      this.itemsPerPage = number;
+    },
   },
 };
 </script>
