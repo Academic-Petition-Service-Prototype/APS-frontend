@@ -36,14 +36,14 @@
                 <v-col>
                   <h1>สร้างหัวข้อคำร้อง</h1>
                   <v-text-field
-                    ref="name"
-                    name="title"
+                    ref="forms.title"
+                    name="forms.title"
                     v-model="forms.title"
                     label="ชื่อหัวข้อ"
                     class="cardshow"
                     required
                     :error-messages="errorMessages"
-                    :rules="[() => !!name || 'กรุณาใส่ชื่อหัวข้อ']"
+                    :rules="[() => !!forms.title || 'กรุณาใส่ชื่อหัวข้อ']"
                   ></v-text-field>
                 </v-col>
               </v-row>
@@ -116,7 +116,7 @@
                       <v-autocomplete
                         ref="approver"
                         v-model="newapproverText"
-                        :rules="[() => !!approver || 'กรุณาเลือกผู้อนุมัติ']"
+                        :rules="[() => !!approverlist || 'กรุณาเลือกผู้อนุมัติ']"
                         :items="approverlist"
                         :error-messages="approvererrorMessages"
                         label="เลือกผู้อนุมัติ"
