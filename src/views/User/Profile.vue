@@ -1,15 +1,14 @@
 <template>
-  
-  <v-app>
+  <div id="UserProfile">
     <!-- ส่วนจัดเเสดง -->
-    <NavbarStu />
+    <NavbarUser />
 
     <v-card class="cardshow">
       <h1>
         ข้อมูลผู้ใช้งาน
         <v-divider></v-divider>
       </h1>
-      
+
       <v-row>
         <v-col align="center">
           <v-btn fab width="auto" height="auto" class="">
@@ -56,7 +55,7 @@
           <v-row>
             <v-col>
               <v-text-field
-                v-model="profile.status"
+                v-model="profile.role"
                 label="สถานะผู้ใช้งาน"
                 readonly
               ></v-text-field>
@@ -98,15 +97,15 @@
     <!-- ส่วนจัดเเสดง -->
 
     <!-- ส่วนจัดเเสดง -->
-  </v-app>
+  </div>
 </template>
 
 <script>
-import NavbarStu from "../../components/NavbarUser.vue";
+import NavbarUser from "../../components/NavbarUser.vue";
 export default {
-  name: "FormsSTU",
+  name: "UserProfile",
   components: {
-    NavbarStu,
+    NavbarUser,
   },
   data() {
     return {
@@ -119,7 +118,7 @@ export default {
           email: this.$store.getters.getUser.email,
           tel_num: this.$store.getters.getUser.tel_num,
           address: this.$store.getters.getUser.address,
-          status: this.$store.getters.getUser.status,
+          role: this.$store.getters.getUser.role,
         },
       ],
     };
@@ -128,7 +127,7 @@ export default {
 </script>
 
 <style>
-h1{
+h1 {
   text-align: center;
   padding: 10px;
 }

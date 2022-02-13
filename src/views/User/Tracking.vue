@@ -1,5 +1,5 @@
 <template>
-  <div id="Trackingofficer" class="bg-color">
+  <div id="UserTracking" class="bg-color">
     <NavbarUser />
     <!-- สถานะคำร้อง -->
     <v-card class="cardshow">
@@ -385,7 +385,7 @@
 <script>
 import NavbarUser from "../../components/NavbarUser.vue";
 export default {
-  name: "Trackingofficer",
+  name: "UserTracking",
   components: {
     NavbarUser,
   },
@@ -477,6 +477,3 @@ export default {
   margin: 2%;
 }
 </style>
-
-
-

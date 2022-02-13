@@ -1,6 +1,6 @@
 <template>
   <!-- ส่วนจัดเเสดง -->
-  <div id="DashboardOffice">
+  <div id="OfficeDashboard">
     <NavbarOF />
     <v-card class="cardshow">
       <v-toolbar dark prominent color="#FFAB40">
@@ -82,7 +82,7 @@
 import { GChart } from "vue-google-charts";
 import NavbarOF from "../../components/NavbarOfficer.vue";
 export default {
-  name: "DashboardOffice",
+  name: "OfficeDashboard",
   components: {
     NavbarOF,
     GChart,

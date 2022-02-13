@@ -1,10 +1,7 @@
-
-
 <template>
-  <div id="ChiefReport">
+  <div id="ChiefApproval">
     <NavbarChief />
     <v-card class="cardmargin">
-      
       <v-toolbar dark prominent color="#FFAB40">
         <h1 class="text-center pa-5">การอนุมัติ</h1>
         <v-spacer></v-spacer>
@@ -42,7 +39,7 @@
 import NavbarChief from "../../components/NavbarChief.vue";
 import axios from "axios";
 export default {
-  name: "Approval",
+  name: "ChiefApproval",
   components: {
     NavbarChief,
   },
@@ -108,4 +105,3 @@ h1 {
   padding: 2% 0% 0% 0%;
 }
 </style>
-

@@ -1,8 +1,7 @@
 <template>
-  <div id="ChiefReport">
+  <div id="AdminViewReport">
     <NavbarAdmin />
     <v-card class="cardmargin">
-     
       <v-toolbar dark prominent color="#FFAB40">
         <h1 class="text-center pa-5">การรายงานปัญหาทั้งหมด</h1>
         <v-spacer></v-spacer>
@@ -40,7 +39,7 @@
 import NavbarAdmin from "../../components/NavbarAdmin.vue";
 import axios from "axios";
 export default {
-  name: "ChiefReport",
+  name: "AdminViewReport",
   components: {
     NavbarAdmin,
   },
@@ -102,4 +101,3 @@ export default {
   margin: 2%;
 }
 </style>
-

@@ -1,12 +1,16 @@
 <template>
   <!-- ส่วนจัดเเสดง -->
-  <div id="Formmanagement">
+  <div id="ChiefSecretaryManagement">
     <NavbarChief />
     <v-card class="cardshow">
       <v-toolbar dark prominent color="#FFAB40">
         <h1>จัดการ Secretary</h1>
         <v-spacer></v-spacer>
-        <v-btn color="success" style="margin: 35px" @click="dialogadd = !dialogadd">
+        <v-btn
+          color="success"
+          style="margin: 35px"
+          @click="dialogadd = !dialogadd"
+        >
           เพิ่ม Secretary
         </v-btn>
       </v-toolbar>
@@ -49,71 +53,64 @@
           </v-row>
 
           <v-row v-for="item in props.items" :key="item.text">
-            
             <v-card-title>
-             
-
-              
               <v-row>
-                    <v-col align="center"> {{ item.id }} </v-col>
-                    <v-col align="center">
-                      {{ item.Fname }} {{ item.Lname }}
-                    </v-col>
+                <v-col align="center"> {{ item.id }} </v-col>
+                <v-col align="center">
+                  {{ item.Fname }} {{ item.Lname }}
+                </v-col>
 
-                    <v-col align="center"> {{ item.gender }} </v-col>
-                    <v-col align="center">
-                      <v-btn icon
-                        ><v-icon color="yellow">mdi-pencil</v-icon></v-btn
-                      >
-                      <v-btn icon
-                        ><v-icon color="red" @click="dialogdel = !dialogdel"
-                          >mdi-delete</v-icon
-                        ></v-btn
-                      >
-                    </v-col>
-                  </v-row>
+                <v-col align="center"> {{ item.gender }} </v-col>
+                <v-col align="center">
+                  <v-btn icon><v-icon color="yellow">mdi-pencil</v-icon></v-btn>
+                  <v-btn icon
+                    ><v-icon color="red" @click="dialogdel = !dialogdel"
+                      >mdi-delete</v-icon
+                    ></v-btn
+                  >
+                </v-col>
+              </v-row>
             </v-card-title>
             <v-divider style="margin: 0px 10px 0px 10px;"></v-divider>
-            
           </v-row>
         </template>
 
         <template v-slot:footer>
-            <v-row class="mt-2" align="center" justify="center">
-              <v-menu offset-y> </v-menu>
+          <v-row class="mt-2" align="center" justify="center">
+            <v-menu offset-y> </v-menu>
 
-              <v-spacer></v-spacer>
-              <v-row>
-                <v-col align="center">
-                  <span class="mr-4 grey--text">
-                    Page {{ page }} of {{ numberOfPages }}
-                  </span>
-                </v-col>
-              </v-row>
-            </v-row>
+            <v-spacer></v-spacer>
             <v-row>
               <v-col align="center">
-                <v-btn
-                  fab
-                  dark
-                  color="blue darken-3"
-                  class="mr-1"
-                  @click="formerPage"
-                >
-                  <v-icon>mdi-chevron-left</v-icon>
-                </v-btn>
-                <v-btn
-                  fab
-                  dark
-                  color="blue darken-3"
-                  class="ml-1"
-                  @click="nextPage"
-                >
-                  <v-icon>mdi-chevron-right</v-icon>
-                </v-btn>
+                <span class="mr-4 grey--text">
+                  Page {{ page }} of {{ numberOfPages }}
+                </span>
               </v-col>
             </v-row>
-          </template>
+          </v-row>
+          <v-row>
+            <v-col align="center">
+              <v-btn
+                fab
+                dark
+                color="blue darken-3"
+                class="mr-1"
+                @click="formerPage"
+              >
+                <v-icon>mdi-chevron-left</v-icon>
+              </v-btn>
+              <v-btn
+                fab
+                dark
+                color="blue darken-3"
+                class="ml-1"
+                @click="nextPage"
+              >
+                <v-icon>mdi-chevron-right</v-icon>
+              </v-btn>
+            </v-col>
+          </v-row>
+        </template>
       </v-data-iterator>
 
       <!-- ส่วนจัดเเสดงเวลากดเเก้ไข -->
@@ -164,7 +161,7 @@
         </v-card>
       </v-dialog>
       <!-- ส่วนจัดเเสดงเวลากดเเก้ไข -->
-       <!-- เพิ่มข้อมูล officer -->
+      <!-- เพิ่มข้อมูล officer -->
       <v-dialog v-model="dialogadd" persistent max-width="1000px">
         <v-card align="center">
           <h1>เพิ่มข้อมูล officer</h1>
@@ -229,7 +226,7 @@
         </v-card>
       </v-dialog>
       <!-- เพิ่มข้อมูล officer -->
-       <!-- ลบ  officer -->
+      <!-- ลบ  officer -->
       <v-dialog v-model="dialogdel" persistent width="800">
         <v-card align="center">
           <h1>ยืนยัน</h1>
@@ -247,9 +244,6 @@
         </v-card>
       </v-dialog>
       <!-- ลบ  officer -->
-
-
-      
     </v-card>
   </div>
   <!-- ส่วนจัดเเสดง -->
@@ -258,9 +252,9 @@
 <script>
 import NavbarChief from "../../components/NavbarChief.vue";
 export default {
-  name: "FormmanagementChief ",
+  name: "ChiefSecretaryManagement ",
   components: {
-    NavbarChief 
+    NavbarChief,
   },
   data() {
     return {
@@ -428,7 +422,7 @@ export default {
           datecreation: "6/12/2564",
         },
       ],
-    }
+    };
   },
   computed: {
     numberOfPages() {
@@ -448,7 +442,7 @@ export default {
     updateItemsPerPage(number) {
       this.itemsPerPage = number;
     },
-    addNewofficer: function () {
+    addNewofficer: function() {
       this.listofficer.push({
         id: this.nextOfficerId++,
         Fname: this.Fname,
@@ -465,7 +459,7 @@ export default {
       this.newtitleText = "";
       this.dialogadd = false;
     },
-    removeofficer: function (index) {
+    removeofficer: function(index) {
       console.log(index);
       this.listofficer.splice(index, 1);
       this.dialogdel = false;

@@ -1,6 +1,6 @@
 <template>
   <!-- ส่วนจัดเเสดง -->
-  <v-app>
+  <div id="AdminProfile">
     <NavbarAdmin />
     <v-card class="cardshow">
       <h1>
@@ -53,7 +53,7 @@
           <v-row>
             <v-col>
               <v-text-field
-                v-model="profile.status"
+                v-model="profile.role"
                 label="สถานะผู้ใช้งาน"
                 readonly
               ></v-text-field>
@@ -93,7 +93,7 @@
       </v-form>
     </v-card>
     <!-- ส่วนจัดเเสดง -->
-  </v-app>
+  </div>
 </template>
 <script>
 import NavbarAdmin from "../../components/NavbarAdmin.vue";
@@ -113,7 +113,7 @@ export default {
           email: this.$store.getters.getUser.email,
           tel_num: this.$store.getters.getUser.tel_num,
           address: this.$store.getters.getUser.address,
-          status: this.$store.getters.getUser.status,
+          role: this.$store.getters.getUser.role,
         },
       ],
     };

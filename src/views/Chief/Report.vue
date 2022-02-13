@@ -2,15 +2,10 @@
   <div id="ChiefReport">
     <NavbarChief />
     <v-card class="cardmargin">
-      
       <v-toolbar dark prominent color="#FFAB40">
         <h1 class="text-center pa-5">การรายงานปัญหาทั้งหมด</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
-
-      
-
-      
       <v-row>
         <v-col align="center" v-if="reports.length">
           <v-btn width="150" height="50">

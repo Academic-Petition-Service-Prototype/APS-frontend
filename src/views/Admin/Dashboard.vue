@@ -1,6 +1,6 @@
 <template>
   <!-- ส่วนจัดเเสดง -->
-  <div id="ChiefDashboard">
+  <div id="AdminDashboard">
     <NavbarAdmin />
     <v-card class="cardshow">
       <v-toolbar dark prominent color="#FFAB40">
@@ -8,7 +8,6 @@
         <v-spacer></v-spacer>
       </v-toolbar>
 
-      
       <v-row>
         <v-col>
           <!-- จำนวนคำร้องที่ส่งเข้ามาทั้งหมด -->
@@ -64,7 +63,6 @@
       <!-- chart -->
       <v-row>
         <v-col>
-
           <GChart
             type="ColumnChart"
             :data="chartData1"
@@ -78,9 +76,9 @@
       <v-row>
         <v-col>
           <v-toolbar dark prominent color="#FFAB40">
-        <h1>จำนวณคำร้อง / รายงาน</h1>
-        <v-spacer></v-spacer>
-      </v-toolbar>
+            <h1>จำนวณคำร้อง / รายงาน</h1>
+            <v-spacer></v-spacer>
+          </v-toolbar>
           <GChart
             type="ColumnChart"
             :data="chartData2"
@@ -91,13 +89,13 @@
       <!-- chart -->
       <!-- แถว2 -->
 
-      <!-- เเุถว3 -->
+      <!-- เเถว3 -->
       <v-row>
         <v-col>
           <v-toolbar dark prominent color="#FFAB40">
-        <h1>จำนวณบุคคลกร</h1>
-        <v-spacer></v-spacer>
-      </v-toolbar>
+            <h1>จำนวณบุคคลกร</h1>
+            <v-spacer></v-spacer>
+          </v-toolbar>
 
           <GChart
             type="PieChart"
@@ -106,7 +104,7 @@
           />
         </v-col>
       </v-row>
-       <!-- เเุถว3 -->
+      <!-- เเถว3 -->
     </v-card>
   </div>
   <!-- ส่วนจัดเเสดง -->
@@ -116,7 +114,7 @@
 import { GChart } from "vue-google-charts";
 import NavbarAdmin from "../../components/NavbarAdmin.vue";
 export default {
-  name: "ChiefDashboard",
+  name: "AdminDashboard",
   components: {
     NavbarAdmin,
     GChart,
@@ -193,15 +191,13 @@ export default {
         bars: "horizontal",
       },
       PieChart: [
-        ['Task', 'Hours per Day'],
-          ['หัวหน้างาน (Chief)',     11],
-          ['พนังงาน (Officer)',      2],
-          ['ผู้ใช้งาน (User)',  2],
-          
+        ["Task", "Hours per Day"],
+        ["หัวหน้างาน (Chief)", 11],
+        ["พนังงาน (Officer)", 2],
+        ["ผู้ใช้งาน (User)", 2],
       ],
       PieChartOptions2: {
         chart: {
-          
           title: "Company Performance",
           subtitle: "Sales, Expenses, and Profit: 2014-2017",
         },

@@ -12,6 +12,7 @@ import UserPetition from '../views/User/Petition.vue'
 import UserProfile from '../views/User/Profile.vue'
 import UserReport from '../views/User/Report.vue'
 import UserTracking from '../views/User/Tracking.vue'
+import UserSentpetition from '../views/User/Sentpetition.vue'
 //User
 
 //Officer
@@ -19,6 +20,7 @@ import OfficerDashboard from '../views/Officer/Dashboard.vue'
 import OfficerPetitionManagement from '../views/Officer/PetitionManagement.vue'
 import OfficerProfile from '../views/Officer/Profile.vue'
 import OfficerTracking from '../views/Officer/Tracking.vue'
+import OfficerCreatepetition from'../views/Officer/Createpetition.vue'
 //Officer
 
 //Chief
@@ -32,6 +34,7 @@ import ChiefSecretaryManagement from '../views/Chief/SecretaryManagement.vue'
 import ChiefTracking from '../views/Chief/Tracking.vue'
 import ChiefReportDetail from '../views/Chief/ReportDetail.vue'
 import Approvaldetaill from '../views/Chief/Approvaldetaill.vue'
+import ChiefCreatepetition from'../views/Chief/Createpetition.vue'
 //Chief
 
 //Secretary
@@ -55,12 +58,9 @@ import AdminViewReport from '../views/Admin/ViewReport.vue'
 
 //Admin
 
-//Formbuilder
-import Builder from '../views/formbuilder/builderform.vue'
-import Sentpetition from '../views/Other/Sentpetition.vue'
+//Other
 import viewpentitiontrackingbyofficer from '../views/Other/viewpentitiontrackingbyofficer.vue'
-import Createtitle from'../views/Other/Createtitle.vue'
-//Formbuilder
+//Other
 
 
 Vue.use(VueRouter)
@@ -111,6 +111,11 @@ const routes = [
     name: 'UserTracking',
     component: UserTracking
   },
+  {
+    path: '/UserSentpetition',
+    name: 'UserSentpetition',
+    component: UserSentpetition 
+  },
   //User
 
   //Officer
@@ -134,6 +139,11 @@ const routes = [
     path: '/OfficerTracking',
     name: 'OfficerTracking',
     component: OfficerTracking 
+  },
+  {
+    path: '/OfficerCreatepetition',
+    name: 'OfficerCreatepetition',
+    component: OfficerCreatepetition 
   },
   //Officer
 
@@ -188,8 +198,11 @@ const routes = [
     name: 'Approvaldetaill',
     component: Approvaldetaill 
   },
-
-  
+  {
+    path: '/ChiefCreatepetition',
+    name: 'ChiefCreatepetition',
+    component: ChiefCreatepetition 
+  },
   //Chief
 
   //Secretary
@@ -270,24 +283,9 @@ const routes = [
 
   //Other
   {
-    path: '/builder',
-    name: 'builder',
-    component: Builder 
-  },
-  {
-    path: '/Sentpetition',
-    name: 'Sentpetition',
-    component: Sentpetition 
-  },
-  {
     path: '/viewpentitiontrackingbyofficer',
     name: 'viewpentitiontrackingbyofficer',
     component: viewpentitiontrackingbyofficer 
-  },
-  {
-    path: '/Createtitle',
-    name: 'Createtitle',
-    component: Createtitle 
   },
   //Other
 

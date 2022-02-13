@@ -1,6 +1,6 @@
 <template>
   <!-- ส่วนจัดเเสดง -->
-  <div id="Formmanagement">
+  <div id="OfficerCreatepetition">
     <NavbarOF />
     <v-card class="cardshow">
       <h1>
@@ -116,7 +116,9 @@
                       <v-autocomplete
                         ref="approver"
                         v-model="newapproverText"
-                        :rules="[() => !!approverlist || 'กรุณาเลือกผู้อนุมัติ']"
+                        :rules="[
+                          () => !!approverlist || 'กรุณาเลือกผู้อนุมัติ',
+                        ]"
                         :items="approverlist"
                         :error-messages="approvererrorMessages"
                         label="เลือกผู้อนุมัติ"
@@ -147,7 +149,7 @@
               </v-row>
             </v-card>
 
-            <v-btn color="primary"  @click="nextstepsecond"> ต่อไป </v-btn>
+            <v-btn color="primary" @click="nextstepsecond"> ต่อไป </v-btn>
 
             <v-btn text @click="stepprocess = 1"> ย้อนกลับ </v-btn>
           </v-stepper-content>
@@ -291,7 +293,7 @@
 import NavbarOF from "../../components/NavbarOfficer.vue";
 import axios from "axios";
 export default {
-  name: "Createtitle",
+  name: "OfficerCreatepetition",
   components: {
     NavbarOF,
   },
@@ -326,7 +328,7 @@ export default {
       nextapproverId: 1,
       formHasErrors: false,
       approverError: false,
-      approverlist :['ชญานิน','บัวสละ',]
+      approverlist: ["ชญานิน", "บัวสละ"],
     };
   },
   watch: {
@@ -343,32 +345,32 @@ export default {
         name: this.forms.title,
       };
     },
-    Selectionapprover(){
-      return{
-        approver:this.listapprover,
-      }
-    }
+    Selectionapprover() {
+      return {
+        approver: this.listapprover,
+      };
+    },
   },
   methods: {
-    addNewtitle: function () {
+    addNewtitle: function() {
       this.title.push({
         id: this.nextTodoId++,
         title: this.newtitleText,
       });
       this.newtitleText = "";
     },
-    addapprovertitle: function () {
+    addapprovertitle: function() {
       this.listapprover.push({
         id: this.nextapproverId++,
         title: this.newapproverText,
       });
       this.newapproverText = "";
     },
-    removetitle: function (index) {
+    removetitle: function(index) {
       console.log(index);
       this.title.splice(index, 1);
     },
-    removeapprover: function (index) {
+    removeapprover: function(index) {
       console.log(index);
       this.listapprover.splice(index, 1);
     },
@@ -394,13 +396,8 @@ export default {
         if (this.listapprover >= 0) {
           this.approverError = true;
           this.$refs[f].validate(true);
-          
         } else {
-        this.stepprocess = 3;
-         
-            
-          
-          
+          this.stepprocess = 3;
         }
         console.log(this.Selectionapprover);
       });

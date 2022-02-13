@@ -1,11 +1,10 @@
 <template>
   <!-- ส่วนจัดเเสดง -->
-  <v-app>
+  <div id="OfficerProfile">
     <NavbarOF />
     <v-card class="cardshow">
-      
-        <h1 >ข้อมูลผู้ใช้งาน</h1>
-<v-divider></v-divider>
+      <h1>ข้อมูลผู้ใช้งาน</h1>
+      <v-divider></v-divider>
       <v-row>
         <v-col align="center">
           <v-btn fab width="auto" height="auto" class="cardshow">
@@ -52,7 +51,7 @@
           <v-row>
             <v-col>
               <v-text-field
-                v-model="profile.status"
+                v-model="profile.role"
                 label="สถานะผู้ใช้งาน"
                 readonly
               ></v-text-field>
@@ -92,12 +91,12 @@
       </v-form>
     </v-card>
     <!-- ส่วนจัดเเสดง -->
-  </v-app>
+  </div>
 </template>
 <script>
 import NavbarOF from "../../components/NavbarOfficer.vue";
 export default {
-  name: "DashboardOffice",
+  name: "OfficerProfile",
   components: {
     NavbarOF,
   },
@@ -112,7 +111,7 @@ export default {
           email: this.$store.getters.getUser.email,
           tel_num: this.$store.getters.getUser.tel_num,
           address: this.$store.getters.getUser.address,
-          status: this.$store.getters.getUser.status,
+          role: this.$store.getters.getUser.role,
         },
       ],
     };

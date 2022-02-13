@@ -113,7 +113,7 @@ export default {
           email: this.$store.getters.getUser.email,
           tel_num: this.$store.getters.getUser.tel_num,
           address: this.$store.getters.getUser.address,
-          status: this.$store.getters.getUser.status,
+          role: this.$store.getters.getUser.role,
         },
       ],
     };
@@ -136,5 +136,4 @@ h2 {
 .box-margin {
   margin: 5%;
 }
-
 </style>

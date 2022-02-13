@@ -48,7 +48,7 @@
           </v-row>
         </template>
 
-         <template v-slot:footer>
+        <template v-slot:footer>
           <v-row class="mt-2" align="center" justify="center">
             <v-menu offset-y> </v-menu>
 
@@ -108,37 +108,38 @@ export default {
       items: [
         {
           name: "เอกสารความกก้าวหน้า",
-          route: "/Sentpentition",
+          route: "/UserSentpetition",
           icon: "file-document-outline",
           detail: "ส่งความก้าวหน้าการทำโครงการ",
         },
         {
           name: "Ice cream sandwich",
-          route: "/Sentpentition",
+          route: "/UserSentpetition",
           icon: "file-document-outline",
           detail: "ส่งความก้าวหน้าการทำโครงการ",
         },
         {
           name: "Eclair",
-          route: "/Sentpentition",
+          route: "/UserSentpetition",
           icon: "file-document-outline",
           detail: "ส่งความก้าวหน้าการทำโครงการ",
         },
         {
           name: "Cupcake",
-          route: "/Sentpentition",
+          route: "/UserSentpetition",
           icon: "file-document-outline",
           detail: "ส่งความก้าวหน้าการทำโครงการ",
         },
         {
           name: "Gingerbread",
-          route: "/Sentpentition",
+          route: "/UserSentpetition",
           icon: "file-document-outline",
           detail: "ส่งความก้าวหน้าการทำโครงการ",
         },
       ],
     };
-  },computed: {
+  },
+  computed: {
     numberOfPages() {
       return Math.ceil(this.items.length / this.itemsPerPage);
     },

@@ -1,7 +1,7 @@
 <template>
   <!-- ส่วนจัดเเสดง -->
-  <v-app>
-    <NavbarStu />
+  <div id="UserSentpetition">
+    <NavbarUser />
     <v-card class="cardshow">
       <h1>
         แบบคำร้อง / ยื่นเรื่อง
@@ -86,7 +86,7 @@
             <v-col align="center" v-if="heard.hasSpecificsDetail">
               <v-row v-for="specifics in specifics" :key="specifics">
                 <v-col>
-                    {{specifics.titleheard}}
+                  {{ specifics.titleheard }}
                   <v-text-field
                     v-model="specifics.specificsdetail"
                     :rules="emailRules"
@@ -112,15 +112,15 @@
       </v-form>
     </v-card>
     <!-- ส่วนจัดเเสดง -->
-  </v-app>
+  </div>
 </template>
 
 <script>
-import NavbarStu from "../../components/NavbarUser.vue";
+import NavbarUser from "../../components/NavbarUser.vue";
 export default {
-  name: "FormsSTU",
+  name: "UserSentpetition",
   components: {
-    NavbarStu,
+    NavbarUser,
   },
   data() {
     return {
@@ -139,7 +139,7 @@ export default {
       heard: [
         {
           title: "การขอสอบย้อนหลัง",
-          hasSpecificsDetail:true , //ตัวกำหนดว่าเป็นฟอรมต้องใส่รายละเอียดเพิ่ม
+          hasSpecificsDetail: true, //ตัวกำหนดว่าเป็นฟอรมต้องใส่รายละเอียดเพิ่ม
         },
       ],
       specifics: [

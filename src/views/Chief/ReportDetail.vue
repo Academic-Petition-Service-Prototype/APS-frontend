@@ -1,5 +1,5 @@
 <template>
-  <div id="ReportDetail">
+  <div id="ChiefReportDetail">
     <NavbarChief />
     <v-card class="cardmargin">
       <h1 class="text-center p-2">
@@ -34,7 +34,7 @@
 import NavbarChief from "../../components/NavbarChief.vue";
 import axios from "axios";
 export default {
-  name: "ReportDetail",
+  name: "ChiefReportDetail",
   components: {
     NavbarChief,
   },

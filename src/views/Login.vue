@@ -150,15 +150,15 @@ export default {
         const token = response.token;
         const user = response.user;
         this.$store.dispatch("login", { token, user });
-        if (user.status == "user") {
+        if (user.role == "user") {
           this.$router.push("/UserDashboard");
-        } else if (user.status == "officer") {
+        } else if (user.role == "officer") {
           this.$router.push("/OfficerDashboard");
-        } else if (user.status == "chief") {
+        } else if (user.role == "chief") {
           this.$router.push("/ChiefDashboard");
-        } else if (user.status == "secretary") {
+        } else if (user.role == "secretary") {
           this.$router.push("/SecretaryDashboard");
-        } else if (user.status == "admin") {
+        } else if (user.role == "admin") {
           this.$router.push("/AdminDashboard");
         }
         localStorage.setItem("token", token);

@@ -1,5 +1,5 @@
 <template>
-  <div id="Trackingofficer" class="bg-color">
+  <div id="ChiefTracking" class="bg-color">
     <NavbarChief />
     <v-card class="cardshow">
       <v-toolbar dark prominent color="#FFAB40">
@@ -45,10 +45,10 @@
             <v-expansion-panels>
               <v-expansion-panel>
                 <v-expansion-panel-header>
-                  <v-row class="text-center" >
-                  <v-col> {{ item.num }} </v-col>
-                  <v-col> {{ item.title }} </v-col>
-                  <v-col> </v-col>
+                  <v-row class="text-center">
+                    <v-col> {{ item.num }} </v-col>
+                    <v-col> {{ item.title }} </v-col>
+                    <v-col> </v-col>
                   </v-row>
 
                   <!-- เเสดงชื่อเอกสาร -->
@@ -196,7 +196,7 @@
 <script>
 import NavbarChief from "../../components/NavbarChief.vue";
 export default {
-  name: "TrackingChief",
+  name: "ChiefTracking",
   components: {
     NavbarChief,
   },
@@ -270,5 +270,3 @@ h1 {
   padding: 2% 0% 0% 0%;
 }
 </style>
-
-

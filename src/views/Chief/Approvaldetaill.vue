@@ -1,5 +1,5 @@
 <template>
-  <div id="ReportDetail">
+  <div id="ChiefApprovaldetail">
     <NavbarChief />
     <!-- <v-card class="cardmargin">
       <h1 class="text-center p-2">
@@ -32,7 +32,9 @@
     <v-card class="cardshow">
       <v-row>
         <v-col>
-          <v-btn class="ma-2" outlined color="error" @click="back" > ย้อนกลับ </v-btn>
+          <v-btn class="ma-2" outlined color="error" @click="back">
+            ย้อนกลับ
+          </v-btn>
         </v-col>
         <v-col align="center">
           <!-- <v-btn class="ma-2" outlined color="error"> ย้อนกลับ </v-btn> -->
@@ -138,37 +140,53 @@
             </v-row>
             <v-row>
               <v-col>
-                {{statuscheck}}
-                <v-row v-if="statuscheck==null">
-              <v-col align="center">
-                <v-btn class="ma-2" color="success" @click="statuscheck=true"> อนุมัติ </v-btn>
-              </v-col>
+                {{ statuscheck }}
+                <v-row v-if="statuscheck == null">
+                  <v-col align="center">
+                    <v-btn
+                      class="ma-2"
+                      color="success"
+                      @click="statuscheck = true"
+                    >
+                      อนุมัติ
+                    </v-btn>
+                  </v-col>
 
-              <v-col align="center">
-                <v-btn class="ma-2" outlined color="error" @click="statuscheck=false"> ไม่อนุมัติ </v-btn>
+                  <v-col align="center">
+                    <v-btn
+                      class="ma-2"
+                      outlined
+                      color="error"
+                      @click="statuscheck = false"
+                    >
+                      ไม่อนุมัติ
+                    </v-btn>
+                  </v-col>
+                </v-row>
+
+                <v-row v-if="statuscheck == true">
+                  <v-col align="center">
+                    <v-btn class="ma-2" color="success" width="500" height="80">
+                      อนุมัติ
+                    </v-btn>
+                  </v-col>
+                </v-row>
+
+                <v-row v-if="statuscheck == false">
+                  <v-col align="center">
+                    <v-btn
+                      class="ma-2"
+                      outlined
+                      color="error"
+                      width="500"
+                      height="80"
+                    >
+                      ไม่อนุมัติ
+                    </v-btn>
+                  </v-col>
+                </v-row>
               </v-col>
             </v-row>
-
-            <v-row v-if="statuscheck==true">
-              <v-col align="center">
-                <v-btn class="ma-2" color="success" width="500" height="80"> อนุมัติ </v-btn>
-              </v-col>
-
-              
-            </v-row>
-
-            <v-row v-if="statuscheck==false">
-              <v-col align="center">
-                <v-btn class="ma-2" outlined color="error" width="500" height="80"> ไม่อนุมัติ </v-btn>
-              </v-col>
-
-              
-            </v-row>
-
-
-              </v-col>
-            </v-row>
-            
           </v-container>
         </v-form>
         <!-- ส่วนเเสดงหน้าการเเสดงตัวอย่าง -->
@@ -181,7 +199,7 @@
 import NavbarChief from "../../components/NavbarChief.vue";
 import axios from "axios";
 export default {
-  name: "Approvaldetaill",
+  name: "ChiefApprovaldetail",
   components: {
     NavbarChief,
   },
@@ -189,7 +207,6 @@ export default {
     return {
       report_title: "",
       report_detail: "",
-
       profile: [
         {
           Fname: "ณัฐภูมิ",
@@ -214,7 +231,7 @@ export default {
       listapprover: [],
       nextTodoId: 1,
       nextapproverId: 1,
-      statuscheck:null,
+      statuscheck: null,
     };
   },
   mounted() {

@@ -1,4 +1,5 @@
-// <template>
+//
+<template>
   <div id="NavbarChief">
     <!-- Navbar -->
     <v-app-bar color="#FFA726">
@@ -38,7 +39,7 @@
       <v-row>
         <v-col class="text-white" align="center">
           ชื่อ : {{ firstname }} {{ lastname }}<br />
-          สถานะ : {{ status }}
+          สถานะ : {{ role }}
         </v-col>
       </v-row>
       <v-divider></v-divider>
@@ -95,7 +96,7 @@ export default {
     slideexit: false,
     firstname: "",
     lastname: "",
-    status: "",
+    role: "",
     lastlogin: "",
     menu: [
       {
@@ -154,7 +155,7 @@ export default {
     }
     this.firstname = this.$store.getters.getUser.f_name;
     this.lastname = this.$store.getters.getUser.l_name;
-    this.status = this.$store.getters.getUser.status;
+    this.role = this.$store.getters.getUser.role;
     this.lastlogin = this.$store.getters.getUser.last_login;
     this.secretMessage = await AuthService.getSecretContent();
   },

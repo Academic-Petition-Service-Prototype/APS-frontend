@@ -2,8 +2,6 @@
   <div id="UserReport" class="bg-color">
     <NavbarUser />
     <v-card class="cardmargin">
-      
-
       <v-toolbar dark prominent color="#FFAB40">
         <h1 class="text-center pa-5">รายงานปัญหาไม่ระบุตัวตน</h1>
         <v-spacer></v-spacer>

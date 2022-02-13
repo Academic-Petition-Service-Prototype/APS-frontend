@@ -1,6 +1,6 @@
 <template>
   <!-- ส่วนจัดเเสดง -->
-  <div id="DashboardSTU">
+  <div id="UserDashboard">
     <NavbarUser />
     <v-card class="cardshow">
       <v-toolbar dark prominent color="#FFAB40">
@@ -81,7 +81,7 @@
 import { GChart } from "vue-google-charts";
 import NavbarUser from "../../components/NavbarUser.vue";
 export default {
-  name: "DashboardSTU",
+  name: "UserDashboard",
   components: {
     NavbarUser,
     GChart,

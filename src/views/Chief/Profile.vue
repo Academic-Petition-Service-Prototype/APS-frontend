@@ -1,6 +1,6 @@
 <template>
   <!-- ส่วนจัดเเสดง -->
-  <v-app>
+  <div id="ChiefProfile">
     <NavbarChief />
     <v-card class="cardshow">
       <h1>
@@ -53,7 +53,7 @@
           <v-row>
             <v-col>
               <v-text-field
-                v-model="profile.status"
+                v-model="profile.role"
                 label="สถานะผู้ใช้งาน"
                 readonly
               ></v-text-field>
@@ -93,12 +93,12 @@
       </v-form>
     </v-card>
     <!-- ส่วนจัดเเสดง -->
-  </v-app>
+  </div>
 </template>
 <script>
 import NavbarChief from "../../components/NavbarChief.vue";
 export default {
-  name: "DashboardChief",
+  name: "ChiefProfile",
   components: {
     NavbarChief,
   },
@@ -113,7 +113,7 @@ export default {
           email: this.$store.getters.getUser.email,
           tel_num: this.$store.getters.getUser.tel_num,
           address: this.$store.getters.getUser.address,
-          status: this.$store.getters.getUser.status,
+          role: this.$store.getters.getUser.role,
         },
       ],
     };
@@ -137,4 +137,3 @@ h2 {
   margin: 5%;
 }
 </style>
-
