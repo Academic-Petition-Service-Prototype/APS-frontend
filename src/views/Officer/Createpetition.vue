@@ -406,6 +406,7 @@ export default {
     createpetition() {
       axios
         .post(process.env.VUE_APP_URL + "forms", {
+          users_id: this.$store.getters.getUser.id,
           form_name: this.forms.title,
           form_specific: this.title,
           f_name: this.$store.getters.getUser.f_name,
