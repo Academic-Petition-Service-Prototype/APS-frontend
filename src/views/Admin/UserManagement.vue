@@ -4,9 +4,8 @@
     <NavbarAdmin />
     <v-card class="cardshow">
       <v-toolbar dark prominent color="#FFAB40">
-        <h1> จัดการ User</h1>
+        <h1>จัดการ User</h1>
         <v-spacer></v-spacer>
-        
       </v-toolbar>
 
       <v-data-iterator
@@ -21,9 +20,15 @@
       >
         <template v-slot:header>
           <v-row>
-            <v-col align="right"><v-btn color="success" style="margin: 10px 10px -25px 10px" @click="dialogadd = !dialogadd">
-          เพิ่ม User
-        </v-btn></v-col>
+            <v-col align="right"
+              ><v-btn
+                color="success"
+                style="margin: 10px 10px -25px 10px"
+                @click="dialogadd = !dialogadd"
+              >
+                เพิ่ม User
+              </v-btn></v-col
+            >
           </v-row>
           <v-row>
             <v-col>
@@ -47,7 +52,7 @@
           <v-row>
             <v-col align="center"> ลำดับ </v-col>
             <v-col align="center"> ชื่อ - สกุล </v-col>
-            <v-col align="center"> เพศ </v-col>
+            <v-col align="center"> Agency </v-col>
 
             <v-col align="center"> Action </v-col>
           </v-row>
@@ -60,7 +65,7 @@
                   {{ item.Fname }} {{ item.Lname }}
                 </v-col>
 
-                <v-col align="center"> {{ item.gender }} </v-col>
+                <v-col align="center"> {{ item.agency }} </v-col>
                 <v-col align="center">
                   <v-btn icon><v-icon color="yellow">mdi-pencil</v-icon></v-btn>
                   <v-btn icon
@@ -71,7 +76,7 @@
                 </v-col>
               </v-row>
             </v-card-title>
-            <v-divider style="margin: 0px 10px 0px 10px;"></v-divider>
+            <v-divider style="margin: 0px 10px 0px 10px"></v-divider>
           </v-row>
         </template>
 
@@ -110,6 +115,7 @@
               </v-btn>
             </v-col>
           </v-row>
+          <!-- {{listofficer}} --> 
         </template>
       </v-data-iterator>
 
@@ -215,6 +221,15 @@
                     label="ที่อยู่"
                     required
                   ></v-text-field>
+
+                  <v-select
+                    v-model="select"
+                    :items="itemsAgency"
+                    :error-messages="errors"
+                    label="Select Agency"
+                    data-vv-name="select"
+                    required
+                  ></v-select>
                 </v-col>
               </v-row>
               <v-btn color="green darken-1" type="submit"> ตกลง </v-btn>
@@ -252,7 +267,7 @@
 <script>
 import NavbarAdmin from "../../components/NavbarAdmin.vue";
 export default {
-  name: "AdminUserManagement",
+  name: "adminUserManagement",
   components: {
     NavbarAdmin,
   },
@@ -282,9 +297,17 @@ export default {
       address: "",
       nextOfficerId: 1,
       listofficer: [],
+      select:"",
       // ของตัวเพิ่มข้อมูล
 
       items: [],
+
+      itemsAgency: [
+        'Item 1',
+        'Item 2',
+        'Item 3',
+        'Item 4',
+      ],
     };
   },
   computed: {
@@ -305,7 +328,7 @@ export default {
     updateItemsPerPage(number) {
       this.itemsPerPage = number;
     },
-    addNewofficer: function() {
+    addNewofficer: function () {
       this.listofficer.push({
         id: this.nextOfficerId++,
         Fname: this.Fname,
@@ -313,6 +336,7 @@ export default {
         gender: this.gender,
         email: this.email,
         address: this.address,
+        agency:this.select,
       });
       this.Fname = "";
       this.Lname = "";
@@ -320,9 +344,10 @@ export default {
       this.email = "";
       this.address = "";
       this.newtitleText = "";
+      this.select = "";
       this.dialogadd = false;
     },
-    removeofficer: function(index) {
+    removeofficer: function (index) {
       console.log(index);
       this.listofficer.splice(index, 1);
       this.dialogdel = false;
