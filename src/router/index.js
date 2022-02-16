@@ -55,6 +55,7 @@ import AdminTracking from '../views/Admin/Tracking.vue'
 import AdminUserManagement from '../views/Admin/UserManagement.vue'
 import AdminViewApproval from '../views/Admin/ViewApproval.vue'
 import AdminViewReport from '../views/Admin/ViewReport.vue'
+import AdminAgencyManagement from '../views/Admin/AgencyManagement.vue'
 
 //Admin
 
@@ -278,6 +279,11 @@ const routes = [
     path: '/AdminViewReport',
     name: 'AdminViewReport',
     component: AdminViewReport 
+  },
+  {
+    path: '/AdminAgencyManagement',
+    name: 'AdminAgencyManagement',
+    component: AdminAgencyManagement 
   },
   //Admin
 

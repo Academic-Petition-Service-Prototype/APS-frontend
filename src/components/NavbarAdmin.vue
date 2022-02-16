@@ -3,9 +3,7 @@
     <!-- Navbar -->
     <v-app-bar color="#FFA726">
       <v-app-bar-nav-icon @click="drawer = !drawer">
-        <v-icon color="#FFFFFF">
-          mdi-menu
-        </v-icon>
+        <v-icon color="#FFFFFF"> mdi-menu </v-icon>
       </v-app-bar-nav-icon>
       <v-btn icon disabled>
         <v-img height="160px" width="160px" src="../assets/logo.png"> </v-img>
@@ -147,7 +145,16 @@ export default {
         route: "/AdminUserManagement",
         icon: "account-multiple",
       },
-      { menu: "9", text: "โปรไฟล์", route: "/AdminProfile", icon: "account" },
+      { menu: "9", 
+        text: "จัดการ Agency",
+        route: "/AdminAgencyManagement",
+        icon: "home-group"
+      },
+      { menu: "9", 
+        text: "โปรไฟล์",
+        route: "/AdminProfile",
+        icon: "account"
+      },
     ],
   }),
   async created() {
