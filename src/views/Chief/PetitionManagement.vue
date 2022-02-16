@@ -6,9 +6,7 @@
       <v-toolbar dark prominent color="#FFAB40">
         <h1>จัดการคำร้อง/ยื่นเรื่อง</h1>
         <v-spacer></v-spacer>
-        <v-btn color="success" style="margin: 35px" to="/ChiefCreatepetition">
-          สร้างคำร้อง
-        </v-btn>
+        
       </v-toolbar>
 
       <v-data-iterator
@@ -19,8 +17,14 @@
         :sort-by="sortBy.toLowerCase()"
         :sort-desc="sortDesc"
         hide-default-footer
+        class="text-center"
       >
         <template v-slot:header>
+          <v-row>
+            <v-col align="right"><v-btn color="success" style="margin: 10px 10px -25px 10px" to="/OfficerCreatepetition">
+          สร้างคำร้อง
+        </v-btn></v-col>
+          </v-row>
           <v-row>
             <v-col>
               <v-text-field

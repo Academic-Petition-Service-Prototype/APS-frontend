@@ -6,13 +6,7 @@
       <v-toolbar dark prominent color="#FFAB40">
         <h1>จัดการ Officer</h1>
         <v-spacer></v-spacer>
-        <v-btn
-          color="success"
-          style="margin: 35px"
-          @click="dialogadd = !dialogadd"
-        >
-          เพิ่ม Officer
-        </v-btn>
+        
       </v-toolbar>
 
       <v-data-iterator
@@ -23,8 +17,14 @@
         :sort-by="sortBy.toLowerCase()"
         :sort-desc="sortDesc"
         hide-default-footer
+        class="text-center"
       >
         <template v-slot:header>
+          <v-row>
+            <v-col align="right"><v-btn color="success" style="margin: 10px 10px -25px 10px" @click="dialogadd = !dialogadd">
+          เพิ่ม Officer
+        </v-btn></v-col>
+          </v-row>
           <v-row>
             <v-col>
               <v-text-field

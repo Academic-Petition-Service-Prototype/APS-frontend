@@ -15,6 +15,7 @@
         :sort-by="sortBy.toLowerCase()"
         :sort-desc="sortDesc"
         hide-default-footer
+        class="text-center"
       >
         <template v-slot:header>
           <v-row>
