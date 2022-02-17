@@ -6,11 +6,11 @@
         <h1>เลือกแบบคำร้อง / ยื่นเรื่อง</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
-      <h6>
+      <!-- <h6>
         {{ petitionList }}
-      </h6>
+      </h6> -->
       <v-data-iterator
-        :items="items"
+        :items="petitionList"
         :items-per-page.sync="itemsPerPage"
         :page.sync="page"
         :search="search"
@@ -38,11 +38,11 @@
             :to="item.route"
             style="padding: 0px 30px 0px 30px"
           >
-            <v-col align="">
+            <v-col v-if="item.form_status=='active' ">
               <v-btn outlined block height="100" router :to="item.route">
                 <v-row>
                   <v-col align="center">
-                    <h2>{{ item.name }}</h2>
+                    <h2>{{ item.form_name }}</h2>
                     <h2>{{ item.detail }}</h2>
                   </v-col>
                 </v-row>
@@ -69,7 +69,8 @@
               <v-btn
                 fab
                 dark
-                color="blue darken-3"
+                icon
+                color="#FFAB40"
                 class="mr-1"
                 @click="formerPage"
               >
@@ -78,7 +79,8 @@
               <v-btn
                 fab
                 dark
-                color="blue darken-3"
+                icon
+                color="#FFAB40"
                 class="ml-1"
                 @click="nextPage"
               >
@@ -109,44 +111,12 @@ export default {
       itemsPerPage: 4,
       sortBy: "name",
       keys: ["Name"],
-      items: [
-        {
-          name: "เอกสารความกก้าวหน้า",
-          route: "/UserSentpetition",
-          icon: "file-document-outline",
-          detail: "ส่งความก้าวหน้าการทำโครงการ",
-        },
-        {
-          name: "Ice cream sandwich",
-          route: "/UserSentpetition",
-          icon: "file-document-outline",
-          detail: "ส่งความก้าวหน้าการทำโครงการ",
-        },
-        {
-          name: "Eclair",
-          route: "/UserSentpetition",
-          icon: "file-document-outline",
-          detail: "ส่งความก้าวหน้าการทำโครงการ",
-        },
-        {
-          name: "Cupcake",
-          route: "/UserSentpetition",
-          icon: "file-document-outline",
-          detail: "ส่งความก้าวหน้าการทำโครงการ",
-        },
-        {
-          name: "Gingerbread",
-          route: "/UserSentpetition",
-          icon: "file-document-outline",
-          detail: "ส่งความก้าวหน้าการทำโครงการ",
-        },
-      ],
       petitionList: [],
     };
   },
   computed: {
     numberOfPages() {
-      return Math.ceil(this.items.length / this.itemsPerPage);
+      return Math.ceil(this.petitionList.length / this.itemsPerPage);
     },
     filteredKeys() {
       return this.keys.filter((key) => key !== "Name");
