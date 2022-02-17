@@ -6,7 +6,9 @@
         <h1>เลือกแบบคำร้อง / ยื่นเรื่อง</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
-
+      <h6>
+        {{ petitionList }}
+      </h6>
       <v-data-iterator
         :items="items"
         :items-per-page.sync="itemsPerPage"
@@ -92,6 +94,7 @@
 
 <script>
 import NavbarUser from "../../components/NavbarUser.vue";
+import axios from "axios";
 export default {
   name: "UserPetition",
   components: {
@@ -138,6 +141,7 @@ export default {
           detail: "ส่งความก้าวหน้าการทำโครงการ",
         },
       ],
+      petitionList: [],
     };
   },
   computed: {
@@ -158,6 +162,25 @@ export default {
     updateItemsPerPage(number) {
       this.itemsPerPage = number;
     },
+    getpetition() {
+      axios
+        .post(process.env.VUE_APP_URL + "getforms", {
+          user_id: this.$store.getters.getUser.user_id,
+          role: this.$store.getters.getUser.role,
+          agency: this.$store.getters.getUser.agency_name,
+        })
+        .then((response) => {
+          // handle success
+          this.petitionList = response.data;
+        })
+        .catch((error) => {
+          // handle error
+          console.log(error);
+        });
+    },
+  },
+  mounted() {
+    this.getpetition();
   },
 };
 </script>
