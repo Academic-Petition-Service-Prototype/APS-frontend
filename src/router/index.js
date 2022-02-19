@@ -113,7 +113,7 @@ const routes = [
     component: UserTracking
   },
   {
-    path: '/UserSentpetition',
+    path: '/UserSentpetition/:id',
     name: 'UserSentpetition',
     component: UserSentpetition 
   },

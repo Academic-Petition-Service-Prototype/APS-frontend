@@ -7,6 +7,7 @@
         แบบคำร้อง / ยื่นเรื่อง
         <v-divider></v-divider>
       </h1>
+      <h5>{{ petitionListById }}</h5>
       <h1 v-for="heard in heard" :key="heard" style="text-align: center">
         {{ heard.title }}
       </h1>
@@ -16,7 +17,6 @@
             <v-col cols="12" md="4">
               <v-text-field
                 v-model="profile.Fname"
-                :rules="nameRules"
                 :counter="10"
                 label="ชื่อ"
                 required
@@ -27,7 +27,6 @@
             <v-col cols="12" md="4">
               <v-text-field
                 v-model="profile.Lname"
-                :rules="nameRules"
                 :counter="10"
                 label="นามสกุล"
                 required
@@ -38,7 +37,6 @@
             <v-col cols="12" md="4">
               <v-text-field
                 v-model="profile.gender"
-                :rules="emailRules"
                 label="เพศ"
                 required
                 disabled
@@ -50,7 +48,6 @@
             <v-col>
               <v-text-field
                 v-model="profile.email"
-                :rules="emailRules"
                 label="E-mail"
                 required
                 disabled
@@ -62,7 +59,6 @@
             <v-col>
               <v-text-field
                 v-model="profile.tell"
-                :rules="emailRules"
                 label="เบอร์โทร"
                 required
                 disabled
@@ -74,7 +70,6 @@
             <v-col>
               <v-text-field
                 v-model="profile.addess"
-                :rules="emailRules"
                 label="ที่อยู่"
                 required
                 disabled
@@ -89,7 +84,6 @@
                   {{ specifics.titleheard }}
                   <v-text-field
                     v-model="specifics.specificsdetail"
-                    :rules="emailRules"
                     label="ใส่ข้อมูลลงที่นี้"
                     required
                   >
@@ -117,6 +111,7 @@
 
 <script>
 import NavbarUser from "../../components/NavbarUser.vue";
+import axios from "axios";
 export default {
   name: "UserSentpetition",
   components: {
@@ -148,7 +143,26 @@ export default {
         { titleheard: "เหตุผล", specificsdetail: "" },
         { titleheard: "เหตุผล", specificsdetail: "" },
       ],
+      petitionListById: [],
     };
+  },
+  methods: {
+    getpetitionbyid() {
+      console.log(this.$route.params.form_id);
+      axios
+        .get(process.env.VUE_APP_URL + "forms/" + this.$route.params.id)
+        .then((response) => {
+          // handle success
+          this.petitionListById = response.data;
+        })
+        .catch((error) => {
+          // handle error
+          console.log(error);
+        });
+    },
+  },
+  mounted() {
+    this.getpetitionbyid();
   },
 };
 </script>

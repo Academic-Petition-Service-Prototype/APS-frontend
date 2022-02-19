@@ -25,7 +25,7 @@
             dense
             filled
             rounded
-            label="ค้นหาเอกสาร"
+            label="ค้นหาคำร้อง"
             class="cardshow magintextfind"
           ></v-text-field>
         </template>
@@ -34,16 +34,20 @@
           <v-row
             v-for="item in name.items"
             :key="item.name"
-            router
-            :to="item.route"
-            style="padding: 0px 30px 0px 30px"
+            class="petitiontitle"
           >
-            <v-col v-if="item.form_status=='active' ">
-              <v-btn outlined block height="100" router :to="item.route">
+            <v-col v-if="item.form_status == 'active'">
+              <v-btn
+                outlined
+                block
+                height="100"
+                router
+                :to="item.route"
+                @click="sentPetition(item.form_id)"
+              >
                 <v-row>
                   <v-col align="center">
                     <h2>{{ item.form_name }}</h2>
-                    <h2>{{ item.detail }}</h2>
                   </v-col>
                 </v-row>
               </v-btn>
@@ -148,6 +152,9 @@ export default {
           console.log(error);
         });
     },
+    sentPetition(form_id) {
+      this.$router.push("/UserSentpetition/" + form_id);
+    },
   },
   mounted() {
     this.getpetition();
@@ -169,5 +176,9 @@ export default {
 h1 {
   font-size: 50px;
   padding: 2% 0% 0% 0%;
+}
+
+.petitiontitle {
+  padding: 0px 30px 0px 30px;
 }
 </style>
