@@ -161,13 +161,12 @@
               <h1>
                 {{ forms.title }}
               </h1>
-              <v-form v-model="valid" v-for="profile in profile" :key="profile">
+              <v-form v-for="profile in profile" :key="profile">
                 <v-container>
                   <v-row>
                     <v-col cols="12" md="4">
                       <v-text-field
                         v-model="profile.f_name"
-                        :rules="nameRules"
                         label="ชื่อ"
                         required
                         disabled
@@ -177,7 +176,6 @@
                     <v-col cols="12" md="4">
                       <v-text-field
                         v-model="profile.l_name"
-                        :rules="nameRules"
                         label="นามสกุล"
                         required
                         disabled
@@ -187,7 +185,6 @@
                     <v-col cols="12" md="4">
                       <v-text-field
                         v-model="profile.gender"
-                        :rules="emailRules"
                         label="เพศ"
                         required
                         disabled
@@ -199,7 +196,6 @@
                     <v-col>
                       <v-text-field
                         v-model="profile.email"
-                        :rules="emailRules"
                         label="E-mail"
                         required
                         disabled
@@ -211,7 +207,6 @@
                     <v-col>
                       <v-text-field
                         v-model="profile.tel_num"
-                        :rules="emailRules"
                         label="เบอร์โทร"
                         required
                         disabled
@@ -223,7 +218,6 @@
                     <v-col>
                       <v-text-field
                         v-model="profile.address"
-                        :rules="emailRules"
                         label="ที่อยู่"
                         required
                         disabled
@@ -329,6 +323,8 @@ export default {
       formHasErrors: false,
       approverError: false,
       approverlist: ["ชญานิน", "บัวสละ"],
+      errorMessages: "",
+      approvererrorMessages: "",
     };
   },
   watch: {
@@ -406,7 +402,7 @@ export default {
     createpetition() {
       axios
         .post(process.env.VUE_APP_URL + "insertforms", {
-          users_id: this.$store.getters.getUser.id,
+          users_id: this.$store.getters.getUser.user_id,
           form_name: this.forms.title,
           form_specific: this.title,
           f_name: this.$store.getters.getUser.f_name,
