@@ -7,8 +7,8 @@
         แบบคำร้อง / ยื่นเรื่อง
         <v-divider></v-divider>
       </h1>
-      <h5>{{ petitionListById }}</h5>
-      <h5>{{ specifics }}</h5>
+      <!-- <h5>{{ petitionListById }}</h5>
+      {{specifics}} -->
 
       <h1 v-for="heard in heard" :key="heard" style="text-align: center">
         {{ petitionListById.form_name }}
@@ -85,9 +85,12 @@
           <v-row v-for="heard in heard" :key="heard">
             <v-col align="center" v-if="heard.hasSpecificsDetail">
               <!-- <v-row v-for="form_specific in petitionListById" :key="form_specific.id"> -->
-              <v-row v-for="id in petitionListById.form_specific" :key="id">
+              <v-row
+                v-for="form_specific in petitionListById.form_specific"
+                :key="form_specific.id"
+              >
                 <v-col>
-                  {{ id }}
+                  {{ form_specific.title }}
                   <v-text-field
                     v-model="specifics.specificsdetail"
                     label="ใส่ข้อมูลลงที่นี้"
@@ -105,7 +108,7 @@
             </v-col>
 
             <v-col align="center">
-              <v-btn class="ma-2" outlined color="error"> ย้อนกลับ </v-btn>
+              <v-btn class="ma-2" outlined color="error" to="/UserPetition"> ย้อนกลับ </v-btn>
             </v-col>
           </v-row>
         </v-container>
@@ -145,7 +148,6 @@ export default {
       ],
       specifics: [],
       petitionListById: [],
-      data1: "",
     };
   },
   methods: {
@@ -156,8 +158,29 @@ export default {
         .get(process.env.VUE_APP_URL + "forms/" + this.$route.params.id)
         .then((response) => {
           // handle success
-          this.tmp = JSON.stringify(response.data);
-          this.petitionListById = this.tmp.replace(/\\/g, "");
+          // this.tmp = JSON.stringify(response.data);
+          // this.petitionListById = this.tmp.replace(/\\/g, "");
+
+          // form_specific
+          this.petitionListById = response.data;
+          this.tmp = JSON.stringify(this.petitionListById.form_specific);
+          this.tmp = this.tmp.replace(/\\/g, "");
+          this.specifics = this.tmp.replace(/\\/g, "");
+
+          var temp = this.specifics.slice(1, -1)
+          temp = JSON.parse(temp)
+          this.petitionListById.form_specific = temp
+          
+          //approval_name
+          this.petitionListById = response.data;
+          this.tmp = JSON.stringify(this.petitionListById.approval_name);
+          this.tmp = this.tmp.replace(/\\/g, "");
+          this.specifics = this.tmp.replace(/\\/g, "");
+
+          temp = this.specifics.slice(1, -1)
+          temp = JSON.parse(temp)
+          this.petitionListById.approval_name = temp
+          
         })
         .catch((error) => {
           // handle error
@@ -167,8 +190,9 @@ export default {
   },
   mounted() {
     this.getpetitionbyid();
-    this.petitionListById.toString();
-    this.specifics = this.petitionListById.split("");
+    console.log(this.specifics);
+  
+    
   },
 };
 </script>
