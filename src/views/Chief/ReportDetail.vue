@@ -44,9 +44,6 @@ export default {
       report_detail: "",
     };
   },
-  mounted() {
-    this.getreportbyid();
-  },
   methods: {
     back() {
       this.$router.push("/ChiefReport");
@@ -64,6 +61,9 @@ export default {
           console.log(error);
         });
     },
+  },
+  mounted() {
+    this.getreportbyid();
   },
 };
 </script>

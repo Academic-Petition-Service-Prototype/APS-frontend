@@ -7,41 +7,47 @@
         แบบคำร้อง / ยื่นเรื่อง
         <v-divider></v-divider>
       </h1>
+      <!-- <h5>{{ petitionListById }}</h5>
+      {{specifics}} -->
+
       <h1 v-for="heard in heard" :key="heard" style="text-align: center">
-        {{ heard.title }}
+        {{ petitionListById.form_name }}
       </h1>
       <v-form v-model="valid" v-for="profile in profile" :key="profile">
         <v-container>
           <v-row>
             <v-col cols="12" md="4">
               <v-text-field
-                v-model="profile.Fname"
-                :rules="nameRules"
-                :counter="10"
+                class="text-black"
+                v-model="profile.f_name"
                 label="ชื่อ"
-                required
-                disabled
+                readonly
               ></v-text-field>
             </v-col>
 
             <v-col cols="12" md="4">
               <v-text-field
-                v-model="profile.Lname"
-                :rules="nameRules"
-                :counter="10"
+                v-model="profile.l_name"
                 label="นามสกุล"
-                required
-                disabled
+                readonly
               ></v-text-field>
             </v-col>
 
             <v-col cols="12" md="4">
               <v-text-field
                 v-model="profile.gender"
-                :rules="emailRules"
                 label="เพศ"
-                required
-                disabled
+                readonly
+              ></v-text-field>
+            </v-col>
+          </v-row>
+
+          <v-row>
+            <v-col>
+              <v-text-field
+                v-model="profile.role"
+                label="สถานะผู้ใช้งาน"
+                readonly
               ></v-text-field>
             </v-col>
           </v-row>
@@ -50,10 +56,8 @@
             <v-col>
               <v-text-field
                 v-model="profile.email"
-                :rules="emailRules"
                 label="E-mail"
-                required
-                disabled
+                readonly
               ></v-text-field>
             </v-col>
           </v-row>
@@ -61,11 +65,9 @@
           <v-row>
             <v-col>
               <v-text-field
-                v-model="profile.tell"
-                :rules="emailRules"
+                v-model="profile.num_tel"
                 label="เบอร์โทร"
-                required
-                disabled
+                readonly
               ></v-text-field>
             </v-col>
           </v-row>
@@ -73,23 +75,24 @@
           <v-row>
             <v-col>
               <v-text-field
-                v-model="profile.addess"
-                :rules="emailRules"
+                v-model="profile.address"
                 label="ที่อยู่"
-                required
-                disabled
+                readonly
               ></v-text-field>
             </v-col>
           </v-row>
 
           <v-row v-for="heard in heard" :key="heard">
             <v-col align="center" v-if="heard.hasSpecificsDetail">
-              <v-row v-for="specifics in specifics" :key="specifics">
+              <!-- <v-row v-for="form_specific in petitionListById" :key="form_specific.id"> -->
+              <v-row
+                v-for="form_specific in petitionListById.form_specific"
+                :key="form_specific.id"
+              >
                 <v-col>
-                  {{ specifics.titleheard }}
+                  {{ form_specific.title }}
                   <v-text-field
                     v-model="specifics.specificsdetail"
-                    :rules="emailRules"
                     label="ใส่ข้อมูลลงที่นี้"
                     required
                   >
@@ -105,7 +108,7 @@
             </v-col>
 
             <v-col align="center">
-              <v-btn class="ma-2" outlined color="error"> ย้อนกลับ </v-btn>
+              <v-btn class="ma-2" outlined color="error" to="/UserPetition"> ย้อนกลับ </v-btn>
             </v-col>
           </v-row>
         </v-container>
@@ -117,6 +120,7 @@
 
 <script>
 import NavbarUser from "../../components/NavbarUser.vue";
+import axios from "axios";
 export default {
   name: "UserSentpetition",
   components: {
@@ -124,31 +128,71 @@ export default {
   },
   data() {
     return {
-      detail: "",
+      detail: "sadas sadasdas sadasd",
       profile: [
         {
-          Fname: "ณัฐภูมิ",
-          Lname: "ผาจิต",
-          gender: "ชาย",
-          email: "62015011@kmit.ac.th",
-          tell: "0856937521",
-          addess:
-            "เลขที่ 1 ซอยฉลองกรุง 1แขวงลาดกระบัง เขตลาดกระบังกรุงเทพฯ 10520",
+          f_name: this.$store.getters.getUser.f_name,
+          l_name: this.$store.getters.getUser.l_name,
+          gender: this.$store.getters.getUser.gender,
+          email: this.$store.getters.getUser.email,
+          tel_num: this.$store.getters.getUser.tel_num,
+          address: this.$store.getters.getUser.address,
+          role: this.$store.getters.getUser.role,
         },
       ],
       heard: [
         {
-          title: "การขอสอบย้อนหลัง",
+          title: "",
           hasSpecificsDetail: true, //ตัวกำหนดว่าเป็นฟอรมต้องใส่รายละเอียดเพิ่ม
         },
       ],
-      specifics: [
-        { titleheard: "ข้อมูลรายวิชา", specificsdetail: "" },
-        { titleheard: "เหตุผล", specificsdetail: "" },
-        { titleheard: "เหตุผล", specificsdetail: "" },
-        { titleheard: "เหตุผล", specificsdetail: "" },
-      ],
+      specifics: [],
+      petitionListById: [],
     };
+  },
+  methods: {
+    getpetitionbyid() {
+      console.log(this.$route.params.form_id);
+      console.log(console.log(this.petitionListById.form_specific));
+      axios
+        .get(process.env.VUE_APP_URL + "forms/" + this.$route.params.id)
+        .then((response) => {
+          // handle success
+          // this.tmp = JSON.stringify(response.data);
+          // this.petitionListById = this.tmp.replace(/\\/g, "");
+
+          // form_specific
+          this.petitionListById = response.data;
+          this.tmp = JSON.stringify(this.petitionListById.form_specific);
+          this.tmp = this.tmp.replace(/\\/g, "");
+          this.specifics = this.tmp.replace(/\\/g, "");
+
+          var temp = this.specifics.slice(1, -1)
+          temp = JSON.parse(temp)
+          this.petitionListById.form_specific = temp
+          
+          //approval_name
+          this.petitionListById = response.data;
+          this.tmp = JSON.stringify(this.petitionListById.approval_name);
+          this.tmp = this.tmp.replace(/\\/g, "");
+          this.specifics = this.tmp.replace(/\\/g, "");
+
+          temp = this.specifics.slice(1, -1)
+          temp = JSON.parse(temp)
+          this.petitionListById.approval_name = temp
+          
+        })
+        .catch((error) => {
+          // handle error
+          console.log(error);
+        });
+    },
+  },
+  mounted() {
+    this.getpetitionbyid();
+    console.log(this.specifics);
+  
+    
   },
 };
 </script>

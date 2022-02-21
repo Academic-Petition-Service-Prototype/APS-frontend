@@ -26,7 +26,7 @@
       </v-card-title>
       <v-data-table :headers="headers" :items="reports" :search="search">
         <template v-slot:[`item.actions`]="{ item }">
-          <v-btn small class="mr-2" @click="chageState(item.id)">
+          <v-btn small class="mr-2" @click="chageState(item.report_id)">
             {{ item.report_state }}
           </v-btn>
         </template>
@@ -50,7 +50,7 @@ export default {
         {
           text: "ลำดับ",
           align: "start",
-          value: "id",
+          value: "report_id",
           width: 100,
         },
         { text: "รายการ", width: 500, value: "report_title" },
@@ -77,15 +77,14 @@ export default {
           console.log(error);
         });
     },
-    chageState(id) {
-      console.log(id);
+    chageState(report_id) {
       axios
         .put(process.env.VUE_APP_URL + "reports", {
-          id: id,
+          id: report_id,
         })
         .then(() => {
           // handle success
-          this.$router.push("/ChiefReportDetail/" + id);
+          this.$router.push("/ChiefReportDetail/" + report_id);
         })
         .catch((error) => {
           // handle error
