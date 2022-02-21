@@ -8,7 +8,7 @@
         <v-divider></v-divider>
       </h1>
       <h5>{{ petitionListById }}</h5>
-      <h5>{{specifics}}</h5>
+      <h5>{{ specifics }}</h5>
 
       <h1 v-for="heard in heard" :key="heard" style="text-align: center">
         {{ petitionListById.form_name }}
@@ -81,22 +81,19 @@
               ></v-text-field>
             </v-col>
           </v-row>
-          
 
           <v-row v-for="heard in heard" :key="heard">
             <v-col align="center" v-if="heard.hasSpecificsDetail">
               <!-- <v-row v-for="form_specific in petitionListById" :key="form_specific.id"> -->
-                <v-row v-for="id in petitionListById.form_specific" :key="id">
-                <v-col >
-                  {{id}}
+              <v-row v-for="id in petitionListById.form_specific" :key="id">
+                <v-col>
+                  {{ id }}
                   <v-text-field
                     v-model="specifics.specificsdetail"
                     label="ใส่ข้อมูลลงที่นี้"
                     required
                   >
-                  
                   </v-text-field>
-                  
                 </v-col>
               </v-row>
             </v-col>
@@ -148,13 +145,10 @@ export default {
       ],
       specifics: [],
       petitionListById: [],
-      data1:"",
-
-      
+      data1: "",
     };
   },
   methods: {
-    
     getpetitionbyid() {
       console.log(this.$route.params.form_id);
       console.log(console.log(this.petitionListById.form_specific));
@@ -162,31 +156,19 @@ export default {
         .get(process.env.VUE_APP_URL + "forms/" + this.$route.params.id)
         .then((response) => {
           // handle success
-          this.petitionListById = response.data;
-          console.log(response);
-          
-          
-          
+          this.tmp = JSON.stringify(response.data);
+          this.petitionListById = this.tmp.replace(/\\/g, "");
         })
         .catch((error) => {
           // handle error
           console.log(error);
-
         });
-
-        
     },
-    
-    
   },
   mounted() {
     this.getpetitionbyid();
     this.petitionListById.toString();
     this.specifics = this.petitionListById.split("");
-    
-    
-
-
   },
 };
 </script>
