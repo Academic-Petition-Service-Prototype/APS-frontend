@@ -86,17 +86,20 @@
             <v-col align="center" v-if="heard.hasSpecificsDetail">
               <!-- <v-row v-for="form_specific in petitionListById" :key="form_specific.id"> -->
               <v-row
-                v-for="form_specific in petitionListById.form_specific"
+                v-for="(form_specific, index) in petitionListById.form_specific"
                 :key="form_specific.id"
               >
                 <v-col>
+                  
                   {{ form_specific.title }}
                   <v-text-field
-                    v-model="specifics.specificsdetail"
+                    v-model="detailspecifics[index]"
                     label="ใส่ข้อมูลลงที่นี้"
                     required
                   >
                   </v-text-field>
+
+                  {{detailspecifics}}
                 </v-col>
               </v-row>
             </v-col>
@@ -148,6 +151,7 @@ export default {
       ],
       specifics: [],
       petitionListById: [],
+      detailspecifics:[],
     };
   },
   methods: {
