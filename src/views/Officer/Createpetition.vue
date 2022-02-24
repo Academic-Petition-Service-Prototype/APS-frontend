@@ -7,6 +7,7 @@
         สร้างคำร้อง
         <v-divider></v-divider>
       </h1>
+      <h5>{{ approverlist }}</h5>
       <!-- ส่วนสร้างเอกสาร -->
       <v-stepper alt-labels v-model="stepprocess">
         <v-stepper-header>
@@ -331,26 +332,6 @@ export default {
       approverlist: ["ชญานิน", "บัวสละ"],
     };
   },
-  watch: {
-    name() {
-      this.errorMessages = "";
-    },
-    approver() {
-      this.approvererrorMessages = "";
-    },
-  },
-  computed: {
-    form() {
-      return {
-        name: this.forms.title,
-      };
-    },
-    Selectionapprover() {
-      return {
-        approver: this.listapprover,
-      };
-    },
-  },
   methods: {
     addNewtitle: function() {
       this.title.push({
@@ -428,6 +409,46 @@ export default {
           console.log(error);
         });
     },
+
+    getchieflist() {
+      axios
+        .get(
+          process.env.VUE_APP_URL +
+            "getchief/" +
+            this.$store.getters.getUser.agencies_id
+        )
+        .then((response) => {
+          // handle success
+          this.approverlist = response.data;
+        })
+        .catch((error) => {
+          // handle error
+          console.log(error);
+        });
+    },
+  },
+  watch: {
+    name() {
+      this.errorMessages = "";
+    },
+    approver() {
+      this.approvererrorMessages = "";
+    },
+  },
+  computed: {
+    form() {
+      return {
+        name: this.forms.title,
+      };
+    },
+    Selectionapprover() {
+      return {
+        approver: this.listapprover,
+      };
+    },
+  },
+  mounted() {
+    this.getchieflist();
   },
 };
 </script>

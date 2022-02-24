@@ -5,10 +5,10 @@
     <v-card class="cardshow">
       <v-toolbar dark prominent color="#FFAB40">
         <h1>จัดการคำร้อง/ยื่นเรื่อง</h1>
-        <v-spacer></v-spacer>
-        
-      </v-toolbar>
 
+        <v-spacer></v-spacer>
+      </v-toolbar>
+      <h5>{{ petitionList }}</h5>
       <v-data-iterator
         :items="items"
         :items-per-page.sync="itemsPerPage"
@@ -21,9 +21,15 @@
       >
         <template v-slot:header>
           <v-row>
-            <v-col align="right"><v-btn color="success" style="margin: 10px 10px -25px 10px" to="/OfficerCreatepetition">
-          สร้างคำร้อง
-        </v-btn></v-col>
+            <v-col align="right"
+              ><v-btn
+                color="success"
+                style="margin: 10px 10px -25px 10px"
+                to="/OfficerCreatepetition"
+              >
+                สร้างคำร้อง
+              </v-btn></v-col
+            >
           </v-row>
           <v-row>
             <v-col>
@@ -237,6 +243,7 @@
 
 <script>
 import NavbarOF from "../../components/NavbarOfficer.vue";
+import axios from "axios";
 export default {
   name: "OfficerPetitionManagement",
   components: {
@@ -251,7 +258,7 @@ export default {
       page: 1,
       itemsPerPage: 4,
       sortBy: "name",
-
+      petitionList: [],
       items: [
         {
           no: "1",
@@ -392,14 +399,6 @@ export default {
       ],
     };
   },
-  computed: {
-    numberOfPages() {
-      return Math.ceil(this.items.length / this.itemsPerPage);
-    },
-    filteredKeys() {
-      return this.keys.filter((key) => key !== "Name");
-    },
-  },
   methods: {
     nextPage() {
       if (this.page + 1 <= this.numberOfPages) this.page += 1;
@@ -410,6 +409,33 @@ export default {
     updateItemsPerPage(number) {
       this.itemsPerPage = number;
     },
+    getpetition() {
+      axios
+        .post(process.env.VUE_APP_URL + "getforms", {
+          user_id: this.$store.getters.getUser.user_id,
+          role: this.$store.getters.getUser.role,
+          agency: this.$store.getters.getUser.agency_name,
+        })
+        .then((response) => {
+          // handle success
+          this.petitionList = response.data;
+        })
+        .catch((error) => {
+          // handle error
+          console.log(error);
+        });
+    },
+  },
+  computed: {
+    numberOfPages() {
+      return Math.ceil(this.items.length / this.itemsPerPage);
+    },
+    filteredKeys() {
+      return this.keys.filter((key) => key !== "Name");
+    },
+  },
+  mounted() {
+    this.getpetition();
   },
 };
 </script>
