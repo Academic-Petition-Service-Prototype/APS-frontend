@@ -7,8 +7,6 @@
         แบบคำร้อง / ยื่นเรื่อง
         <v-divider></v-divider>
       </h1>
-      <!-- <h5>{{ petitionListById }}</h5>
-      {{specifics}} -->
 
       <h1 v-for="heard in heard" :key="heard" style="text-align: center">
         {{ petitionListById.form_name }}
@@ -90,16 +88,15 @@
                 :key="form_specific.id"
               >
                 <v-col>
-                  
                   {{ form_specific.title }}
                   <v-text-field
-                    v-model="detailspecifics[index]"
+                    v-model="form_value[index]"
                     label="ใส่ข้อมูลลงที่นี้"
                     required
                   >
                   </v-text-field>
 
-                  {{detailspecifics}}
+                  {{ form_value }}
                 </v-col>
               </v-row>
             </v-col>
@@ -107,11 +104,15 @@
 
           <v-row>
             <v-col align="center">
-              <v-btn class="ma-2" color="success"> ส่งคำร้อง </v-btn>
+              <v-btn class="ma-2" color="success" @click="sentpetition">
+                ส่งคำร้อง
+              </v-btn>
             </v-col>
 
             <v-col align="center">
-              <v-btn class="ma-2" outlined color="error" to="/UserPetition"> ย้อนกลับ </v-btn>
+              <v-btn class="ma-2" outlined color="error" to="/UserPetition">
+                ย้อนกลับ
+              </v-btn>
             </v-col>
           </v-row>
         </v-container>
@@ -131,7 +132,6 @@ export default {
   },
   data() {
     return {
-      detail: "sadas sadasdas sadasd",
       profile: [
         {
           f_name: this.$store.getters.getUser.f_name,
@@ -151,13 +151,11 @@ export default {
       ],
       specifics: [],
       petitionListById: [],
-      detailspecifics:[],
+      form_value: [],
     };
   },
   methods: {
     getpetitionbyid() {
-      console.log(this.$route.params.form_id);
-      console.log(console.log(this.petitionListById.form_specific));
       axios
         .get(process.env.VUE_APP_URL + "forms/" + this.$route.params.id)
         .then((response) => {
@@ -167,36 +165,49 @@ export default {
 
           // form_specific
           this.petitionListById = response.data;
+          console.log(this.petitionListById);
           this.tmp = JSON.stringify(this.petitionListById.form_specific);
           this.tmp = this.tmp.replace(/\\/g, "");
           this.specifics = this.tmp.replace(/\\/g, "");
 
-          var temp = this.specifics.slice(1, -1)
-          temp = JSON.parse(temp)
-          this.petitionListById.form_specific = temp
-          
+          var temp = this.specifics.slice(1, -1);
+          temp = JSON.parse(temp);
+          this.petitionListById.form_specific = temp;
+
           //approval_name
           this.petitionListById = response.data;
           this.tmp = JSON.stringify(this.petitionListById.approval_name);
           this.tmp = this.tmp.replace(/\\/g, "");
           this.specifics = this.tmp.replace(/\\/g, "");
 
-          temp = this.specifics.slice(1, -1)
-          temp = JSON.parse(temp)
-          this.petitionListById.approval_name = temp
-          
+          temp = this.specifics.slice(1, -1);
+          temp = JSON.parse(temp);
+          this.petitionListById.approval_name = temp;
         })
         .catch((error) => {
           // handle error
           console.log(error);
         });
     },
+    sentpetition() {
+      axios
+        .post(process.env.VUE_APP_URL + "submitforms", {
+          users_id: this.$store.getters.getUser.user_id,
+          forms_id: this.petitionListById.form_id,
+          form_value: this.form_value,
+        })
+        .then((response) => {
+          if (response.data == "Sent petition successful") {
+            alert("ส่งคำร้อง" + this.petitionListById.form_name + "สำเร็จ");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
   mounted() {
     this.getpetitionbyid();
-    console.log(this.specifics);
-  
-    
   },
 };
 </script>
