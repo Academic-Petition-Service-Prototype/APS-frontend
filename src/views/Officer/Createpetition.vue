@@ -8,6 +8,7 @@
         <v-divider></v-divider>
       </h1>
       <h5>{{ approverlist }}</h5>
+      {{ approver  }}
       <!-- ส่วนสร้างเอกสาร -->
       <v-stepper alt-labels v-model="stepprocess">
         <v-stepper-header>
@@ -120,7 +121,7 @@
                         :rules="[
                           () => !!approverlist || 'กรุณาเลือกผู้อนุมัติ',
                         ]"
-                        :items="approverlist"
+                        :items="approver"
                         :error-messages="approvererrorMessages"
                         label="เลือกผู้อนุมัติ"
                         placeholder="Select..."
@@ -329,29 +330,30 @@ export default {
       nextapproverId: 1,
       formHasErrors: false,
       approverError: false,
-      approverlist: ["ชญานิน", "บัวสละ"],
+      approverlist: [],
+      approver: [],
     };
   },
   methods: {
-    addNewtitle: function() {
+    addNewtitle: function () {
       this.title.push({
         id: this.nextTodoId++,
         title: this.newtitleText,
       });
       this.newtitleText = "";
     },
-    addapprovertitle: function() {
+    addapprovertitle: function () {
       this.listapprover.push({
         id: this.nextapproverId++,
         title: this.newapproverText,
       });
       this.newapproverText = "";
     },
-    removetitle: function(index) {
+    removetitle: function (index) {
       console.log(index);
       this.title.splice(index, 1);
     },
-    removeapprover: function(index) {
+    removeapprover: function (index) {
       console.log(index);
       this.listapprover.splice(index, 1);
     },
@@ -420,6 +422,30 @@ export default {
         .then((response) => {
           // handle success
           this.approverlist = response.data;
+          // console.log(this.approverlist[0].f_name);
+
+          this.approverlist.forEach((approver) => {
+            this.approver.push(approver.f_name +" "+ approver.l_name);
+            console.log(this.approver.f_name);
+            console.log(this.approver);
+          });
+          
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          
         })
         .catch((error) => {
           // handle error
@@ -449,6 +475,8 @@ export default {
   },
   mounted() {
     this.getchieflist();
+
+    
   },
 };
 </script>
