@@ -8,7 +8,7 @@
         <v-divider></v-divider>
       </h1>
       <h5>{{ approverlist }}</h5>
-      {{ approver  }}
+      {{ approver }}
       <!-- ส่วนสร้างเอกสาร -->
       <v-stepper alt-labels v-model="stepprocess">
         <v-stepper-header>
@@ -422,30 +422,12 @@ export default {
         .then((response) => {
           // handle success
           this.approverlist = response.data;
-          // console.log(this.approverlist[0].f_name);
 
           this.approverlist.forEach((approver) => {
-            this.approver.push(approver.f_name +" "+ approver.l_name);
+            this.approver.push(approver.f_name + " " + approver.l_name);
             console.log(this.approver.f_name);
             console.log(this.approver);
           });
-          
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-          
         })
         .catch((error) => {
           // handle error
@@ -475,8 +457,6 @@ export default {
   },
   mounted() {
     this.getchieflist();
-
-    
   },
 };
 </script>
