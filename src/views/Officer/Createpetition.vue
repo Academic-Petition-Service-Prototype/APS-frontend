@@ -8,7 +8,9 @@
         <v-divider></v-divider>
       </h1>
       <h5>{{ approverlist }}</h5>
-      {{ approver }}
+      <!-- {{ approver }}<br /> -->
+      <!-- {{ approver.name }}<br /> -->
+      <!-- {{ approver.id }} -->
       <!-- ส่วนสร้างเอกสาร -->
       <v-stepper alt-labels v-model="stepprocess">
         <v-stepper-header>
@@ -106,7 +108,7 @@
               <v-row>
                 <!-- ส่วนของเพิ่มหน้าผู้อนุมัติ -->
                 <div>
-                  <form v-on:submit.prevent="addapprovertitle">
+                  <form v-on:submit.prevent="addapprovertitle()">
                     <v-col class="cardshow" align="center">
                       <!-- <v-text-field
                         v-model="newapproverText"
@@ -121,11 +123,15 @@
                         :rules="[
                           () => !!approverlist || 'กรุณาเลือกผู้อนุมัติ',
                         ]"
-                        :items="approver"
+                        :items="approverlist"
+                        item-text="f_name"
+                        item-value="user_id"
+                        return-object
                         :error-messages="approvererrorMessages"
                         label="เลือกผู้อนุมัติ"
                         placeholder="Select..."
                         required
+                        hide-selected
                         class="cardshow"
                       ></v-autocomplete>
                       <v-btn type="submit">เพิ่ม</v-btn>
@@ -133,13 +139,14 @@
                   </form>
                   <v-row
                     v-for="(listapprover, index) in listapprover"
-                    :key="listapprover.id"
+                    :key="listapprover.order"
                   >
                     <v-col class="cardshow" align="center">
-                      {{ listapprover.id }}
+                      {{ listapprover.order }}
                     </v-col>
                     <v-col class="cardshow" align="center">
-                      {{ listapprover.title }}
+                      {{ listapprover.approver_name.f_name }}
+                      {{ listapprover.approver_name.l_name }}
                     </v-col>
                     <v-col class="cardshow" align="center">
                       <v-btn @click="removeapprover(index)"> ลบ </v-btn>
@@ -331,31 +338,38 @@ export default {
       formHasErrors: false,
       approverError: false,
       approverlist: [],
-      approver: [],
+      approver: [
+        {
+          id: "",
+          name: "",
+        },
+      ],
     };
   },
   methods: {
-    addNewtitle: function () {
+    fullname: (approverlist) =>
+      approverlist.f_name + " — " + approverlist.l_name,
+    addNewtitle: function() {
       this.title.push({
         id: this.nextTodoId++,
         title: this.newtitleText,
       });
       this.newtitleText = "";
     },
-    addapprovertitle: function () {
+    addapprovertitle: function() {
       this.listapprover.push({
-        id: this.nextapproverId++,
-        title: this.newapproverText,
+        order: this.nextapproverId++,
+        approver_name: this.newapproverText,
+        // approver_id: this.approver.id[0],
       });
       this.newapproverText = "";
     },
-    removetitle: function (index) {
-      console.log(index);
+    removetitle: function(index) {
       this.title.splice(index, 1);
     },
-    removeapprover: function (index) {
-      console.log(index);
+    removeapprover: function(index) {
       this.listapprover.splice(index, 1);
+      this.nextapproverId--;
     },
 
     nextstepfirst() {
@@ -423,11 +437,11 @@ export default {
           // handle success
           this.approverlist = response.data;
 
-          this.approverlist.forEach((approver) => {
-            this.approver.push(approver.f_name + " " + approver.l_name);
-            console.log(this.approver.f_name);
-            console.log(this.approver);
-          });
+          // this.approverlist.forEach((approver) => {
+          //   // this.approver[0].id.push(approver.user_id);
+          //   this.approver.push(approver.f_name + " " + approver.l_name);
+          //   console.log(this.approver[0].id);
+          // });
         })
         .catch((error) => {
           // handle error
