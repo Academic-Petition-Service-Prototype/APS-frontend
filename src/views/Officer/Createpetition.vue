@@ -110,30 +110,22 @@
                 <div>
                   <form v-on:submit.prevent="addapprovertitle()">
                     <v-col class="cardshow" align="center">
-                      <!-- <v-text-field
-                        v-model="newapproverText"
-                        label="ชื่อผู้อนุมัติ"
-                        required
-                        class="cardshow"
-                      ></v-text-field> -->
-
-                      <v-autocomplete
+                      <v-select
                         ref="approver"
                         v-model="newapproverText"
                         :rules="[
                           () => !!approverlist || 'กรุณาเลือกผู้อนุมัติ',
                         ]"
                         :items="approverlist"
-                        item-text="f_name"
+                        :item-text="item => item.f_name +' - '+ item.l_name"
                         item-value="user_id"
                         return-object
                         :error-messages="approvererrorMessages"
                         label="เลือกผู้อนุมัติ"
-                        placeholder="Select..."
-                        required
-                        hide-selected
                         class="cardshow"
-                      ></v-autocomplete>
+                      >
+                      
+                      </v-select>
                       <v-btn type="submit">เพิ่ม</v-btn>
                     </v-col>
                   </form>
@@ -349,14 +341,14 @@ export default {
   methods: {
     fullname: (approverlist) =>
       approverlist.f_name + " — " + approverlist.l_name,
-    addNewtitle: function() {
+    addNewtitle: function () {
       this.title.push({
         id: this.nextTodoId++,
         title: this.newtitleText,
       });
       this.newtitleText = "";
     },
-    addapprovertitle: function() {
+    addapprovertitle: function () {
       this.listapprover.push({
         order: this.nextapproverId++,
         approver_name: this.newapproverText,
@@ -364,10 +356,10 @@ export default {
       });
       this.newapproverText = "";
     },
-    removetitle: function(index) {
+    removetitle: function (index) {
       this.title.splice(index, 1);
     },
-    removeapprover: function(index) {
+    removeapprover: function (index) {
       this.listapprover.splice(index, 1);
       this.nextapproverId--;
     },
