@@ -165,7 +165,6 @@ export default {
 
           // form_specific
           this.petitionListById = response.data;
-          console.log(this.petitionListById);
           this.tmp = JSON.stringify(this.petitionListById.form_specific);
           this.tmp = this.tmp.replace(/\\/g, "");
           this.specifics = this.tmp.replace(/\\/g, "");
@@ -194,6 +193,7 @@ export default {
         .post(process.env.VUE_APP_URL + "submitforms", {
           users_id: this.$store.getters.getUser.user_id,
           forms_id: this.petitionListById.form_id,
+          approval_order: this.petitionListById.approval_name,
           form_value: this.form_value,
         })
         .then((response) => {
