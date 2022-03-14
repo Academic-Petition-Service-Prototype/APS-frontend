@@ -117,14 +117,13 @@
                           () => !!approverlist || 'กรุณาเลือกผู้อนุมัติ',
                         ]"
                         :items="approverlist"
-                        :item-text="item => item.f_name +' - '+ item.l_name"
+                        :item-text="(item) => item.f_name + ' - ' + item.l_name"
                         item-value="user_id"
                         return-object
                         :error-messages="approvererrorMessages"
                         label="เลือกผู้อนุมัติ"
                         class="cardshow"
                       >
-                      
                       </v-select>
                       <v-btn type="submit">เพิ่ม</v-btn>
                     </v-col>
@@ -341,25 +340,26 @@ export default {
   methods: {
     fullname: (approverlist) =>
       approverlist.f_name + " — " + approverlist.l_name,
-    addNewtitle: function () {
+    addNewtitle: function() {
       this.title.push({
         id: this.nextTodoId++,
         title: this.newtitleText,
       });
       this.newtitleText = "";
     },
-    addapprovertitle: function () {
+    addapprovertitle: function() {
       this.listapprover.push({
         order: this.nextapproverId++,
         approver_name: this.newapproverText,
+        approver_state: "ยังไม่ได้อนุมัติ",
         // approver_id: this.approver.id[0],
       });
       this.newapproverText = "";
     },
-    removetitle: function (index) {
+    removetitle: function(index) {
       this.title.splice(index, 1);
     },
-    removeapprover: function (index) {
+    removeapprover: function(index) {
       this.listapprover.splice(index, 1);
       this.nextapproverId--;
     },
