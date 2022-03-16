@@ -7,10 +7,10 @@
         <v-spacer></v-spacer>
       </v-toolbar>
       <v-row>
-        <v-col align="center" v-if="reports.length">
+        <v-col align="center" v-if="petitionList.length">
           <v-btn width="150" height="50">
             <v-icon>mdi-account</v-icon>
-            <div class="title">{{ reports.length }}</div>
+            <div class="title">{{ petitionList.length }}</div>
           </v-btn>
         </v-col>
       </v-row>
@@ -24,7 +24,7 @@
         >
         </v-text-field>
       </v-card-title>
-      <v-data-table :headers="headers" :items="reports" :search="search">
+      <v-data-table :headers="headers" :items="petitionList" :search="search">
         <template v-slot:[`item.actions`]="{ item }">
           <v-btn small class="mr-2" @click="chageState(item.id)">
             {{ item.report_state }}
@@ -50,48 +50,57 @@ export default {
         {
           text: "ลำดับ",
           align: "start",
-          value: "id",
+          value: "submit_id",
           width: 100,
         },
-        { text: "รายการ", width: 500, value: "report_title" },
-
-        { text: "สถานะ", width: 200, value: "actions" },
+        { text: "รายการ", width: 300, value: "form_name" },
+        { text: "ผู้ยื่นคำร้อง", width: 500, value: "fullname" },
+        {
+          text: "สถานะ",
+          width: 200,
+          value: "approval_order.approver_state[0]",
+        },
       ],
-      reports: [],
+      petitionList: [],
     };
-  },
-  mounted() {
-    this.getreport();
   },
 
   methods: {
-    getreport() {
+    getpetition() {
       axios
-        .get(process.env.VUE_APP_URL + "reports")
+        .post(process.env.VUE_APP_URL + "getsubmitforms", {
+          user_id: this.$store.getters.getUser.user_id,
+        })
         .then((response) => {
           // handle success
-          this.reports = response.data;
+          this.petitionList = response.data;
+          console.log(response.data);
+          console.log(this.petitionList);
         })
         .catch((error) => {
           // handle error
           console.log(error);
         });
     },
-    chageState(id) {
-      console.log(id);
-      axios
-        .put(process.env.VUE_APP_URL + "reports", {
-          id: id,
-        })
-        .then(() => {
-          // handle success
-          this.$router.push("/Approvaldetaill/" + id);
-        })
-        .catch((error) => {
-          // handle error
-          console.log(error);
-        });
-    },
+    // chageState(id) {
+    //   console.log(id);
+    //   axios
+    //     .put(process.env.VUE_APP_URL + "petitionList", {
+    //       id: id,
+    //     })
+    //     .then(() => {
+    //       // handle success
+    //       this.$router.push("/Approvaldetaill/" + id);
+    //     })
+    //     .catch((error) => {
+    //       // handle error
+    //       console.log(error);
+    //     });
+    // },
+  },
+
+  mounted() {
+    this.getpetition();
   },
 };
 </script>
