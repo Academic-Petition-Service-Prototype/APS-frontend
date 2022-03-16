@@ -56,8 +56,7 @@
                 <v-col> {{ item.fullname }}</v-col>
 
                 <v-col>
-                  <v-btn @click="sentPetition(item.form_id)"
-                    ><v-icon color="yellow">mdi-pencil</v-icon
+                  <v-btn @click="selectApprovaldetaill(item.submit_id)"
                     >{{ item.approver_state }}</v-btn
                   >
                 </v-col>
@@ -181,21 +180,6 @@ export default {
           console.log(error);
         });
     },
-    chageState(id) {
-      console.log(id);
-      axios
-        .put(process.env.VUE_APP_URL + "petitionList", {
-          id: id,
-        })
-        .then(() => {
-          // handle success
-          this.$router.push("/Approvaldetaill/" + id);
-        })
-        .catch((error) => {
-          // handle error
-          console.log(error);
-        });
-    },
     nextPage() {
       if (this.page + 1 <= this.numberOfPages) this.page += 1;
     },
@@ -215,8 +199,8 @@ export default {
   updateItemsPerPage(number) {
     this.itemsPerPage = number;
   },
-  sentPetition(form_id) {
-      this.$router.push("/UserSentpetition/" + form_id);
+  selectApprovaldetaill(submit_id) {
+      this.$router.push("/Approvaldetaill/" + submit_id);
     },
 
   mounted() {
