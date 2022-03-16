@@ -8,9 +8,11 @@
 
         <v-spacer></v-spacer>
       </v-toolbar>
-      <h5>{{ petitionList }}</h5>
+      <!-- <h5>{{ petitionListById }}</h5> -->
+      {{petitionListById[0]}}
+
       <v-data-iterator
-        :items="petitionList"
+        :items="petitionListById"
         :items-per-page.sync="itemsPerPage"
         :page.sync="page"
         :search="search"
@@ -20,7 +22,6 @@
         class="text-center"
       >
         <template v-slot:header>
-          
           <v-row>
             <v-col>
               <v-text-field
@@ -55,8 +56,10 @@
                 <v-col> {{ item.fullname }}</v-col>
 
                 <v-col>
-                  <v-btn ><v-icon color="yellow">mdi-pencil</v-icon>{{ item.approver_state }}</v-btn>
-                  
+                  <v-btn @click="sentPetition(item.form_id)"
+                    ><v-icon color="yellow">mdi-pencil</v-icon
+                    >{{ item.approver_state }}</v-btn
+                  >
                 </v-col>
               </v-row>
             </v-card-title>
@@ -125,7 +128,8 @@ export default {
       itemsPerPage: 4,
       sortBy: "name",
 
-      petitionList: [],
+      petitionListById: [],
+      specifics: [],
     };
   },
 
@@ -136,31 +140,62 @@ export default {
           user_id: this.$store.getters.getUser.user_id,
         })
         .then((response) => {
-          // handle success
-          this.petitionList = response.data;
-          console.log(response.data);
-          console.log(this.petitionList);
+          //handle success
+          // this.petitionListById = response.data;
+          // console.log(this.petitionListById);
+          // form_specific
+          this.petitionListById = response.data;
+          console.log(this.petitionListById);
+          this.tmp = JSON.stringify(this.petitionListById[0].form_specific);
+          this.tmp = this.tmp.replace(/\\/g, "");
+          this.specifics = this.tmp.replace(/\\/g, "");
+
+          var temp = this.specifics.slice(1, -1);
+          temp = JSON.parse(temp);
+          this.petitionListById[0].form_specific = temp;
+
+          //approval_name
+          this.petitionListById = response.data;
+          this.tmp = JSON.stringify(this.petitionListById[0].approval_name);
+          this.tmp = this.tmp.replace(/\\/g, "");
+          this.specifics = this.tmp.replace(/\\/g, "");
+
+          temp = this.specifics.slice(1, -1);
+          temp = JSON.parse(temp);
+          this.petitionListById[0].approval_name = temp;
+
+          //form_value
+          this.petitionListById = response.data;
+          this.tmp = JSON.stringify(this.petitionListById[0].form_value);
+          this.tmp = this.tmp.replace(/\\/g, "");
+          this.specifics = this.tmp.replace(/\\/g, "");
+
+          temp = this.specifics.slice(1, -1);
+          temp = JSON.parse(temp);
+          this.petitionListById[0].form_value = temp;
+
+          
         })
         .catch((error) => {
           // handle error
           console.log(error);
         });
     },
-    // chageState(id) {
-    //   console.log(id);
-    //   axios
-    //     .put(process.env.VUE_APP_URL + "petitionList", {
-    //       id: id,
-    //     })
-    //     .then(() => {
-    //       // handle success
-    //       this.$router.push("/Approvaldetaill/" + id);
-    //     })
-    //     .catch((error) => {
-    //       // handle error
-    //       console.log(error);
-    //     });
-    // },
+    chageState(id) {
+      console.log(id);
+      axios
+        .put(process.env.VUE_APP_URL + "petitionList", {
+          id: id,
+        })
+        .then(() => {
+          // handle success
+          this.$router.push("/Approvaldetaill/" + id);
+        })
+        .catch((error) => {
+          // handle error
+          console.log(error);
+        });
+    },
     nextPage() {
       if (this.page + 1 <= this.numberOfPages) this.page += 1;
     },
@@ -180,6 +215,9 @@ export default {
   updateItemsPerPage(number) {
     this.itemsPerPage = number;
   },
+  sentPetition(form_id) {
+      this.$router.push("/UserSentpetition/" + form_id);
+    },
 
   mounted() {
     this.getpetition();
