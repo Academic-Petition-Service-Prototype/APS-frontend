@@ -9,7 +9,7 @@
         <v-spacer></v-spacer>
       </v-toolbar>
       <!-- <h5>{{ petitionListById }}</h5> -->
-      {{petitionListById[0]}}
+      {{ petitionListById }}
 
       <v-data-iterator
         :items="petitionListById"
@@ -56,9 +56,9 @@
                 <v-col> {{ item.fullname }}</v-col>
 
                 <v-col>
-                  <v-btn @click="selectApprovaldetaill(item.submit_id)"
-                    >{{ item.approver_state }}</v-btn
-                  >
+                  <v-btn @click="selectApprovaldetaill(item.submit_id)">{{
+                    item.approver_state
+                  }}</v-btn>
                 </v-col>
               </v-row>
             </v-card-title>
@@ -144,36 +144,40 @@ export default {
           // console.log(this.petitionListById);
           // form_specific
           this.petitionListById = response.data;
+          for (let i = 0; i < this.petitionListById.length; i++) {
           console.log(this.petitionListById);
-          this.tmp = JSON.stringify(this.petitionListById[0].form_specific);
+          this.tmp = JSON.stringify(this.petitionListById[i].form_specific);
           this.tmp = this.tmp.replace(/\\/g, "");
           this.specifics = this.tmp.replace(/\\/g, "");
 
           var temp = this.specifics.slice(1, -1);
           temp = JSON.parse(temp);
-          this.petitionListById[0].form_specific = temp;
+          this.petitionListById[i].form_specific = temp;
+          }
 
           //approval_name
           this.petitionListById = response.data;
-          this.tmp = JSON.stringify(this.petitionListById[0].approval_name);
-          this.tmp = this.tmp.replace(/\\/g, "");
-          this.specifics = this.tmp.replace(/\\/g, "");
+          for (let i = 0; i < this.petitionListById.length; i++) {
+            this.tmp = JSON.stringify(this.petitionListById[i].approval_name);
+            this.tmp = this.tmp.replace(/\\/g, "");
+            this.specifics = this.tmp.replace(/\\/g, "");
 
-          temp = this.specifics.slice(1, -1);
-          temp = JSON.parse(temp);
-          this.petitionListById[0].approval_name = temp;
+            temp = this.specifics.slice(1, -1);
+            temp = JSON.parse(temp);
+            this.petitionListById[i].approval_name = temp;
+          }
 
           //form_value
           this.petitionListById = response.data;
-          this.tmp = JSON.stringify(this.petitionListById[0].form_value);
+          for (let i = 0; i < this.petitionListById.length; i++) {
+          this.tmp = JSON.stringify(this.petitionListById[i].form_value);
           this.tmp = this.tmp.replace(/\\/g, "");
           this.specifics = this.tmp.replace(/\\/g, "");
 
           temp = this.specifics.slice(1, -1);
           temp = JSON.parse(temp);
-          this.petitionListById[0].form_value = temp;
-
-          
+          this.petitionListById[i].form_value = temp;
+          }
         })
         .catch((error) => {
           // handle error
@@ -200,8 +204,8 @@ export default {
     this.itemsPerPage = number;
   },
   selectApprovaldetaill(submit_id) {
-      this.$router.push("/Approvaldetaill/" + submit_id);
-    },
+    this.$router.push("/Approvaldetaill/" + submit_id);
+  },
 
   mounted() {
     this.getpetition();
