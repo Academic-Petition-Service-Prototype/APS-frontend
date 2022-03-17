@@ -1,6 +1,7 @@
 <template>
   <div id="ChiefApprovaldetail">
     <NavbarChief />
+    {{ submition_detail }}
     <v-card class="cardshow">
       <v-row>
         <v-col>
@@ -22,14 +23,12 @@
         <h1>
           {{ forms.title }}
         </h1>
-        <v-form v-model="valid" v-for="profile in profile" :key="profile">
+        <v-form>
           <v-container>
             <v-row>
               <v-col cols="12" md="4">
                 <v-text-field
-                  v-model="profile.Fname"
-                  :rules="nameRules"
-                  :counter="10"
+                  v-model="submition_detail[0].f_name"
                   label="ชื่อ"
                   required
                   disabled
@@ -38,9 +37,7 @@
 
               <v-col cols="12" md="4">
                 <v-text-field
-                  v-model="profile.Lname"
-                  :rules="nameRules"
-                  :counter="10"
+                  v-model="submition_detail[0].l_name"
                   label="นามสกุล"
                   required
                   disabled
@@ -49,8 +46,7 @@
 
               <v-col cols="12" md="4">
                 <v-text-field
-                  v-model="profile.gender"
-                  :rules="emailRules"
+                  v-model="submition_detail[0].gender"
                   label="เพศ"
                   required
                   disabled
@@ -61,8 +57,7 @@
             <v-row>
               <v-col>
                 <v-text-field
-                  v-model="profile.email"
-                  :rules="emailRules"
+                  v-model="submition_detail[0].email"
                   label="E-mail"
                   required
                   disabled
@@ -73,8 +68,7 @@
             <v-row>
               <v-col>
                 <v-text-field
-                  v-model="profile.tell"
-                  :rules="emailRules"
+                  v-model="submition_detail[0].tel_num"
                   label="เบอร์โทร"
                   required
                   disabled
@@ -85,8 +79,7 @@
             <v-row>
               <v-col>
                 <v-text-field
-                  v-model="profile.addess"
-                  :rules="emailRules"
+                  v-model="submition_detail[0].address"
                   label="ที่อยู่"
                   required
                   disabled
@@ -177,19 +170,7 @@ export default {
   },
   data() {
     return {
-      report_title: "",
-      report_detail: "",
-      profile: [
-        {
-          Fname: "ณัฐภูมิ",
-          Lname: "ผาจิต",
-          gender: "ชาย",
-          email: "62015011@kmit.ac.th",
-          tell: "0856937521",
-          addess:
-            "เลขที่ 1 ซอยฉลองกรุง 1แขวงลาดกระบัง เขตลาดกระบังกรุงเทพฯ 10520",
-        },
-      ],
+      submition_detail: [],
       forms: [
         {
           title: "",
@@ -206,26 +187,28 @@ export default {
       statuscheck: null,
     };
   },
-  mounted() {
-    this.getreportbyid();
-  },
   methods: {
     back() {
       this.$router.push("/ChiefApproval");
     },
-    getreportbyid() {
+    getapprovaldetaillbyid() {
       axios
-        .get(process.env.VUE_APP_URL + "reports/" + this.$route.params.id)
+        .get(
+          process.env.VUE_APP_URL + "getsubmitforms/" + this.$route.params.id
+        )
         .then((response) => {
           // handle success
-          this.report_title = response.data.report_title;
-          this.report_detail = response.data.report_detail;
+          this.submition_detail = response.data;
+          console.log(this.submition_detail);
         })
         .catch((error) => {
           // handle error
           console.log(error);
         });
     },
+  },
+  mounted() {
+    this.getapprovaldetaillbyid();
   },
 };
 </script>

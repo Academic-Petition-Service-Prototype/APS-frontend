@@ -8,7 +8,6 @@
 
         <v-spacer></v-spacer>
       </v-toolbar>
-      <!-- <h5>{{ petitionListById }}</h5> -->
       {{ petitionListById }}
 
       <v-data-iterator
@@ -44,21 +43,22 @@
           <v-row class="text-center">
             <v-col> ลำดับ </v-col>
             <v-col> รายการ </v-col>
-            <v-col> ผู้ยื่นคำร้อง</v-col>
-            <v-col> สถานะ</v-col>
+            <v-col> ผู้ยื่นคำร้อง </v-col>
+            <v-col> วันที่ยื่นคำร้อง </v-col>
+            <v-col> สถานะ </v-col>
           </v-row>
 
           <v-row v-for="item in props.items" :key="item.text">
             <v-card-title>
               <v-row class="text-center" align="center">
-                <v-col> {{ item.form_id }} </v-col>
+                <v-col> {{ item.submit_id }} </v-col>
                 <v-col> {{ item.form_name }} </v-col>
                 <v-col> {{ item.fullname }}</v-col>
-
+                <v-col> {{ item.submit_date }} </v-col>
                 <v-col>
-                  <v-btn @click="selectApprovaldetaill(item.submit_id)">{{
-                    item.approver_state
-                  }}</v-btn>
+                  <v-btn @click="selectApprovaldetaill(item.submit_id)">
+                    {{ item.approval_order[0].approver_state }}</v-btn
+                  >
                 </v-col>
               </v-row>
             </v-card-title>
@@ -108,7 +108,6 @@
   <!-- ส่วนจัดเเสดง -->
 </template>
 
-
 <script>
 import NavbarChief from "../../components/NavbarChief.vue";
 import axios from "axios";
@@ -126,7 +125,6 @@ export default {
       page: 1,
       itemsPerPage: 4,
       sortBy: "name",
-
       petitionListById: [],
       specifics: [],
     };
@@ -140,43 +138,29 @@ export default {
         })
         .then((response) => {
           //handle success
-          // this.petitionListById = response.data;
-          // console.log(this.petitionListById);
-          // form_specific
+
+          // approval_order
           this.petitionListById = response.data;
           for (let i = 0; i < this.petitionListById.length; i++) {
-          console.log(this.petitionListById);
-          this.tmp = JSON.stringify(this.petitionListById[i].form_specific);
-          this.tmp = this.tmp.replace(/\\/g, "");
-          this.specifics = this.tmp.replace(/\\/g, "");
-
-          var temp = this.specifics.slice(1, -1);
-          temp = JSON.parse(temp);
-          this.petitionListById[i].form_specific = temp;
-          }
-
-          //approval_name
-          this.petitionListById = response.data;
-          for (let i = 0; i < this.petitionListById.length; i++) {
-            this.tmp = JSON.stringify(this.petitionListById[i].approval_name);
+            this.tmp = JSON.stringify(this.petitionListById[i].approval_order);
             this.tmp = this.tmp.replace(/\\/g, "");
             this.specifics = this.tmp.replace(/\\/g, "");
 
-            temp = this.specifics.slice(1, -1);
+            var temp = this.specifics.slice(1, -1);
             temp = JSON.parse(temp);
-            this.petitionListById[i].approval_name = temp;
+            this.petitionListById[i].approval_order = temp;
           }
 
           //form_value
           this.petitionListById = response.data;
           for (let i = 0; i < this.petitionListById.length; i++) {
-          this.tmp = JSON.stringify(this.petitionListById[i].form_value);
-          this.tmp = this.tmp.replace(/\\/g, "");
-          this.specifics = this.tmp.replace(/\\/g, "");
+            this.tmp = JSON.stringify(this.petitionListById[i].form_value);
+            this.tmp = this.tmp.replace(/\\/g, "");
+            this.specifics = this.tmp.replace(/\\/g, "");
 
-          temp = this.specifics.slice(1, -1);
-          temp = JSON.parse(temp);
-          this.petitionListById[i].form_value = temp;
+            temp = this.specifics.slice(1, -1);
+            temp = JSON.parse(temp);
+            this.petitionListById[i].form_value = temp;
           }
         })
         .catch((error) => {
@@ -193,18 +177,9 @@ export default {
     updateItemsPerPage(number) {
       this.itemsPerPage = number;
     },
-  },
-  nextPage() {
-    if (this.page + 1 <= this.numberOfPages) this.page += 1;
-  },
-  formerPage() {
-    if (this.page - 1 >= 1) this.page -= 1;
-  },
-  updateItemsPerPage(number) {
-    this.itemsPerPage = number;
-  },
-  selectApprovaldetaill(submit_id) {
-    this.$router.push("/Approvaldetaill/" + submit_id);
+    selectApprovaldetaill(submit_id) {
+      this.$router.push("/Approvaldetaill/" + submit_id);
+    },
   },
 
   mounted() {
