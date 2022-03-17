@@ -1,34 +1,6 @@
 <template>
   <div id="ChiefApprovaldetail">
     <NavbarChief />
-    <!-- <v-card class="cardmargin">
-      <h1 class="text-center p-2">
-        รายละเอียดการรายงานปัญหา
-      </h1>
-      <v-divider></v-divider>
-      <v-form>
-        <v-container>
-          <v-row>
-            <v-col cols="12">
-              <v-card outlined class="p-4">
-                <h3>หัวข้อปัญหา</h3>
-                <p class="subtitle-1">{{ report_title }}</p>
-              </v-card>
-              <v-card outlined class="p-4 mt-2">
-                <h3>รายละเอียดปัญหา</h3>
-                <p class="subtitle-1">{{ report_detail }}</p>
-              </v-card>
-            </v-col>
-            <v-col cols="12" class="text-center">
-              <v-btn dark x-large color="#3F3F3F" @click="back">
-                ย้อนกลับ
-              </v-btn>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-form>
-    </v-card> -->
-
     <v-card class="cardshow">
       <v-row>
         <v-col>
