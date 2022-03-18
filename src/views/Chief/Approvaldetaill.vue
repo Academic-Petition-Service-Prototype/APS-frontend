@@ -1,7 +1,7 @@
 <template>
   <div id="ChiefApprovaldetail">
     <NavbarChief />
-
+    {{disapproveddetail}}
     <v-card class="cardshow">
       <v-row>
         <v-col>
@@ -10,7 +10,7 @@
           </v-btn>
         </v-col>
         <v-col align="center">
-          <!-- <v-btn class="ma-2" outlined color="error"> ย้อนกลับ </v-btn> -->
+         
           <h2>{{ submition_detail[0].form_name }}</h2>
         </v-col>
         <v-col> </v-col>
@@ -20,9 +20,7 @@
 
       <v-card class="mb-12" color="#ECEFF1">
         <!-- ส่วนเเสดงหน้าการเเสดงตัวอย่าง -->
-        <h1>
-          {{ forms.title }}
-        </h1>
+        
         <v-form>
           <v-container>
             <v-row>
@@ -120,7 +118,7 @@
                       class="ma-2"
                       outlined
                       color="error"
-                      @click="disapproved"
+                      @click="disapproveddialog = true"
                     >
                       ไม่อนุมัติ
                     </v-btn>
@@ -169,6 +167,32 @@
           </v-container>
         </v-form>
         <!-- ส่วนเเสดงหน้าการเเสดงตัวอย่าง -->
+        <!-- ส่วนจัดเเสดงเวลากดเเก้ไข -->
+      <v-dialog v-model="disapproveddialog" persistent width="800">
+        <v-card align="center">
+          <h1>รายละเอียด</h1>
+          <h3>กรุณาใส่เหตุผลที่ไม่อนุมัติ</h3>
+
+          {{getdisapproveddetail}}
+          <v-textarea
+          v-model="getdisapproveddetail"
+          auto-grow
+          outlined
+          rows="1"
+          row-height="15"
+          class="cardmargin"
+        ></v-textarea>
+          
+          
+          <v-btn color="green darken-1" text @click="disapproved">
+            ตกลง
+          </v-btn>
+          <v-btn color="red darken-1" text @click="canle">
+            ยกเลิก
+          </v-btn>
+        </v-card>
+      </v-dialog>
+      <!-- ส่วนจัดเเสดงเวลากดเเก้ไข -->
       </v-card>
     </v-card>
     <!-- ส่วนจัดเเสดง -->
@@ -185,23 +209,16 @@ export default {
   data() {
     return {
       submition_detail: [],
-      forms: [
-        {
-          title: "",
-          specifics: true,
-          approver: true,
-        },
-      ],
-      newtitleText: "",
-      newapproverText: "",
+      disapproveddialog: false,
       title: [],
       listapprover: [],
-      nextTodoId: 1,
-      nextapproverId: 1,
       statuscheck: true,
       specifics: [],
       specificsdata: [],
       titlespecifics: [],
+      disapproveddetail:[],
+      getdisapproveddetail:'',
+      nextdetailId: 1,
     };
   },
   methods: {
@@ -259,11 +276,24 @@ export default {
     },
     approve() {
       this.submition_detail[0].approval_order[0].approver_state = "อนุมัติแล้ว";
+      
       this.statuscheck = false;
+      this.getdisapproveddetail='';
+      
     },
     disapproved() {
       this.submition_detail[0].approval_order[0].approver_state = "ไม่อนุมัติ";
+      this.disapproveddetail.push({
+        id: this.nextdetailId++,
+        detail: this.getdisapproveddetail,
+        
+      });
       this.statuscheck = false;
+      this.disapproveddialog = false;
+    },
+    canle(){
+      this.disapproveddialog = false;
+    this.getdisapproveddetail='';
     },
   },
   mounted() {

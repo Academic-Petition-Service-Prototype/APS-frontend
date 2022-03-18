@@ -2,6 +2,7 @@
   <!-- ส่วนจัดเเสดง -->
   <div id="ChiefApproval">
     <NavbarChief />
+    
     <v-card class="cardshow">
       <v-toolbar dark prominent color="#FFAB40">
         <h1>การอนุมัติคำร้อง</h1>
