@@ -1,7 +1,7 @@
 <template>
   <div id="ChiefApprovaldetail">
     <NavbarChief />
-    {{ submition_detail }}
+
     <v-card class="cardshow">
       <v-row>
         <v-col>
@@ -11,9 +11,9 @@
         </v-col>
         <v-col align="center">
           <!-- <v-btn class="ma-2" outlined color="error"> ย้อนกลับ </v-btn> -->
-          <h2>แบบคำร้อง / ยื่นเรื่อง</h2>
+          <h2>{{ submition_detail[0].form_name }}</h2>
         </v-col>
-        <v-col></v-col>
+        <v-col> </v-col>
       </v-row>
 
       <v-divider></v-divider>
@@ -86,69 +86,83 @@
                 ></v-text-field>
               </v-col>
             </v-row>
-
-            <v-row v-if="forms.specifics == true">
-              <div>
-                <v-row v-for="title in title" :key="title.id">
-                  <v-col class="cardshow" align="center">
-                    <h3>{{ title.title }}</h3>
-                    <v-text-field
-                      label="กรุณาใส่ข่อมูล"
-                      required
-                      class="cardshow"
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-
-                {{ title }}
-              </div>
-            </v-row>
             <v-row>
               <v-col>
-                {{ statuscheck }}
-                <v-row v-if="statuscheck == null">
-                  <v-col align="center">
-                    <v-btn
-                      class="ma-2"
-                      color="success"
-                      @click="statuscheck = true"
-                    >
-                      อนุมัติ
-                    </v-btn>
-                  </v-col>
+                <div
+                  v-for="(titlespecifics, index) in titlespecifics"
+                  :key="index"
+                >
+                  <h3>{{ titlespecifics.title }}</h3>
 
                   <v-col align="center">
-                    <v-btn
-                      class="ma-2"
-                      outlined
-                      color="error"
-                      @click="statuscheck = false"
-                    >
-                      ไม่อนุมัติ
-                    </v-btn>
+                    
+                    <b-card class="text-center">
+                      <div >
+                      {{ specificsdata[index] }}
+                      </div>
+                    </b-card>
                   </v-col>
-                </v-row>
+                </div>
+              </v-col>
+            </v-row>
 
+            <v-row>
+              <v-col>
                 <v-row v-if="statuscheck == true">
                   <v-col align="center">
-                    <v-btn class="ma-2" color="success" width="500" height="80">
+                    <v-btn class="ma-2" color="success" @click="approve">
                       อนุมัติ
                     </v-btn>
                   </v-col>
-                </v-row>
 
-                <v-row v-if="statuscheck == false">
                   <v-col align="center">
                     <v-btn
                       class="ma-2"
                       outlined
                       color="error"
-                      width="500"
-                      height="80"
+                      @click="disapproved"
                     >
                       ไม่อนุมัติ
                     </v-btn>
                   </v-col>
+                </v-row>
+                <v-row v-if="statuscheck == false">
+                  <v-row
+                    v-if="
+                      this.submition_detail[0].approval_order[0]
+                        .approver_state == 'อนุมัติแล้ว'
+                    "
+                  >
+                    <v-col align="center">
+                      <v-btn
+                        class="ma-2"
+                        color="success"
+                        width="500"
+                        height="80"
+                      >
+                        อนุมัติ
+                      </v-btn>
+                    </v-col>
+                  </v-row>
+
+                  <v-row
+                    v-if="
+                      this.submition_detail[0].approval_order[0]
+                        .approver_state == 'ไม่อนุมัติ'
+                    "
+                  >
+                    <v-col align="center">
+                      <v-btn
+                        class="ma-2"
+                        outlined
+                        color="error"
+                        width="500"
+                        height="80"
+                      >
+                        ไม่อนุมัติ
+                      </v-btn>
+                    </v-col>
+                  </v-row>
                 </v-row>
               </v-col>
             </v-row>
@@ -184,7 +198,10 @@ export default {
       listapprover: [],
       nextTodoId: 1,
       nextapproverId: 1,
-      statuscheck: null,
+      statuscheck: true,
+      specifics: [],
+      specificsdata: [],
+      titlespecifics: [],
     };
   },
   methods: {
@@ -199,12 +216,54 @@ export default {
         .then((response) => {
           // handle success
           this.submition_detail = response.data;
-          console.log(this.submition_detail);
+          // approval_order
+          this.submition_detail = response.data;
+          for (let i = 0; i < this.submition_detail.length; i++) {
+            this.tmp = JSON.stringify(this.submition_detail[i].approval_order);
+            this.tmp = this.tmp.replace(/\\/g, "");
+            this.specifics = this.tmp.replace(/\\/g, "");
+
+            var temp = this.specifics.slice(1, -1);
+            temp = JSON.parse(temp);
+            this.submition_detail[i].approval_order = temp;
+          }
+
+          //form_value
+          this.submition_detail = response.data;
+          for (let i = 0; i < this.submition_detail.length; i++) {
+            this.tmp = JSON.stringify(this.submition_detail[i].form_value);
+            this.tmp = this.tmp.replace(/\\/g, "");
+            this.specifics = this.tmp.replace(/\\/g, "");
+
+            temp = this.specifics.slice(1, -1);
+            temp = JSON.parse(temp);
+            this.specificsdata = temp;
+          }
+
+          //form_specific
+          this.submition_detail = response.data;
+          for (let i = 0; i < this.submition_detail.length; i++) {
+            this.tmp = JSON.stringify(this.submition_detail[i].form_specific);
+            this.tmp = this.tmp.replace(/\\/g, "");
+            this.specifics = this.tmp.replace(/\\/g, "");
+
+            temp = this.specifics.slice(1, -1);
+            temp = JSON.parse(temp);
+            this.titlespecifics = temp;
+          }
         })
         .catch((error) => {
           // handle error
           console.log(error);
         });
+    },
+    approve() {
+      this.submition_detail[0].approval_order[0].approver_state = "อนุมัติแล้ว";
+      this.statuscheck = false;
+    },
+    disapproved() {
+      this.submition_detail[0].approval_order[0].approver_state = "ไม่อนุมัติ";
+      this.statuscheck = false;
     },
   },
   mounted() {
