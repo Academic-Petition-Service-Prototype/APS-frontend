@@ -8,7 +8,6 @@
 
         <v-spacer></v-spacer>
       </v-toolbar>
-      {{ petitionListById }}
 
       <v-data-iterator
         :items="petitionListById"
