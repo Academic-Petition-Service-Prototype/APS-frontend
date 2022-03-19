@@ -9,27 +9,22 @@
           </v-btn>
         </v-col>
         <v-col align="center">
-          <!-- <v-btn class="ma-2" outlined color="error"> ย้อนกลับ </v-btn> -->
-          <h2>แบบคำร้อง / ยื่นเรื่อง</h2>
+          <h2>{{ submition_detail[0].form_name }}</h2>
         </v-col>
-        <v-col></v-col>
+        <v-col> </v-col>
       </v-row>
 
       <v-divider></v-divider>
 
       <v-card class="mb-12" color="#ECEFF1">
         <!-- ส่วนเเสดงหน้าการเเสดงตัวอย่าง -->
-        <h1>
-          {{ forms.title }}
-        </h1>
-        <v-form v-model="valid" v-for="profile in profile" :key="profile">
+
+        <v-form>
           <v-container>
             <v-row>
               <v-col cols="12" md="4">
                 <v-text-field
-                  v-model="profile.Fname"
-                  :rules="nameRules"
-                  :counter="10"
+                  v-model="submition_detail[0].f_name"
                   label="ชื่อ"
                   required
                   disabled
@@ -38,9 +33,7 @@
 
               <v-col cols="12" md="4">
                 <v-text-field
-                  v-model="profile.Lname"
-                  :rules="nameRules"
-                  :counter="10"
+                  v-model="submition_detail[0].l_name"
                   label="นามสกุล"
                   required
                   disabled
@@ -49,8 +42,7 @@
 
               <v-col cols="12" md="4">
                 <v-text-field
-                  v-model="profile.gender"
-                  :rules="emailRules"
+                  v-model="submition_detail[0].gender"
                   label="เพศ"
                   required
                   disabled
@@ -61,8 +53,7 @@
             <v-row>
               <v-col>
                 <v-text-field
-                  v-model="profile.email"
-                  :rules="emailRules"
+                  v-model="submition_detail[0].email"
                   label="E-mail"
                   required
                   disabled
@@ -73,8 +64,7 @@
             <v-row>
               <v-col>
                 <v-text-field
-                  v-model="profile.tell"
-                  :rules="emailRules"
+                  v-model="submition_detail[0].tel_num"
                   label="เบอร์โทร"
                   required
                   disabled
@@ -85,83 +75,120 @@
             <v-row>
               <v-col>
                 <v-text-field
-                  v-model="profile.addess"
-                  :rules="emailRules"
+                  v-model="submition_detail[0].address"
                   label="ที่อยู่"
                   required
                   disabled
                 ></v-text-field>
               </v-col>
             </v-row>
-
-            <v-row v-if="forms.specifics == true">
-              <div>
-                <v-row v-for="title in title" :key="title.id">
-                  <v-col class="cardshow" align="center">
-                    <h3>{{ title.title }}</h3>
-                    <v-text-field
-                      label="กรุณาใส่ข่อมูล"
-                      required
-                      class="cardshow"
-                    ></v-text-field>
-                  </v-col>
-                </v-row>
-
-                {{ title }}
-              </div>
-            </v-row>
             <v-row>
               <v-col>
-                {{ statuscheck }}
-                <v-row v-if="statuscheck == null">
-                  <v-col align="center">
-                    <v-btn
-                      class="ma-2"
-                      color="success"
-                      @click="statuscheck = true"
-                    >
-                      อนุมัติ
-                    </v-btn>
-                  </v-col>
+                <div
+                  v-for="(titlespecifics, index) in titlespecifics"
+                  :key="index"
+                >
+                  <h3>{{ titlespecifics.title }}</h3>
 
                   <v-col align="center">
-                    <v-btn
-                      class="ma-2"
-                      outlined
-                      color="error"
-                      @click="statuscheck = false"
-                    >
-                      ไม่อนุมัติ
-                    </v-btn>
+                    <b-card class="text-center">
+                      <div>
+                        {{ specificsdata[index] }}
+                      </div>
+                    </b-card>
                   </v-col>
-                </v-row>
+                </div>
+              </v-col>
+            </v-row>
 
+            <v-row>
+              <v-col>
                 <v-row v-if="statuscheck == true">
                   <v-col align="center">
-                    <v-btn class="ma-2" color="success" width="500" height="80">
+                    <v-btn class="ma-2" color="success" @click="approve">
                       อนุมัติ
                     </v-btn>
                   </v-col>
-                </v-row>
 
-                <v-row v-if="statuscheck == false">
                   <v-col align="center">
                     <v-btn
                       class="ma-2"
                       outlined
                       color="error"
-                      width="500"
-                      height="80"
+                      @click="disapproveddialog = true"
                     >
                       ไม่อนุมัติ
                     </v-btn>
                   </v-col>
+                </v-row>
+                <v-row v-if="statuscheck == false">
+                  <v-row
+                    v-if="
+                      this.submition_detail[0].approval_order[0]
+                        .approver_state == 'อนุมัติแล้ว'
+                    "
+                  >
+                    <v-col align="center">
+                      <v-btn
+                        class="ma-2"
+                        color="success"
+                        width="500"
+                        height="80"
+                      >
+                        อนุมัติ
+                      </v-btn>
+                    </v-col>
+                  </v-row>
+
+                  <v-row
+                    v-if="
+                      this.submition_detail[0].approval_order[0]
+                        .approver_state == 'ไม่อนุมัติ'
+                    "
+                  >
+                    <v-col align="center">
+                      <v-btn
+                        class="ma-2"
+                        outlined
+                        color="error"
+                        width="500"
+                        height="80"
+                      >
+                        ไม่อนุมัติ
+                      </v-btn>
+                    </v-col>
+                  </v-row>
                 </v-row>
               </v-col>
             </v-row>
           </v-container>
         </v-form>
         <!-- ส่วนเเสดงหน้าการเเสดงตัวอย่าง -->
+        <!-- ส่วนจัดเเสดงเวลากดเเก้ไข -->
+        <v-dialog v-model="disapproveddialog" persistent width="800">
+          <v-card align="center">
+            <h1>รายละเอียด</h1>
+            <h3>กรุณาใส่เหตุผลที่ไม่อนุมัติ</h3>
+
+            {{ getdisapproveddetail }}
+            <v-textarea
+              v-model="getdisapproveddetail"
+              auto-grow
+              outlined
+              rows="1"
+              row-height="15"
+              class="cardmargin"
+            ></v-textarea>
+
+            <v-btn color="green darken-1" text @click="disapproved">
+              ตกลง
+            </v-btn>
+            <v-btn color="red darken-1" text @click="canle">
+              ยกเลิก
+            </v-btn>
+          </v-card>
+        </v-dialog>
+        <!-- ส่วนจัดเเสดงเวลากดเเก้ไข -->
       </v-card>
     </v-card>
     <!-- ส่วนจัดเเสดง -->
@@ -177,55 +204,118 @@ export default {
   },
   data() {
     return {
-      report_title: "",
-      report_detail: "",
-      profile: [
-        {
-          Fname: "ณัฐภูมิ",
-          Lname: "ผาจิต",
-          gender: "ชาย",
-          email: "62015011@kmit.ac.th",
-          tell: "0856937521",
-          addess:
-            "เลขที่ 1 ซอยฉลองกรุง 1แขวงลาดกระบัง เขตลาดกระบังกรุงเทพฯ 10520",
-        },
-      ],
-      forms: [
-        {
-          title: "",
-          specifics: true,
-          approver: true,
-        },
-      ],
-      newtitleText: "",
-      newapproverText: "",
+      submition_detail: [],
+      disapproveddialog: false,
       title: [],
       listapprover: [],
-      nextTodoId: 1,
-      nextapproverId: 1,
-      statuscheck: null,
+      statuscheck: true,
+      specifics: [],
+      specificsdata: [],
+      titlespecifics: [],
+      disapproveddetail: [],
+      getdisapproveddetail: "",
+      nextdetailId: 1,
     };
-  },
-  mounted() {
-    this.getreportbyid();
   },
   methods: {
     back() {
       this.$router.push("/ChiefApproval");
     },
-    getreportbyid() {
+    getapprovaldetaillbyid() {
       axios
-        .get(process.env.VUE_APP_URL + "reports/" + this.$route.params.id)
+        .get(
+          process.env.VUE_APP_URL + "getsubmitforms/" + this.$route.params.id
+        )
         .then((response) => {
           // handle success
-          this.report_title = response.data.report_title;
-          this.report_detail = response.data.report_detail;
+          this.submition_detail = response.data;
+          // approval_order
+          this.submition_detail = response.data;
+          for (let i = 0; i < this.submition_detail.length; i++) {
+            this.tmp = JSON.stringify(this.submition_detail[i].approval_order);
+            this.tmp = this.tmp.replace(/\\/g, "");
+            this.specifics = this.tmp.replace(/\\/g, "");
+
+            var temp = this.specifics.slice(1, -1);
+            temp = JSON.parse(temp);
+            this.submition_detail[i].approval_order = temp;
+          }
+
+          //form_value
+          this.submition_detail = response.data;
+          for (let i = 0; i < this.submition_detail.length; i++) {
+            this.tmp = JSON.stringify(this.submition_detail[i].form_value);
+            this.tmp = this.tmp.replace(/\\/g, "");
+            this.specifics = this.tmp.replace(/\\/g, "");
+
+            temp = this.specifics.slice(1, -1);
+            temp = JSON.parse(temp);
+            this.specificsdata = temp;
+          }
+
+          //form_specific
+          this.submition_detail = response.data;
+          for (let i = 0; i < this.submition_detail.length; i++) {
+            this.tmp = JSON.stringify(this.submition_detail[i].form_specific);
+            this.tmp = this.tmp.replace(/\\/g, "");
+            this.specifics = this.tmp.replace(/\\/g, "");
+
+            temp = this.specifics.slice(1, -1);
+            temp = JSON.parse(temp);
+            this.titlespecifics = temp;
+          }
         })
         .catch((error) => {
           // handle error
           console.log(error);
         });
     },
+    approve() {
+      if (confirm("ยืนยันการอนุมัติ")) {
+        alert("อนุมัติสำเร็จ");
+        this.submition_detail[0].approval_order[0].approver_state =
+          "อนุมัติแล้ว";
+        this.submition_detail[0].submit_state++;
+        this.statuscheck = false;
+        this.getdisapproveddetail = "";
+
+        axios
+          .post(process.env.VUE_APP_URL + "approvepetition", {
+            submit_id: this.submition_detail[0].submit_id,
+            approval_order: this.submition_detail[0].approval_order,
+            submit_state: this.submition_detail[0].submit_state,
+          })
+          .then((response) => {
+            //handle success
+            if (response.data == "Approve petition successful") {
+              alert("อนุมัติคำร้องสำเร็จ");
+              this.$router.push("/ChiefApproval");
+            } else {
+              alert("อนุมัติคำร้องไม่สำเร็จ!");
+            }
+          })
+          .catch((error) => {
+            // handle error
+            console.log(error);
+          });
+      }
+    },
+    disapproved() {
+      this.submition_detail[0].approval_order[0].approver_state = "ไม่อนุมัติ";
+      this.disapproveddetail.push({
+        id: this.nextdetailId++,
+        detail: this.getdisapproveddetail,
+      });
+      this.statuscheck = false;
+      this.disapproveddialog = false;
+    },
+    cancle() {
+      this.disapproveddialog = false;
+      this.getdisapproveddetail = "";
+    },
+  },
+  mounted() {
+    this.getapprovaldetaillbyid();
   },
 };
 </script>
