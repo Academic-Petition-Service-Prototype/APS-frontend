@@ -93,7 +93,8 @@
               <v-btn
                 fab
                 dark
-                color="blue darken-3"
+                icon
+                color="#FFAB40"
                 class="mr-1"
                 @click="formerPage"
               >
@@ -102,7 +103,8 @@
               <v-btn
                 fab
                 dark
-                color="blue darken-3"
+                icon
+                color="#FFAB40"
                 class="ml-1"
                 @click="nextPage"
               >
@@ -281,152 +283,13 @@ export default {
       email: "",
       address: "",
       nextOfficerId: 1,
-      listofficer: [],
+      listSecretary: [],
       // ของตัวไเพิ่มข้อมูล
-
-      items: [
-        {
-          no: "1",
-          text: "ฟรอมที่ 1",
-          agency: "ศึกษาทั่วไป",
-          satatus: true,
-          switch: false,
-          datecreation: "6/12/2564",
-        },
-        {
-          no: "2",
-          text: "ฟรอมที่ 2",
-          agency: "ศึกษาทั่วไป",
-          satatus: true,
-          switch: true,
-          datecreation: "6/12/2564",
-        },
-        {
-          no: "3",
-          text: "ฟรอมที่ 3",
-          agency: "ศึกษาทั่วไป",
-          satatus: false,
-          switch: true,
-          datecreation: "6/12/2564",
-        },
-        {
-          no: "4",
-          text: "ฟรอมที่ 4",
-          agency: "ศึกษาทั่วไป",
-          satatus: true,
-          switch: true,
-          datecreation: "6/12/2564",
-        },
-        {
-          no: "4",
-          text: "ฟรอมที่ 4",
-          agency: "ศึกษาทั่วไป",
-          satatus: true,
-          switch: true,
-          datecreation: "6/12/2564",
-        },
-        {
-          no: "4",
-          text: "ฟรอมที่ 4",
-          agency: "ศึกษาทั่วไป",
-          satatus: true,
-          switch: true,
-          datecreation: "6/12/2564",
-        },
-        {
-          no: "4",
-          text: "ฟรอมที่ 4",
-          agency: "ศึกษาทั่วไป",
-          satatus: true,
-          switch: true,
-          datecreation: "6/12/2564",
-        },
-        {
-          no: "4",
-          text: "ฟรอมที่ 4",
-          agency: "ศึกษาทั่วไป",
-          satatus: true,
-          switch: true,
-          datecreation: "6/12/2564",
-        },
-        {
-          no: "4",
-          text: "ฟรอมที่ 4",
-          agency: "ศึกษาทั่วไป",
-          satatus: true,
-          switch: true,
-          datecreation: "6/12/2564",
-        },
-        {
-          no: "4",
-          text: "ฟรอมที่ 4",
-          agency: "ศึกษาทั่วไป",
-          satatus: true,
-          switch: true,
-          datecreation: "6/12/2564",
-        },
-        {
-          no: "4",
-          text: "ฟรอมที่ 4",
-          agency: "ศึกษาทั่วไป",
-          satatus: true,
-          switch: true,
-          datecreation: "6/12/2564",
-        },
-        {
-          no: "4",
-          text: "ฟรอมที่ 4",
-          agency: "ศึกษาทั่วไป",
-          satatus: true,
-          switch: true,
-          datecreation: "6/12/2564",
-        },
-        {
-          no: "4",
-          text: "ฟรอมที่ 36",
-          agency: "ศึกษาทั่วไป",
-          satatus: true,
-          switch: true,
-          datecreation: "6/12/2564",
-        },
-        {
-          no: "4",
-          text: "ฟรอมที่ 4",
-          agency: "ศึกษาทั่วไป",
-          satatus: true,
-          switch: true,
-          datecreation: "6/12/2564",
-        },
-        {
-          no: "4",
-          text: "ฟรอมที่ 4",
-          agency: "ศึกษาทั่วไป",
-          satatus: true,
-          switch: true,
-          datecreation: "6/12/2564",
-        },
-        {
-          no: "4",
-          text: "ฟรอมที่ 4",
-          agency: "ศึกษาทั่วไป",
-          satatus: true,
-          switch: true,
-          datecreation: "6/12/2564",
-        },
-        {
-          no: "4",
-          text: "ฟรอมที่ 4",
-          agency: "ศึกษาทั่วไป",
-          satatus: true,
-          switch: true,
-          datecreation: "6/12/2564",
-        },
-      ],
     };
   },
   computed: {
     numberOfPages() {
-      return Math.ceil(this.items.length / this.itemsPerPage);
+      return Math.ceil(this.listSecretary.length / this.itemsPerPage);
     },
     filteredKeys() {
       return this.keys.filter((key) => key !== "Name");
@@ -443,7 +306,7 @@ export default {
       this.itemsPerPage = number;
     },
     addNewofficer: function() {
-      this.listofficer.push({
+      this.listSecretary.push({
         id: this.nextOfficerId++,
         Fname: this.Fname,
         Lname: this.Lname,

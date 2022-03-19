@@ -103,7 +103,12 @@
 
             <v-row>
               <v-col>
-                <v-row v-if="statuscheck == true">
+                <v-row
+                  v-if="
+                    this.submition_detail[0].approval_order[0].approver_state ==
+                    'ยังไม่ได้อนุมัติ'
+                  "
+                >
                   <v-col align="center">
                     <v-btn class="ma-2" color="success" @click="approve">
                       อนุมัติ
@@ -121,7 +126,7 @@
                     </v-btn>
                   </v-col>
                 </v-row>
-                <v-row v-if="statuscheck == false">
+                <v-row>
                   <v-row
                     v-if="
                       this.submition_detail[0].approval_order[0]
@@ -183,7 +188,7 @@
             <v-btn color="green darken-1" text @click="disapproved">
               ตกลง
             </v-btn>
-            <v-btn color="red darken-1" text @click="canle">
+            <v-btn color="red darken-1" text @click="disapproveddialog = false">
               ยกเลิก
             </v-btn>
           </v-card>
@@ -191,6 +196,18 @@
         <!-- ส่วนจัดเเสดงเวลากดเเก้ไข -->
       </v-card>
     </v-card>
+
+    <!-- เเจ้งเตือน  -->
+    <v-snackbar v-model="notnull" color="red accent-2">
+      <h3>กรุณาใส่ข้อความ โปรดอย่าเว้นว่าง</h3>
+
+      <template v-slot:action="{ attrs }">
+        <v-btn  text v-bind="attrs" @click="notnull = false">
+         ปิด
+        </v-btn>
+      </template>
+    </v-snackbar>
+    <!-- เเจ้งเตือน  -->
     <!-- ส่วนจัดเเสดง -->
   </div>
 </template>
@@ -215,6 +232,7 @@ export default {
       disapproveddetail: [],
       getdisapproveddetail: "",
       nextdetailId: 1,
+      notnull: false,
     };
   },
   methods: {
@@ -301,13 +319,19 @@ export default {
       }
     },
     disapproved() {
-      this.submition_detail[0].approval_order[0].approver_state = "ไม่อนุมัติ";
-      this.disapproveddetail.push({
-        id: this.nextdetailId++,
-        detail: this.getdisapproveddetail,
-      });
-      this.statuscheck = false;
-      this.disapproveddialog = false;
+      if (this.getdisapproveddetail != "") {
+        this.submition_detail[0].approval_order[0].approver_state =
+          "ไม่อนุมัติ";
+        this.disapproveddetail.push({
+          id: this.nextdetailId++,
+          detail: this.getdisapproveddetail,
+        });
+        this.statuscheck = false;
+        this.disapproveddialog = false;
+      }
+      else{
+        this.notnull = true;
+      }
     },
     cancle() {
       this.disapproveddialog = false;
