@@ -5,12 +5,9 @@
     <v-card class="cardshow">
       <h1>
         สร้างคำร้อง
+        
         <v-divider></v-divider>
       </h1>
-      <h5>{{ approverlist }}</h5>
-      <!-- {{ approver }}<br /> -->
-      <!-- {{ approver.name }}<br /> -->
-      <!-- {{ approver.id }} -->
       <!-- ส่วนสร้างเอกสาร -->
       <v-stepper alt-labels v-model="stepprocess">
         <v-stepper-header>
@@ -39,6 +36,7 @@
               <v-row>
                 <v-col>
                   <h1>สร้างหัวข้อคำร้อง</h1>
+                  
                   <v-text-field
                     ref="forms.title"
                     name="forms.title"
@@ -82,8 +80,6 @@
                       <v-btn @click="removetitle(index)"> ลบ </v-btn>
                     </v-col>
                   </v-row>
-                  {{ title }}
-                  {{ forms }}
                 </div>
               </v-row>
 
@@ -143,7 +139,7 @@
                       <v-btn @click="removeapprover(index)"> ลบ </v-btn>
                     </v-col>
                   </v-row>
-                  {{ listapprover }}
+                  
                 </div>
                 <!-- ส่วนของเพิ่มหน้าผู้อนุมัติ -->
               </v-row>
@@ -167,7 +163,6 @@
                     <v-col cols="12" md="4">
                       <v-text-field
                         v-model="profile.f_name"
-                        :rules="nameRules"
                         label="ชื่อ"
                         required
                         disabled
@@ -177,7 +172,6 @@
                     <v-col cols="12" md="4">
                       <v-text-field
                         v-model="profile.l_name"
-                        :rules="nameRules"
                         label="นามสกุล"
                         required
                         disabled
@@ -187,7 +181,6 @@
                     <v-col cols="12" md="4">
                       <v-text-field
                         v-model="profile.gender"
-                        :rules="emailRules"
                         label="เพศ"
                         required
                         disabled
@@ -199,7 +192,6 @@
                     <v-col>
                       <v-text-field
                         v-model="profile.email"
-                        :rules="emailRules"
                         label="E-mail"
                         required
                         disabled
@@ -211,7 +203,6 @@
                     <v-col>
                       <v-text-field
                         v-model="profile.tel_num"
-                        :rules="emailRules"
                         label="เบอร์โทร"
                         required
                         disabled
@@ -223,7 +214,6 @@
                     <v-col>
                       <v-text-field
                         v-model="profile.address"
-                        :rules="emailRules"
                         label="ที่อยู่"
                         required
                         disabled
@@ -243,8 +233,6 @@
                           ></v-text-field>
                         </v-col>
                       </v-row>
-
-                      {{ title }}
                     </div>
                   </v-row>
 
@@ -338,16 +326,14 @@ export default {
     };
   },
   methods: {
-    fullname: (approverlist) =>
-      approverlist.f_name + " — " + approverlist.l_name,
-    addNewtitle: function() {
+    addNewtitle: function () {
       this.title.push({
         id: this.nextTodoId++,
         title: this.newtitleText,
       });
       this.newtitleText = "";
     },
-    addapprovertitle: function() {
+    addapprovertitle: function () {
       this.listapprover.push({
         order: this.nextapproverId++,
         approver_name: this.newapproverText,
@@ -356,24 +342,37 @@ export default {
       });
       this.newapproverText = "";
     },
-    removetitle: function(index) {
+    removetitle: function (index) {
       this.title.splice(index, 1);
       this.nextTodoId--;
     },
-    removeapprover: function(index) {
+    removeapprover: function (index) {
       this.listapprover.splice(index, 1);
       this.nextapproverId--;
     },
 
     nextstepfirst() {
       this.formHasErrors = false;
+      // forms.specifics
 
       Object.keys(this.form).forEach((f) => {
         if (!this.form[f]) {
           this.formHasErrors = true;
           this.$refs[f].validate(true);
         } else {
-          this.stepprocess = 2;
+          if (this.forms.specifics == true) {
+            Object.keys(this.form).forEach((f) => {
+              if (this.title >= 0) {
+                this.formHasErrors = true;
+                this.$refs[f].validate(true);
+                console.log(this.newtitleText)
+              } else {
+                this.stepprocess = 2;
+              }
+            });
+          } else {
+            this.stepprocess = 2;
+          }
         }
         console.log(this.form);
       });

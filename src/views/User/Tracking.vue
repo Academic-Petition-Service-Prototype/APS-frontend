@@ -176,7 +176,8 @@
               <v-btn
                 fab
                 dark
-                color="blue darken-3"
+                icon
+                color="#FFAB40"
                 class="mr-1"
                 @click="formerPage"
               >
@@ -185,7 +186,8 @@
               <v-btn
                 fab
                 dark
-                color="blue darken-3"
+                icon
+                color="#FFAB40"
                 class="ml-1"
                 @click="nextPage"
               >
@@ -193,6 +195,9 @@
               </v-btn>
             </v-col>
           </v-row>
+
+
+
         </template>
       </v-data-iterator>
       <!-- วนเเสดงรายการสถาณะเอสาร -->
@@ -359,7 +364,8 @@
               <v-btn
                 fab
                 dark
-                color="blue darken-3"
+                icon
+                color="#FFAB40"
                 class="mr-1"
                 @click="formerPage"
               >
@@ -368,7 +374,8 @@
               <v-btn
                 fab
                 dark
-                color="blue darken-3"
+                icon
+                color="#FFAB40"
                 class="ml-1"
                 @click="nextPage"
               >
@@ -376,6 +383,9 @@
               </v-btn>
             </v-col>
           </v-row>
+
+
+
         </template>
       </v-data-iterator>
       <!-- วนเเสดงรายการสถาณะเอสาร -->

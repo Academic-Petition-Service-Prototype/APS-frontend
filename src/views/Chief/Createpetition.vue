@@ -5,6 +5,7 @@
     <v-card class="cardshow">
       <h1>
         สร้างคำร้อง
+        
         <v-divider></v-divider>
       </h1>
       <!-- ส่วนสร้างเอกสาร -->
@@ -35,6 +36,7 @@
               <v-row>
                 <v-col>
                   <h1>สร้างหัวข้อคำร้อง</h1>
+                  
                   <v-text-field
                     ref="forms.title"
                     name="forms.title"
@@ -78,8 +80,6 @@
                       <v-btn @click="removetitle(index)"> ลบ </v-btn>
                     </v-col>
                   </v-row>
-                  {{ title }}
-                  {{ forms }}
                 </div>
               </v-row>
 
@@ -90,7 +90,7 @@
               ต่อไป
             </v-btn>
 
-            <v-btn text> ยกเลิก </v-btn>
+            <v-btn text @click="exitpention=true" > ยกเลิก </v-btn>
           </v-stepper-content>
 
           <v-stepper-content step="2" ref="Selectionapprover">
@@ -104,46 +104,42 @@
               <v-row>
                 <!-- ส่วนของเพิ่มหน้าผู้อนุมัติ -->
                 <div>
-                  <form v-on:submit.prevent="addapprovertitle">
+                  <form v-on:submit.prevent="addapprovertitle()">
                     <v-col class="cardshow" align="center">
-                      <!-- <v-text-field
-                        v-model="newapproverText"
-                        label="ชื่อผู้อนุมัติ"
-                        required
-                        class="cardshow"
-                      ></v-text-field> -->
-
-                      <v-autocomplete
+                      <v-select
                         ref="approver"
                         v-model="newapproverText"
                         :rules="[
                           () => !!approverlist || 'กรุณาเลือกผู้อนุมัติ',
                         ]"
                         :items="approverlist"
+                        :item-text="(item) => item.f_name + ' - ' + item.l_name"
+                        item-value="user_id"
+                        return-object
                         :error-messages="approvererrorMessages"
                         label="เลือกผู้อนุมัติ"
-                        placeholder="Select..."
-                        required
                         class="cardshow"
-                      ></v-autocomplete>
+                      >
+                      </v-select>
                       <v-btn type="submit">เพิ่ม</v-btn>
                     </v-col>
                   </form>
                   <v-row
                     v-for="(listapprover, index) in listapprover"
-                    :key="listapprover.id"
+                    :key="listapprover.order"
                   >
                     <v-col class="cardshow" align="center">
-                      {{ listapprover.id }}
+                      {{ listapprover.order }}
                     </v-col>
                     <v-col class="cardshow" align="center">
-                      {{ listapprover.title }}
+                      {{ listapprover.approver_name.f_name }}
+                      {{ listapprover.approver_name.l_name }}
                     </v-col>
                     <v-col class="cardshow" align="center">
                       <v-btn @click="removeapprover(index)"> ลบ </v-btn>
                     </v-col>
                   </v-row>
-                  {{ listapprover }}
+                  
                 </div>
                 <!-- ส่วนของเพิ่มหน้าผู้อนุมัติ -->
               </v-row>
@@ -161,7 +157,7 @@
               <h1>
                 {{ forms.title }}
               </h1>
-              <v-form v-for="profile in profile" :key="profile">
+              <v-form v-model="valid" v-for="profile in profile" :key="profile">
                 <v-container>
                   <v-row>
                     <v-col cols="12" md="4">
@@ -237,8 +233,6 @@
                           ></v-text-field>
                         </v-col>
                       </v-row>
-
-                      {{ title }}
                     </div>
                   </v-row>
 
@@ -279,7 +273,23 @@
         </v-btn>
       </template>
     </v-snackbar>
-    <!-- เเจ้งเตือน  -->
+
+
+    <!-- ส่วนจัดเเสดงเวลากดออกจากหน้าสร้างคำร้อง -->
+        <v-dialog v-model="exitpention" persistent width="800">
+          <v-card align="center">
+            <h1>ต้องการออกจากหน้าสร้างคำร้องหรือไม่</h1>
+            
+
+            <v-btn color="green darken-1" text to="/ChiefPetitionManagement">
+              ตกลง
+            </v-btn>
+            <v-btn color="red darken-1" text @click="exitpention = false">
+              ยกเลิก
+            </v-btn>
+          </v-card>
+        </v-dialog>
+        <!-- ส่วนจัดเเสดงเวลากดออกจากหน้าสร้างคำร้อง -->
   </div>
   <!-- ส่วนจัดเเสดง -->
 </template>
@@ -294,6 +304,7 @@ export default {
   },
   data() {
     return {
+      exitpention:false,
       stepprocess: 1,
       snackbar: false,
       text: ``,
@@ -323,64 +334,63 @@ export default {
       nextapproverId: 1,
       formHasErrors: false,
       approverError: false,
-      approverlist: ["ชญานิน", "บัวสละ"],
-      errorMessages: "",
-      approvererrorMessages: "",
+      approverlist: [],
+      approver: [
+        {
+          id: "",
+          name: "",
+        },
+      ],
     };
   },
-  watch: {
-    name() {
-      this.errorMessages = "";
-    },
-    approver() {
-      this.approvererrorMessages = "";
-    },
-  },
-  computed: {
-    form() {
-      return {
-        name: this.forms.title,
-      };
-    },
-    Selectionapprover() {
-      return {
-        approver: this.listapprover,
-      };
-    },
-  },
   methods: {
-    addNewtitle: function() {
+    addNewtitle: function () {
       this.title.push({
         id: this.nextTodoId++,
         title: this.newtitleText,
       });
       this.newtitleText = "";
     },
-    addapprovertitle: function() {
+    addapprovertitle: function () {
       this.listapprover.push({
-        id: this.nextapproverId++,
-        title: this.newapproverText,
+        order: this.nextapproverId++,
+        approver_name: this.newapproverText,
+        approver_state: "ยังไม่ได้อนุมัติ",
+        // approver_id: this.approver.id[0],
       });
       this.newapproverText = "";
     },
-    removetitle: function(index) {
-      console.log(index);
+    removetitle: function (index) {
       this.title.splice(index, 1);
+      this.nextTodoId--;
     },
-    removeapprover: function(index) {
-      console.log(index);
+    removeapprover: function (index) {
       this.listapprover.splice(index, 1);
+      this.nextapproverId--;
     },
 
     nextstepfirst() {
       this.formHasErrors = false;
+      // forms.specifics
 
       Object.keys(this.form).forEach((f) => {
         if (!this.form[f]) {
           this.formHasErrors = true;
           this.$refs[f].validate(true);
         } else {
-          this.stepprocess = 2;
+          if (this.forms.specifics == true) {
+            Object.keys(this.form).forEach((f) => {
+              if (this.title >= 0) {
+                this.formHasErrors = true;
+                this.$refs[f].validate(true);
+                console.log(this.newtitleText)
+              } else {
+                this.stepprocess = 2;
+              }
+            });
+          } else {
+            this.stepprocess = 2;
+          }
         }
         console.log(this.form);
       });
@@ -416,15 +426,63 @@ export default {
           } else if (response.data == "ชื่อคำร้องนี้มีอยู่ในระบบแล้ว") {
             alert("ชื่อคำร้องนี้มีอยู่ในระบบแล้ว");
           } else {
-            this.textsnackbar = "รายงานปัญหาสำเร็จ";
-            this.colorsnackbar = "#2E7D32";
-            this.snackbar = true;
+            // this.textsnackbar = "รายงานปัญหาสำเร็จ";
+            // this.colorsnackbar = "#2E7D32";
+            // this.snackbar = true;
+            alert("สร้างคำร้องสำเร็จ");
+            this.$router.push("/ChiefPetitionManagement");
           }
         })
         .catch((error) => {
           console.log(error);
         });
     },
+
+    getchieflist() {
+      axios
+        .get(
+          process.env.VUE_APP_URL +
+            "getchief/" +
+            this.$store.getters.getUser.agencies_id
+        )
+        .then((response) => {
+          // handle success
+          this.approverlist = response.data;
+
+          // this.approverlist.forEach((approver) => {
+          //   // this.approver[0].id.push(approver.user_id);
+          //   this.approver.push(approver.f_name + " " + approver.l_name);
+          //   console.log(this.approver[0].id);
+          // });
+        })
+        .catch((error) => {
+          // handle error
+          console.log(error);
+        });
+    },
+  },
+  watch: {
+    name() {
+      this.errorMessages = "";
+    },
+    approver() {
+      this.approvererrorMessages = "";
+    },
+  },
+  computed: {
+    form() {
+      return {
+        name: this.forms.title,
+      };
+    },
+    Selectionapprover() {
+      return {
+        approver: this.listapprover,
+      };
+    },
+  },
+  mounted() {
+    this.getchieflist();
   },
 };
 </script>

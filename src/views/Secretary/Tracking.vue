@@ -1,5 +1,5 @@
 <template>
-  <div id="Trackingofficer" class="bg-color">
+  <div id="TrackingSecretary">
     <NavbarSecretary />
     <v-card class="cardshow">
       <v-toolbar dark prominent color="#FFAB40">
@@ -46,10 +46,10 @@
             <v-expansion-panels>
               <v-expansion-panel>
                 <v-expansion-panel-header>
-                  <v-row class="text-center" >
-                  <v-col> {{ item.num }} </v-col>
-                  <v-col> {{ item.title }} </v-col>
-                  <v-col> </v-col>
+                  <v-row class="text-center">
+                    <v-col> {{ item.num }} </v-col>
+                    <v-col> {{ item.title }} </v-col>
+                    <v-col> </v-col>
                   </v-row>
 
                   <!-- เเสดงชื่อเอกสาร -->
@@ -170,7 +170,8 @@
               <v-btn
                 fab
                 dark
-                color="blue darken-3"
+                icon
+                color="#FFAB40"
                 class="mr-1"
                 @click="formerPage"
               >
@@ -179,7 +180,8 @@
               <v-btn
                 fab
                 dark
-                color="blue darken-3"
+                icon
+                color="#FFAB40"
                 class="ml-1"
                 @click="nextPage"
               >
@@ -197,7 +199,7 @@
 <script>
 import NavbarSecretary from "../../components/NavbarSecretary.vue";
 export default {
-  name: "Trackingofficer",
+  name: "TrackingSecretary",
   components: {
     NavbarSecretary,
   },
@@ -271,5 +273,3 @@ h1 {
   padding: 2% 0% 0% 0%;
 }
 </style>
-
-

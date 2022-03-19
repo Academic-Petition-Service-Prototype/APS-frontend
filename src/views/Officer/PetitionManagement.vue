@@ -8,7 +8,7 @@
 
         <v-spacer></v-spacer>
       </v-toolbar>
-      <h5>{{ petitionList }}</h5>
+      
       <v-data-iterator
         :items="petitionList"
         :items-per-page.sync="itemsPerPage"
@@ -99,7 +99,8 @@
               <v-btn
                 fab
                 dark
-                color="blue darken-3"
+                icon
+                color="#FFAB40"
                 class="mr-1"
                 @click="formerPage"
               >
@@ -108,7 +109,8 @@
               <v-btn
                 fab
                 dark
-                color="blue darken-3"
+                icon
+                color="#FFAB40"
                 class="ml-1"
                 @click="nextPage"
               >
@@ -116,6 +118,9 @@
               </v-btn>
             </v-col>
           </v-row>
+
+
+
         </template>
       </v-data-iterator>
     </v-card>
