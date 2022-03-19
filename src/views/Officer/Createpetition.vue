@@ -358,6 +358,7 @@ export default {
     },
     removetitle: function(index) {
       this.title.splice(index, 1);
+      this.nextTodoId--;
     },
     removeapprover: function(index) {
       this.listapprover.splice(index, 1);
@@ -408,9 +409,11 @@ export default {
           } else if (response.data == "ชื่อคำร้องนี้มีอยู่ในระบบแล้ว") {
             alert("ชื่อคำร้องนี้มีอยู่ในระบบแล้ว");
           } else {
-            this.textsnackbar = "รายงานปัญหาสำเร็จ";
-            this.colorsnackbar = "#2E7D32";
-            this.snackbar = true;
+            // this.textsnackbar = "รายงานปัญหาสำเร็จ";
+            // this.colorsnackbar = "#2E7D32";
+            // this.snackbar = true;
+            alert("สร้างคำร้องสำเร็จ");
+            this.$router.push("/OfficerCreatepetition");
           }
         })
         .catch((error) => {
