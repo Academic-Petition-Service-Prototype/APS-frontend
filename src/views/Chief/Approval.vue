@@ -2,7 +2,7 @@
   <!-- ส่วนจัดเเสดง -->
   <div id="ChiefApproval">
     <NavbarChief />
-    
+
     <v-card class="cardshow">
       <v-toolbar dark prominent color="#FFAB40">
         <h1>การอนุมัติคำร้อง</h1>
@@ -149,18 +149,6 @@ export default {
             var temp = this.specifics.slice(1, -1);
             temp = JSON.parse(temp);
             this.petitionListById[i].approval_order = temp;
-          }
-
-          //form_value
-          this.petitionListById = response.data;
-          for (let i = 0; i < this.petitionListById.length; i++) {
-            this.tmp = JSON.stringify(this.petitionListById[i].form_value);
-            this.tmp = this.tmp.replace(/\\/g, "");
-            this.specifics = this.tmp.replace(/\\/g, "");
-
-            temp = this.specifics.slice(1, -1);
-            temp = JSON.parse(temp);
-            this.petitionListById[i].form_value = temp;
           }
         })
         .catch((error) => {

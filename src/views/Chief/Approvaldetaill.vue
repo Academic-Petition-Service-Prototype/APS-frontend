@@ -1,7 +1,6 @@
 <template>
   <div id="ChiefApprovaldetail">
     <NavbarChief />
-    {{disapproveddetail}}
     <v-card class="cardshow">
       <v-row>
         <v-col>
@@ -10,7 +9,6 @@
           </v-btn>
         </v-col>
         <v-col align="center">
-         
           <h2>{{ submition_detail[0].form_name }}</h2>
         </v-col>
         <v-col> </v-col>
@@ -20,7 +18,7 @@
 
       <v-card class="mb-12" color="#ECEFF1">
         <!-- ส่วนเเสดงหน้าการเเสดงตัวอย่าง -->
-        
+
         <v-form>
           <v-container>
             <v-row>
@@ -93,10 +91,9 @@
                   <h3>{{ titlespecifics.title }}</h3>
 
                   <v-col align="center">
-                    
                     <b-card class="text-center">
-                      <div >
-                      {{ specificsdata[index] }}
+                      <div>
+                        {{ specificsdata[index] }}
                       </div>
                     </b-card>
                   </v-col>
@@ -168,31 +165,30 @@
         </v-form>
         <!-- ส่วนเเสดงหน้าการเเสดงตัวอย่าง -->
         <!-- ส่วนจัดเเสดงเวลากดเเก้ไข -->
-      <v-dialog v-model="disapproveddialog" persistent width="800">
-        <v-card align="center">
-          <h1>รายละเอียด</h1>
-          <h3>กรุณาใส่เหตุผลที่ไม่อนุมัติ</h3>
+        <v-dialog v-model="disapproveddialog" persistent width="800">
+          <v-card align="center">
+            <h1>รายละเอียด</h1>
+            <h3>กรุณาใส่เหตุผลที่ไม่อนุมัติ</h3>
 
-          {{getdisapproveddetail}}
-          <v-textarea
-          v-model="getdisapproveddetail"
-          auto-grow
-          outlined
-          rows="1"
-          row-height="15"
-          class="cardmargin"
-        ></v-textarea>
-          
-          
-          <v-btn color="green darken-1" text @click="disapproved">
-            ตกลง
-          </v-btn>
-          <v-btn color="red darken-1" text @click="canle">
-            ยกเลิก
-          </v-btn>
-        </v-card>
-      </v-dialog>
-      <!-- ส่วนจัดเเสดงเวลากดเเก้ไข -->
+            {{ getdisapproveddetail }}
+            <v-textarea
+              v-model="getdisapproveddetail"
+              auto-grow
+              outlined
+              rows="1"
+              row-height="15"
+              class="cardmargin"
+            ></v-textarea>
+
+            <v-btn color="green darken-1" text @click="disapproved">
+              ตกลง
+            </v-btn>
+            <v-btn color="red darken-1" text @click="canle">
+              ยกเลิก
+            </v-btn>
+          </v-card>
+        </v-dialog>
+        <!-- ส่วนจัดเเสดงเวลากดเเก้ไข -->
       </v-card>
     </v-card>
     <!-- ส่วนจัดเเสดง -->
@@ -216,8 +212,8 @@ export default {
       specifics: [],
       specificsdata: [],
       titlespecifics: [],
-      disapproveddetail:[],
-      getdisapproveddetail:'',
+      disapproveddetail: [],
+      getdisapproveddetail: "",
       nextdetailId: 1,
     };
   },
@@ -275,25 +271,47 @@ export default {
         });
     },
     approve() {
-      this.submition_detail[0].approval_order[0].approver_state = "อนุมัติแล้ว";
-      
-      this.statuscheck = false;
-      this.getdisapproveddetail='';
-      
+      if (confirm("ยืนยันการอนุมัติ")) {
+        alert("อนุมัติสำเร็จ");
+        this.submition_detail[0].approval_order[0].approver_state =
+          "อนุมัติแล้ว";
+        this.submition_detail[0].submit_state++;
+        this.statuscheck = false;
+        this.getdisapproveddetail = "";
+
+        axios
+          .post(process.env.VUE_APP_URL + "approvepetition", {
+            submit_id: this.submition_detail[0].submit_id,
+            approval_order: this.submition_detail[0].approval_order,
+            submit_state: this.submition_detail[0].submit_state,
+          })
+          .then((response) => {
+            //handle success
+            if (response.data == "Approve petition successful") {
+              alert("อนุมัติคำร้องสำเร็จ");
+              this.$router.push("/ChiefApproval");
+            } else {
+              alert("อนุมัติคำร้องไม่สำเร็จ!");
+            }
+          })
+          .catch((error) => {
+            // handle error
+            console.log(error);
+          });
+      }
     },
     disapproved() {
       this.submition_detail[0].approval_order[0].approver_state = "ไม่อนุมัติ";
       this.disapproveddetail.push({
         id: this.nextdetailId++,
         detail: this.getdisapproveddetail,
-        
       });
       this.statuscheck = false;
       this.disapproveddialog = false;
     },
-    canle(){
+    cancle() {
       this.disapproveddialog = false;
-    this.getdisapproveddetail='';
+      this.getdisapproveddetail = "";
     },
   },
   mounted() {
