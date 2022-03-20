@@ -142,7 +142,9 @@ export default {
   methods: {
     getreport() {
       axios
-        .get(process.env.VUE_APP_URL + "reports")
+        .post(process.env.VUE_APP_URL + "agencyreports",{
+          agency_id: this.$store.getters.getUser.agencies_id
+        })
         .then((response) => {
           // handle success
           this.reports = response.data;

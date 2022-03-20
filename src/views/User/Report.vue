@@ -64,6 +64,7 @@ export default {
     sentreport() {
       axios
         .post(process.env.VUE_APP_URL + "reports", {
+          users_id: this.$store.getters.getUser.user_id,
           report_title: this.report_title,
           report_detail: this.report_detail,
         })
@@ -72,12 +73,14 @@ export default {
             this.textsnackbar = "กรุณากรอกข้อมูลให้ครบ";
             this.colorsnackbar = "#DB4437";
             this.snackbar = true;
-          } else {
+          } else if (response.data == "Sent report successful") {
             this.textsnackbar = "รายงานปัญหาสำเร็จ";
             this.colorsnackbar = "#2E7D32";
             this.snackbar = true;
             this.report_title = "";
             this.report_detail = "";
+          } else {
+            alert("เกิดข้อผิดพลาดในการส่งรายงาน");
           }
         })
         .catch((error) => {
