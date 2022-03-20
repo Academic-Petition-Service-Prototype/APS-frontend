@@ -1,6 +1,7 @@
 <template>
   <div id="ChiefApprovaldetail">
     <NavbarChief />
+    {{submition_detail[0].approval_order}}
     <v-card class="cardshow">
       <v-row>
         <v-col>
@@ -247,18 +248,7 @@ export default {
         .then((response) => {
           // handle success
           this.submition_detail = response.data;
-          // approval_order
-          this.submition_detail = response.data;
-          for (let i = 0; i < this.submition_detail.length; i++) {
-            this.tmp = JSON.stringify(this.submition_detail[i].approval_order);
-            this.tmp = this.tmp.replace(/\\/g, "");
-            this.specifics = this.tmp.replace(/\\/g, "");
-
-            var temp = this.specifics.slice(1, -1);
-            temp = JSON.parse(temp);
-            this.submition_detail[i].approval_order = temp;
-          }
-
+          
           //form_value
           this.submition_detail = response.data;
           for (let i = 0; i < this.submition_detail.length; i++) {
@@ -282,6 +272,28 @@ export default {
             temp = JSON.parse(temp);
             this.titlespecifics = temp;
           }
+
+          // approval_order
+          this.submition_detail = response.data;
+          for (let i = 0; i < this.submition_detail.length; i++) {
+            this.tmp = JSON.stringify(this.submition_detail[i].approval_order);
+            this.tmp = this.tmp.replace(/\\/g, "");
+            this.specifics = this.tmp.replace(/\\/g, "");
+
+            var temp = this.specifics.slice(1, -1);
+            temp = JSON.parse(temp);
+            this.submition_detail[i].approval_order = temp;
+
+            if (this.$store.getters.getUser.user_id  == this.submition_detail[i].approval_order[i].approver_name.user_id) {
+              console.log(this.submition_detail[i].approval_order[i].approver_state)
+            } else {
+              console.log( "bitch2")
+              this.submition_detail[i].approval_order.splice(i,1);
+            }
+          }
+
+
+          
         })
         .catch((error) => {
           // handle error
@@ -291,11 +303,13 @@ export default {
     approve() {
       if (confirm("ยืนยันการอนุมัติ")) {
         alert("อนุมัติสำเร็จ");
+        
+        this.statuscheck = false;
+
+        
         this.submition_detail[0].approval_order[0].approver_state =
           "อนุมัติแล้ว";
         this.submition_detail[0].submit_state++;
-        this.statuscheck = false;
-        this.getdisapproveddetail = "";
 
         axios
           .post(process.env.VUE_APP_URL + "approvepetition", {

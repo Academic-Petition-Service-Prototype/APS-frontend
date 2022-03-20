@@ -2,7 +2,8 @@
   <!-- ส่วนจัดเเสดง -->
   <div id="ChiefApproval">
     <NavbarChief />
-
+   
+  {{petitionListById[0].approval_order[0].approver_name.user_id }}
     <v-card class="cardshow">
       <v-toolbar dark prominent color="#FFAB40">
         <h1>การอนุมัติคำร้อง</h1>
@@ -50,15 +51,30 @@
 
           <v-row v-for="item in props.items" :key="item.text">
             <v-card-title>
-              <v-row class="text-center" align="center">
+              <v-row class="text-center" align="center"
+              
+              >
                 <v-col> {{ item.submit_id }} </v-col>
                 <v-col> {{ item.form_name }} </v-col>
                 <v-col> {{ item.fullname }}</v-col>
                 <v-col> {{ item.submit_date }} </v-col>
-                <v-col>
-                  <v-btn @click="selectApprovaldetaill(item.submit_id)">
-                    {{ item.approval_order[0].approver_state }}</v-btn
-                  >
+                
+
+                <v-col  >
+
+                  <v-btn @click="selectApprovaldetaill(item.submit_id)"  >
+                    <h4 >
+                      {{ item.approval_order[0].approver_state }}
+                     
+
+                    </h4>
+                    
+                    
+                    </v-btn>
+                 
+
+                    
+                
                 </v-col>
               </v-row>
             </v-card-title>
@@ -129,6 +145,7 @@ export default {
       sortBy: "name",
       petitionListById: [],
       specifics: [],
+      stong:[],
     };
   },
 
@@ -143,6 +160,7 @@ export default {
 
           // approval_order
           this.petitionListById = response.data;
+         
           for (let i = 0; i < this.petitionListById.length; i++) {
             this.tmp = JSON.stringify(this.petitionListById[i].approval_order);
             this.tmp = this.tmp.replace(/\\/g, "");
@@ -151,6 +169,20 @@ export default {
             var temp = this.specifics.slice(1, -1);
             temp = JSON.parse(temp);
             this.petitionListById[i].approval_order = temp;
+
+            if (this.$store.getters.getUser.user_id  == this.petitionListById[i].approval_order[i].approver_name.user_id) {
+              console.log(this.petitionListById[i].approval_order[i].approver_state)
+            } else {
+              
+              this.petitionListById[i].approval_order.splice(i,1);
+            }
+
+            // if ( this.petitionListById[i].approval_order[i].approver_state == "อนุมัติแล้ว") {
+            //   console.log( i)
+            //   // delete this.petitionListById[i].approval_order[i]
+            //   this.petitionListById[i].approval_order.splice(i,1);
+            //   console.log( this.petitionListById[i].approval_order[i])
+            // }
           }
         })
         .catch((error) => {
