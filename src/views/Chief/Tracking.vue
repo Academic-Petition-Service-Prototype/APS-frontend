@@ -1,7 +1,6 @@
 <template>
   <div id="ChiefTracking" class="bg-color">
     <NavbarChief />
-    
     <v-card class="cardshow">
       <v-toolbar dark prominent color="#FFAB40">
         <h1 class="text-center pa-5">สถานะคำร้อง</h1>
@@ -38,22 +37,26 @@
         </template>
         <template v-slot:default="props">
           <v-row class="text-center">
-            
-            <v-col> <h3>ลำดับ </h3></v-col>
-            
-            <v-col align="left"> <h3>รายการ </h3></v-col>
-            
-            
+            <v-col> <h3>ลำดับ</h3></v-col>
+
+            <v-col align="left"> <h3>รายการ</h3></v-col>
           </v-row>
 
-          <v-row v-for="item in props.items" :key="item.title" class="cardshow text-center " >
+          <v-row
+            v-for="item in props.items"
+            :key="item.title"
+            class="cardshow text-center "
+          >
             <v-expansion-panels>
               <v-expansion-panel>
                 <v-expansion-panel-header>
                   <v-row class="text-center">
-                    <v-col > <h3>{{ item.submit_id }}</h3> </v-col>
-                    <v-col> <h4>{{ item.form_name }}</h4> </v-col>
-                    
+                    <v-col>
+                      <h3>{{ item.submit_id }}</h3>
+                    </v-col>
+                    <v-col>
+                      <h4>{{ item.form_name }}</h4>
+                    </v-col>
                   </v-row>
 
                   <!-- เเสดงชื่อเอกสาร -->
@@ -69,15 +72,13 @@
                       <v-stepper-header>
                         <v-divider></v-divider>
                         <v-stepper-step
-                         v-for="(item,n) in item.approval_order"
-                         :key="item"
-                          :complete="item > n+1"
-                          :step="n+1"
+                          v-for="(item, n) in item.approval_order"
+                          :key="item"
+                          :complete="item > n + 1"
+                          :step="n + 1"
                           color="green"
                         >
-                          
                         </v-stepper-step>
-                        
 
                         <v-divider></v-divider>
 
@@ -222,7 +223,6 @@ export default {
       itemsPerPage: 4,
       sortBy: "name",
       petitionListById: [],
-      
     };
   },
   computed: {
@@ -236,8 +236,8 @@ export default {
   methods: {
     getpetition() {
       axios
-        .post(process.env.VUE_APP_URL + "getsubmitforms", {
-          user_id: this.$store.getters.getUser.user_id,
+        .post(process.env.VUE_APP_URL + "getsubmitformsbyagency", {
+          agency_id: this.$store.getters.getUser.agencies_id,
         })
         .then((response) => {
           //handle success
@@ -261,7 +261,7 @@ export default {
     },
 
     stepComplete(step) {
-            return this.curr > step
+      return this.curr > step;
     },
 
     nextPage() {
@@ -273,7 +273,6 @@ export default {
     updateItemsPerPage(number) {
       this.itemsPerPage = number;
     },
-     
   },
   mounted() {
     this.getpetition();

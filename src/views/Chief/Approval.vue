@@ -2,8 +2,6 @@
   <!-- ส่วนจัดเเสดง -->
   <div id="ChiefApproval">
     <NavbarChief />
-   
-  {{petitionListById[0].approval_order[0].approver_name.user_id }}
     <v-card class="cardshow">
       <v-toolbar dark prominent color="#FFAB40">
         <h1>การอนุมัติคำร้อง</h1>
