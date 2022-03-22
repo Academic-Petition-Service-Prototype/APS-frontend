@@ -1,6 +1,7 @@
 <template>
   <div id="ChiefTracking" class="bg-color">
     <NavbarChief />
+    {{petitionListById[0]}}
     <v-card class="cardshow">
       <v-toolbar dark prominent color="#FFAB40">
         <h1 class="text-center pa-5">สถานะคำร้อง</h1>
@@ -71,16 +72,23 @@
                     <v-stepper alt-labels v-model="item.submit_state">
                       <v-stepper-header>
                         <v-divider></v-divider>
-                        <v-stepper-step
-                          v-for="(item, n) in item.approval_order"
-                          :key="item"
-                          :complete="item > n + 1"
+
+                        <template v-for="(approval_order,n) in item.approval_order"
+                           >
+                          <v-stepper-step
+                          :key="approval_order"
+                          :complete="item.submit_state > n + 1"
                           :step="n + 1"
                           color="green"
                         >
+                         
                         </v-stepper-step>
+                         <v-divider :key="approval_order" ></v-divider>
+                        </template>
 
-                        <v-divider></v-divider>
+                        
+
+                       
 
                         <!-- <v-stepper-step
                           :complete="item.submit_state > 2"
@@ -118,6 +126,7 @@
                             height="200px"
                           >
                             <h2 class="cardshow">รายละเอียด</h2>
+                            
                           </v-card>
                         </v-stepper-content>
 
