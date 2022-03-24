@@ -1,7 +1,7 @@
 <template>
   <div id="ChiefApprovaldetail">
     <NavbarChief />
-    <!-- {{approver_detail[0].approval_order}} -->
+    {{approver_detail[0].approval_order}}
     <br /><br /><br />
     {{ submition_detail[0].approval_order}}
 
@@ -224,7 +224,6 @@ export default {
   data() {
     return {
       submition_detail: [],
-      
       disapproveddialog: false,
       listapprover: [],
       statuscheck: true,
@@ -285,19 +284,19 @@ export default {
             temp = JSON.parse(temp);
             this.submition_detail[i].approval_order = temp;
 
-            // this.approver_detail = Object.assign({},this.submition_detail);
-            // this.approver_detail = Array.from(this.submition_detail)
+
+
+
             this.approver_detail = JSON.parse(JSON.stringify(this.submition_detail))
-            if (
-              this.$store.getters.getUser.user_id ==
-              this.approver_detail[i].approval_order[i].approver_name.user_id
-            ) {
-              console.log(
-                this.approver_detail[i].approval_order[i].approver_state
-              );
-            } else {
+            // console.log(typeof )
+              for (let j = 0; j < this.approver_detail[i].approval_order.length; j++) {
+                if (this.$store.getters.getUser.user_id !== this.approver_detail[i].approval_order[0].approver_name.user_id 
+                && this.approver_detail[i].approval_order[0].approver_state == "อนุมัติแล้ว" ) {
               this.approver_detail[i].approval_order.splice(i, 1);
             }
+                
+              }
+            
           }
         })
         .catch((error) => {
