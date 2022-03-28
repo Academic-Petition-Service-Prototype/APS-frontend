@@ -12,9 +12,9 @@
         </h1>
         <v-spacer></v-spacer>
       </v-toolbar>
-
+      
       <v-data-iterator
-        :items="listtracking"
+        :items="petitionListById"
         :items-per-page.sync="itemsPerPage"
         :page.sync="page"
         :search="search"
@@ -43,19 +43,26 @@
         </template>
         <template v-slot:default="props">
           <v-row class="text-center">
-            <v-col> ลำดับ </v-col>
-            <v-col> รายการ </v-col>
-            <v-col> </v-col>
+            <v-col> <h3>ลำดับ</h3></v-col>
+
+            <v-col align="left"> <h3>รายการ</h3></v-col>
           </v-row>
 
-          <v-row v-for="item in props.items" :key="item.title" class="cardshow">
+          <v-row
+            v-for="item in props.items"
+            :key="item.title"
+            class="cardshow text-center "
+          >
             <v-expansion-panels>
               <v-expansion-panel>
                 <v-expansion-panel-header>
                   <v-row class="text-center">
-                    <v-col> {{ item.num }} </v-col>
-                    <v-col> {{ item.title }} </v-col>
-                    <v-col> </v-col>
+                    <v-col>
+                      <h3>{{ item.submit_id }}</h3>
+                    </v-col>
+                    <v-col>
+                      <h4>{{ item.form_name }}</h4>
+                    </v-col>
                   </v-row>
 
                   <!-- เเสดงชื่อเอกสาร -->
@@ -67,20 +74,29 @@
                   <!-- เเสดงเนื้อหาข้างใน -->
 
                   <v-container id="inspire">
-                    <v-stepper alt-labels v-model="item.checktracking">
+                    <v-stepper alt-labels v-model="item.submit_state">
                       <v-stepper-header>
-                        <v-stepper-step
-                          :complete="item.checktracking > 1"
-                          step="1"
-                          color="green"
-                        >
-                          ส่งยื่นคำร้อง
-                        </v-stepper-step>
-
                         <v-divider></v-divider>
 
-                        <v-stepper-step
-                          :complete="item.checktracking > 2"
+                        <template v-for="(approval_order,n) in item.approval_order"
+                           >
+                          <v-stepper-step
+                          :key="approval_order"
+                          :complete="item.submit_state > n + 1"
+                          :step="n + 1"
+                          color="green"
+                        >
+                         
+                        </v-stepper-step>
+                         <v-divider :key="approval_order" ></v-divider>
+                        </template>
+
+                        
+
+                       
+
+                        <!-- <v-stepper-step
+                          :complete="item.submit_state > 2"
                           step="2"
                           color="green"
                         >
@@ -90,22 +106,22 @@
                         <v-divider></v-divider>
 
                         <v-stepper-step
-                          :complete="item.checktracking > 3"
+                          :complete="item.submit_state > 3"
                           step="3"
                           color="green"
                         >
                           การอนุมัติคำร้อง
                         </v-stepper-step>
 
-                        <v-divider></v-divider>
+                        <v-divider></v-divider> -->
 
-                        <v-stepper-step
-                          :complete="item.checktracking > 4"
+                        <!-- <v-stepper-step
+                          :complete="item.submit_state > 4"
                           step="4"
                           color="green"
                         >
                           ยื่นคำร้องสำเร็จ
-                        </v-stepper-step>
+                        </v-stepper-step> -->
                       </v-stepper-header>
                       <v-stepper-items>
                         <v-stepper-content step="1">
@@ -115,6 +131,7 @@
                             height="200px"
                           >
                             <h2 class="cardshow">รายละเอียด</h2>
+                            
                           </v-card>
                         </v-stepper-content>
 
@@ -195,9 +212,6 @@
               </v-btn>
             </v-col>
           </v-row>
-
-
-
         </template>
       </v-data-iterator>
       <!-- วนเเสดงรายการสถาณะเอสาร -->
@@ -212,7 +226,7 @@
       </v-toolbar>
 
       <v-data-iterator
-        :items="listReport"
+        :items="reports"
         :items-per-page.sync="itemsPerPage"
         :page.sync="page"
         :search="search"
@@ -240,8 +254,8 @@
               <v-expansion-panel>
                 <v-expansion-panel-header>
                   <v-row class="text-center">
-                    <v-col> {{ item.num }} </v-col>
-                    <v-col> {{ item.title }} </v-col>
+                    <v-col> {{ item.report_id }} </v-col>
+                    <v-col> {{ item.report_title }} </v-col>
                     <v-col> </v-col>
                   </v-row>
 
@@ -255,10 +269,10 @@
                   <!-- เเสดงเนื้อหาข้างใน -->
 
                   <v-container id="inspire">
-                    <v-stepper alt-labels v-model="listtracking.checktracking">
+                    <v-stepper alt-labels v-model="item.report_state">
                       <v-stepper-header>
                         <v-stepper-step
-                          :complete="listtracking.checktracking > 1"
+                          :complete="item.report_state > 1"
                           step="1"
                           color="green"
                         >
@@ -268,32 +282,15 @@
                         <v-divider></v-divider>
 
                         <v-stepper-step
-                          :complete="listtracking.checktracking > 2"
+                          :complete="item.report_state > 2"
                           step="2"
                           color="green"
                         >
                           รับคำร้องเข้าระบบ
                         </v-stepper-step>
 
-                        <v-divider></v-divider>
+                      
 
-                        <v-stepper-step
-                          :complete="listtracking.checktracking > 3"
-                          step="3"
-                          color="green"
-                        >
-                          การอนุมัติคำร้อง
-                        </v-stepper-step>
-
-                        <v-divider></v-divider>
-
-                        <v-stepper-step
-                          :complete="listtracking.checktracking > 4"
-                          step="4"
-                          color="green"
-                        >
-                          ยื่นคำร้องสำเร็จ
-                        </v-stepper-step>
                       </v-stepper-header>
                       <v-stepper-items>
                         <v-stepper-content step="1">
@@ -302,7 +299,8 @@
                             color="grey lighten-1"
                             height="200px"
                           >
-                            <h2 class="cardshow">รายละเอียด</h2>
+                            <h2 class="cardshow">รายละเอียด1</h2>
+                            <h2 class="cardshow">{{item.report_detail}}</h2>
                           </v-card>
                         </v-stepper-content>
 
@@ -312,29 +310,11 @@
                             color="grey lighten-1"
                             height="200px"
                           >
-                            <h2 class="cardshow">รายละเอียด</h2>
+                            <h2 class="cardshow">รายละเอียด2</h2>
+                            <h2 class="cardshow">{{item.report_detail}}</h2>
                           </v-card>
                         </v-stepper-content>
 
-                        <v-stepper-content step="3">
-                          <v-card
-                            class="mb-12"
-                            color="grey lighten-1"
-                            height="200px"
-                          >
-                            <h2 class="cardshow">รายละเอียด</h2>
-                          </v-card>
-                        </v-stepper-content>
-
-                        <v-stepper-content step="4">
-                          <v-card
-                            class="mb-12"
-                            color="grey lighten-1"
-                            height="200px"
-                          >
-                            <h2 class="cardshow">รายละเอียด</h2>
-                          </v-card>
-                        </v-stepper-content>
                       </v-stepper-items>
                     </v-stepper>
                   </v-container>
@@ -396,6 +376,7 @@
 
 <script>
 import NavbarUser from "../../components/NavbarUser.vue";
+import axios from "axios";
 export default {
   name: "UserTracking",
   components: {
@@ -411,61 +392,75 @@ export default {
       itemsPerPage: 4,
       sortBy: "name",
 
-      listtracking: [
-        {
-          num: 1,
-          title: "เอกสารที่1",
-          pointracking: 6,
-          checktracking: 3,
-          e1: 1,
-        },
-        {
-          num: 2,
-          title: "เอกสารที่2",
-          pointracking: 2,
-          checktracking: 3,
-          e1: 1,
-        },
-        {
-          num: 3,
-          title: "เอกสารที่2",
-          pointracking: 2,
-          checktracking: 1,
-          e1: 1,
-        },
+      petitionListById: [
+        
       ],
-      listReport: [
-        {
-          num: 1,
-          title: "เหตุเกิดทะเลาะกันในชั้นเรืียน",
-          e1: 2,
-          detail: "เจอเด็กยกพวกตีกัน ข้างอาคารเรียน 12 ชั้น",
-        },
-        { num: 2, title: "บัตรประจำตัวนักศึกษาหาย", e1: 1, detail: "" },
-        {
-          num: 3,
-          title: "เจอคนโรคจิตยืนเเก้ผ้าในสถาบันศึกษา",
-          e1: 1,
-          detail: "",
-        },
-      ],
+      reports: [],
     };
   },
   computed: {
     numberOfPages() {
-      return Math.ceil(this.listtracking.length / this.itemsPerPage);
+      return Math.ceil(this.petitionListById.length / this.itemsPerPage);
     },
     filteredKeys() {
       return this.keys.filter((key) => key !== "Name");
     },
     numberOfPagesreport() {
-      return Math.ceil(this.listReport.length / this.itemsPerPage);
+      return Math.ceil(this.reports.length / this.itemsPerPage);
     },
     filteredKeysreport() {
       return this.keys.filter((key) => key !== "Name");
     },
   },
   methods: {
+    getpetition() {
+      axios
+        .post(process.env.VUE_APP_URL + "getsubmitformsbyagency", {
+          agency_id: this.$store.getters.getUser.agencies_id,
+        })
+        .then((response) => {
+          //handle success
+
+          // approval_order
+          this.petitionListById = response.data;
+          for (let i = 0; i < this.petitionListById.length; i++) {
+            this.tmp = JSON.stringify(this.petitionListById[i].approval_order);
+            this.tmp = this.tmp.replace(/\\/g, "");
+            this.specifics = this.tmp.replace(/\\/g, "");
+
+            var temp = this.specifics.slice(1, -1);
+            temp = JSON.parse(temp);
+            this.petitionListById[i].approval_order = temp;
+          }
+        })
+        .catch((error) => {
+          // handle error
+          console.log(error);
+        });
+    },
+    getreport() {
+      axios
+        .post(process.env.VUE_APP_URL + "agencyreports",{
+          agency_id: this.$store.getters.getUser.agencies_id
+        })
+        .then((response) => {
+          // handle success
+          this.reports = response.data;
+          for (let i = 0; i < this.reports.length; i++) {
+            if (this.reports[i].report_state == 'read') {
+              this.reports[i].report_state = 2
+            } else {
+              this.reports[i].report_state = 1
+            }
+            
+          }
+          console.log(response.data)
+        })
+        .catch((error) => {
+          // handle error
+          console.log(error);
+        });
+    },
     nextPage() {
       if (this.page + 1 <= this.numberOfPages) this.page += 1;
     },
@@ -475,6 +470,10 @@ export default {
     updateItemsPerPage(number) {
       this.itemsPerPage = number;
     },
+  },
+  mounted() {
+    this.getpetition();
+    this.getreport();
   },
 };
 </script>
