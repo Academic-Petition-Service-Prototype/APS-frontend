@@ -448,7 +448,7 @@ export default {
           this.reports = response.data;
           for (let i = 0; i < this.reports.length; i++) {
             if (this.reports[i].report_state == 'read') {
-              this.reports[i].report_state = 2
+              this.reports[i].report_state = 3
             } else {
               this.reports[i].report_state = 1
             }
