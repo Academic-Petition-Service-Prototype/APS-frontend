@@ -2,10 +2,10 @@
   <div id="UserReport" class="bg-color">
     <NavbarUser />
     <v-card class="cardmargin">
-      <h1 class="text-center p-3">
-        รายงานปัญหาไม่ระบุตัวตน
-        <v-divider></v-divider>
-      </h1>
+      <v-toolbar dark prominent color="#FFAB40">
+        <h1 class="text-center pa-5">รายงานปัญหาไม่ระบุตัวตน</h1>
+        <v-spacer></v-spacer>
+      </v-toolbar>
 
       <v-form>
         <v-container>
@@ -64,6 +64,7 @@ export default {
     sentreport() {
       axios
         .post(process.env.VUE_APP_URL + "reports", {
+          users_id: this.$store.getters.getUser.user_id,
           report_title: this.report_title,
           report_detail: this.report_detail,
         })
@@ -72,10 +73,14 @@ export default {
             this.textsnackbar = "กรุณากรอกข้อมูลให้ครบ";
             this.colorsnackbar = "#DB4437";
             this.snackbar = true;
-          } else {
+          } else if (response.data == "Sent report successful") {
             this.textsnackbar = "รายงานปัญหาสำเร็จ";
             this.colorsnackbar = "#2E7D32";
             this.snackbar = true;
+            this.report_title = "";
+            this.report_detail = "";
+          } else {
+            alert("เกิดข้อผิดพลาดในการส่งรายงาน");
           }
         })
         .catch((error) => {
@@ -93,5 +98,9 @@ export default {
 }
 .cardmargin {
   margin: 2%;
+}
+h1 {
+  font-size: 50px;
+  padding: 2% 0% 0% 0%;
 }
 </style>

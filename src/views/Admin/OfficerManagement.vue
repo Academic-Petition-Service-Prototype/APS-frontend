@@ -1,175 +1,372 @@
 <template>
+  <!-- ส่วนจัดเเสดง -->
   <div id="AdminOfficerManagement">
     <NavbarAdmin />
-    <v-card class="cardmargin">
-      <h1 class="text-center p-4">
-        จัดการ Officer
-        <v-divider></v-divider>
-      </h1>
-      <v-row>
-        <v-col align="center" v-if="members.length">
-          <v-btn width="150" height="50">
-            <v-icon>mdi-account</v-icon>
-            <div class="title">{{ members.length }}</div>
-          </v-btn>
-        </v-col>
-      </v-row>
-      <v-card-title>
-        <v-text-field
-          v-model="search"
-          append-icon="mdi-magnify"
-          label="Search"
-          single-line
-          hide-details
-        >
-        </v-text-field>
-      </v-card-title>
-      <v-data-table :headers="headers" :items="members" :search="search">
-        <template v-slot:item="members">
-          <tr>
-            <td>{{ members.item.name }}</td>
-            <td>{{ members.item.calories }}</td>
-            <td>{{ members.item.fat }}</td>
-            <td>
-              <v-btn
-                fab
-                plain
-                small
-                color="yellow darken-3"
-                @click="onButtonClick(row.item)"
+    <v-card class="cardshow">
+      <v-toolbar dark prominent color="#FFAB40">
+        <h1>จัดการ Officer</h1>
+        <v-spacer></v-spacer>
+      </v-toolbar>
+
+      <v-data-iterator
+        :items="listofficer"
+        :items-per-page.sync="itemsPerPage"
+        :page.sync="page"
+        :search="search"
+        :sort-by="sortBy.toLowerCase()"
+        :sort-desc="sortDesc"
+        hide-default-footer
+        class="text-center"
+      >
+        <template v-slot:header>
+          <v-row>
+            <v-col align="right"
+              ><v-btn
+                color="success"
+                style="margin: 10px 10px -25px 10px"
+                @click="dialogadd = !dialogadd"
               >
-                <v-icon>mdi-account-edit</v-icon>
-              </v-btn>
-              <v-btn
-                fab
-                plain
-                small
-                color="red"
-                @click="onButtonClick(row.item)"
+                เพิ่ม Officer
+              </v-btn></v-col
+            >
+          </v-row>
+          <v-row>
+            <v-col>
+              <v-text-field
+                prepend-inner-icon="mdi-magnify"
+                label="ชื่อ Officer"
+                placeholder="ชื่อ Officer"
+                filled
+                rounded
+                dense
+                v-model="search"
+                class="cardshow"
               >
-                <v-icon>mdi-delete</v-icon>
-              </v-btn>
-            </td>
-          </tr>
+              </v-text-field>
+              <template v-if="$vuetify.breakpoint.mdAndUp"> </template>
+            </v-col>
+          </v-row>
         </template>
-      </v-data-table>
+
+        <template v-slot:default="props">
+          <v-row>
+            <v-col align="center"> ลำดับ </v-col>
+            <v-col align="center"> ชื่อ - สกุล </v-col>
+            <v-col align="center"> Agency </v-col>
+
+            <v-col align="center"> Action </v-col>
+          </v-row>
+
+          <v-row v-for="item in props.items" :key="item.text">
+            <v-card-title>
+              <v-row>
+                <v-col align="center"> {{ item.id }} </v-col>
+                <v-col align="center">
+                  {{ item.Fname }} {{ item.Lname }}
+                </v-col>
+
+                <v-col align="center"> {{ item.agency }} </v-col>
+                <v-col align="center">
+                  <v-btn icon><v-icon color="yellow">mdi-pencil</v-icon></v-btn>
+                  <v-btn icon
+                    ><v-icon color="red" @click="dialogdel = !dialogdel"
+                      >mdi-delete</v-icon
+                    ></v-btn
+                  >
+                </v-col>
+              </v-row>
+            </v-card-title>
+            <v-divider style="margin: 0px 10px 0px 10px"></v-divider>
+          </v-row>
+        </template>
+
+        <template v-slot:footer>
+          <v-row class="mt-2" align="center" justify="center">
+            <v-menu offset-y> </v-menu>
+
+            <v-spacer></v-spacer>
+            <v-row>
+              <v-col align="center">
+                <span class="mr-4 grey--text">
+                  Page {{ page }} of {{ numberOfPages }}
+                </span>
+              </v-col>
+            </v-row>
+          </v-row>
+          <v-row>
+            <v-col align="center">
+              <v-btn
+                fab
+                dark
+                icon
+                color="#FFAB40"
+                class="mr-1"
+                @click="formerPage"
+              >
+                <v-icon>mdi-chevron-left</v-icon>
+              </v-btn>
+              <v-btn
+                fab
+                dark
+                icon
+                color="#FFAB40"
+                class="ml-1"
+                @click="nextPage"
+              >
+                <v-icon>mdi-chevron-right</v-icon>
+              </v-btn>
+            </v-col>
+          </v-row>
+         
+        </template>
+      </v-data-iterator>
+
+      <!-- ส่วนจัดเเสดงเวลากดเเก้ไข -->
+      <v-dialog v-model="dialog" persistent width="800">
+        <v-card align="center">
+          <h1>จัดการข้อมูล Officer</h1>
+
+          <v-divider></v-divider>
+          <v-btn fab width="250" height="250" left class="text-pprofile-magin"
+            >Image</v-btn
+          >
+
+          <v-text-field
+            label="ชื่อ"
+            outlined
+            readonly
+            class="text-pprofile-magin"
+          ></v-text-field>
+
+          <v-text-field
+            label="นามสกุล"
+            outlined
+            readonly
+            class="text-pprofile-magin"
+          ></v-text-field>
+          <v-text-field
+            label="หน่วยงาน"
+            outlined
+            readonly
+            class="text-pprofile-magin"
+          ></v-text-field>
+
+          <v-textarea
+            label="คำอธิบาย"
+            auto-grow
+            outlined
+            rows="1"
+            row-height="15"
+            class="text-pprofile-magin"
+          ></v-textarea>
+          <v-divider></v-divider>
+          <v-btn color="green darken-1" text @click="dialog = false">
+            ตกลง
+          </v-btn>
+          <v-btn color="red darken-1" text @click="dialog = false">
+            ยกเลิก
+          </v-btn>
+        </v-card>
+      </v-dialog>
+      <!-- ส่วนจัดเเสดงเวลากดเเก้ไข -->
+      <!-- เพิ่มข้อมูล officer -->
+      <v-dialog v-model="dialogadd" persistent max-width="1000px">
+        <v-card align="center">
+          <h1>เพิ่มข้อมูล Officer</h1>
+          <v-divider></v-divider>
+          <form v-on:submit.prevent="addNewofficer">
+            <v-container>
+              <v-row>
+                <v-col>
+                  <v-btn fab width="150" height="150"> </v-btn>
+                  <v-file-input
+                    :rules="rules"
+                    accept="image/png, image/jpeg, image/bmp"
+                    placeholder="Pick an avatar"
+                    prepend-icon="mdi-camera"
+                    label="Avatar"
+                  ></v-file-input>
+                </v-col>
+                <v-col>
+                  <v-text-field
+                    class="cardmargin"
+                    v-model="Fname"
+                    label="ชื่อ"
+                    required
+                  ></v-text-field>
+                  <v-text-field
+                    class="cardmargin"
+                    v-model="Lname"
+                    label="นามสกุล"
+                    required
+                  ></v-text-field>
+                  <v-radio-group v-model="gender" mandatory row>
+                    <v-radio label="ชาย" value="ขาย"></v-radio>
+                    <v-radio label="หญิง" value="หญง" color="#E91E63"></v-radio>
+                  </v-radio-group>
+                  <v-text-field
+                    class="cardmargin"
+                    v-model="email"
+                    label="E-mail"
+                    required
+                  ></v-text-field>
+                  <v-text-field
+                    class="cardmargin"
+                    v-model="tell"
+                    label="เบอร์โทร"
+                    required
+                  ></v-text-field>
+
+                  <v-text-field
+                    class="cardmargin"
+                    v-model="address"
+                    label="ที่อยู่"
+                    required
+                  ></v-text-field>
+
+                  <v-select
+                    v-model="select"
+                    :items="itemsAgency"
+                    :error-messages="errors"
+                    label="Select Agency"
+                    data-vv-name="select"
+                    required
+                  ></v-select>
+                </v-col>
+              </v-row>
+              <v-btn color="green darken-1" type="submit"> ตกลง </v-btn>
+              <v-btn color="red darken-1" text @click="dialogadd = false">
+                ยกเลิก
+              </v-btn>
+            </v-container>
+          </form>
+        </v-card>
+      </v-dialog>
+      <!-- เพิ่มข้อมูล officer -->
+      <!-- ลบ  officer -->
+      <v-dialog v-model="dialogdel" persistent width="800">
+        <v-card align="center">
+          <h1>ยืนยัน</h1>
+
+          <v-divider></v-divider>
+          <h2>ต้องการลบข้อมูลของ Officer คนนี้</h2>
+
+          <v-divider></v-divider>
+          <v-btn color="green darken-1" text @click="removeofficer">
+            ตกลง
+          </v-btn>
+          <v-btn color="red darken-1" text @click="dialogdel = false">
+            ยกเลิก
+          </v-btn>
+        </v-card>
+      </v-dialog>
+      <!-- ลบ  officer -->
     </v-card>
   </div>
+  <!-- ส่วนจัดเเสดง -->
 </template>
 
 <script>
 import NavbarAdmin from "../../components/NavbarAdmin.vue";
 export default {
-  name: "AdminOfficerManagement",
+  name: "adminOfficerManagement",
   components: {
     NavbarAdmin,
   },
   data() {
     return {
+      // ของตัวตาราง
+      itemsPerPageArray: [4, 8, 12],
       search: "",
-      headers: [
-        {
-          text: "ลำดับ",
-          align: "start",
-          value: "count",
-          width: 100,
-        },
-        { text: "ชื่อ-นามสกุล", width: 350, value: "calories" },
-        { text: "หน่วยงาน", width: 350, value: "calories" },
-        { text: "Action", align: "center", width: 100, value: "iron" },
-      ],
-      members: [
-        {
-          name: "Frozen Yogurt",
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
-          iron: `f`,
-        },
-        {
-          name: "Ice cream sandwich",
-          calories: 237,
-          fat: 9.0,
-          carbs: 37,
-          protein: 4.3,
-          iron: "1%",
-        },
-        {
-          name: "Eclair",
-          calories: 262,
-          fat: 16.0,
-          carbs: 23,
-          protein: 6.0,
-          iron: "7%",
-        },
-        {
-          name: "Cupcake",
-          calories: 305,
-          fat: 3.7,
-          carbs: 67,
-          protein: 4.3,
-          iron: "8%",
-        },
-        {
-          name: "Gingerbread",
-          calories: 356,
-          fat: 16.0,
-          carbs: 49,
-          protein: 3.9,
-          iron: "16%",
-        },
-        {
-          name: "Jelly bean",
-          calories: 375,
-          fat: 0.0,
-          carbs: 94,
-          protein: 0.0,
-          iron: "0%",
-        },
-        {
-          name: "Lollipop",
-          calories: 392,
-          fat: 0.2,
-          carbs: 98,
-          protein: 0,
-          iron: "2%",
-        },
-        {
-          name: "Honeycomb",
-          calories: 408,
-          fat: 3.2,
-          carbs: 87,
-          protein: 6.5,
-          iron: "45%",
-        },
-        {
-          name: "Donut",
-          calories: 452,
-          fat: 25.0,
-          carbs: 51,
-          protein: 4.9,
-          iron: "22%",
-        },
-        {
-          name: "KitKat",
-          calories: 518,
-          fat: 26.0,
-          carbs: 65,
-          protein: 7,
-          iron: "6%",
-        },
+      filter: {},
+      sortDesc: false,
+      page: 1,
+      itemsPerPage: 4,
+      sortBy: "name",
+      // ของตัวตาราง
+
+      // ของตัวไดอล็อค
+      dialog: false,
+      dialogadd: false,
+      dialogdel: false,
+      // ของตัวไดอล็อค
+
+      // ของตัวเพิ่มข้อมูล
+      Fname: "",
+      Lname: "",
+      gender: "",
+      email: "",
+      address: "",
+      nextOfficerId: 1,
+      listofficer: [],
+      select:"",
+      // ของตัวเพิ่มข้อมูล
+
+      items: [],
+
+      itemsAgency: [
+        'Item 1',
+        'Item 2',
+        'Item 3',
+        'Item 4',
       ],
     };
   },
-  computed: {},
-
-  methods: {},
+  computed: {
+    numberOfPages() {
+      return Math.ceil(this.items.length / this.itemsPerPage);
+    },
+    filteredKeys() {
+      return this.keys.filter((key) => key !== "Name");
+    },
+  },
+  methods: {
+    nextPage() {
+      if (this.page + 1 <= this.numberOfPages) this.page += 1;
+    },
+    formerPage() {
+      if (this.page - 1 >= 1) this.page -= 1;
+    },
+    updateItemsPerPage(number) {
+      this.itemsPerPage = number;
+    },
+    addNewofficer: function () {
+      this.listofficer.push({
+        id: this.nextOfficerId++,
+        Fname: this.Fname,
+        Lname: this.Lname,
+        gender: this.gender,
+        email: this.email,
+        address: this.address,
+        agency:this.select,
+      });
+      this.Fname = "";
+      this.Lname = "";
+      this.gender = "";
+      this.email = "";
+      this.address = "";
+      this.newtitleText = "";
+      this.select = "";
+      this.dialogadd = false;
+    },
+    removeofficer: function (index) {
+      console.log(index);
+      this.listofficer.splice(index, 1);
+      this.dialogdel = false;
+    },
+  },
 };
 </script>
 
 <style scoped>
-.cardmargin {
+h1 {
+  font-size: 50px;
+  padding: 2% 0% 0% 0%;
+}
+.cardshow {
   margin: 2%;
+}
+.btn-margin {
+  margin: 3%;
 }
 </style>

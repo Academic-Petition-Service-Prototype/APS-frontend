@@ -1,20 +1,23 @@
 <template>
   <div id="UserPetition" class="bg-color">
     <NavbarUser />
-    <v-card class="cardmargin text-center">
-      <h1>
-        เลือกแบบคำร้อง / ยื่นเรื่อง
-        <v-divider></v-divider>
-      </h1>
-
+    <v-card class="cardmargin">
+      <v-toolbar dark prominent color="#FFAB40">
+        <h1>เลือกแบบคำร้อง / ยื่นเรื่อง</h1>
+        <v-spacer></v-spacer>
+      </v-toolbar>
+      <!-- <h6>
+        {{ petitionList }}
+      </h6> -->
       <v-data-iterator
-        :items="items"
+        :items="petitionList"
         :items-per-page.sync="itemsPerPage"
         :page.sync="page"
         :search="search"
         :sort-by="sortBy.toLowerCase()"
         :sort-desc="sortDesc"
         hide-default-footer
+        class="text-center"
       >
         <template v-slot:header>
           <v-text-field
@@ -22,8 +25,8 @@
             dense
             filled
             rounded
-            label="ค้นหาเอกสาร"
-            class="cardshow"
+            label="ค้นหาคำร้อง"
+            class="cardshow magintextfind"
           ></v-text-field>
         </template>
 
@@ -31,24 +34,61 @@
           <v-row
             v-for="item in name.items"
             :key="item.name"
-            router
-            :to="item.route"
-            class="cardshow"
+            class="petitiontitle"
           >
-            <v-col>
-              <v-btn block height="200" router :to="item.route">
+            <v-col v-if="item.form_status == 'active'">
+              <v-btn
+                outlined
+                block
+                height="100"
+                router
+                :to="item.route"
+                @click="sentPetition(item.form_id)"
+              >
                 <v-row>
                   <v-col align="center">
-                    <v-btn color="secondary" width="100" height="100">
-                      <v-icon>mdi-{{ item.icon }}</v-icon>
-                    </v-btn>
-                    
-                  </v-col>
-                  <v-col>
-                    <h2>{{ item.name }}</h2>
-                    <h2>{{ item.detail }}</h2>
+                    <h2>{{ item.form_name }}</h2>
                   </v-col>
                 </v-row>
+              </v-btn>
+            </v-col>
+          </v-row>
+        </template>
+
+        <template v-slot:footer>
+          <v-row class="mt-2" align="center" justify="center">
+            <v-menu offset-y> </v-menu>
+
+            <v-spacer></v-spacer>
+            <v-row>
+              <v-col align="center">
+                <span class="mr-4 grey--text">
+                  Page {{ page }} of {{ numberOfPages }}
+                </span>
+              </v-col>
+            </v-row>
+          </v-row>
+          <v-row>
+            <v-col align="center">
+              <v-btn
+                fab
+                dark
+                icon
+                color="#FFAB40"
+                class="mr-1"
+                @click="formerPage"
+              >
+                <v-icon>mdi-chevron-left</v-icon>
+              </v-btn>
+              <v-btn
+                fab
+                dark
+                icon
+                color="#FFAB40"
+                class="ml-1"
+                @click="nextPage"
+              >
+                <v-icon>mdi-chevron-right</v-icon>
               </v-btn>
             </v-col>
           </v-row>
@@ -60,6 +100,7 @@
 
 <script>
 import NavbarUser from "../../components/NavbarUser.vue";
+import axios from "axios";
 export default {
   name: "UserPetition",
   components: {
@@ -74,69 +115,49 @@ export default {
       itemsPerPage: 4,
       sortBy: "name",
       keys: ["Name"],
-      items: [
-        {
-          name: "เอกสารความกก้าวหน้า",
-          route: "/Sentpentition",
-          icon: "file-document-outline",
-          detail:"ส่งความก้าวหน้าการทำโครงการ",
-        },
-        {
-          name: "Ice cream sandwich",
-          route: "/Sentpentition",
-          icon: "file-document-outline",
-          detail:"ส่งความก้าวหน้าการทำโครงการ",
-        },
-        {
-          name: "Eclair",
-          route: "/Sentpentition",
-          icon: "file-document-outline",
-          detail:"ส่งความก้าวหน้าการทำโครงการ",
-        },
-        {
-          name: "Cupcake",
-          route: "/Sentpentition",
-          icon: "file-document-outline",
-          detail:"ส่งความก้าวหน้าการทำโครงการ",
-        },
-        {
-          name: "Gingerbread",
-          route: "/Sentpentition",
-          icon: "file-document-outline",
-          detail:"ส่งความก้าวหน้าการทำโครงการ",
-        },
-        {
-          name: "Jelly bean",
-          route: "/Sentpentition",
-          icon: "file-document-outline",
-          detail:"ส่งความก้าวหน้าการทำโครงการ",
-        },
-        {
-          name: "Lollipop",
-          route: "/Sentpentition",
-          icon: "file-document-outline",
-          detail:"ส่งความก้าวหน้าการทำโครงการ",
-        },
-        {
-          name: "Honeycomb",
-          route: "/Sentpentition",
-          icon: "file-document-outline",
-          detail:"ส่งความก้าวหน้าการทำโครงการ",
-        },
-        {
-          name: "Donut",
-          route: "/Sentpentition",
-          icon: "file-document-outline",
-          detail:"ส่งความก้าวหน้าการทำโครงการ",
-        },
-        {
-          name: "KitKat",
-          route: "/Sentpentition",
-          icon: "file-document-outline",
-          detail:"ส่งความก้าวหน้าการทำโครงการ",
-        },
-      ],
+      petitionList: [],
     };
+  },
+  computed: {
+    numberOfPages() {
+      return Math.ceil(this.petitionList.length / this.itemsPerPage);
+    },
+    filteredKeys() {
+      return this.keys.filter((key) => key !== "Name");
+    },
+  },
+  methods: {
+    nextPage() {
+      if (this.page + 1 <= this.numberOfPages) this.page += 1;
+    },
+    formerPage() {
+      if (this.page - 1 >= 1) this.page -= 1;
+    },
+    updateItemsPerPage(number) {
+      this.itemsPerPage = number;
+    },
+    getpetition() {
+      axios
+        .post(process.env.VUE_APP_URL + "getforms", {
+          user_id: this.$store.getters.getUser.user_id,
+          role: this.$store.getters.getUser.role,
+          agency: this.$store.getters.getUser.agency_name,
+        })
+        .then((response) => {
+          // handle success
+          this.petitionList = response.data;
+        })
+        .catch((error) => {
+          // handle error
+          console.log(error);
+        });
+    },
+    sentPetition(form_id) {
+      this.$router.push("/UserSentpetition/" + form_id);
+    },
+  },
+  mounted() {
+    this.getpetition();
   },
 };
 </script>
@@ -148,5 +169,16 @@ export default {
 }
 .cardmargin {
   margin: 2%;
+}
+.magintextfind {
+  padding: 2%;
+}
+h1 {
+  font-size: 50px;
+  padding: 2% 0% 0% 0%;
+}
+
+.petitiontitle {
+  padding: 0px 30px 0px 30px;
 }
 </style>

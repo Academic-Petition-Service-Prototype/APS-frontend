@@ -38,7 +38,7 @@
       <v-row>
         <v-col class="text-white" align="center">
           ชื่อ : {{ firstname }} {{ lastname }}<br />
-          สถานะ : {{ status }}
+          สถานะ : {{ role }}
         </v-col>
       </v-row>
       <v-divider></v-divider>
@@ -95,37 +95,37 @@ export default {
     slideexit: false,
     firstname: "",
     lastname: "",
-    status: "",
+    role: "",
     lastlogin: "",
     menu: [
       {
         menu: "1",
         text: "Dashboard",
-        route: "/DashboardHofficer",
+        route: "/SecretaryDashboard",
         icon: "home",
       },
       {
         menu: "2",
         text: "ติดตามสถานะคำร้อง/ปัญหา",
-        route: "/petitionHofficer",
+        route: "/SecretaryTracking",
         icon: "marker-check",
       },
       {
         menu: "3",
         text: "การอนุมัติคำร้อง",
-        route: "/CRUDOFFICEHofficer",
+        route: "/SecretaryViewApproval",
         icon: "file-document",
       },
       {
         menu: "4",
         text: "การรายงานปัญหา",
-        route: "/tarckingHofficer",
+        route: "/SecretaryViewReport",
         icon: "alert-octagon",
       },
       {
         menu: "5",
         text: "โปรไฟล์",
-        route: "/tarckingHofficer",
+        route: "/SecretaryProfile",
         icon: "account",
       },
     ],
@@ -140,7 +140,7 @@ export default {
     }
     this.firstname = this.$store.getters.getUser.f_name;
     this.lastname = this.$store.getters.getUser.l_name;
-    this.status = this.$store.getters.getUser.status;
+    this.role = this.$store.getters.getUser.role;
     this.lastlogin = this.$store.getters.getUser.last_login;
     this.secretMessage = await AuthService.getSecretContent();
   },

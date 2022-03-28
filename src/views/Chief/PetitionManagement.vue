@@ -1,83 +1,191 @@
 <template>
   <!-- ส่วนจัดเเสดง -->
-  <div id="Formmanagementchief">
-    <NavbarHOF />
+  <div id="ChiefPetitionManagement">
+    <NavbarChief />
     <v-card class="cardshow">
-      <h1>
-        จัดการแบบฟอร์ม
-        <v-divider></v-divider>
-      </h1>
-      <v-row>
-        <v-col align="center">
-          <v-btn width="300" height="150" class="box-margin">
-            <h2>
-              + <br /><br />
-              สร้างเอกสารใหม่
-            </h2></v-btn
-          >
-        </v-col>
-      </v-row>
+      <v-toolbar dark prominent color="#FFAB40">
+        <h1>จัดการคำร้อง/ยื่นเรื่อง</h1>
+        <v-spacer></v-spacer>
+      </v-toolbar>
 
-      <v-card class="box-marginlist">
-        <v-row>
-          <v-col align="center">ลำดับ</v-col>
-          <v-col align="center">รายการ</v-col>
-          <v-col align="center">หน่วยงาน</v-col>
-          <v-col align="center">ตัวเลือก</v-col>
-        </v-row>
-      </v-card>
+      <v-data-iterator
+        :items="items"
+        :items-per-page.sync="itemsPerPage"
+        :page.sync="page"
+        :search="search"
+        :sort-by="sortBy.toLowerCase()"
+        :sort-desc="sortDesc"
+        hide-default-footer
+        class="text-center"
+      >
+        <template v-slot:header>
+          <v-row>
+            <v-col align="right"
+              ><v-btn
+                color="success"
+                style="margin: 10px 10px -25px 10px"
+                to="/ChiefCreatepetition"
+              >
+                สร้างคำร้อง
+              </v-btn></v-col
+            >
+          </v-row>
+          <v-row>
+            <v-col>
+              <v-text-field
+                prepend-inner-icon="mdi-magnify"
+                label="ชื่อคำร้อง / ยื่นเรื่อง"
+                placeholder="ชื่อคำร้อง / ยื่นเรื่อง"
+                filled
+                rounded
+                dense
+                v-model="search"
+                class="cardshow"
+              >
+              </v-text-field>
+              <template v-if="$vuetify.breakpoint.mdAndUp"> </template>
+            </v-col>
+          </v-row>
+        </template>
 
-      <v-card class="box-marginlist">
-        <v-row v-for="forms in forms" :key="forms">
-          <v-col align="center">{{ forms.no }}</v-col>
-          <v-col align="center">{{ forms.text }}</v-col>
-          <v-col align="center">{{ forms.agency }}</v-col>
-          <v-col>
-            <v-btn color="#FFEB3B" class="btn-magin"> เเก้ไขข้อมูล</v-btn>
-            <v-btn color="#F44336"> ลบข้อมูล</v-btn>
-          </v-col>
-        </v-row>
-      </v-card>
+        <template v-slot:default="props">
+          <v-row class="text-center">
+            <v-col> ลำดับ </v-col>
+            <v-col> รายการ </v-col>
+            <v-col> สถานะ </v-col>
+            <v-col> วันที่สร้าง </v-col>
+            <v-col> Action </v-col>
+          </v-row>
+
+          <v-row v-for="item in props.items" :key="item.text">
+            <v-card-title>
+              <v-row class="text-center" align="center">
+                <v-col> {{ item.no }} </v-col>
+                <v-col> {{ item.text }} </v-col>
+                <v-col>
+                  <v-switch
+                    inset
+                    v-model="item.switch"
+                    style="margin: 0px 0px 0px 40%;"
+                  ></v-switch>
+                </v-col>
+                <v-col> {{ item.datecreation }} </v-col>
+                <v-col>
+                  <v-btn icon><v-icon color="yellow">mdi-pencil</v-icon></v-btn>
+                  <v-btn icon><v-icon color="red">mdi-delete</v-icon></v-btn>
+                </v-col>
+              </v-row>
+            </v-card-title>
+            <v-divider style="margin: 0px 10px 0px 10px;"></v-divider>
+          </v-row>
+        </template>
+
+        <template v-slot:footer>
+          <v-row class="mt-2" align="center" justify="center">
+            <v-menu offset-y> </v-menu>
+
+            <v-spacer></v-spacer>
+            <v-row>
+              <v-col align="center">
+                <span class="mr-4 grey--text">
+                  Page {{ page }} of {{ numberOfPages }}
+                </span>
+              </v-col>
+            </v-row>
+          </v-row>
+          <v-row>
+            <v-col align="center">
+              <v-btn
+                fab
+                dark
+                icon
+                color="#FFAB40"
+                class="mr-1"
+                @click="formerPage"
+              >
+                <v-icon>mdi-chevron-left</v-icon>
+              </v-btn>
+              <v-btn
+                fab
+                dark
+                icon
+                color="#FFAB40"
+                class="ml-1"
+                @click="nextPage"
+              >
+                <v-icon>mdi-chevron-right</v-icon>
+              </v-btn>
+            </v-col>
+          </v-row>
+        </template>
+      </v-data-iterator>
+      <!-- </v-container> -->
     </v-card>
   </div>
   <!-- ส่วนจัดเเสดง -->
 </template>
+
 <script>
-import NavbarHOF from "../../components/NavbarChief.vue";
+import NavbarChief from "../../components/NavbarChief.vue";
 export default {
-  name: "Formmanagementchief",
+  name: "ChiefPetitionManagement",
   components: {
-    NavbarHOF,
+    NavbarChief,
   },
   data() {
     return {
-      forms: [
-        { no: "1", text: "ฟรอมที่ 1", agency: "ศึกษาทั่วไป", satatus: true },
-        { no: "2", text: "ฟรอมที่ 2", agency: "ศึกษาทั่วไป", satatus: true },
-        { no: "3", text: "ฟรอมที่ 3", agency: "ศึกษาทั่วไป", satatus: false },
-        { no: "4", text: "ฟรอมที่ 4", agency: "ศึกษาทั่วไป", satatus: true },
+      itemsPerPageArray: [4, 8, 12],
+      search: "",
+      filter: {},
+      sortDesc: false,
+      page: 1,
+      itemsPerPage: 4,
+      sortBy: "name",
+
+      items: [
+        {
+          no: "1",
+          text: "ฟรอมที่ 1",
+          agency: "ศึกษาทั่วไป",
+          satatus: true,
+          switch: false,
+          datecreation: "6/12/2564",
+        },
+       
       ],
     };
+  },
+  computed: {
+    numberOfPages() {
+      return Math.ceil(this.items.length / this.itemsPerPage);
+    },
+    filteredKeys() {
+      return this.keys.filter((key) => key !== "Name");
+    },
+  },
+  methods: {
+    nextPage() {
+      if (this.page + 1 <= this.numberOfPages) this.page += 1;
+    },
+    formerPage() {
+      if (this.page - 1 >= 1) this.page -= 1;
+    },
+    updateItemsPerPage(number) {
+      this.itemsPerPage = number;
+    },
   },
 };
 </script>
 
 <style scoped>
 h1 {
-  text-align: center;
-  padding: 10px;
-}
-h2 {
-  text-align: center;
-  padding: 10px;
+  font-size: 50px;
+  padding: 2% 0% 0% 0%;
 }
 .cardshow {
-  margin: 8%;
+  margin: 2%;
 }
-.box-margin {
+.btn-margin {
   margin: 3%;
-}
-.box-marginlist {
-  margin: 0px 0px 10px 0px;
 }
 </style>

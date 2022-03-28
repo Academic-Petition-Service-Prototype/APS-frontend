@@ -20,6 +20,8 @@
                   label="Email"
                   type="email"
                   class="textfield-margin"
+                  :rules="rules.email"
+                  required
                 >
                   <template v-slot:prepend>
                     <v-tooltip bottom>
@@ -39,9 +41,11 @@
               <v-col>
                 <v-text-field
                   v-model="password"
+                  :rules="rules.email"
                   label="Password"
                   type="password"
                   class="textfield-margin"
+                  required
                 >
                   <template v-slot:prepend>
                     <v-tooltip bottom>
@@ -133,6 +137,9 @@ export default {
       snackbar: false,
       dialogforgot: false,
       timeout: 2000,
+      rules: {
+        email: [(val) => (val || "").length > 0 || "This field is required"],
+      },
     };
   },
   components: {
@@ -146,26 +153,27 @@ export default {
           password: this.password,
         };
         const response = await AuthService.login(credentials);
-        this.msg = response.msg;
+        this.msg = response.message;
+        alert(this.msg);
         const token = response.token;
         const user = response.user;
         this.$store.dispatch("login", { token, user });
-        if (user.status == "user") {
+        if (user.role == "user") {
           this.$router.push("/UserDashboard");
-        } else if (user.status == "officer") {
+        } else if (user.role == "officer") {
           this.$router.push("/OfficerDashboard");
-        } else if (user.status == "chief") {
+        } else if (user.role == "chief") {
           this.$router.push("/ChiefDashboard");
-        } else if (user.status == "secretary") {
+        } else if (user.role == "secretary") {
           this.$router.push("/SecretaryDashboard");
-        } else if (user.status == "admin") {
+        } else if (user.role == "admin") {
           this.$router.push("/AdminDashboard");
         }
         localStorage.setItem("token", token);
         localStorage.setItem("UserData", JSON.stringify(user));
       } catch (error) {
-        this.msg = error.response.data.msg;
-        console.log(error.data);
+        alert("Login failed");
+        this.msg = error.response.data.message;
       }
     },
 

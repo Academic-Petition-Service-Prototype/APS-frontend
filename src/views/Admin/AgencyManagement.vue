@@ -1,10 +1,10 @@
 <template>
   <!-- ส่วนจัดเเสดง -->
-  <div id="ChiefOfficerManagement">
-    <NavbarChief />
+  <div id="AdminAgencyManagement">
+    <NavbarAdmin />
     <v-card class="cardshow">
       <v-toolbar dark prominent color="#FFAB40">
-        <h1>จัดการ Officer</h1>
+        <h1> จัดการ Agency</h1>
         <v-spacer></v-spacer>
         
       </v-toolbar>
@@ -22,15 +22,15 @@
         <template v-slot:header>
           <v-row>
             <v-col align="right"><v-btn color="success" style="margin: 10px 10px -25px 10px" @click="dialogadd = !dialogadd">
-          เพิ่ม Officer
+          เพิ่ม Agency
         </v-btn></v-col>
           </v-row>
           <v-row>
             <v-col>
               <v-text-field
                 prepend-inner-icon="mdi-magnify"
-                label="ชื่อ Officer"
-                placeholder="ชื่อ Officer"
+                label="ชื่อ Agency"
+                placeholder="ชื่อ Agency"
                 filled
                 rounded
                 dense
@@ -118,7 +118,7 @@
       <!-- ส่วนจัดเเสดงเวลากดเเก้ไข -->
       <v-dialog v-model="dialog" persistent width="800">
         <v-card align="center">
-          <h1>จัดการข้อมูล Officer</h1>
+          <h1>จัดการข้อมูล Agency</h1>
 
           <v-divider></v-divider>
           <v-btn fab width="250" height="250" left class="text-pprofile-magin"
@@ -166,7 +166,7 @@
       <!-- เพิ่มข้อมูล officer -->
       <v-dialog v-model="dialogadd" persistent max-width="1000px">
         <v-card align="center">
-          <h1>เพิ่มข้อมูล officer</h1>
+          <h1>เพิ่มข้อมูล Agency</h1>
           <v-divider></v-divider>
           <form v-on:submit.prevent="addNewofficer">
             <v-container>
@@ -252,11 +252,11 @@
 </template>
 
 <script>
-import NavbarChief from "../../components/NavbarChief.vue";
+import NavbarAdmin from "../../components/NavbarAdmin.vue";
 export default {
-  name: "ChiefOfficerManagement",
+  name: "AdminAgencyManagement",
   components: {
-    NavbarChief,
+    NavbarAdmin,
   },
   data() {
     return {
@@ -285,11 +285,13 @@ export default {
       nextOfficerId: 1,
       listofficer: [],
       // ของตัวเพิ่มข้อมูล
+
+      items: [],
     };
   },
   computed: {
     numberOfPages() {
-      return Math.ceil(this.listofficer.length / this.itemsPerPage);
+      return Math.ceil(this.items.length / this.itemsPerPage);
     },
     filteredKeys() {
       return this.keys.filter((key) => key !== "Name");

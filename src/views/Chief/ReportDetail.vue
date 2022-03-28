@@ -1,22 +1,26 @@
 <template>
-  <div id="ReportDetail">
+  <div id="ChiefReportDetail">
     <NavbarChief />
     <v-card class="cardmargin">
-      <h1 class="text-center p-2">
-        รายละเอียดการรายงานปัญหา
-      </h1>
-      <v-divider></v-divider>
+      <v-toolbar dark prominent color="#FFAB40">
+        <h1>รายละเอียดการรายงานปัญหา</h1>
+
+        
+      </v-toolbar>
+      
+      
       <v-form>
-        <v-container>
+        <v-container class="text-center">
           <v-row>
             <v-col cols="12">
-              <v-card outlined class="p-4">
-                <h3>หัวข้อปัญหา</h3>
-                <p class="subtitle-1">{{ report_title }}</p>
+              <v-card  outlined class="p-4 ">
+                
+                <h1>หัวข้อปัญหา</h1>
+                <h2 >{{ report_title }}</h2>
               </v-card>
               <v-card outlined class="p-4 mt-2">
-                <h3>รายละเอียดปัญหา</h3>
-                <p class="subtitle-1">{{ report_detail }}</p>
+                <h1>รายละเอียดปัญหา</h1>
+                <h2 >{{ report_detail }}</h2>
               </v-card>
             </v-col>
             <v-col cols="12" class="text-center">
@@ -34,7 +38,7 @@
 import NavbarChief from "../../components/NavbarChief.vue";
 import axios from "axios";
 export default {
-  name: "ReportDetail",
+  name: "ChiefReportDetail",
   components: {
     NavbarChief,
   },
@@ -43,9 +47,6 @@ export default {
       report_title: "",
       report_detail: "",
     };
-  },
-  mounted() {
-    this.getreportbyid();
   },
   methods: {
     back() {
@@ -64,6 +65,9 @@ export default {
           console.log(error);
         });
     },
+  },
+  mounted() {
+    this.getreportbyid();
   },
 };
 </script>
