@@ -1,5 +1,5 @@
 <template>
-  <div id="OfficerTracking" class="bg-color">
+  <div id="ChiefTracking" class="bg-color">
     <NavbarOF />
     <v-card class="cardshow">
       <v-toolbar dark prominent color="#FFAB40">
@@ -8,7 +8,7 @@
       </v-toolbar>
 
       <v-data-iterator
-        :items="listtracking"
+        :items="petitionListById"
         :items-per-page.sync="itemsPerPage"
         :page.sync="page"
         :search="search"
@@ -37,19 +37,26 @@
         </template>
         <template v-slot:default="props">
           <v-row class="text-center">
-            <v-col> ลำดับ </v-col>
-            <v-col> รายการ </v-col>
-            <v-col> </v-col>
+            <v-col> <h3>ลำดับ</h3></v-col>
+
+            <v-col align="left"> <h3>รายการ</h3></v-col>
           </v-row>
 
-          <v-row v-for="item in props.items" :key="item.title" class="cardshow">
+          <v-row
+            v-for="item in props.items"
+            :key="item.title"
+            class="cardshow text-center "
+          >
             <v-expansion-panels>
               <v-expansion-panel>
                 <v-expansion-panel-header>
                   <v-row class="text-center">
-                    <v-col> {{ item.num }} </v-col>
-                    <v-col> {{ item.title }} </v-col>
-                    <v-col> </v-col>
+                    <v-col>
+                      <h3>{{ item.submit_id }}</h3>
+                    </v-col>
+                    <v-col>
+                      <h4>{{ item.form_name }}</h4>
+                    </v-col>
                   </v-row>
 
                   <!-- เเสดงชื่อเอกสาร -->
@@ -61,20 +68,29 @@
                   <!-- เเสดงเนื้อหาข้างใน -->
 
                   <v-container id="inspire">
-                    <v-stepper alt-labels v-model="item.checktracking">
+                    <v-stepper alt-labels v-model="item.submit_state">
                       <v-stepper-header>
-                        <v-stepper-step
-                          :complete="item.checktracking > 1"
-                          step="1"
-                          color="green"
-                        >
-                          ส่งยื่นคำร้อง
-                        </v-stepper-step>
-
                         <v-divider></v-divider>
 
-                        <v-stepper-step
-                          :complete="item.checktracking > 2"
+                        <template v-for="(approval_order,n) in item.approval_order"
+                           >
+                          <v-stepper-step
+                          :key="approval_order"
+                          :complete="item.submit_state > n + 1"
+                          :step="n + 1"
+                          color="green"
+                        >
+                         
+                        </v-stepper-step>
+                         <v-divider :key="approval_order" ></v-divider>
+                        </template>
+
+                        
+
+                       
+
+                        <!-- <v-stepper-step
+                          :complete="item.submit_state > 2"
                           step="2"
                           color="green"
                         >
@@ -84,22 +100,22 @@
                         <v-divider></v-divider>
 
                         <v-stepper-step
-                          :complete="item.checktracking > 3"
+                          :complete="item.submit_state > 3"
                           step="3"
                           color="green"
                         >
                           การอนุมัติคำร้อง
                         </v-stepper-step>
 
-                        <v-divider></v-divider>
+                        <v-divider></v-divider> -->
 
-                        <v-stepper-step
-                          :complete="item.checktracking > 4"
+                        <!-- <v-stepper-step
+                          :complete="item.submit_state > 4"
                           step="4"
                           color="green"
                         >
                           ยื่นคำร้องสำเร็จ
-                        </v-stepper-step>
+                        </v-stepper-step> -->
                       </v-stepper-header>
                       <v-stepper-items>
                         <v-stepper-content step="1">
@@ -109,6 +125,7 @@
                             height="200px"
                           >
                             <h2 class="cardshow">รายละเอียด</h2>
+                            
                           </v-card>
                         </v-stepper-content>
 
@@ -189,9 +206,6 @@
               </v-btn>
             </v-col>
           </v-row>
-
-
-
         </template>
       </v-data-iterator>
       <!-- วนเเสดงรายการสถาณะเอสาร -->
@@ -201,6 +215,7 @@
 
 <script>
 import NavbarOF from "../../components/NavbarOfficer.vue";
+import axios from "axios";
 export default {
   name: "OfficerTracking",
   components: {
@@ -215,40 +230,48 @@ export default {
       page: 1,
       itemsPerPage: 4,
       sortBy: "name",
-      listtracking: [
-        {
-          num: 1,
-          title: "เอกสารที่1",
-          pointracking: 6,
-          checktracking: 3,
-          e1: 1,
-        },
-        {
-          num: 2,
-          title: "เอกสารที่2",
-          pointracking: 2,
-          checktracking: 3,
-          e1: 1,
-        },
-        {
-          num: 3,
-          title: "เอกสารที่2",
-          pointracking: 2,
-          checktracking: 1,
-          e1: 1,
-        },
-      ],
+      petitionListById: [],
     };
   },
   computed: {
     numberOfPages() {
-      return Math.ceil(this.listtracking.length / this.itemsPerPage);
+      return Math.ceil(this.petitionListById.length / this.itemsPerPage);
     },
     filteredKeys() {
       return this.keys.filter((key) => key !== "Name");
     },
   },
   methods: {
+    getpetition() {
+      axios
+        .post(process.env.VUE_APP_URL + "getsubmitformsbyagency", {
+          agency_id: this.$store.getters.getUser.agencies_id,
+        })
+        .then((response) => {
+          //handle success
+
+          // approval_order
+          this.petitionListById = response.data;
+          for (let i = 0; i < this.petitionListById.length; i++) {
+            this.tmp = JSON.stringify(this.petitionListById[i].approval_order);
+            this.tmp = this.tmp.replace(/\\/g, "");
+            this.specifics = this.tmp.replace(/\\/g, "");
+
+            var temp = this.specifics.slice(1, -1);
+            temp = JSON.parse(temp);
+            this.petitionListById[i].approval_order = temp;
+          }
+        })
+        .catch((error) => {
+          // handle error
+          console.log(error);
+        });
+    },
+
+    stepComplete(step) {
+      return this.curr > step;
+    },
+
     nextPage() {
       if (this.page + 1 <= this.numberOfPages) this.page += 1;
     },
@@ -258,6 +281,9 @@ export default {
     updateItemsPerPage(number) {
       this.itemsPerPage = number;
     },
+  },
+  mounted() {
+    this.getpetition();
   },
 };
 </script>
