@@ -5,7 +5,7 @@
     <v-card class="cardshow">
       <h1>
         สร้างคำร้อง
-        
+
         <v-divider></v-divider>
       </h1>
       <!-- ส่วนสร้างเอกสาร -->
@@ -36,7 +36,7 @@
               <v-row>
                 <v-col>
                   <h1>สร้างหัวข้อคำร้อง</h1>
-                  
+
                   <v-text-field
                     ref="forms.title"
                     name="forms.title"
@@ -90,7 +90,7 @@
               ต่อไป
             </v-btn>
 
-            <v-btn text @click="exitpention=true" > ยกเลิก </v-btn>
+            <v-btn text @click="exitpention = true"> ยกเลิก </v-btn>
           </v-stepper-content>
 
           <v-stepper-content step="2" ref="Selectionapprover">
@@ -116,7 +116,6 @@
                         :item-text="(item) => item.f_name + ' - ' + item.l_name"
                         item-value="user_id"
                         return-object
-                        :error-messages="approvererrorMessages"
                         label="เลือกผู้อนุมัติ"
                         class="cardshow"
                       >
@@ -139,7 +138,7 @@
                       <v-btn @click="removeapprover(index)"> ลบ </v-btn>
                     </v-col>
                   </v-row>
-                  
+                  <!-- {{listapprover[1].approver_name.user_id}} -->
                 </div>
                 <!-- ส่วนของเพิ่มหน้าผู้อนุมัติ -->
               </v-row>
@@ -274,22 +273,89 @@
       </template>
     </v-snackbar>
 
-
     <!-- ส่วนจัดเเสดงเวลากดออกจากหน้าสร้างคำร้อง -->
-        <v-dialog v-model="exitpention" persistent width="800">
-          <v-card align="center">
-            <h1>ต้องการออกจากหน้าสร้างคำร้องหรือไม่</h1>
-            
+    <v-dialog v-model="exitpention" persistent width="800">
+      <v-card align="center">
+        <h1>ต้องการออกจากหน้าสร้างคำร้องหรือไม่</h1>
 
-            <v-btn color="green darken-1" text to="/ChiefPetitionManagement">
-              ตกลง
-            </v-btn>
-            <v-btn color="red darken-1" text @click="exitpention = false">
-              ยกเลิก
-            </v-btn>
-          </v-card>
-        </v-dialog>
-        <!-- ส่วนจัดเเสดงเวลากดออกจากหน้าสร้างคำร้อง -->
+        <v-btn color="green darken-1" text to="/ChiefPetitionManagement">
+          ตกลง
+        </v-btn>
+        <v-btn color="red darken-1" text @click="exitpention = false">
+          ยกเลิก
+        </v-btn>
+      </v-card>
+    </v-dialog>
+    <!-- ส่วนจัดเเสดงเวลากดออกจากหน้าสร้างคำร้อง -->
+    <!-- เเจ้งเตื่อน ให้ใส่ คำร้อง -->
+    <v-snackbar v-model="snackbartitle" :timeout="timeouttitle">
+      กรุณากรอกชื่อคำร้องให้ถูกต้อง !
+
+      <template v-slot:action="{ attrs }">
+        <v-btn color="blue" text v-bind="attrs" @click="snackbartitle = false">
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
+
+    <!-- เเจ้งเตื่อน ให้ใส่ คำร้อง -->
+
+    <!-- เเจ้งเตื่อน ให้ใส่ คำร้อง -->
+    <v-snackbar v-model="snackbarspecifics" :timeout="timeouttitle">
+      กรุณากรอกข้อมูลเฉพาะด้วย
+      <br />
+      หลังจากเปิดให้ใส่ข้อมูลเฉพาะ !
+
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          color="blue"
+          text
+          v-bind="attrs"
+          @click="snackbarspecifics = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
+
+    <!-- เเจ้งเตื่อน ให้ใส่ คำร้อง -->
+
+    <!-- เเจ้งเตื่อน ให้ใส่ ผู้อนุมัติ -->
+    <v-snackbar v-model="snackbarapprover" :timeout="timeoutapprover">
+      กรุณาเลือกผู้อนุมัติ !
+
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          color="blue"
+          text
+          v-bind="attrs"
+          @click="snackbarapprover = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
+
+    <!-- เเจ้งเตื่อน ให้ใส่ ผู้อนุมัติ -->
+    <!-- เเจ้งเตื่อน ให้ใส่ ผู้อนุมัติ -->
+    <v-snackbar v-model="snackbarduplicate" :timeout="timeoutapprover">
+      ผู้อนุมัติซ้ำหับรายการที่มีอยู่
+      <br />
+      โปรดเลือกใหม่ !
+
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          color="blue"
+          text
+          v-bind="attrs"
+          @click="snackbarduplicate = false"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
+
+    <!-- เเจ้งเตื่อน ให้ใส่ ผู้อนุมัติ -->
   </div>
   <!-- ส่วนจัดเเสดง -->
 </template>
@@ -304,7 +370,12 @@ export default {
   },
   data() {
     return {
-      exitpention:false,
+      snackbarduplicate: false,
+      snackbarspecifics: false,
+      snackbartitle: false,
+      snackbarapprover: false,
+      timeoutapprover: 2000,
+      exitpention: false,
       stepprocess: 1,
       snackbar: false,
       text: ``,
@@ -352,13 +423,29 @@ export default {
       this.newtitleText = "";
     },
     addapprovertitle: function () {
-      this.listapprover.push({
-        order: this.nextapproverId++,
-        approver_name: this.newapproverText,
-        approver_state: "ยังไม่ได้อนุมัติ",
-        // approver_id: this.approver.id[0],
-      });
-      this.newapproverText = "";
+      if (this.newapproverText !== "" && this.newapproverText !== null) {
+        let ifdup = false;
+        for (let i = 0; i < this.listapprover.length; i++) {
+          if (this.listapprover[i].approver_name.user_id === this.newapproverText.user_id) {
+            ifdup = true;
+          } else {
+            ifdup = false;
+          }
+        }
+        if (ifdup == true) {
+          this.snackbarduplicate = true;
+        } else {
+          this.listapprover.push({
+            order: this.nextapproverId++,
+            approver_name: this.newapproverText,
+            approver_state: "ยังไม่ได้อนุมัติ",
+          });
+          this.newapproverText = "";
+        }
+        
+      } else {
+        this.snackbarapprover = true;
+      }
     },
     removetitle: function (index) {
       this.title.splice(index, 1);
@@ -375,15 +462,17 @@ export default {
 
       Object.keys(this.form).forEach((f) => {
         if (!this.form[f]) {
+          this.snackbartitle = true;
           this.formHasErrors = true;
           this.$refs[f].validate(true);
         } else {
           if (this.forms.specifics == true) {
             Object.keys(this.form).forEach((f) => {
               if (this.title >= 0) {
+                this.snackbarspecifics = true;
                 this.formHasErrors = true;
                 this.$refs[f].validate(true);
-                console.log(this.newtitleText)
+                console.log(this.newtitleText);
               } else {
                 this.stepprocess = 2;
               }
