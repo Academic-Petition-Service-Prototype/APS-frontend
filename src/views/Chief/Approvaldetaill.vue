@@ -1,9 +1,9 @@
 <template>
   <div id="ChiefApprovaldetail">
     <NavbarChief />
-    {{approver_detail[0].approval_order}}
+    {{ approver_detail[0].approval_order }}
     <br /><br /><br />
-    {{ submition_detail[0].approval_order}}
+    {{ submition_detail[0].approval_order }}
 
     <v-card class="cardshow">
       <v-row>
@@ -110,7 +110,7 @@
                 <v-row
                   v-if="
                     this.approver_detail[0].approval_order[0].approver_state ==
-                    'ยังไม่ได้อนุมัติ'
+                      'ยังไม่ได้อนุมัติ'
                   "
                 >
                   <v-col align="center">
@@ -192,7 +192,11 @@
             <v-btn color="green darken-1" text @click="disapproved">
               ตกลง
             </v-btn>
-            <v-btn color="red darken-1" text @click="disapproveddialog = false">
+            <v-btn
+              color="red darken-1"
+              text
+              @click="(disapproveddialog = false), (getdisapproveddetail = '')"
+            >
               ยกเลิก
             </v-btn>
           </v-card>
@@ -230,9 +234,8 @@ export default {
       specifics: [],
       specificsdata: [],
       titlespecifics: [],
-      disapproveddetail: [],
       getdisapproveddetail: "",
-      approver_detail:[],
+      approver_detail: [],
       notnull: false,
     };
   },
@@ -284,19 +287,25 @@ export default {
             temp = JSON.parse(temp);
             this.submition_detail[i].approval_order = temp;
 
-
-
-
-            this.approver_detail = JSON.parse(JSON.stringify(this.submition_detail))
+            this.approver_detail = JSON.parse(
+              JSON.stringify(this.submition_detail)
+            );
             // console.log(typeof )
-              for (let j = 0; j < this.approver_detail[i].approval_order.length; j++) {
-                if (this.$store.getters.getUser.user_id !== this.approver_detail[i].approval_order[0].approver_name.user_id 
-                && this.approver_detail[i].approval_order[0].approver_state == "อนุมัติแล้ว" ) {
-              this.approver_detail[i].approval_order.splice(i, 1);
-            }
-                
+            for (
+              let j = 0;
+              j < this.approver_detail[i].approval_order.length;
+              j++
+            ) {
+              if (
+                this.$store.getters.getUser.user_id !==
+                  this.approver_detail[i].approval_order[0].approver_name
+                    .user_id &&
+                this.approver_detail[i].approval_order[0].approver_state ==
+                  "อนุมัติแล้ว"
+              ) {
+                this.approver_detail[i].approval_order.splice(i, 1);
               }
-            
+            }
           }
         })
         .catch((error) => {
@@ -306,72 +315,87 @@ export default {
     },
     approve() {
       if (confirm("ยืนยันการอนุมัติ")) {
-        alert("อนุมัติสำเร็จ");
-
         this.statuscheck = false;
-        
 
         for (let i = 0; i < this.submition_detail.length; i++) {
-          for (let j =0; j < this.submition_detail[i].approval_order.length; j++){
-            // console.log(this.submition_detail[i].approval_order[j].approver_name.user_id)
-            if (this.submition_detail[i].approval_order[j].approver_name.user_id == this.$store.getters.getUser.user_id ) {
-              this.submition_detail[i].approval_order[j].approver_state = "อนุมัติแล้ว";
+          for (
+            let j = 0;
+            j < this.submition_detail[i].approval_order.length;
+            j++
+          ) {
+            if (
+              this.submition_detail[i].approval_order[j].approver_name
+                .user_id == this.$store.getters.getUser.user_id
+            ) {
+              this.submition_detail[i].approval_order[j].approver_state =
+                "อนุมัติแล้ว";
               this.submition_detail[i].submit_state++;
-              console.log("test")
 
-            axios
-            .post(process.env.VUE_APP_URL + "approvepetition", {
-              submit_id: this.submition_detail[i].submit_id,
-              approval_order: this.submition_detail[i].approval_order,
-              submit_state: this.submition_detail[i].submit_state,
-            })
-            .then((response) => {
-              //handle success
-              if (response.data == "Approve petition successful") {
-                alert("อนุมัติคำร้องสำเร็จ");
-                this.$router.push("/ChiefApproval");
-              } else {
-                alert("อนุมัติคำร้องไม่สำเร็จ!");
-              }
-            })
-            .catch((error) => {
-              // handle error
-              console.log(error);
-            });
+              axios
+                .post(process.env.VUE_APP_URL + "approvepetition", {
+                  submit_id: this.submition_detail[i].submit_id,
+                  approval_order: this.submition_detail[i].approval_order,
+                  submit_state: this.submition_detail[i].submit_state,
+                })
+                .then((response) => {
+                  //handle success
+                  if (response.data == "Approve petition successful") {
+                    alert("อนุมัติคำร้องสำเร็จ");
+                    this.$router.push("/ChiefApproval");
+                  } else {
+                    alert("อนุมัติคำร้องไม่สำเร็จ!");
+                  }
+                })
+                .catch((error) => {
+                  // handle error
+                  console.log(error);
+                });
             }
           }
-          // axios
-          //   .post(process.env.VUE_APP_URL + "approvepetition", {
-          //     submit_id: this.submition_detail[i].submit_id,
-          //     approval_order: this.submition_detail[i].approval_order,
-          //     submit_state: this.submition_detail[i].submit_state,
-          //   })
-          //   .then((response) => {
-          //     //handle success
-          //     if (response.data == "Approve petition successful") {
-          //       alert("อนุมัติคำร้องสำเร็จ");
-          //       this.$router.push("/ChiefApproval");
-          //     } else {
-          //       alert("อนุมัติคำร้องไม่สำเร็จ!");
-          //     }
-          //   })
-          //   .catch((error) => {
-          //     // handle error
-          //     console.log(error);
-          //   });
         }
       }
     },
     disapproved() {
       if (this.getdisapproveddetail != "") {
-        this.submition_detail[0].approval_order[0].approver_state =
-          "ไม่อนุมัติ";
-        this.disapproveddetail.push({
-          id: this.nextdetailId++,
-          detail: this.getdisapproveddetail,
-        });
         this.statuscheck = false;
         this.disapproveddialog = false;
+
+        for (let i = 0; i < this.submition_detail.length; i++) {
+          for (
+            let j = 0;
+            j < this.submition_detail[i].approval_order.length;
+            j++
+          ) {
+            if (
+              this.submition_detail[i].approval_order[j].approver_name
+                .user_id == this.$store.getters.getUser.user_id
+            ) {
+              this.submition_detail[i].approval_order[j].approver_state =
+                "ไม่อนุมัติ";
+
+              axios
+                .post(process.env.VUE_APP_URL + "approvepetition", {
+                  submit_id: this.submition_detail[i].submit_id,
+                  approval_order: this.submition_detail[i].approval_order,
+                  submit_state: this.submition_detail[i].submit_state,
+                  submit_refuse: this.getdisapproveddetail,
+                })
+                .then((response) => {
+                  //handle success
+                  if (response.data == "Approve petition successful") {
+                    alert("ปฏิเสธคำร้องสำเร็จ");
+                    this.$router.push("/ChiefApproval");
+                  } else {
+                    alert("ปฏิเสธคำร้องไม่สำเร็จ!");
+                  }
+                })
+                .catch((error) => {
+                  // handle error
+                  console.log(error);
+                });
+            }
+          }
+        }
       } else {
         this.notnull = true;
       }
