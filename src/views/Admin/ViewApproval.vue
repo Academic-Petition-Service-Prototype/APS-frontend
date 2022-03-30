@@ -1,6 +1,6 @@
 <template>
   <!-- ส่วนจัดเเสดง -->
-  <div id="ChiefApproval">
+  <div id="AdminApproval">
     <NavbarAdmin />
 
     <v-card class="cardshow">
@@ -56,7 +56,10 @@
                 <v-col> {{ item.fullname }}</v-col>
                 <v-col> {{ item.submit_date }} </v-col>
                 <v-col>
-                  <v-btn @click="selectApprovaldetaill(item.submit_id)" disabled>
+                  <v-btn
+                    @click="selectApprovaldetaill(item.submit_id)"
+                    disabled
+                  >
                     {{ item.approval_order[0].approver_state }}</v-btn
                   >
                 </v-col>
@@ -114,7 +117,7 @@
 import NavbarAdmin from "../../components/NavbarAdmin.vue";
 import axios from "axios";
 export default {
-  name: "adminApproval",
+  name: "AdminApproval",
   components: {
     NavbarAdmin,
   },
@@ -135,9 +138,7 @@ export default {
   methods: {
     getpetition() {
       axios
-        .post(process.env.VUE_APP_URL + "getsubmitforms", {
-          user_id: this.$store.getters.getUser.user_id,
-        })
+        .get(process.env.VUE_APP_URL + "getsubmitforms")
         .then((response) => {
           //handle success
           // approval_order

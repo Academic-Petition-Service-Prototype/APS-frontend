@@ -72,17 +72,17 @@
                       <v-stepper-header>
                         <v-divider></v-divider>
 
-                        <template v-for="(approval_order,n) in item.approval_order"
-                           >
-                          <v-stepper-step
-                          :key="approval_order"
-                          :complete="item.submit_state > n + 1"
-                          :step="n + 1"
-                          color="green"
+                        <template
+                          v-for="(approval_order, n) in item.approval_order"
                         >
-                         
-                        </v-stepper-step>
-                         <v-divider :key="approval_order" ></v-divider>
+                          <v-stepper-step
+                            :key="approval_order"
+                            :complete="item.submit_state > n + 1"
+                            :step="n + 1"
+                            color="green"
+                          >
+                          </v-stepper-step>
+                          <v-divider :key="approval_order"></v-divider>
                         </template>
                       </v-stepper-header>
                       <v-stepper-items>
@@ -93,7 +93,6 @@
                             height="200px"
                           >
                             <h2 class="cardshow">รายละเอียด</h2>
-                            
                           </v-card>
                         </v-stepper-content>
 
@@ -212,9 +211,7 @@ export default {
   methods: {
     getpetition() {
       axios
-        .post(process.env.VUE_APP_URL + "getsubmitformsbyagency", {
-          agency_id: this.$store.getters.getUser.agencies_id,
-        })
+        .get(process.env.VUE_APP_URL + "getsubmitforms")
         .then((response) => {
           //handle success
 
