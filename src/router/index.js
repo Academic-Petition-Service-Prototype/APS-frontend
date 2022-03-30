@@ -42,6 +42,7 @@ import SecretaryDashboard from '../views/Secretary/Dashboard.vue'
 import SecretaryProfile from '../views/Secretary/Profile.vue'
 import SecretaryTracking from '../views/Secretary/Tracking.vue'
 import SecretaryViewApproval from '../views/Secretary/ViewApproval.vue'
+import SecretaryViewApprovaldetail from '../views/Secretary/ViewApprovaldetail.vue'
 import SecretaryViewReport from '../views/Secretary/ViewReport.vue'
 //Secretary
 
@@ -231,6 +232,11 @@ const routes = [
     path: '/SecretaryViewReport',
     name: 'SecretaryViewReport',
     component: SecretaryViewReport
+  },
+  {
+    path: '/ViewApprovaldetail/:id',
+    name: 'SecretaryViewApprovaldetail',
+    component: SecretaryViewApprovaldetail
   },
   //Secretary
 
