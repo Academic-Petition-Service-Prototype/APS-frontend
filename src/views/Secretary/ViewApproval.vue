@@ -58,7 +58,7 @@
                 <v-col>
                   <v-btn @click="selectApprovaldetaill(item.submit_id)">
                     <h4>
-                      {{ item.approval_order[0].approver_state }}
+                      ดูรายละเอียด
                     </h4>
                   </v-btn>
                 </v-col>
@@ -152,17 +152,6 @@ export default {
             var temp = this.specifics.slice(1, -1);
             temp = JSON.parse(temp);
             this.petitionListById[i].approval_order = temp;
-
-            if (
-              this.$store.getters.getUser.user_id ==
-              this.petitionListById[i].approval_order[i].approver_name.user_id
-            ) {
-              console.log(
-                this.petitionListById[i].approval_order[i].approver_state
-              );
-            } else {
-              this.petitionListById[i].approval_order.splice(i, 1);
-            }
           }
         })
         .catch((error) => {
