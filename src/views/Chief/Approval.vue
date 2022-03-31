@@ -168,12 +168,28 @@ export default {
             temp = JSON.parse(temp);
             this.petitionListById[i].approval_order = temp;
 
-            if (this.$store.getters.getUser.user_id  == this.petitionListById[i].approval_order[i].approver_name.user_id) {
-              console.log(this.petitionListById[i].approval_order[i].approver_state)
-            } else {
-              
-              this.petitionListById[i].approval_order.splice(i,1);
+            for (
+              let j = 0;
+              j < this.petitionListById[i].approval_order.length;
+              j++
+            ) {
+              if (
+                this.$store.getters.getUser.user_id !==
+                  this.petitionListById[i].approval_order[0].approver_name
+                    .user_id &&
+                this.petitionListById[i].approval_order[0].approver_state ==
+                  "อนุมัติแล้ว"
+              ) {
+                this.petitionListById[i].approval_order.splice(i, 1);
+              }
             }
+
+            // if (this.$store.getters.getUser.user_id  == this.petitionListById[i].approval_order[i].approver_name.user_id) {
+            //   console.log(this.petitionListById[i].approval_order[i].approver_state)
+            // } else {
+              
+            //   this.petitionListById[i].approval_order.splice(i,1);
+            // }
 
             // if ( this.petitionListById[i].approval_order[i].approver_state == "อนุมัติแล้ว") {
             //   console.log( i)

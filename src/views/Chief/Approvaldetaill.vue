@@ -110,7 +110,7 @@
                 <v-row
                   v-if="
                     this.approver_detail[0].approval_order[0].approver_state ==
-                      'ยังไม่ได้อนุมัติ'
+                    'ยังไม่ได้อนุมัติ'
                   "
                 >
                   <v-col align="center">

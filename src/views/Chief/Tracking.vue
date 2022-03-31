@@ -86,79 +86,27 @@
                          <v-divider :key="approval_order" ></v-divider>
                         </template>
 
-                        
-
-                       
-
-                        <!-- <v-stepper-step
-                          :complete="item.submit_state > 2"
-                          step="2"
-                          color="green"
-                        >
-                          รับคำร้องเข้าระบบ
-                        </v-stepper-step>
-
-                        <v-divider></v-divider>
-
-                        <v-stepper-step
-                          :complete="item.submit_state > 3"
-                          step="3"
-                          color="green"
-                        >
-                          การอนุมัติคำร้อง
-                        </v-stepper-step>
-
-                        <v-divider></v-divider> -->
-
-                        <!-- <v-stepper-step
-                          :complete="item.submit_state > 4"
-                          step="4"
-                          color="green"
-                        >
-                          ยื่นคำร้องสำเร็จ
-                        </v-stepper-step> -->
                       </v-stepper-header>
                       <v-stepper-items>
-                        <v-stepper-content step="1">
+                        <template v-for="(approval_order,n) in item.approval_order"
+                           >
+                        <v-stepper-content :step="n + 1"
+                        :key="approval_order"
+                        >
                           <v-card
                             class="mb-12"
                             color="grey lighten-1"
                             height="200px"
+                            
                           >
                             <h2 class="cardshow">รายละเอียด</h2>
                             
                           </v-card>
                         </v-stepper-content>
 
-                        <v-stepper-content step="2">
-                          <v-card
-                            class="mb-12"
-                            color="grey lighten-1"
-                            height="200px"
-                          >
-                            <h2 class="cardshow">รายละเอียด</h2>
-                          </v-card>
-                        </v-stepper-content>
+                        
 
-                        <v-stepper-content step="3">
-                          <v-card
-                            class="mb-12"
-                            color="grey lighten-1"
-                            height="200px"
-                          >
-                            <h2 class="cardshow">รายละเอียด</h2>
-                          </v-card>
-                        </v-stepper-content>
-
-                        <v-stepper-content step="4">
-                          <v-card
-                            class="mb-12"
-                            color="grey lighten-1"
-                            height="200px"
-                          >
-                            <h2 class="cardshow">รายละเอียด</h2>
-                          </v-card>
-                        </v-stepper-content>
+                        </template>
                       </v-stepper-items>
                     </v-stepper>
                   </v-container>
