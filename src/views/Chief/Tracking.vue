@@ -90,7 +90,7 @@
                       <v-stepper-items>
                         <template v-for="(approval_order,n) in item.approval_order"
                            >
-                        <v-stepper-content :step="n + 1"
+                        <v-stepper-content :step="n + 2"
                         :key="approval_order"
                         >
                           <v-card
