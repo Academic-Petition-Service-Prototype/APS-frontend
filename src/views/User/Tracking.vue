@@ -92,6 +92,7 @@
                           <v-stepper-step
                             :key="n"
                             :complete="item.submit_state > n + 1"
+                           
                             step=""
                             color="green"
                           >
@@ -243,6 +244,7 @@
                       <v-stepper-header>
                         <v-stepper-step
                           :complete="item.report_state > 1"
+                          
                           step="1"
                           color="green"
                         >
@@ -275,6 +277,17 @@
                         </v-stepper-content>
 
                         <v-stepper-content step="2">
+                          <v-card
+                            class="mb-12"
+                            color="grey lighten-1"
+                            height="200px"
+                          >
+                            <h2 class="cardshow">รายละเอียด2</h2>
+                            <h2 class="cardshow">{{item.report_detail}}</h2>
+                          </v-card>
+                        </v-stepper-content>
+
+                        <v-stepper-content step="3">
                           <v-card
                             class="mb-12"
                             color="grey lighten-1"
