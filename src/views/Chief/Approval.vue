@@ -8,6 +8,8 @@
 
         <v-spacer></v-spacer>
       </v-toolbar>
+      {{ petitionListById }}
+      {{stong}}
 
       <v-data-iterator
         :items="petitionListById"
@@ -47,32 +49,31 @@
             <v-col> สถานะ </v-col>
           </v-row>
 
-          <v-row v-for="item in props.items" :key="item.text">
+          <v-row v-for="(item, index) in props.items" :key="index">
             <v-card-title>
-              <v-row class="text-center" align="center"
-              
-              >
+              <v-row class="text-center" align="center">
                 <v-col> {{ item.submit_id }} </v-col>
                 <v-col> {{ item.form_name }} </v-col>
                 <v-col> {{ item.fullname }}</v-col>
                 <v-col> {{ item.submit_date }} </v-col>
-                
 
-                <v-col  >
-
-                  <v-btn @click="selectApprovaldetaill(item.submit_id)"  >
-                    <h4 >
-                      {{ item.approval_order[0].approver_state }}
-                     
-
-                    </h4>
-                    
-                    
-                    </v-btn>
-                 
-
-                    
-                
+                <v-col>
+                  <v-btn @click="selectApprovaldetaill(item.submit_id)">
+                    <template
+                      v-for="(approval_order, n) in item.approval_order"
+                    >
+                    <!-- {{ item.approval_order[n].approver_name.user_id}} -->
+                      
+                        
+                          <p 
+                          :key="n"
+                          v-if="item.approval_order[n].approver_name.user_id == stong">
+                          {{ item.approval_order[n].approver_state }}
+                          </p>
+                        
+                      
+                    </template>
+                  </v-btn>
                 </v-col>
               </v-row>
             </v-card-title>
@@ -143,7 +144,7 @@ export default {
       sortBy: "name",
       petitionListById: [],
       specifics: [],
-      stong:[],
+      stong: this.$store.getters.getUser.user_id,
     };
   },
 
@@ -158,7 +159,7 @@ export default {
 
           // approval_order
           this.petitionListById = response.data;
-         
+
           for (let i = 0; i < this.petitionListById.length; i++) {
             this.tmp = JSON.stringify(this.petitionListById[i].approval_order);
             this.tmp = this.tmp.replace(/\\/g, "");
@@ -168,34 +169,20 @@ export default {
             temp = JSON.parse(temp);
             this.petitionListById[i].approval_order = temp;
 
-            for (
-              let j = 0;
-              j < this.petitionListById[i].approval_order.length;
-              j++
-            ) {
-              if (
-                this.$store.getters.getUser.user_id !==
-                  this.petitionListById[i].approval_order[0].approver_name
-                    .user_id &&
-                this.petitionListById[i].approval_order[0].approver_state ==
-                  "อนุมัติแล้ว"
-              ) {
-                this.petitionListById[i].approval_order.splice(i, 1);
-              }
-            }
-
-            // if (this.$store.getters.getUser.user_id  == this.petitionListById[i].approval_order[i].approver_name.user_id) {
-            //   console.log(this.petitionListById[i].approval_order[i].approver_state)
-            // } else {
-              
-            //   this.petitionListById[i].approval_order.splice(i,1);
-            // }
-
-            // if ( this.petitionListById[i].approval_order[i].approver_state == "อนุมัติแล้ว") {
-            //   console.log( i)
-            //   // delete this.petitionListById[i].approval_order[i]
-            //   this.petitionListById[i].approval_order.splice(i,1);
-            //   console.log( this.petitionListById[i].approval_order[i])
+            // for (
+            //   let j = 0;
+            //   j < this.petitionListById[i].approval_order.length;
+            //   j++
+            // ) {
+            //   if (
+            //     this.$store.getters.getUser.user_id !==
+            //       this.petitionListById[i].approval_order[0].approver_name
+            //         .user_id &&
+            //     this.petitionListById[i].approval_order[0].approver_state ==
+            //       "อนุมัติแล้ว"
+            //   ) {
+            //     this.petitionListById[i].approval_order.splice(i, 1);
+            //   }
             // }
           }
         })

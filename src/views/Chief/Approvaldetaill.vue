@@ -331,11 +331,19 @@ export default {
                 "อนุมัติแล้ว";
               this.submition_detail[i].submit_state++;
 
+              if (this.submition_detail[i].submit_state >= this.submition_detail[i].approval_order.length) {
+                this.getdisapproveddetail = 'ยื่นคำร้องสำเร็จ';
+              } else {
+                this.getdisapproveddetail = null;
+              }
+
               axios
                 .post(process.env.VUE_APP_URL + "approvepetition", {
                   submit_id: this.submition_detail[i].submit_id,
                   approval_order: this.submition_detail[i].approval_order,
                   submit_state: this.submition_detail[i].submit_state,
+                  submit_refuse: this.getdisapproveddetail,
+                  
                 })
                 .then((response) => {
                   //handle success

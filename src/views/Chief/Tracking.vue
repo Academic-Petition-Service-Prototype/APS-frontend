@@ -1,7 +1,7 @@
 <template>
   <div id="ChiefTracking" class="bg-color">
     <NavbarChief />
-    {{petitionListById[0]}}
+    {{petitionListById[0].approval_order.length}}
     <v-card class="cardshow">
       <v-toolbar dark prominent color="#FFAB40">
         <h1 class="text-center pa-5">สถานะคำร้อง</h1>
@@ -98,13 +98,14 @@
                         </template>
 
                         <v-stepper-step
-                          :complete="item.submit_state > n + 1"
+                          :complete="item.submit_state > item.approval_order.length"
                           step=""
                           color="green"
                         >
                           ยื่นคำร้องสำเร็จ
                         </v-stepper-step>
                         <v-divider></v-divider>
+                        
                       </v-stepper-header>
                       <v-stepper-items>
                         <template
@@ -120,12 +121,14 @@
                               height="200px"
                             >
                               <h2 class="cardshow">รายละเอียด</h2>
+                              {{item.approval_order.length}}
                               <p v-if="item.submit_refuse === null">
                                 กำลังดำเนิการ
                               </p>
                               <p v-if="item.submit_refuse !== null">
                                 {{ item.submit_refuse }}
                               </p>
+                              
                             </v-card>
                           </v-stepper-content>
                         </template>
@@ -202,6 +205,8 @@ export default {
       itemsPerPage: 4,
       sortBy: "name",
       petitionListById: [],
+      
+
     };
   },
   computed: {
@@ -231,6 +236,8 @@ export default {
             var temp = this.specifics.slice(1, -1);
             temp = JSON.parse(temp);
             this.petitionListById[i].approval_order = temp;
+
+
           }
         })
         .catch((error) => {
