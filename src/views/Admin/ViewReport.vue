@@ -1,12 +1,12 @@
 <template>
   <div id="SecretaryReport">
-    <NavbarAdmin/>
+    <NavbarAdmin />
     <v-card class="cardmargin">
       <v-toolbar dark prominent color="#FFAB40">
         <h1 class="text-center pa-5">การรายงานปัญหาทั้งหมด</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
-      
+
       <v-data-iterator
         :items="reports"
         :items-per-page.sync="itemsPerPage"
@@ -19,9 +19,7 @@
       >
         <template v-slot:header>
           <v-row>
-            <v-col align="right"
-              ></v-col
-            >
+            <v-col align="right"></v-col>
           </v-row>
           <v-row>
             <v-col>
@@ -45,7 +43,7 @@
           <v-row class="text-center">
             <v-col> ลำดับ </v-col>
             <v-col> รายการ </v-col>
-            
+
             <v-col> วันที่สร้าง </v-col>
             <v-col> สถานะ </v-col>
           </v-row>
@@ -55,14 +53,19 @@
               <v-row class="text-center" align="center">
                 <v-col> {{ item.report_id }} </v-col>
                 <v-col> {{ item.report_title }} </v-col>
-                
-                <v-col> <p>{{ item.report_created }}</p> </v-col>
+
                 <v-col>
-                  
-          <v-btn disabled small class="mr-2" @click="chageState(item.report_id)">
-            {{ item.report_state }}
-          </v-btn>
-        
+                  <p>{{ item.report_created }}</p>
+                </v-col>
+                <v-col>
+                  <v-btn
+                    disabled
+                    small
+                    class="mr-2"
+                    @click="chageState(item.report_id)"
+                  >
+                    {{ item.report_state }}
+                  </v-btn>
                 </v-col>
               </v-row>
             </v-card-title>
@@ -109,7 +112,6 @@
           </v-row>
         </template>
       </v-data-iterator>
-      
     </v-card>
   </div>
 </template>
@@ -132,7 +134,6 @@ export default {
       itemsPerPage: 4,
       sortBy: "name",
       reports: [],
-
     };
   },
   mounted() {
@@ -142,9 +143,7 @@ export default {
   methods: {
     getreport() {
       axios
-        .post(process.env.VUE_APP_URL + "agencyreports",{
-          agency_id: this.$store.getters.getUser.agencies_id
-        })
+        .get(process.env.VUE_APP_URL + "reports")
         .then((response) => {
           // handle success
           this.reports = response.data;

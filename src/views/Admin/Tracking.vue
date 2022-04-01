@@ -6,7 +6,9 @@
         <h1 class="text-center pa-5">สถานะคำร้อง</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
-
+      {{ petitionListById }}
+      <br /><br />
+      {{ listname }}
       <v-data-iterator
         :items="petitionListById"
         :items-per-page.sync="itemsPerPage"
@@ -45,7 +47,7 @@
           <v-row
             v-for="item in props.items"
             :key="item.title"
-            class="cardshow text-center "
+            class="cardshow text-center"
           >
             <v-expansion-panels>
               <v-expansion-panel>
@@ -71,61 +73,63 @@
                     <v-stepper alt-labels v-model="item.submit_state">
                       <v-stepper-header>
                         <v-divider></v-divider>
-
-                        <template v-for="(approval_order,n) in item.approval_order"
-                           >
-                          <v-stepper-step
-                          :key="approval_order"
-                          :complete="item.submit_state > n + 1"
-                          :step="n + 1"
+                        <v-stepper-step
+                          :complete="item.submit_state >= 1"
+                          step=""
                           color="green"
                         >
-                         
+                          รับเรื่องคำร้องเเล้ว
                         </v-stepper-step>
-                         <v-divider :key="approval_order" ></v-divider>
+                        <v-divider></v-divider>
+
+                        <template
+                          v-for="(approval_order, n) in item.approval_order"
+                        >
+                          <v-stepper-step
+                            :key="n"
+                            :complete="item.submit_state > n + 1"
+                            step=""
+                            color="green"
+                          >
+                            {{ item.approval_order[n].approver_name.f_name }}
+
+                            {{ item.approval_order[n].approver_name.l_name }}
+                          </v-stepper-step>
+                          <v-divider :key="approval_order"></v-divider>
                         </template>
+
+                        <v-stepper-step
+                          :complete="item.submit_state > n + 1"
+                          step=""
+                          color="green"
+                        >
+                          ยื่นคำร้องสำเร็จ
+                        </v-stepper-step>
+                        <v-divider></v-divider>
                       </v-stepper-header>
                       <v-stepper-items>
-                        <v-stepper-content step="1">
-                          <v-card
-                            class="mb-12"
-                            color="grey lighten-1"
-                            height="200px"
+                        <template
+                          v-for="(approval_order, n) in item.approval_order"
+                        >
+                          <v-stepper-content
+                            :step="n + 2"
+                            :key="approval_order"
                           >
-                            <h2 class="cardshow">รายละเอียด</h2>
-                            
-                          </v-card>
-                        </v-stepper-content>
-
-                        <v-stepper-content step="2">
-                          <v-card
-                            class="mb-12"
-                            color="grey lighten-1"
-                            height="200px"
-                          >
-                            <h2 class="cardshow">รายละเอียด</h2>
-                          </v-card>
-                        </v-stepper-content>
-
-                        <v-stepper-content step="3">
-                          <v-card
-                            class="mb-12"
-                            color="grey lighten-1"
-                            height="200px"
-                          >
-                            <h2 class="cardshow">รายละเอียด</h2>
-                          </v-card>
-                        </v-stepper-content>
-
-                        <v-stepper-content step="4">
-                          <v-card
-                            class="mb-12"
-                            color="grey lighten-1"
-                            height="200px"
-                          >
-                            <h2 class="cardshow">รายละเอียด</h2>
-                          </v-card>
-                        </v-stepper-content>
+                            <v-card
+                              class="mb-12"
+                              color="grey lighten-1"
+                              height="200px"
+                            >
+                              <h2 class="cardshow">รายละเอียด</h2>
+                              <p v-if="item.submit_refuse === null">
+                                กำลังดำเนิการ
+                              </p>
+                              <p v-if="item.submit_refuse !== null">
+                                {{ item.submit_refuse }}
+                              </p>
+                            </v-card>
+                          </v-stepper-content>
+                        </template>
                       </v-stepper-items>
                     </v-stepper>
                   </v-container>
@@ -199,6 +203,7 @@ export default {
       itemsPerPage: 4,
       sortBy: "name",
       petitionListById: [],
+      
     };
   },
   computed: {
@@ -212,9 +217,7 @@ export default {
   methods: {
     getpetition() {
       axios
-        .post(process.env.VUE_APP_URL + "getsubmitformsbyagency", {
-          agency_id: this.$store.getters.getUser.agencies_id,
-        })
+        .get(process.env.VUE_APP_URL + "getsubmitforms")
         .then((response) => {
           //handle success
 
@@ -228,6 +231,7 @@ export default {
             var temp = this.specifics.slice(1, -1);
             temp = JSON.parse(temp);
             this.petitionListById[i].approval_order = temp;
+            
           }
         })
         .catch((error) => {
