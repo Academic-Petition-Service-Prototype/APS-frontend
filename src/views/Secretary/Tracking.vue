@@ -72,19 +72,39 @@
                     <v-stepper alt-labels v-model="item.submit_state">
                       <v-stepper-header>
                         <v-divider></v-divider>
+                        <v-stepper-step
+                          :complete="item.submit_state >= 1"
+                          step=""
+                          color="green"
+                        >
+                          รับเรื่องคำร้องเเล้ว
+                        </v-stepper-step>
+                        <v-divider></v-divider>
 
                         <template
                           v-for="(approval_order, n) in item.approval_order"
                         >
                           <v-stepper-step
-                            :key="approval_order"
+                            :key="n"
                             :complete="item.submit_state > n + 1"
-                            :step="n + 1"
+                            step=""
                             color="green"
                           >
+                            {{ item.approval_order[n].approver_name.f_name }}
+
+                            {{ item.approval_order[n].approver_name.l_name }}
                           </v-stepper-step>
                           <v-divider :key="approval_order"></v-divider>
                         </template>
+
+                        <v-stepper-step
+                          :complete="item.submit_state > n + 1"
+                          step=""
+                          color="green"
+                        >
+                          ยื่นคำร้องสำเร็จ
+                        </v-stepper-step>
+                        <v-divider></v-divider>
                       </v-stepper-header>
 
                       <v-stepper-items>
