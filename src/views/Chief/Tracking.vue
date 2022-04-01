@@ -72,40 +72,62 @@
                     <v-stepper alt-labels v-model="item.submit_state">
                       <v-stepper-header>
                         <v-divider></v-divider>
-
-                        <template v-for="(approval_order,n) in item.approval_order"
-                           >
-                          <v-stepper-step
-                          :key="approval_order"
-                          :complete="item.submit_state > n + 1"
-                          :step="n + 1"
+                        <v-stepper-step
+                          :complete="item.submit_state >= 1"
+                          step=""
                           color="green"
                         >
-                         
+                          รับเรื่องคำร้องเเล้ว
                         </v-stepper-step>
-                         <v-divider :key="approval_order" ></v-divider>
+                        <v-divider></v-divider>
+
+                        <template
+                          v-for="(approval_order, n) in item.approval_order"
+                        >
+                          <v-stepper-step
+                            :key="n"
+                            :complete="item.submit_state > n + 1"
+                            step=""
+                            color="green"
+                          >
+                            {{ item.approval_order[n].approver_name.f_name }}
+
+                            {{ item.approval_order[n].approver_name.l_name }}
+                          </v-stepper-step>
+                          <v-divider :key="approval_order"></v-divider>
                         </template>
 
+                        <v-stepper-step
+                          :complete="item.submit_state > n + 1"
+                          step=""
+                          color="green"
+                        >
+                          ยื่นคำร้องสำเร็จ
+                        </v-stepper-step>
+                        <v-divider></v-divider>
                       </v-stepper-header>
                       <v-stepper-items>
-                        <template v-for="(approval_order,n) in item.approval_order"
-                           >
-                        <v-stepper-content :step="n + 2"
-                        :key="approval_order"
+                        <template
+                          v-for="(approval_order, n) in item.approval_order"
                         >
-                          <v-card
-                            class="mb-12"
-                            color="grey lighten-1"
-                            height="200px"
-                            
+                          <v-stepper-content
+                            :step="n + 2"
+                            :key="approval_order"
                           >
-                            <h2 class="cardshow">รายละเอียด</h2>
-                            
-                          </v-card>
-                        </v-stepper-content>
-
-                        
-
+                            <v-card
+                              class="mb-12"
+                              color="grey lighten-1"
+                              height="200px"
+                            >
+                              <h2 class="cardshow">รายละเอียด</h2>
+                              <p v-if="item.submit_refuse === null">
+                                กำลังดำเนิการ
+                              </p>
+                              <p v-if="item.submit_refuse !== null">
+                                {{ item.submit_refuse }}
+                              </p>
+                            </v-card>
+                          </v-stepper-content>
                         </template>
                       </v-stepper-items>
                     </v-stepper>
