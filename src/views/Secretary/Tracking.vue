@@ -6,8 +6,6 @@
         <h1 class="text-center pa-5">สถานะคำร้อง</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
-      {{petitionListById}}
-
       <v-data-iterator
         :items="petitionListById"
         :items-per-page.sync="itemsPerPage"
@@ -98,7 +96,7 @@
                         </template>
 
                         <v-stepper-step
-                          :complete="item.submit_state > n + 1"
+                          :complete="item.submit_state > item.approval_order.length"
                           step=""
                           color="green"
                         >

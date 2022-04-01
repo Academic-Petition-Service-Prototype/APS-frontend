@@ -1,11 +1,10 @@
 <template>
   <!-- ส่วนจัดเเสดง -->
-  <div id="AdminApproval">
+  <div id="AdminApproval" class="bg-color">
     <NavbarAdmin />
-
     <v-card class="cardshow">
       <v-toolbar dark prominent color="#FFAB40">
-        <h1>การอนุมัติคำร้อง</h1>
+        <h1 class="text-center pa-5">การอนุมัติคำร้อง</h1>
 
         <v-spacer></v-spacer>
       </v-toolbar>
@@ -176,7 +175,11 @@ export default {
 </script>
 
 <style scoped>
-.cardmargin {
+.bg-color {
+  background: #f0f0f0;
+  height: 100%;
+}
+.cardshow {
   margin: 2%;
 }
 h1 {

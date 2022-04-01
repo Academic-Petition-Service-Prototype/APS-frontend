@@ -1,10 +1,6 @@
 <template>
   <div id="ChiefApprovaldetail">
     <NavbarChief />
-    {{ approver_detail[0].approval_order }}
-    <br /><br /><br />
-    {{ submition_detail[0].approval_order }}
-
     <v-card class="cardshow">
       <v-row>
         <v-col>

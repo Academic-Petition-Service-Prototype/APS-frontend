@@ -1,16 +1,13 @@
 <template>
   <!-- ส่วนจัดเเสดง -->
-  <div id="ChiefApproval">
+  <div id="ChiefApproval" class="bg-color">
     <NavbarChief />
     <v-card class="cardshow">
       <v-toolbar dark prominent color="#FFAB40">
-        <h1>การอนุมัติคำร้อง</h1>
+        <h1 class="text-center pa-5">การอนุมัติคำร้อง</h1>
 
         <v-spacer></v-spacer>
       </v-toolbar>
-      {{ petitionListById }}
-      {{stong}}
-
       <v-data-iterator
         :items="petitionListById"
         :items-per-page.sync="itemsPerPage"
@@ -62,16 +59,16 @@
                     <template
                       v-for="(approval_order, n) in item.approval_order"
                     >
-                    <!-- {{ item.approval_order[n].approver_name.user_id}} -->
-                      
-                        
-                          <p 
-                          :key="n"
-                          v-if="item.approval_order[n].approver_name.user_id == stong">
-                          {{ item.approval_order[n].approver_state }}
-                          </p>
-                        
-                      
+                      <!-- {{ item.approval_order[n].approver_name.user_id}} -->
+
+                      <p
+                        :key="n"
+                        v-if="
+                          item.approval_order[n].approver_name.user_id == stong
+                        "
+                      >
+                        {{ item.approval_order[n].approver_state }}
+                      </p>
                     </template>
                   </v-btn>
                 </v-col>
@@ -212,7 +209,12 @@ export default {
 </script>
 
 <style scoped>
-.cardmargin {
+.bg-color {
+  background: #f0f0f0;
+  height: 100%;
+}
+
+.cardshow {
   margin: 2%;
 }
 h1 {

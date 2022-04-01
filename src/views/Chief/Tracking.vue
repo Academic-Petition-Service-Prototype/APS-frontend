@@ -1,7 +1,6 @@
 <template>
   <div id="ChiefTracking" class="bg-color">
     <NavbarChief />
-    {{petitionListById[0].approval_order.length}}
     <v-card class="cardshow">
       <v-toolbar dark prominent color="#FFAB40">
         <h1 class="text-center pa-5">สถานะคำร้อง</h1>

@@ -1,12 +1,11 @@
 <template>
-  <div id="SecretaryReport">
+  <div id="SecretaryReport" class="bg-color">
     <NavbarAdmin />
-    <v-card class="cardmargin">
+    <v-card class="cardshow">
       <v-toolbar dark prominent color="#FFAB40">
         <h1 class="text-center pa-5">การรายงานปัญหาทั้งหมด</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
-
       <v-data-iterator
         :items="reports"
         :items-per-page.sync="itemsPerPage"
@@ -167,7 +166,11 @@ export default {
 </script>
 
 <style scoped>
-.cardmargin {
+.bg-color {
+  background: #f0f0f0;
+  height: 100%;
+}
+.cardshow {
   margin: 2%;
 }
 h1 {

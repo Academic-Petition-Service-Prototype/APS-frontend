@@ -1,6 +1,6 @@
 <template>
   <!-- ส่วนจัดเเสดง -->
-  <div id="SecretaryApproval">
+  <div id="SecretaryApproval" class="bg-color">
     <NavbarSecretary />
     <v-card class="cardshow">
       <v-toolbar dark prominent color="#FFAB40">
@@ -180,7 +180,12 @@ export default {
 </script>
 
 <style scoped>
-.cardmargin {
+.bg-color {
+  background: #f0f0f0;
+  height: 100%;
+}
+
+.cardshow {
   margin: 2%;
 }
 h1 {

@@ -97,7 +97,7 @@
                         </template>
 
                         <v-stepper-step
-                          :complete="item.submit_state > n + 1"
+                          :complete="item.submit_state > item.approval_order.length"
                           step=""
                           color="green"
                         >
