@@ -8,8 +8,12 @@
 
         <v-spacer></v-spacer>
       </v-toolbar>
+
+      {{ petitionListById }}
+    <br><br><br>
+      {{listapproval}}
       <v-data-iterator
-        :items="petitionListById"
+        :items="listapproval"
         :items-per-page.sync="itemsPerPage"
         :page.sync="page"
         :search="search"
@@ -46,13 +50,18 @@
             <v-col> สถานะ </v-col>
           </v-row>
 
-          <v-row v-for="(item, index) in props.items" :key="index">
-            <v-card-title>
+          <v-row >
+            <template v-for="(item, index) in props.items"  >
+              <div :key="index" >
+                <v-card-title
+            
+            >
               <v-row class="text-center" align="center">
                 <v-col> {{ item.submit_id }} </v-col>
                 <v-col> {{ item.form_name }} </v-col>
                 <v-col> {{ item.fullname }}</v-col>
                 <v-col> {{ item.submit_date }} </v-col>
+                
 
                 <v-col>
                   <v-btn @click="selectApprovaldetaill(item.submit_id)">
@@ -74,6 +83,10 @@
                 </v-col>
               </v-row>
             </v-card-title>
+                
+              </div>
+            </template>
+            
             <v-divider style="margin: 0px 10px 0px 10px"></v-divider>
           </v-row>
         </template>
@@ -137,12 +150,21 @@ export default {
       filter: {},
       sortDesc: false,
       page: 1,
-      itemsPerPage: 4,
+      itemsPerPage: 12,
       sortBy: "name",
       petitionListById: [],
       specifics: [],
       stong: this.$store.getters.getUser.user_id,
+      listapproval:[],
     };
+  },
+  computed: {
+    numberOfPages() {
+      return Math.ceil(this.listapproval.length / this.itemsPerPage);
+    },
+    filteredKeys() {
+      return this.keys.filter((key) => key !== "Name");
+    },
   },
 
   methods: {
@@ -165,22 +187,53 @@ export default {
             var temp = this.specifics.slice(1, -1);
             temp = JSON.parse(temp);
             this.petitionListById[i].approval_order = temp;
-
-            // for (
-            //   let j = 0;
-            //   j < this.petitionListById[i].approval_order.length;
-            //   j++
-            // ) {
-            //   if (
-            //     this.$store.getters.getUser.user_id !==
-            //       this.petitionListById[i].approval_order[0].approver_name
-            //         .user_id &&
-            //     this.petitionListById[i].approval_order[0].approver_state ==
-            //       "อนุมัติแล้ว"
-            //   ) {
-            //     this.petitionListById[i].approval_order.splice(i, 1);
-            //   }
-            // }
+            console.log(this.petitionListById[i].form_name);
+            console.log(this.stong)
+            for (
+              let j = 0;
+              j < this.petitionListById[i].approval_order.length;
+              j++
+            ) {
+              
+              if (
+                this.petitionListById[i].approval_order[j].approver_name
+                  .user_id == this.$store.getters.getUser.user_id
+              ) {
+                if (this.petitionListById[i].approval_order[0].approver_name.f_name == this.$store.getters.getUser.f_name &&
+                  this.petitionListById[i].approval_order[0].approver_name.l_name == this.$store.getters.getUser.l_name
+                  &&
+                  this.petitionListById[i].approval_order[0].approver_name.user_id == this.$store.getters.getUser.user_id
+                  &&
+                  this.petitionListById[i].approval_order[j].approver_state =='ยังไม่ได้อนุมัติ'
+                ) {
+                 
+                  this.listapproval.push(this.petitionListById[i]);
+                  console.log(this.petitionListById[i])
+                  console.log("เงื่อนไข1")
+                }
+                else if (this.petitionListById[i].approval_order[j].approver_state =='อนุมัติแล้ว') {
+                  
+                  console.log("เงื่อนไข2") 
+                }
+                else if (this.petitionListById[i].approval_order[j-1].approver_state =='อนุมัติแล้ว'
+                &&
+                this.petitionListById[i].approval_order[j].approver_state =='ยังไม่ได้อนุมัติ' ) {
+                  
+                  console.log("เงื่อนไขภ3")
+                  
+                  this.listapproval.push(this.petitionListById[i]);
+                }
+                else{
+                  console.log("else");
+                  
+                }
+                
+               
+              }
+              else{
+                console.log("error0.0");
+              }
+            }
           }
         })
         .catch((error) => {
