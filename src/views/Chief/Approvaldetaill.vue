@@ -154,7 +154,7 @@
                     <v-col align="center">
                       <v-btn
                         class="ma-2"
-                        outlined
+                        
                         color="error"
                         width="500"
                         height="80"

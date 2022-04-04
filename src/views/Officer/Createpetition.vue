@@ -1,6 +1,6 @@
 <template>
   <!-- ส่วนจัดเเสดง -->
-  <div id="ChiefCreatepetition">
+  <div id="OfficerCreatepetition">
     <NavbarOF />
     <v-card class="cardshow">
       <h1>
@@ -519,7 +519,7 @@ export default {
             // this.colorsnackbar = "#2E7D32";
             // this.snackbar = true;
             alert("สร้างคำร้องสำเร็จ");
-            this.$router.push("/ChiefPetitionManagement");
+            this.$router.push("/OfficerPetitionManagement");
           }
         })
         .catch((error) => {

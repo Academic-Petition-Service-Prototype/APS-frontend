@@ -96,7 +96,7 @@
                   >
                   </v-text-field>
 
-                  {{ form_value }}
+                  <!-- {{ form_value }} -->
                 </v-col>
               </v-row>
             </v-col>
