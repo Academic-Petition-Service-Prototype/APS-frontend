@@ -105,7 +105,7 @@
               <v-col>
                 <v-row
                   v-if="
-                    this.submition_detail[0].approval_order[0].approver_state ==
+                    this.approver_detail[0].approval_order[0].approver_state ==
                     'ยังไม่ได้อนุมัติ'
                   "
                 >
@@ -129,7 +129,7 @@
                 <v-row>
                   <v-row
                     v-if="
-                      this.submition_detail[0].approval_order[0]
+                      this.approver_detail[0].approval_order[0]
                         .approver_state == 'อนุมัติแล้ว'
                     "
                   >
@@ -147,14 +147,14 @@
 
                   <v-row
                     v-if="
-                      this.submition_detail[0].approval_order[0]
+                      this.approver_detail[0].approval_order[0]
                         .approver_state == 'ไม่อนุมัติ'
                     "
                   >
                     <v-col align="center">
                       <v-btn
                         class="ma-2"
-                        outlined
+                        
                         color="error"
                         width="500"
                         height="80"
@@ -188,7 +188,11 @@
             <v-btn color="green darken-1" text @click="disapproved">
               ตกลง
             </v-btn>
-            <v-btn color="red darken-1" text @click="disapproveddialog = false">
+            <v-btn
+              color="red darken-1"
+              text
+              @click="(disapproveddialog = false), (getdisapproveddetail = '')"
+            >
               ยกเลิก
             </v-btn>
           </v-card>
@@ -202,9 +206,7 @@
       <h3>กรุณาใส่ข้อความ โปรดอย่าเว้นว่าง</h3>
 
       <template v-slot:action="{ attrs }">
-        <v-btn  text v-bind="attrs" @click="notnull = false">
-         ปิด
-        </v-btn>
+        <v-btn text v-bind="attrs" @click="notnull = false"> ปิด </v-btn>
       </template>
     </v-snackbar>
     <!-- เเจ้งเตือน  -->
@@ -223,15 +225,13 @@ export default {
     return {
       submition_detail: [],
       disapproveddialog: false,
-      title: [],
       listapprover: [],
       statuscheck: true,
       specifics: [],
       specificsdata: [],
       titlespecifics: [],
-      disapproveddetail: [],
       getdisapproveddetail: "",
-      nextdetailId: 1,
+      approver_detail: [],
       notnull: false,
     };
   },
@@ -247,17 +247,6 @@ export default {
         .then((response) => {
           // handle success
           this.submition_detail = response.data;
-          // approval_order
-          this.submition_detail = response.data;
-          for (let i = 0; i < this.submition_detail.length; i++) {
-            this.tmp = JSON.stringify(this.submition_detail[i].approval_order);
-            this.tmp = this.tmp.replace(/\\/g, "");
-            this.specifics = this.tmp.replace(/\\/g, "");
-
-            var temp = this.specifics.slice(1, -1);
-            temp = JSON.parse(temp);
-            this.submition_detail[i].approval_order = temp;
-          }
 
           //form_value
           this.submition_detail = response.data;
@@ -282,6 +271,38 @@ export default {
             temp = JSON.parse(temp);
             this.titlespecifics = temp;
           }
+
+          // approval_order
+          this.submition_detail = response.data;
+          for (let i = 0; i < this.submition_detail.length; i++) {
+            this.tmp = JSON.stringify(this.submition_detail[i].approval_order);
+            this.tmp = this.tmp.replace(/\\/g, "");
+            this.specifics = this.tmp.replace(/\\/g, "");
+
+            var temp = this.specifics.slice(1, -1);
+            temp = JSON.parse(temp);
+            this.submition_detail[i].approval_order = temp;
+
+            this.approver_detail = JSON.parse(
+              JSON.stringify(this.submition_detail)
+            );
+            // console.log(typeof )
+            for (
+              let j = 0;
+              j < this.approver_detail[i].approval_order.length;
+              j++
+            ) {
+              if (
+                this.$store.getters.getUser.user_id !==
+                  this.approver_detail[i].approval_order[0].approver_name
+                    .user_id &&
+                this.approver_detail[i].approval_order[0].approver_state ==
+                  "อนุมัติแล้ว"
+              ) {
+                this.approver_detail[i].approval_order.splice(i, 1);
+              }
+            }
+          }
         })
         .catch((error) => {
           // handle error
@@ -290,46 +311,96 @@ export default {
     },
     approve() {
       if (confirm("ยืนยันการอนุมัติ")) {
-        alert("อนุมัติสำเร็จ");
-        this.submition_detail[0].approval_order[0].approver_state =
-          "อนุมัติแล้ว";
-        this.submition_detail[0].submit_state++;
         this.statuscheck = false;
-        this.getdisapproveddetail = "";
 
-        axios
-          .post(process.env.VUE_APP_URL + "approvepetition", {
-            submit_id: this.submition_detail[0].submit_id,
-            approval_order: this.submition_detail[0].approval_order,
-            submit_state: this.submition_detail[0].submit_state,
-          })
-          .then((response) => {
-            //handle success
-            if (response.data == "Approve petition successful") {
-              alert("อนุมัติคำร้องสำเร็จ");
-              this.$router.push("/ChiefApproval");
-            } else {
-              alert("อนุมัติคำร้องไม่สำเร็จ!");
+        for (let i = 0; i < this.submition_detail.length; i++) {
+          for (
+            let j = 0;
+            j < this.submition_detail[i].approval_order.length;
+            j++
+          ) {
+            if (
+              this.submition_detail[i].approval_order[j].approver_name
+                .user_id == this.$store.getters.getUser.user_id
+            ) {
+              this.submition_detail[i].approval_order[j].approver_state =
+                "อนุมัติแล้ว";
+              this.submition_detail[i].submit_state++;
+
+              if (this.submition_detail[i].submit_state >= this.submition_detail[i].approval_order.length) {
+                this.getdisapproveddetail = 'ยื่นคำร้องสำเร็จ';
+              } else {
+                this.getdisapproveddetail = null;
+              }
+
+              axios
+                .post(process.env.VUE_APP_URL + "approvepetition", {
+                  submit_id: this.submition_detail[i].submit_id,
+                  approval_order: this.submition_detail[i].approval_order,
+                  submit_state: this.submition_detail[i].submit_state,
+                  submit_refuse: this.getdisapproveddetail,
+                  
+                })
+                .then((response) => {
+                  //handle success
+                  if (response.data == "Approve petition successful") {
+                    alert("อนุมัติคำร้องสำเร็จ");
+                    this.$router.push("/ChiefApproval");
+                  } else {
+                    alert("อนุมัติคำร้องไม่สำเร็จ!");
+                  }
+                })
+                .catch((error) => {
+                  // handle error
+                  console.log(error);
+                });
             }
-          })
-          .catch((error) => {
-            // handle error
-            console.log(error);
-          });
+          }
+        }
       }
     },
     disapproved() {
       if (this.getdisapproveddetail != "") {
-        this.submition_detail[0].approval_order[0].approver_state =
-          "ไม่อนุมัติ";
-        this.disapproveddetail.push({
-          id: this.nextdetailId++,
-          detail: this.getdisapproveddetail,
-        });
         this.statuscheck = false;
         this.disapproveddialog = false;
-      }
-      else{
+
+        for (let i = 0; i < this.submition_detail.length; i++) {
+          for (
+            let j = 0;
+            j < this.submition_detail[i].approval_order.length;
+            j++
+          ) {
+            if (
+              this.submition_detail[i].approval_order[j].approver_name
+                .user_id == this.$store.getters.getUser.user_id
+            ) {
+              this.submition_detail[i].approval_order[j].approver_state =
+                "ไม่อนุมัติ";
+
+              axios
+                .post(process.env.VUE_APP_URL + "approvepetition", {
+                  submit_id: this.submition_detail[i].submit_id,
+                  approval_order: this.submition_detail[i].approval_order,
+                  submit_state: this.submition_detail[i].submit_state,
+                  submit_refuse: this.getdisapproveddetail,
+                })
+                .then((response) => {
+                  //handle success
+                  if (response.data == "Approve petition successful") {
+                    alert("ปฏิเสธคำร้องสำเร็จ");
+                    this.$router.push("/ChiefApproval");
+                  } else {
+                    alert("ปฏิเสธคำร้องไม่สำเร็จ!");
+                  }
+                })
+                .catch((error) => {
+                  // handle error
+                  console.log(error);
+                });
+            }
+          }
+        }
+      } else {
         this.notnull = true;
       }
     },

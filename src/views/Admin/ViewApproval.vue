@@ -1,11 +1,10 @@
 <template>
   <!-- ส่วนจัดเเสดง -->
-  <div id="ChiefApproval">
+  <div id="AdminApproval" class="bg-color">
     <NavbarAdmin />
-
     <v-card class="cardshow">
       <v-toolbar dark prominent color="#FFAB40">
-        <h1>การอนุมัติคำร้อง</h1>
+        <h1 class="text-center pa-5">การอนุมัติคำร้อง</h1>
 
         <v-spacer></v-spacer>
       </v-toolbar>
@@ -56,7 +55,10 @@
                 <v-col> {{ item.fullname }}</v-col>
                 <v-col> {{ item.submit_date }} </v-col>
                 <v-col>
-                  <v-btn @click="selectApprovaldetaill(item.submit_id)" disabled>
+                  <v-btn
+                    @click="selectApprovaldetaill(item.submit_id)"
+                    disabled
+                  >
                     {{ item.approval_order[0].approver_state }}</v-btn
                   >
                 </v-col>
@@ -114,7 +116,7 @@
 import NavbarAdmin from "../../components/NavbarAdmin.vue";
 import axios from "axios";
 export default {
-  name: "adminApproval",
+  name: "AdminApproval",
   components: {
     NavbarAdmin,
   },
@@ -135,9 +137,7 @@ export default {
   methods: {
     getpetition() {
       axios
-        .post(process.env.VUE_APP_URL + "getsubmitforms", {
-          user_id: this.$store.getters.getUser.user_id,
-        })
+        .get(process.env.VUE_APP_URL + "getsubmitforms")
         .then((response) => {
           //handle success
           // approval_order
@@ -175,7 +175,11 @@ export default {
 </script>
 
 <style scoped>
-.cardmargin {
+.bg-color {
+  background: #f0f0f0;
+  height: 100%;
+}
+.cardshow {
   margin: 2%;
 }
 h1 {

@@ -1,12 +1,11 @@
 <template>
-  <div id="ChiefReport">
+  <div id="SecretaryReport" class="bg-color">
     <NavbarAdmin />
-    <v-card class="cardmargin">
+    <v-card class="cardshow">
       <v-toolbar dark prominent color="#FFAB40">
         <h1 class="text-center pa-5">การรายงานปัญหาทั้งหมด</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
-      
       <v-data-iterator
         :items="reports"
         :items-per-page.sync="itemsPerPage"
@@ -19,9 +18,7 @@
       >
         <template v-slot:header>
           <v-row>
-            <v-col align="right"
-              ></v-col
-            >
+            <v-col align="right"></v-col>
           </v-row>
           <v-row>
             <v-col>
@@ -45,7 +42,7 @@
           <v-row class="text-center">
             <v-col> ลำดับ </v-col>
             <v-col> รายการ </v-col>
-            
+
             <v-col> วันที่สร้าง </v-col>
             <v-col> สถานะ </v-col>
           </v-row>
@@ -55,14 +52,19 @@
               <v-row class="text-center" align="center">
                 <v-col> {{ item.report_id }} </v-col>
                 <v-col> {{ item.report_title }} </v-col>
-                
-                <v-col> <p>{{ item.report_created }}</p> </v-col>
+
                 <v-col>
-                  
-          <v-btn small class="mr-2" @click="chageState(item.report_id)" disabled>
-            {{ item.report_state }}
-          </v-btn>
-        
+                  <p>{{ item.report_created }}</p>
+                </v-col>
+                <v-col>
+                  <v-btn
+                    disabled
+                    small
+                    class="mr-2"
+                    @click="chageState(item.report_id)"
+                  >
+                    {{ item.report_state }}
+                  </v-btn>
                 </v-col>
               </v-row>
             </v-card-title>
@@ -109,7 +111,6 @@
           </v-row>
         </template>
       </v-data-iterator>
-      
     </v-card>
   </div>
 </template>
@@ -118,7 +119,7 @@
 import NavbarAdmin from "../../components/NavbarAdmin.vue";
 import axios from "axios";
 export default {
-  name: "SecretaryReport",
+  name: "AdminReport",
   components: {
     NavbarAdmin,
   },
@@ -132,7 +133,6 @@ export default {
       itemsPerPage: 4,
       sortBy: "name",
       reports: [],
-
     };
   },
   mounted() {
@@ -146,20 +146,6 @@ export default {
         .then((response) => {
           // handle success
           this.reports = response.data;
-        })
-        .catch((error) => {
-          // handle error
-          console.log(error);
-        });
-    },
-    chageState(report_id) {
-      axios
-        .put(process.env.VUE_APP_URL + "reports", {
-          id: report_id,
-        })
-        .then(() => {
-          // handle success
-          this.$router.push("/ChiefReportDetail/" + report_id);
         })
         .catch((error) => {
           // handle error
@@ -180,7 +166,11 @@ export default {
 </script>
 
 <style scoped>
-.cardmargin {
+.bg-color {
+  background: #f0f0f0;
+  height: 100%;
+}
+.cardshow {
   margin: 2%;
 }
 h1 {

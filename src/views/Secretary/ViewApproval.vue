@@ -1,8 +1,7 @@
 <template>
   <!-- ส่วนจัดเเสดง -->
-  <div id="ChiefApproval">
+  <div id="SecretaryApproval" class="bg-color">
     <NavbarSecretary />
-
     <v-card class="cardshow">
       <v-toolbar dark prominent color="#FFAB40">
         <h1>การอนุมัติคำร้อง</h1>
@@ -55,10 +54,13 @@
                 <v-col> {{ item.form_name }} </v-col>
                 <v-col> {{ item.fullname }}</v-col>
                 <v-col> {{ item.submit_date }} </v-col>
+
                 <v-col>
-                  <v-btn @click="selectApprovaldetaill(item.submit_id)" disabled>
-                    {{ item.approval_order[0].approver_state }}</v-btn
-                  >
+                  <v-btn @click="selectApprovaldetaill(item.submit_id)">
+                    <h4>
+                      ดูรายละเอียด
+                    </h4>
+                  </v-btn>
                 </v-col>
               </v-row>
             </v-card-title>
@@ -120,7 +122,6 @@ export default {
   },
   data() {
     return {
-      itemsPerPageArray: [4, 8, 12],
       search: "",
       filter: {},
       sortDesc: false,
@@ -128,20 +129,21 @@ export default {
       itemsPerPage: 4,
       sortBy: "name",
       petitionListById: [],
-      specifics: [],
     };
   },
 
   methods: {
     getpetition() {
       axios
-        .post(process.env.VUE_APP_URL + "getsubmitforms", {
-          user_id: this.$store.getters.getUser.user_id,
+        .post(process.env.VUE_APP_URL + "getsubmitformsbyagency", {
+          agency_id: this.$store.getters.getUser.agencies_id,
         })
         .then((response) => {
           //handle success
+
           // approval_order
           this.petitionListById = response.data;
+
           for (let i = 0; i < this.petitionListById.length; i++) {
             this.tmp = JSON.stringify(this.petitionListById[i].approval_order);
             this.tmp = this.tmp.replace(/\\/g, "");
@@ -166,6 +168,9 @@ export default {
     updateItemsPerPage(number) {
       this.itemsPerPage = number;
     },
+    selectApprovaldetaill(submit_id) {
+      this.$router.push("/ViewApprovaldetail/" + submit_id);
+    },
   },
 
   mounted() {
@@ -175,7 +180,12 @@ export default {
 </script>
 
 <style scoped>
-.cardmargin {
+.bg-color {
+  background: #f0f0f0;
+  height: 100%;
+}
+
+.cardshow {
   margin: 2%;
 }
 h1 {

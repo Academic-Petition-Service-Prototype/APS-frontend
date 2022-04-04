@@ -1,7 +1,7 @@
 <template>
-  <div id="ChiefReport">
+  <div id="SecretaryReport" class="bg-color">
     <NavbarSecretary />
-    <v-card class="cardmargin">
+    <v-card class="cardshow">
       <v-toolbar dark prominent color="#FFAB40">
         <h1 class="text-center pa-5">การรายงานปัญหาทั้งหมด</h1>
         <v-spacer></v-spacer>
@@ -59,7 +59,7 @@
                 <v-col> <p>{{ item.report_created }}</p> </v-col>
                 <v-col>
                   
-          <v-btn small class="mr-2" @click="chageState(item.report_id)" disabled>
+          <v-btn disabled small class="mr-2" @click="chageState(item.report_id)">
             {{ item.report_state }}
           </v-btn>
         
@@ -142,24 +142,12 @@ export default {
   methods: {
     getreport() {
       axios
-        .get(process.env.VUE_APP_URL + "reports")
+        .post(process.env.VUE_APP_URL + "agencyreports",{
+          agency_id: this.$store.getters.getUser.agencies_id
+        })
         .then((response) => {
           // handle success
           this.reports = response.data;
-        })
-        .catch((error) => {
-          // handle error
-          console.log(error);
-        });
-    },
-    chageState(report_id) {
-      axios
-        .put(process.env.VUE_APP_URL + "reports", {
-          id: report_id,
-        })
-        .then(() => {
-          // handle success
-          this.$router.push("/ChiefReportDetail/" + report_id);
         })
         .catch((error) => {
           // handle error
@@ -180,7 +168,12 @@ export default {
 </script>
 
 <style scoped>
-.cardmargin {
+.bg-color {
+  background: #f0f0f0;
+  height: 100%;
+}
+
+.cardshow {
   margin: 2%;
 }
 h1 {

@@ -9,7 +9,7 @@
       </v-toolbar>
 
       <v-data-iterator
-        :items="items"
+        :items="petitionList"
         :items-per-page.sync="itemsPerPage"
         :page.sync="page"
         :search="search"
@@ -60,8 +60,8 @@
           <v-row v-for="item in props.items" :key="item.text">
             <v-card-title>
               <v-row class="text-center" align="center">
-                <v-col> {{ item.no }} </v-col>
-                <v-col> {{ item.text }} </v-col>
+                <v-col> {{ item.form_id }} </v-col>
+                <v-col> {{ item.form_name }} </v-col>
                 <v-col>
                   <v-switch
                     inset
@@ -69,7 +69,7 @@
                     style="margin: 0px 0px 0px 40%;"
                   ></v-switch>
                 </v-col>
-                <v-col> {{ item.datecreation }} </v-col>
+                <v-col> <p>{{ item.created_date }}</p> </v-col>
                 <v-col>
                   <v-btn icon><v-icon color="yellow">mdi-pencil</v-icon></v-btn>
                   <v-btn icon><v-icon color="red">mdi-delete</v-icon></v-btn>
@@ -127,6 +127,7 @@
 
 <script>
 import NavbarChief from "../../components/NavbarChief.vue";
+import axios from "axios";
 export default {
   name: "ChiefPetitionManagement",
   components: {
@@ -141,6 +142,7 @@ export default {
       page: 1,
       itemsPerPage: 4,
       sortBy: "name",
+      petitionList: [],
 
       items: [
         {
@@ -164,6 +166,23 @@ export default {
     },
   },
   methods: {
+
+    getpetition() {
+      axios
+        .post(process.env.VUE_APP_URL + "getforms", {
+          user_id: this.$store.getters.getUser.user_id,
+          role: this.$store.getters.getUser.role,
+          agency: this.$store.getters.getUser.agency_name,
+        })
+        .then((response) => {
+          // handle success
+          this.petitionList = response.data;
+        })
+        .catch((error) => {
+          // handle error
+          console.log(error);
+        });
+    },
     nextPage() {
       if (this.page + 1 <= this.numberOfPages) this.page += 1;
     },
@@ -173,6 +192,9 @@ export default {
     updateItemsPerPage(number) {
       this.itemsPerPage = number;
     },
+  },
+   mounted() {
+    this.getpetition();
   },
 };
 </script>
