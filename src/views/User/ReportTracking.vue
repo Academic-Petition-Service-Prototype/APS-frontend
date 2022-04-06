@@ -1,5 +1,5 @@
 <template>
-  <div id="UserTracking" class="bg-color">
+  <div id="UserTrackingreport" class="bg-color">
     <NavbarUser />
     <!-- สถานะคำร้อง -->
     <v-card class="cardshow">
@@ -8,13 +8,16 @@
           class="text-center pa-5"
           style="font-size: 50px; padding: 2% 0% 0% 0%"
         >
-          สถานะคำร้อง
+          การรายงานปัญหาแบบไม่ระบุตัวตน
         </h1>
         <v-spacer></v-spacer>
       </v-toolbar>
-      
+    </v-card>
+
+    <!-- ของรายงาน -->
+    <v-card class="cardshow">
       <v-data-iterator
-        :items="petitionListById"
+        :items="reports"
         :items-per-page.sync="itemsPerPage"
         :page.sync="page"
         :search="search"
@@ -26,43 +29,25 @@
         <template v-slot:header>
           <v-row>
             <v-col>
-              <v-text-field
-                prepend-inner-icon="mdi-magnify"
-                label="ชื่อคำร้อง / ยื่นเรื่อง"
-                placeholder="ชื่อคำร้อง / ยื่นเรื่อง"
-                filled
-                rounded
-                dense
-                v-model="search"
-                class="cardshow"
-              >
-              </v-text-field>
               <template v-if="$vuetify.breakpoint.mdAndUp"> </template>
             </v-col>
           </v-row>
         </template>
         <template v-slot:default="props">
           <v-row class="text-center">
-            <v-col> <h3>ลำดับ</h3></v-col>
-
-            <v-col align="left"> <h3>รายการ</h3></v-col>
+            <v-col> ลำดับ </v-col>
+            <v-col> รายการ </v-col>
+            <v-col> </v-col>
           </v-row>
 
-          <v-row
-            v-for="item in props.items"
-            :key="item.title"
-            class="cardshow text-center "
-          >
+          <v-row v-for="item in props.items" :key="item.title" class="cardshow">
             <v-expansion-panels>
               <v-expansion-panel>
                 <v-expansion-panel-header>
                   <v-row class="text-center">
-                    <v-col>
-                      <h3>{{ item.submit_id }}</h3>
-                    </v-col>
-                    <v-col>
-                      <h4>{{ item.form_name }}</h4>
-                    </v-col>
+                    <v-col> {{ item.report_id }} </v-col>
+                    <v-col> {{ item.report_title }} </v-col>
+                    <v-col> </v-col>
                   </v-row>
 
                   <!-- เเสดงชื่อเอกสาร -->
@@ -70,71 +55,64 @@
 
                   <!-- เเสดงขั้นนตอน-->
                 </v-expansion-panel-header>
+
                 <v-expansion-panel-content>
                   <!-- เเสดงเนื้อหาข้างใน -->
 
                   <v-container id="inspire">
-                    <v-stepper alt-labels v-model="item.submit_state">
+                    <v-stepper alt-labels v-model="item.report_state">
                       <v-stepper-header>
-                        <v-divider></v-divider>
                         <v-stepper-step
-                          :complete="item.submit_state >= 1"
-                          step=""
+                          :complete="item.report_state > 1"
+                          step="1"
                           color="green"
                         >
-                          รับเรื่องคำร้องเเล้ว
+                          ส่งยื่นคำร้อง
                         </v-stepper-step>
+
                         <v-divider></v-divider>
-
-                        <template
-                          v-for="(approval_order, n) in item.approval_order"
-                        >
-                          <v-stepper-step
-                            :key="n"
-                            :complete="item.submit_state > n + 1"
-                           
-                            step=""
-                            color="green"
-                          >
-                            {{ item.approval_order[n].approver_name.f_name }}
-
-                            {{ item.approval_order[n].approver_name.l_name }}
-                          </v-stepper-step>
-                          <v-divider :key="approval_order"></v-divider>
-                        </template>
 
                         <v-stepper-step
-                          :complete="item.submit_state > item.approval_order.length"
-                          step=""
+                          :complete="item.report_state > 2"
+                          step="2"
                           color="green"
                         >
-                          ยื่นคำร้องสำเร็จ
+                          รับคำร้องเข้าระบบ
                         </v-stepper-step>
-                        <v-divider></v-divider>
                       </v-stepper-header>
                       <v-stepper-items>
-                        <template
-                          v-for="(approval_order, n) in item.approval_order"
-                        >
-                          <v-stepper-content
-                            :step="n + 2"
-                            :key="approval_order"
+                        <v-stepper-content step="1">
+                          <v-card
+                            class="mb-12"
+                            color="grey lighten-1"
+                            height="200px"
                           >
-                            <v-card
-                              class="mb-12"
-                              color="grey lighten-1"
-                              height="200px"
-                            >
-                              <h2 class="cardshow">รายละเอียด</h2>
-                              <p v-if="item.submit_refuse === null">
-                                กำลังดำเนิการ
-                              </p>
-                              <p v-if="item.submit_refuse !== null">
-                                {{ item.submit_refuse }}
-                              </p>
-                            </v-card>
-                          </v-stepper-content>
-                        </template>
+                            <h2 class="cardshow">รายละเอียด1</h2>
+                            <h2 class="cardshow">{{ item.report_detail }}</h2>
+                          </v-card>
+                        </v-stepper-content>
+
+                        <v-stepper-content step="2">
+                          <v-card
+                            class="mb-12"
+                            color="grey lighten-1"
+                            height="200px"
+                          >
+                            <h2 class="cardshow">รายละเอียด2</h2>
+                            <h2 class="cardshow">{{ item.report_detail }}</h2>
+                          </v-card>
+                        </v-stepper-content>
+
+                        <v-stepper-content step="3">
+                          <v-card
+                            class="mb-12"
+                            color="grey lighten-1"
+                            height="200px"
+                          >
+                            <h2 class="cardshow">รายละเอียด2</h2>
+                            <h2 class="cardshow">{{ item.report_detail }}</h2>
+                          </v-card>
+                        </v-stepper-content>
                       </v-stepper-items>
                     </v-stepper>
                   </v-container>
@@ -187,9 +165,7 @@
       </v-data-iterator>
       <!-- วนเเสดงรายการสถาณะเอสาร -->
     </v-card>
-    <!-- สถานะคำร้อง -->
-
-   
+    <!-- ของรายงาน -->
   </div>
 </template>
 
@@ -197,7 +173,7 @@
 import NavbarUser from "../../components/NavbarUser.vue";
 import axios from "axios";
 export default {
-  name: "UserTracking",
+  name: "UserTrackingreport",
   components: {
     NavbarUser,
   },
@@ -211,9 +187,7 @@ export default {
       itemsPerPage: 4,
       sortBy: "name",
 
-      petitionListById: [
-        
-      ],
+      petitionListById: [],
       reports: [],
     };
   },
@@ -259,21 +233,20 @@ export default {
     },
     getreport() {
       axios
-        .post(process.env.VUE_APP_URL + "agencyreports",{
-          agency_id: this.$store.getters.getUser.agencies_id
+        .post(process.env.VUE_APP_URL + "agencyreports", {
+          agency_id: this.$store.getters.getUser.agencies_id,
         })
         .then((response) => {
           // handle success
           this.reports = response.data;
           for (let i = 0; i < this.reports.length; i++) {
-            if (this.reports[i].report_state == 'read') {
-              this.reports[i].report_state = 3
+            if (this.reports[i].report_state == "read") {
+              this.reports[i].report_state = 3;
             } else {
-              this.reports[i].report_state = 1
+              this.reports[i].report_state = 1;
             }
-            
           }
-          console.log(response.data)
+          console.log(response.data);
         })
         .catch((error) => {
           // handle error

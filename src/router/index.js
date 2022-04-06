@@ -13,6 +13,10 @@ import UserProfile from '../views/User/Profile.vue'
 import UserReport from '../views/User/Report.vue'
 import UserTracking from '../views/User/Tracking.vue'
 import UserSentpetition from '../views/User/Sentpetition.vue'
+import ReportTracking from '../views/User/ReportTracking.vue'
+import request from '../views/User/request.vue'
+
+
 //User
 
 //Officer
@@ -118,6 +122,17 @@ const routes = [
     name: 'UserSentpetition',
     component: UserSentpetition 
   },
+  {
+    path: '/ReportTracking',
+    name: 'ReportTracking',
+    component: ReportTracking 
+  },
+  {
+    path: '/request',
+    name: 'request',
+    component: request 
+  },
+  
   //User
 
   //Officer

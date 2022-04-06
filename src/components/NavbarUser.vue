@@ -106,15 +106,27 @@ export default {
         icon: "file-document",
       },
       {
-        menu: "3",
-        text: "ติดตามสถานะคำร้อง/ปัญหา",
-        route: "/UserTracking",
+        menu: "4",
+        text: "รายงานปัญหาไม่ระบุตัวตน",
+        route: "/UserReport",
         icon: "alert-octagon",
       },
       {
         menu: "4",
-        text: "รายงานปัญหาไม่ระบุตัวตน",
-        route: "/UserReport",
+        text: "การร้องขอต่อระบบ",
+        route: "/request",
+        icon: "alert-octagon",
+      },
+      {
+        menu: "3",
+        text: "ติดตามสถานะคำร้อง",
+        route: "/UserTracking",
+        icon: "alert-octagon",
+      },
+      {
+        menu: "3",
+        text: "ติดตามสถานะคำร้อง",
+        route: "/ReportTracking",
         icon: "alert-octagon",
       },
       {
