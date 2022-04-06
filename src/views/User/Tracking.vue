@@ -55,7 +55,10 @@
           >
             <v-expansion-panels>
               <v-expansion-panel>
-                <v-expansion-panel-header>
+                <v-expansion-panel-header
+                color="#FFAB40"
+                
+                >
                   <v-row class="text-center">
                     <v-col>
                       <h3>{{ item.submit_id }}</h3>
@@ -64,6 +67,7 @@
                       <h4>{{ item.form_name }}</h4>
                     </v-col>
                   </v-row>
+                  
 
                   <!-- เเสดงชื่อเอกสาร -->
                   <v-spacer></v-spacer>
@@ -116,6 +120,8 @@
                         <template
                           v-for="(approval_order, n) in item.approval_order"
                         >
+                        
+                          
                           <v-stepper-content
                             :step="n + 2"
                             :key="approval_order"
@@ -133,9 +139,24 @@
                                 {{ item.submit_refuse }}
                               </p>
                             </v-card>
+                            
                           </v-stepper-content>
                         </template>
+                        <v-card>
+                          <v-row>
+                            <v-col>
+                              <v-btn class="cardshow"
+                              @click="selecttrackingdetaill(item.submit_id)"
+                                
+                               >
+                                ดูรายละเอียดคำร้อง
+                              </v-btn>
+                            </v-col>
+                          </v-row>
+                        </v-card>
+                        
                       </v-stepper-items>
+                      
                     </v-stepper>
                   </v-container>
 
@@ -288,6 +309,9 @@ export default {
     },
     updateItemsPerPage(number) {
       this.itemsPerPage = number;
+    },
+    selecttrackingdetaill(submit_id) {
+      this.$router.push("/Trackingdetail/" + submit_id);
     },
   },
   mounted() {

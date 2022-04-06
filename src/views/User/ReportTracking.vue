@@ -43,7 +43,9 @@
           <v-row v-for="item in props.items" :key="item.title" class="cardshow">
             <v-expansion-panels>
               <v-expansion-panel>
-                <v-expansion-panel-header>
+                <v-expansion-panel-header
+                color="#FFAB40"
+                >
                   <v-row class="text-center">
                     <v-col> {{ item.report_id }} </v-col>
                     <v-col> {{ item.report_title }} </v-col>

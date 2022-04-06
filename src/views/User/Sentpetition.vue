@@ -7,7 +7,7 @@
         แบบคำร้อง / ยื่นเรื่อง
         <v-divider></v-divider>
       </h1>
-
+     
       <h1 v-for="heard in heard" :key="heard" style="text-align: center">
         {{ petitionListById.form_name }}
       </h1>
@@ -182,6 +182,8 @@ export default {
           temp = this.specifics.slice(1, -1);
           temp = JSON.parse(temp);
           this.petitionListById.approval_name = temp;
+
+          
         })
         .catch((error) => {
           // handle error

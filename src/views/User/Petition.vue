@@ -6,7 +6,7 @@
         <h1>เลือกแบบคำร้อง / ยื่นเรื่อง</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
-
+        <!-- {{petitionList}} -->
       <v-data-iterator
         :items="petitionList"
         :items-per-page.sync="itemsPerPage"
@@ -24,17 +24,27 @@
             filled
             rounded
             label="ค้นหาคำร้อง"
-            class="cardshow magintextfind"
+            clearable
+            class="cardmargin "
           ></v-text-field>
+
+          <h3 class="textleft">ค้นหาตามหมวดหมู่</h3>
+          <v-select
+          v-model="search"
+          :items="form_tag"
+          label="กรุณาเลือกหมวดหมู่"
+          outlined
+          class="cardmargin "
+        ></v-select>
         </template>
 
         <template v-slot:default="prop">
           <v-container>
             <v-row>
-                <v-col align="left">
-                  <h2>แนะนำสำหรับท่าน</h2>
-                </v-col>
-              </v-row>
+              <v-col align="left">
+                <h2>แนะนำสำหรับท่าน</h2>
+              </v-col>
+            </v-row>
             <v-row>
               <v-col
                 v-for="item in prop.items"
@@ -43,124 +53,67 @@
                 md="6"
               >
                 <v-item>
-                  
                   <v-card
                     class="d-flex align-center"
                     dark
                     height="200"
                     :to="item.route"
                     @click="sentPetition(item.form_id)"
+                    v-if="item.form_status == 'active'"
                   >
-                  <v-row>
-                  <v-col align="center">
-                    <h2>{{ item.form_name }}</h2>
-                    <h5>{{ item.form_detail }}</h5>
-                  </v-col>
-                </v-row>
+                    <v-row>
+                      <v-col align="center">
+                        <h2>{{ item.form_name }}</h2>
+                        <h5>{{ item.form_detail }}</h5>
+                      </v-col>
+                    </v-row>
                   </v-card>
-                  
                 </v-item>
               </v-col>
             </v-row>
           </v-container>
-          <template  v-if="search ==''">
-        <v-stepper v-model="e1" class="cardmargin">
-          <v-toolbar dark prominent color="#FFAB40">
-        <h1>หมวดหมู่คำร้อง</h1>
-        <v-spacer></v-spacer>
-      </v-toolbar>
-    
+          <template v-if="search == ''">
+            <v-stepper v-model="e1" class="cardmargin">
+              <v-toolbar dark prominent color="#FFAB40">
+                <h1>แบบคำร้องที่ยอดนิยม</h1>
+                <v-spacer></v-spacer>
+              </v-toolbar>
 
-    <v-stepper-items>
-      <v-stepper-content step="1">
-        <v-card
-          class="mb-12"
-          
-          height="500px"
-        ></v-card>
-
-        <v-btn
-          color="primary"
-          @click="e1 = 2"
-        >
-          Continue
-        </v-btn>
-
-        <v-btn text>
-          Cancel
-        </v-btn>
-      </v-stepper-content>
-
-      <v-stepper-content step="2">
-        <v-card
-          class="mb-12"
-          color="grey lighten-1"
-          height="200px"
-        ></v-card>
-
-        <v-btn
-          color="primary"
-          @click="e1 = 3"
-        >
-          Continue
-        </v-btn>
-
-        <v-btn text>
-          Cancel
-        </v-btn>
-      </v-stepper-content>
-
-      <v-stepper-content step="3">
-        <v-card
-          class="mb-12"
-          color="grey lighten-1"
-          height="200px"
-        ></v-card>
-
-        <v-btn
-          color="primary"
-          @click="e1 = 1"
-        >
-          Continue
-        </v-btn>
-
-        <v-btn text>
-          Cancel
-        </v-btn>
-      </v-stepper-content>
-    </v-stepper-items>
-  </v-stepper>
-</template>
-
-          <!-- <v-row
-            v-for="item in prop.items"
-            :key="item.name"
-            class="petitiontitle"
-          > -->
-          <!-- <v-col v-if="item.form_status == 'active'">
-              <v-btn
-                outlined
-                block
-                height="100"
-                router
-                :to="item.route"
-                @click="sentPetition(item.form_id)"
-              >
-                <v-row>
-                  <v-col align="center">
-                    <h2>{{ item.form_name }}</h2>
-                    <h5>{{ item.form_detail }}</h5>
-                  </v-col>
-                </v-row>
-              </v-btn>
-            </v-col> -->
-
-          <!-- </v-row> -->
-
-          
+              <v-stepper-items>
+                <v-stepper-content step="1">
+                  <v-card class="mb-12" height="500px">
+                    <v-row>
+                      <v-col
+                        v-for="item in prop.items"
+                        :key="item.name"
+                        class=" petitiontitle"
+                        cols="12"
+                        md="4"
+                      >
+                        <v-btn
+                          v-if="item.form_status == 'active'"
+                          block
+                          dark
+                          height="150"
+                          router
+                          :to="item.route"
+                          @click="sentPetition(item.form_id)"
+                        >
+                          <v-row>
+                            <v-col align="center">
+                              <h2>{{ item.form_name }}</h2>
+                              <h5>{{ item.form_detail }}</h5>
+                            </v-col>
+                          </v-row>
+                        </v-btn>
+                      </v-col>
+                    </v-row>
+                  </v-card>
+                </v-stepper-content>
+              </v-stepper-items>
+            </v-stepper>
+          </template>
         </template>
-
-        
 
         <template v-slot:footer>
           <v-row class="mt-2" align="center" justify="center">
@@ -200,7 +153,6 @@
             </v-col>
           </v-row>
         </template>
-        
       </v-data-iterator>
     </v-card>
   </div>
@@ -224,7 +176,8 @@ export default {
       sortBy: "name",
       keys: ["Name"],
       petitionList: [],
-      e1:1
+      e1: 1,
+      form_tag: [],
     };
   },
   computed: {
@@ -255,6 +208,12 @@ export default {
         .then((response) => {
           // handle success
           this.petitionList = response.data;
+          for (let i = 0; i < this.petitionList.length; i++) {
+
+            this.form_tag.push(this.petitionList[i].form_tag)
+            
+          }
+
         })
         .catch((error) => {
           // handle error
@@ -285,6 +244,12 @@ export default {
 h1 {
   font-size: 50px;
   padding: 2% 0% 0% 0%;
+  
+}
+.textleft{
+  text-align: left;
+  margin: 2%;
+
 }
 
 .petitiontitle {

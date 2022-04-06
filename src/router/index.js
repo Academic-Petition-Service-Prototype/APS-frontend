@@ -15,6 +15,8 @@ import UserTracking from '../views/User/Tracking.vue'
 import UserSentpetition from '../views/User/Sentpetition.vue'
 import ReportTracking from '../views/User/ReportTracking.vue'
 import request from '../views/User/request.vue'
+import Trackingdetail from '../views/User/Trackingdetail.vue'
+
 
 
 //User
@@ -132,6 +134,17 @@ const routes = [
     name: 'request',
     component: request 
   },
+  {
+    path: '/Trackingdetail',
+    name: 'Trackingdetail',
+    component: Trackingdetail 
+  },
+  {
+    path: '/Trackingdetail/:id',
+    name: 'Trackingdetail',
+    component: Trackingdetail 
+  },
+  
   
   //User
 
