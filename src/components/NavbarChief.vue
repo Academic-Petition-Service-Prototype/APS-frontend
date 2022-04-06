@@ -113,7 +113,7 @@ export default {
       },
       {
         menu: "2",
-        text: "ตรจสอบการอนุมัติคำร้อง",
+        text: "คำร้องที่รอการอนุมัติ",
         route: "/ChiefCheckapprovedlist",
         icon: "file-document",
       },
@@ -121,6 +121,12 @@ export default {
         menu: "5",
         text: "คำร้องที่อนุมัติแล้ว",
         route: "/Approvedlist",
+        icon: "file-document",
+      },
+      {
+        menu: "5",
+        text: "คำร้องที่ไม่อนุมัติ",
+        route: "/Disapprovedlist",
         icon: "file-document",
       },
       {

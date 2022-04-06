@@ -37,6 +37,8 @@ import Approvaldetaill from '../views/Chief/Approvaldetaill.vue'
 import ChiefCreatepetition from'../views/Chief/Createpetition.vue'
 import Approvedlist from'../views/Chief/Approvedlist.vue'
 import ViweApprovedlist from'../views/Chief/ViweApprovedlist.vue'
+import Disapprovedlist from'../views/Chief/Disapprovedlist.vue'
+import ViweDisapprovedlist from'../views/Chief/ViweDisapprovedlist.vue'
 
 //Chief
 
@@ -223,6 +225,17 @@ const routes = [
     name: 'ChiefCreatepetition',
     component: ChiefCreatepetition 
   },
+  {
+    path: '/Disapprovedlist',
+    name: 'Disapprovedlist',
+    component: Disapprovedlist 
+  },
+  {
+    path: '/ViweDisapprovedlist/:id',
+    name: 'ViweDisapprovedlist',
+    component: ViweDisapprovedlist 
+  },
+  
   //Chief
 
   //Secretary
