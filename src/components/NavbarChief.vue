@@ -106,9 +106,21 @@ export default {
         icon: "home",
       },
       {
+        menu: "5",
+        text: "จัดการคำร้อง",
+        route: "/ChiefPetitionManagement",
+        icon: "file-document",
+      },
+      {
         menu: "2",
-        text: "การอนุมัติคำร้อง",
-        route: "/ChiefApproval",
+        text: "ตรจสอบการอนุมัติคำร้อง",
+        route: "/ChiefCheckapprovedlist",
+        icon: "file-document",
+      },
+      {
+        menu: "5",
+        text: "คำร้องที่อนุมัติแล้ว",
+        route: "/Approvedlist",
         icon: "file-document",
       },
       {
@@ -123,12 +135,7 @@ export default {
         route: "/ChiefTracking",
         icon: "marker-check",
       },
-      {
-        menu: "5",
-        text: "จัดการคำร้อง",
-        route: "/ChiefPetitionManagement",
-        icon: "file-document",
-      },
+      
       {
         menu: "6",
         text: "จัดการ Secretary",

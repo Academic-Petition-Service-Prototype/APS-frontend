@@ -1,6 +1,6 @@
 <template>
   <!-- ส่วนจัดเเสดง -->
-  <div id="ChiefApproval" class="bg-color">
+  <div id="ChiefCheckapprovedlist" class="bg-color">
     <NavbarChief />
     <v-card class="cardshow">
       <v-toolbar dark prominent color="#FFAB40">
@@ -139,7 +139,7 @@
 import NavbarChief from "../../components/NavbarChief.vue";
 import axios from "axios";
 export default {
-  name: "ChiefApproval",
+  name: "ChiefCheckapprovedlist",
   components: {
     NavbarChief,
   },

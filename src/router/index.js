@@ -24,7 +24,7 @@ import OfficerCreatepetition from'../views/Officer/Createpetition.vue'
 //Officer
 
 //Chief
-import ChiefApproval from '../views/Chief/Approval.vue'
+import ChiefCheckapprovedlist from '../views/Chief/Checkapprovedlist.vue'
 import ChiefDashboard from '../views/Chief/Dashboard.vue'
 import ChiefOfficerManagement from '../views/Chief/OfficerManagement.vue'
 import ChiefPetitionManagement from '../views/Chief/PetitionManagement.vue'
@@ -35,6 +35,9 @@ import ChiefTracking from '../views/Chief/Tracking.vue'
 import ChiefReportDetail from '../views/Chief/ReportDetail.vue'
 import Approvaldetaill from '../views/Chief/Approvaldetaill.vue'
 import ChiefCreatepetition from'../views/Chief/Createpetition.vue'
+import Approvedlist from'../views/Chief/Approvedlist.vue'
+import ViweApprovedlist from'../views/Chief/ViweApprovedlist.vue'
+
 //Chief
 
 //Secretary
@@ -151,9 +154,19 @@ const routes = [
 
   //Chief
   {
-    path: '/ChiefApproval',
-    name: 'ChiefApproval',
-    component: ChiefApproval 
+    path: '/ChiefCheckapprovedlist',
+    name: 'ChiefCheckapprovedlist',
+    component: ChiefCheckapprovedlist 
+  },
+  {
+    path: '/Approvedlist',
+    name: 'Approvedlist',
+    component: Approvedlist 
+  },
+  {
+    path: '/ViweApprovedlist',
+    name: 'ViweApprovedlist',
+    component: ViweApprovedlist 
   },
   {
     path: '/ChiefDashboard',
@@ -199,6 +212,11 @@ const routes = [
     path: '/Approvaldetaill/:id',
     name: 'Approvaldetaill',
     component: Approvaldetaill 
+  },
+  {
+    path: '/ViweApprovedlist/:id',
+    name: 'ViweApprovedlist',
+    component: ViweApprovedlist 
   },
   {
     path: '/ChiefCreatepetition',
