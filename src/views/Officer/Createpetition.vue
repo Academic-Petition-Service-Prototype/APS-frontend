@@ -17,13 +17,24 @@
 
           <v-divider></v-divider>
 
-          <v-stepper-step :complete="stepprocess > 2" step="2" color="green">
+          <v-stepper-step
+            :complete="stepprocess > 2"
+            step="2"
+            color="green"
+            class="text-center"
+          >
+            รายละเอียด และ จัดหมวดหมู่คำร้อง
+          </v-stepper-step>
+
+          <v-divider></v-divider>
+
+          <v-stepper-step :complete="stepprocess > 3" step="3" color="green">
             ผู้อนุมัติ
           </v-stepper-step>
 
           <v-divider></v-divider>
 
-          <v-stepper-step step="3" color="green">
+          <v-stepper-step step="4" color="green">
             ตัวอย่างคำร้อง
           </v-stepper-step>
         </v-stepper-header>
@@ -93,7 +104,49 @@
             <v-btn text @click="exitpention = true"> ยกเลิก </v-btn>
           </v-stepper-content>
 
-          <v-stepper-content step="2" ref="Selectionapprover">
+          <v-stepper-content step="2">
+            <v-card class="mb-12" color="#ECEFF1">
+              <!-- หน้าสร้างหัวข้อ -->
+
+              <v-row>
+                <v-col>
+                  <h1>รายละเอียดคำร้อง</h1>
+
+                  <v-text-field
+                    v-model="detail_forms"
+                    label="รายละเอียดคำร้อง"
+                    class="cardshow"
+                    required
+                    
+                    
+                  ></v-text-field>
+
+                  <h1>หมวดหมู่คำร้อง</h1>
+                  <v-autocomplete
+                    class="cardshow"
+                    v-model="tag_forms"
+                    :items="tag"
+                    outlined
+                    dense
+                    chips
+                    small-chips
+                    label="หมวดหมู่คำร้อง"
+                    multiple
+                  ></v-autocomplete>
+                </v-col>
+              </v-row>
+
+              <!-- หน้าสร้างหัวข้อ -->
+            </v-card>
+
+            <v-btn type="submit" color="primary" @click="nextstepsecond">
+              ต่อไป
+            </v-btn>
+
+            <v-btn text @click="stepprocess = 1"> ยกเลิก </v-btn>
+          </v-stepper-content>
+
+          <v-stepper-content step="3" ref="Selectionapprover">
             <v-card class="mb-12" color="#ECEFF1">
               <v-row>
                 <v-col class="cardshow">
@@ -144,12 +197,12 @@
               </v-row>
             </v-card>
 
-            <v-btn color="primary" @click="nextstepsecond"> ต่อไป </v-btn>
+            <v-btn color="primary" @click="nextstep3"> ต่อไป </v-btn>
 
-            <v-btn text @click="stepprocess = 1"> ย้อนกลับ </v-btn>
+            <v-btn text @click="stepprocess = 2"> ย้อนกลับ </v-btn>
           </v-stepper-content>
 
-          <v-stepper-content step="3">
+          <v-stepper-content step="4">
             <v-card class="mb-12" color="#ECEFF1">
               <h1>ตัวอย่างคำร้อง</h1>
               <!-- ส่วนเเสดงหน้าการเเสดงตัวอย่าง -->
@@ -278,7 +331,7 @@
       <v-card align="center">
         <h1>ต้องการออกจากหน้าสร้างคำร้องหรือไม่</h1>
 
-        <v-btn color="green darken-1" text to="/ChiefPetitionManagement">
+        <v-btn color="green darken-1" text to="/OfficerPetitionManagement">
           ตกลง
         </v-btn>
         <v-btn color="red darken-1" text @click="exitpention = false">
@@ -370,6 +423,9 @@ export default {
   },
   data() {
     return {
+      tag:['a','b','c'],
+      tag_forms:"",
+      detail_forms:"",
       snackbarduplicate: false,
       snackbarspecifics: false,
       snackbartitle: false,
@@ -426,7 +482,10 @@ export default {
       if (this.newapproverText !== "" && this.newapproverText !== null) {
         let ifdup = false;
         for (let i = 0; i < this.listapprover.length; i++) {
-          if (this.listapprover[i].approver_name.user_id === this.newapproverText.user_id) {
+          if (
+            this.listapprover[i].approver_name.user_id ===
+            this.newapproverText.user_id
+          ) {
             ifdup = true;
           } else {
             ifdup = false;
@@ -442,7 +501,6 @@ export default {
           });
           this.newapproverText = "";
         }
-        
       } else {
         this.snackbarapprover = true;
       }
@@ -484,16 +542,25 @@ export default {
         console.log(this.form);
       });
     },
-
     nextstepsecond() {
+      if (this.detail_forms !== "" && this.detail_forms !== null 
+      && this.tag_forms !== "" && this.tag_forms !== null) {
+        this.stepprocess = 3;
+      } else {
+        this.snackbarspecifics = true;
+      }
+    },
+
+    nextstep3() {
       this.approver = false;
 
       Object.keys(this.Selectionapprover).forEach((f) => {
         if (this.listapprover >= 0) {
           this.approverError = true;
+          this.snackbarapprover = true;
           this.$refs[f].validate(true);
         } else {
-          this.stepprocess = 3;
+          this.stepprocess = 4;
         }
         console.log(this.Selectionapprover);
       });
@@ -519,7 +586,7 @@ export default {
             // this.colorsnackbar = "#2E7D32";
             // this.snackbar = true;
             alert("สร้างคำร้องสำเร็จ");
-            this.$router.push("/OfficerPetitionManagement");
+            this.$router.push("/ChiefPetitionManagement");
           }
         })
         .catch((error) => {
@@ -591,3 +658,4 @@ h3 {
   margin: 2%;
 }
 </style>
+
