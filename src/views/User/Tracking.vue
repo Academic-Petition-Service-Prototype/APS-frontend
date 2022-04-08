@@ -43,9 +43,10 @@
         </template>
         <template v-slot:default="props">
           <v-row class="text-center">
-            <v-col> <h3>ลำดับ</h3></v-col>
+            <v-col align="center"> <p>ลำดับ</p></v-col>
 
-            <v-col align="left"> <h3>รายการ</h3></v-col>
+            <v-col align="center"> <p>รายการ</p></v-col>
+            <v-col align="center"> <p>เวลา</p></v-col>
           </v-row>
 
           <v-row
@@ -60,17 +61,20 @@
                 
                 >
                   <v-row class="text-center">
-                    <v-col>
+                    <v-col >
                       <h3>{{ item.submit_id }}</h3>
                     </v-col>
                     <v-col>
                       <h4>{{ item.form_name }}</h4>
                     </v-col>
+                    <v-col>
+                      <h4>{{ item.submit_date }}</h4>
+                    </v-col>
                   </v-row>
                   
 
                   <!-- เเสดงชื่อเอกสาร -->
-                  <v-spacer></v-spacer>
+                  
 
                   <!-- เเสดงขั้นนตอน-->
                 </v-expansion-panel-header>
@@ -329,5 +333,15 @@ export default {
 
 .cardshow {
   margin: 2%;
+}
+h1 {
+  font-size: 50px;
+  padding: 2% 0% 0% 0%;
+}
+h3{
+  color: #f0f0f0;
+}
+h4{
+  color: #f0f0f0;
 }
 </style>

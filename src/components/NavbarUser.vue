@@ -37,8 +37,9 @@
 
       <v-row>
         <v-col class="text-white" align="center">
-          ชื่อ : {{ firstname }} {{ lastname }}<br />
-          สถานะ : {{ role }}
+          <p>คุณ : {{ firstname }} {{ lastname }}</p> 
+          <p v-if="role == 'user'">สถานะ : ผู้ยื่นนคำร้อง </p>
+          
         </v-col>
       </v-row>
       <v-divider></v-divider>
