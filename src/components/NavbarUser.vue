@@ -126,7 +126,7 @@ export default {
       },
       {
         menu: "3",
-        text: "ติดตามสถานะคำร้อง",
+        text: "ติดตามสถานะการร้องขอ",
         route: "/ReportTracking",
         icon: "alert-octagon",
       },
