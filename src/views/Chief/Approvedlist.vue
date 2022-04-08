@@ -3,7 +3,7 @@
   <div id="ChiefApprovedlist" class="bg-color">
     <NavbarChief />
     <v-card class="cardshow">
-      <v-toolbar dark prominent color="#FFAB40">
+      <v-toolbar dark prominent color="primary">
         <h1 class="text-center pa-5">คำร้องที่อนุมัติแล้ว</h1>
 
         <v-spacer></v-spacer>
@@ -61,13 +61,13 @@
                     <v-col> {{ item.submit_date }} </v-col>
 
                     <v-col>
-                      <v-btn @click="selectApprovaldetaill(item.submit_id)">
+                      <v-btn @click="selectApprovaldetaill(item.submit_id)" color="#4CAF50">
                         <template
                           v-for="(approval_order, n) in item.approval_order"
                         >
                           <!-- {{ item.approval_order[n].approver_name.user_id}} -->
 
-                          <p
+                          <h5
                             :key="n"
                             v-if="
                               item.approval_order[n].approver_name.user_id ==
@@ -75,7 +75,7 @@
                             "
                           >
                             {{ item.approval_order[n].approver_state }}
-                          </p>
+                          </h5>
                         </template>
                       </v-btn>
                     </v-col>
@@ -107,7 +107,7 @@
                 fab
                 dark
                 icon
-                color="#FFAB40"
+                color="primary"
                 class="mr-1"
                 @click="formerPage"
               >
@@ -117,7 +117,7 @@
                 fab
                 dark
                 icon
-                color="#FFAB40"
+                color="primary"
                 class="ml-1"
                 @click="nextPage"
               >
@@ -246,5 +246,8 @@ export default {
 h1 {
   font-size: 50px;
   padding: 2% 0% 0% 0%;
+}
+h5{
+  color: #f0f0f0;
 }
 </style>

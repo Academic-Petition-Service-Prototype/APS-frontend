@@ -2,7 +2,7 @@
   <div id="ChiefTracking" class="bg-color">
     <NavbarChief />
     <v-card class="cardshow">
-      <v-toolbar dark prominent color="#FFAB40">
+      <v-toolbar dark prominent color="primary">
         <h1 class="text-center pa-5">สถานะคำร้อง</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
@@ -49,7 +49,7 @@
           >
             <v-expansion-panels>
               <v-expansion-panel>
-                <v-expansion-panel-header>
+                <v-expansion-panel-header color="primary">
                   <v-row class="text-center">
                     <v-col>
                       <h3>{{ item.submit_id }}</h3>

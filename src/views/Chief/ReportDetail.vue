@@ -2,7 +2,7 @@
   <div id="ChiefReportDetail">
     <NavbarChief />
     <v-card class="cardmargin">
-      <v-toolbar dark prominent color="#FFAB40">
+      <v-toolbar dark prominent color="primary">
         <h1>รายละเอียดการรายงานปัญหา</h1>
 
         

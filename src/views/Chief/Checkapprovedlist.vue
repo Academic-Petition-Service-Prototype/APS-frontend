@@ -3,7 +3,7 @@
   <div id="ChiefCheckapprovedlist" class="bg-color">
     <NavbarChief />
     <v-card class="cardshow">
-      <v-toolbar dark prominent color="#FFAB40">
+      <v-toolbar dark prominent color="primary">
         <h1 class="text-center pa-5">การอนุมัติคำร้อง</h1>
 
         <v-spacer></v-spacer>
@@ -70,14 +70,14 @@
                     >
                       <!-- {{ item.approval_order[n].approver_name.user_id}} -->
 
-                      <p
+                      <h5
                         :key="n"
                         v-if="
                           item.approval_order[n].approver_name.user_id == stong
                         "
                       >
                         {{ item.approval_order[n].approver_state }}
-                      </p>
+                      </h5>
                     </template>
                   </v-btn>
                 </v-col>

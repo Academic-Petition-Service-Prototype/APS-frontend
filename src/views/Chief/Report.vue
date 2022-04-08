@@ -2,7 +2,7 @@
   <div id="ChiefReport" class="bg-color">
     <NavbarChief />
     <v-card class="cardshow">
-      <v-toolbar dark prominent color="#FFAB40">
+      <v-toolbar dark prominent color="primary">
         <h1 class="text-center pa-5">การรายงานปัญหาทั้งหมด</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
@@ -60,7 +60,14 @@
                 <v-col>
                   
           <v-btn small class="mr-2" @click="chageState(item.report_id)">
-            {{ item.report_state }}
+            <h5 v-if="item.report_state == 'read'">
+                  อ่านเเล้ว
+            </h5>
+
+            <h5 v-if="item.report_state == 'unread'">
+                  ยังไม่ได้อ่าน
+            </h5>
+            
           </v-btn>
         
                 </v-col>

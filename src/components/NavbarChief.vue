@@ -2,7 +2,7 @@
 <template>
   <div id="NavbarChief">
     <!-- Navbar -->
-    <v-app-bar color="#FFA726">
+    <v-app-bar color="primary">
       <v-app-bar-nav-icon @click="drawer = !drawer">
         <v-icon color="#FFFFFF">
           mdi-menu
@@ -14,7 +14,7 @@
       <v-spacer></v-spacer>
       <div class="text-white subtitle-1 mr-4">Last login: {{ lastlogin }}</div>
       <v-btn elevation="2" color="error" @click="slideexit = !slideexit">
-        Logout
+        ออกจากระบบ
       </v-btn>
     </v-app-bar>
     <!-- Navbar -->
