@@ -39,6 +39,8 @@ import Approvedlist from'../views/Chief/Approvedlist.vue'
 import ViweApprovedlist from'../views/Chief/ViweApprovedlist.vue'
 import Disapprovedlist from'../views/Chief/Disapprovedlist.vue'
 import ViweDisapprovedlist from'../views/Chief/ViweDisapprovedlist.vue'
+import requestlist from'../views/Chief/requestlist.vue'
+import requestlistdetail from'../views/Chief/requestlistdetail.vue'
 
 //Chief
 
@@ -235,7 +237,23 @@ const routes = [
     name: 'ViweDisapprovedlist',
     component: ViweDisapprovedlist 
   },
+  {
+    path: '/requestlist',
+    name: 'requestlist',
+    component: requestlist 
+  },
+  {
+    path: '/requestlistdetail/',
+    name: 'ViweDisapprovedlist',
+    component: requestlistdetail 
+  },
+  {
+    path: '/requestlistdetail/:id',
+    name: 'ViweDisapprovedlist',
+    component: requestlistdetail 
+  },
   
+
   //Chief
 
   //Secretary

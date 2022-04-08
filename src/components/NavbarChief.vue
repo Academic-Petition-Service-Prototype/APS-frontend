@@ -136,6 +136,13 @@ export default {
         icon: "alert-octagon",
       },
       {
+        menu: "3",
+        text: "การรายการร้องขอ",
+        route: "/requestlist",
+        icon: "alert-octagon",
+      },
+      
+      {
         menu: "4",
         text: "ติดตามสถานะคำร้อง/ปัญหา",
         route: "/ChiefTracking",
