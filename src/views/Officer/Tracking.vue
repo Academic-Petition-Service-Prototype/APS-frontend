@@ -2,11 +2,11 @@
   <div id="ChiefTracking" class="bg-color">
     <NavbarOF />
     <v-card class="cardshow">
-      <v-toolbar dark prominent color="#FFAB40">
+      <v-toolbar dark prominent color="#6c757d">
         <h1 class="text-center pa-5">สถานะคำร้อง</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
-
+      
       <v-data-iterator
         :items="petitionListById"
         :items-per-page.sync="itemsPerPage"
@@ -37,9 +37,10 @@
         </template>
         <template v-slot:default="props">
           <v-row class="text-center">
-            <v-col> <h3>ลำดับ</h3></v-col>
+            <v-col align="center"> <p>ลำดับ</p></v-col>
 
-            <v-col align="left"> <h3>รายการ</h3></v-col>
+            <v-col align="center"> <p>รายการ</p></v-col>
+            <v-col align="center"> <p>เวลา</p></v-col>
           </v-row>
 
           <v-row
@@ -49,18 +50,21 @@
           >
             <v-expansion-panels>
               <v-expansion-panel>
-                <v-expansion-panel-header>
+                <v-expansion-panel-header color="#6c757d">
                   <v-row class="text-center">
-                    <v-col>
+                    <v-col >
                       <h3>{{ item.submit_id }}</h3>
                     </v-col>
                     <v-col>
                       <h4>{{ item.form_name }}</h4>
                     </v-col>
+                    <v-col>
+                      <h4>{{ item.submit_date }}</h4>
+                    </v-col>
                   </v-row>
 
                   <!-- เเสดงชื่อเอกสาร -->
-                  <v-spacer></v-spacer>
+                  
 
                   <!-- เเสดงขั้นนตอน-->
                 </v-expansion-panel-header>
@@ -270,5 +274,11 @@ export default {
 h1 {
   font-size: 50px;
   padding: 2% 0% 0% 0%;
+}
+h3{
+  color: #f0f0f0;
+}
+h4{
+  color: #f0f0f0;
 }
 </style>

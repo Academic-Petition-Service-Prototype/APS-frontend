@@ -3,7 +3,7 @@
   <div id="OfficeDashboard">
     <NavbarOF />
     <v-card class="cardshow">
-      <v-toolbar dark prominent color="#FFAB40">
+      <v-toolbar dark prominent color="#6c757d">
         <h1>Dashboard</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
@@ -62,7 +62,7 @@
 
       <v-row>
         <v-col>
-          <v-toolbar dark prominent color="#FFAB40">
+          <v-toolbar dark prominent color="#6c757d">
             <h1>จำนวณคำร้อง / รายงาน</h1>
             <v-spacer></v-spacer>
           </v-toolbar>

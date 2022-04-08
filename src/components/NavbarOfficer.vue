@@ -1,7 +1,7 @@
 <template>
   <div id="NavbarOfficer">
     <!-- Navbar -->
-    <v-app-bar color="#FFA726">
+    <v-app-bar color="#6c757d">
       <v-app-bar-nav-icon @click="drawer = !drawer">
         <v-icon color="#FFFFFF">
           mdi-menu

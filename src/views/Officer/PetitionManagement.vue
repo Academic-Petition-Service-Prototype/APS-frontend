@@ -3,7 +3,7 @@
   <div id="OfficerPetitionManagement">
     <NavbarOF />
     <v-card class="cardshow">
-      <v-toolbar dark prominent color="#FFAB40">
+      <v-toolbar dark prominent color="#6c757d">
         <h1>จัดการคำร้อง/ยื่นเรื่อง</h1>
 
         <v-spacer></v-spacer>
