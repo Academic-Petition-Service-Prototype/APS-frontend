@@ -1,32 +1,31 @@
 <template>
-  <div id="Userequest" class="bg-color">
+  <div id="UseRequest" class="bg-color">
     <NavbarUser />
     <v-card class="cardmargin">
       <v-toolbar dark prominent color="#FFAB40">
-        <h1 class="text-center pa-5">การร้องขอต่อระบบ</h1>
+        <h1 class="text-center pa-5">การร้องขอคำร้องที่ไม่มีในระบบ</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
-
       <v-form>
         <v-container>
           <v-row>
             <v-col cols="12">
               <v-text-field
-                label="หัวข้อร้องขอ"
+                label="หัวข้อการร้องขอ"
                 placeholder="ระบุหัวข้อการร้องข้อ"
-                v-model="report_title"
+                v-model="request_title"
               ></v-text-field>
             </v-col>
             <v-col cols="12">
               <v-textarea
                 solo
                 name="input-7-4"
-                label="ระบุรายละเอียดการข้องขอดังกล่าว"
-                v-model="report_detail"
+                label="ระบุรายละเอียดการร้องขอดังกล่าว"
+                v-model="request_detail"
               ></v-textarea>
             </v-col>
             <v-col cols="12" class="text-center">
-              <v-btn dark x-large color="#2E7D32" @click="sentreport">
+              <v-btn dark x-large color="#2E7D32" @click="sentrequest">
                 ส่งการร้องขอ
               </v-btn>
             </v-col>
@@ -34,11 +33,6 @@
         </v-container>
       </v-form>
     </v-card>
-    <!-- ป้ายเเจ้งเตือน -->
-    <v-snackbar v-model="snackbar" :timeout="timeout" :color="colorsnackbar">
-      {{ textsnackbar }}
-    </v-snackbar>
-    <!-- ป้ายเเจ้งเตือน -->
   </div>
 </template>
 
@@ -46,41 +40,33 @@
 import NavbarUser from "../../components/NavbarUser.vue";
 import axios from "axios";
 export default {
-  name: "Userrequest",
+  name: "UserRequest",
   components: {
     NavbarUser,
   },
   data() {
     return {
-      report_title: "",
-      report_detail: "",
-      colorsnackbar: "",
-      textsnackbar: "",
-      snackbar: false,
-      timeout: 2000,
+      request_title: "",
+      request_detail: "",
     };
   },
   methods: {
-    sentreport() {
+    sentrequest() {
       axios
-        .post(process.env.VUE_APP_URL + "reports", {
+        .post(process.env.VUE_APP_URL + "requests", {
           users_id: this.$store.getters.getUser.user_id,
-          report_title: this.report_title,
-          report_detail: this.report_detail,
+          request_title: this.request_title,
+          request_detail: this.request_detail,
         })
         .then((response) => {
           if (response.data == "Please fill your information") {
-            this.textsnackbar = "กรุณากรอกข้อมูลให้ครบ";
-            this.colorsnackbar = "#DB4437";
-            this.snackbar = true;
-          } else if (response.data == "Sent report successful") {
-            this.textsnackbar = "รายงานปัญหาสำเร็จ";
-            this.colorsnackbar = "#2E7D32";
-            this.snackbar = true;
-            this.report_title = "";
-            this.report_detail = "";
+            alert("กรุณากรอกข้อมูลให้ครบ");
+          } else if (response.data == "Sent request successful") {
+            alert("การร้องขอคำร้องสำเร็จ");
+            this.request_title = "";
+            this.request_detail = "";
           } else {
-            alert("เกิดข้อผิดพลาดในการส่งรายงาน");
+            alert("เกิดข้อผิดพลาดในการร้องขอคำร้องสำเร็จ");
           }
         })
         .catch((error) => {

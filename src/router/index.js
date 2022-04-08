@@ -11,10 +11,11 @@ import UserDashboard from '../views/User/Dashboard.vue'
 import UserPetition from '../views/User/Petition.vue'
 import UserProfile from '../views/User/Profile.vue'
 import UserReport from '../views/User/Report.vue'
+import UserReportTracking from '../views/User/Reporttracking.vue'
 import UserTracking from '../views/User/Tracking.vue'
 import UserSentpetition from '../views/User/Sentpetition.vue'
-import ReportTracking from '../views/User/ReportTracking.vue'
-import request from '../views/User/request.vue'
+import UserRequest from '../views/User/Request.vue'
+import UserRequestTracking from '../views/User/Requesttracking.vue'
 import Trackingdetail from '../views/User/Trackingdetail.vue'
 
 
@@ -122,6 +123,11 @@ const routes = [
     component: UserReport
   },
   {
+    path: '/UserReportTracking',
+    name: 'UserReportTracking',
+    component: UserReportTracking
+  },
+  {
     path: '/UserTracking',
     name: 'UserTracking',
     component: UserTracking
@@ -132,14 +138,14 @@ const routes = [
     component: UserSentpetition 
   },
   {
-    path: '/ReportTracking',
-    name: 'ReportTracking',
-    component: ReportTracking 
+    path: '/UserRequestTracking',
+    name: 'UserRequestTracking',
+    component: UserRequestTracking 
   },
   {
-    path: '/request',
-    name: 'request',
-    component: request 
+    path: '/UserRequest',
+    name: 'UserRequest',
+    component: UserRequest 
   },
   {
     path: '/Trackingdetail',
