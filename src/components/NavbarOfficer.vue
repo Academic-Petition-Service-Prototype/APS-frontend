@@ -13,7 +13,7 @@
       <v-spacer></v-spacer>
       <div class="text-white subtitle-1 mr-4">Last login: {{ lastlogin }}</div>
       <v-btn elevation="2" color="error" @click="slideexit = !slideexit">
-        Logout
+        ออกจากระบบ
       </v-btn>
     </v-app-bar>
     <!-- Navbar -->
