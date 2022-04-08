@@ -162,7 +162,7 @@
                 fab
                 dark
                 icon
-                color="#FFAB40"
+                color="#6c757d"
                 class="mr-1"
                 @click="formerPage"
               >
@@ -172,7 +172,7 @@
                 fab
                 dark
                 icon
-                color="#FFAB40"
+                color="#6c757d"
                 class="ml-1"
                 @click="nextPage"
               >
