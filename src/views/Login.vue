@@ -154,7 +154,11 @@ export default {
         };
         const response = await AuthService.login(credentials);
         this.msg = response.message;
-        alert(this.msg);
+        this.$swal({
+          icon: "success",
+          title: "เข้าสู่ระบบสำเร็จ",
+          timer: 1500,
+        });
         const token = response.token;
         const user = response.user;
         this.$store.dispatch("login", { token, user });
@@ -172,7 +176,12 @@ export default {
         localStorage.setItem("token", token);
         localStorage.setItem("UserData", JSON.stringify(user));
       } catch (error) {
-        alert("Login failed");
+        this.$swal({
+          icon: "error",
+          title: "เข้าสู่ระบบไม่สำเร็จ",
+          text: "เกิดข้อผิดพลาดในการเข้าสู่ระบบ",
+          timer: 2000,
+        });
         this.msg = error.response.data.message;
       }
     },
