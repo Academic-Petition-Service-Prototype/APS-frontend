@@ -3,7 +3,7 @@
   <div id="ChiefDashboard">
     <NavbarChief />
     <v-card class="cardshow">
-      <v-toolbar dark prominent color="#FFAB40">
+      <v-toolbar dark prominent color="primary">
         <h1>Dashboard</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
@@ -75,7 +75,7 @@
       <!-- chart -->
       <v-row>
         <v-col>
-          <v-toolbar dark prominent color="#FFAB40">
+          <v-toolbar dark prominent color="primary">
             <h1>จำนวณคำร้อง / รายงาน</h1>
             <v-spacer></v-spacer>
           </v-toolbar>
@@ -92,7 +92,7 @@
       <!-- เเถว3 -->
       <v-row>
         <v-col>
-          <v-toolbar dark prominent color="#FFAB40">
+          <v-toolbar dark prominent color="primary">
             <h1>จำนวณบุคคลกร</h1>
             <v-spacer></v-spacer>
           </v-toolbar>

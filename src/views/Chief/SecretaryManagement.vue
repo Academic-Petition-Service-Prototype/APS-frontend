@@ -3,7 +3,7 @@
   <div id="ChiefSecretaryManagement">
     <NavbarChief />
     <v-card class="cardshow">
-      <v-toolbar dark prominent color="#FFAB40">
+      <v-toolbar dark prominent color="primary">
         <h1>จัดการ Secretary</h1>
         <v-spacer></v-spacer>
         

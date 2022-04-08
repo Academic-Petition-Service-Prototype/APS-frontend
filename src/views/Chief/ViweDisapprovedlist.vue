@@ -1,5 +1,5 @@
 <template>
-  <div id="ChiefApprovaldetail">
+  <div id="ChiefViweDisapprovedlist">
     <NavbarChief />
     <v-card class="cardshow">
       <v-row>
@@ -217,7 +217,7 @@
 import NavbarChief from "../../components/NavbarChief.vue";
 import axios from "axios";
 export default {
-  name: "ChiefApprovaldetail",
+  name: "ChiefViweDisapprovedlist",
   components: {
     NavbarChief,
   },
@@ -237,7 +237,7 @@ export default {
   },
   methods: {
     back() {
-      this.$router.push("/ChiefCheckapprovedlist");
+      this.$router.push("/Disapprovedlist");
     },
     getapprovaldetaillbyid() {
       axios

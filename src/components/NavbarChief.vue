@@ -2,7 +2,7 @@
 <template>
   <div id="NavbarChief">
     <!-- Navbar -->
-    <v-app-bar color="#FFA726">
+    <v-app-bar color="primary">
       <v-app-bar-nav-icon @click="drawer = !drawer">
         <v-icon color="#FFFFFF">
           mdi-menu
@@ -14,7 +14,7 @@
       <v-spacer></v-spacer>
       <div class="text-white subtitle-1 mr-4">Last login: {{ lastlogin }}</div>
       <v-btn elevation="2" color="error" @click="slideexit = !slideexit">
-        Logout
+        ออกจากระบบ
       </v-btn>
     </v-app-bar>
     <!-- Navbar -->
@@ -38,8 +38,8 @@
 
       <v-row>
         <v-col class="text-white" align="center">
-          ชื่อ : {{ firstname }} {{ lastname }}<br />
-          สถานะ : {{ role }}
+          <p>คุณ : {{ firstname }} {{ lastname }}</p>
+          <p v-if="role == 'chief'">สถานะ : หัวหน้าหน่วยงาน</p>
         </v-col>
       </v-row>
       <v-divider></v-divider>
@@ -106,9 +106,27 @@ export default {
         icon: "home",
       },
       {
+        menu: "5",
+        text: "จัดการคำร้อง",
+        route: "/ChiefPetitionManagement",
+        icon: "file-document",
+      },
+      {
         menu: "2",
-        text: "การอนุมัติคำร้อง",
-        route: "/ChiefApproval",
+        text: "คำร้องที่รอการอนุมัติ",
+        route: "/ChiefCheckapprovedlist",
+        icon: "file-document",
+      },
+      {
+        menu: "5",
+        text: "คำร้องที่อนุมัติแล้ว",
+        route: "/Approvedlist",
+        icon: "file-document",
+      },
+      {
+        menu: "5",
+        text: "คำร้องที่ไม่อนุมัติ",
+        route: "/Disapprovedlist",
         icon: "file-document",
       },
       {
@@ -118,17 +136,19 @@ export default {
         icon: "alert-octagon",
       },
       {
+        menu: "3",
+        text: "การรายการร้องขอ",
+        route: "/requestlist",
+        icon: "alert-octagon",
+      },
+      
+      {
         menu: "4",
         text: "ติดตามสถานะคำร้อง/ปัญหา",
         route: "/ChiefTracking",
         icon: "marker-check",
       },
-      {
-        menu: "5",
-        text: "จัดการคำร้อง",
-        route: "/ChiefPetitionManagement",
-        icon: "file-document",
-      },
+      
       {
         menu: "6",
         text: "จัดการ Secretary",

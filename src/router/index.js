@@ -30,7 +30,7 @@ import OfficerCreatepetition from'../views/Officer/Createpetition.vue'
 //Officer
 
 //Chief
-import ChiefApproval from '../views/Chief/Approval.vue'
+import ChiefCheckapprovedlist from '../views/Chief/Checkapprovedlist.vue'
 import ChiefDashboard from '../views/Chief/Dashboard.vue'
 import ChiefOfficerManagement from '../views/Chief/OfficerManagement.vue'
 import ChiefPetitionManagement from '../views/Chief/PetitionManagement.vue'
@@ -41,6 +41,13 @@ import ChiefTracking from '../views/Chief/Tracking.vue'
 import ChiefReportDetail from '../views/Chief/ReportDetail.vue'
 import Approvaldetaill from '../views/Chief/Approvaldetaill.vue'
 import ChiefCreatepetition from'../views/Chief/Createpetition.vue'
+import Approvedlist from'../views/Chief/Approvedlist.vue'
+import ViweApprovedlist from'../views/Chief/ViweApprovedlist.vue'
+import Disapprovedlist from'../views/Chief/Disapprovedlist.vue'
+import ViweDisapprovedlist from'../views/Chief/ViweDisapprovedlist.vue'
+import requestlist from'../views/Chief/requestlist.vue'
+import requestlistdetail from'../views/Chief/requestlistdetail.vue'
+
 //Chief
 
 //Secretary
@@ -179,9 +186,19 @@ const routes = [
 
   //Chief
   {
-    path: '/ChiefApproval',
-    name: 'ChiefApproval',
-    component: ChiefApproval 
+    path: '/ChiefCheckapprovedlist',
+    name: 'ChiefCheckapprovedlist',
+    component: ChiefCheckapprovedlist 
+  },
+  {
+    path: '/Approvedlist',
+    name: 'Approvedlist',
+    component: Approvedlist 
+  },
+  {
+    path: '/ViweApprovedlist',
+    name: 'ViweApprovedlist',
+    component: ViweApprovedlist 
   },
   {
     path: '/ChiefDashboard',
@@ -229,10 +246,42 @@ const routes = [
     component: Approvaldetaill 
   },
   {
+    path: '/ViweApprovedlist/:id',
+    name: 'ViweApprovedlist',
+    component: ViweApprovedlist 
+  },
+  {
     path: '/ChiefCreatepetition',
     name: 'ChiefCreatepetition',
     component: ChiefCreatepetition 
   },
+  {
+    path: '/Disapprovedlist',
+    name: 'Disapprovedlist',
+    component: Disapprovedlist 
+  },
+  {
+    path: '/ViweDisapprovedlist/:id',
+    name: 'ViweDisapprovedlist',
+    component: ViweDisapprovedlist 
+  },
+  {
+    path: '/requestlist',
+    name: 'requestlist',
+    component: requestlist 
+  },
+  {
+    path: '/requestlistdetail/',
+    name: 'ViweDisapprovedlist',
+    component: requestlistdetail 
+  },
+  {
+    path: '/requestlistdetail/:id',
+    name: 'ViweDisapprovedlist',
+    component: requestlistdetail 
+  },
+  
+
   //Chief
 
   //Secretary

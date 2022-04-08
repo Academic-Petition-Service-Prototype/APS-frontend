@@ -237,7 +237,7 @@ export default {
   },
   methods: {
     back() {
-      this.$router.push("/ChiefCheckapprovedlist");
+      this.$router.push("/Approvedlist");
     },
     getapprovaldetaillbyid() {
       axios
