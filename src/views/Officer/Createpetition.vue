@@ -115,7 +115,7 @@
                   <h1>รายละเอียดคำร้อง</h1>
 
                   <v-text-field
-                    v-model="detail_forms"
+                    v-model="form_detail"
                     label="รายละเอียดคำร้อง"
                     class="cardshow"
                     required
@@ -124,7 +124,7 @@
                   <h1>หมวดหมู่คำร้อง</h1>
                   <v-autocomplete
                     class="cardshow"
-                    v-model="tag_forms"
+                    v-model="tag_form"
                     :items="tag"
                     outlined
                     dense
@@ -424,8 +424,8 @@ export default {
   data() {
     return {
       tag: ["a", "b", "c"],
-      tag_forms: "",
-      detail_forms: "",
+      tag_form: "",
+      form_detail: "",
       snackbarduplicate: false,
       snackbarspecifics: false,
       snackbartitle: false,
@@ -471,14 +471,14 @@ export default {
     };
   },
   methods: {
-    addNewtitle: function () {
+    addNewtitle: function() {
       this.title.push({
         id: this.nextTodoId++,
         title: this.newtitleText,
       });
       this.newtitleText = "";
     },
-    addapprovertitle: function () {
+    addapprovertitle: function() {
       if (this.newapproverText !== "" && this.newapproverText !== null) {
         let ifdup = false;
         for (let i = 0; i < this.listapprover.length; i++) {
@@ -505,11 +505,11 @@ export default {
         this.snackbarapprover = true;
       }
     },
-    removetitle: function (index) {
+    removetitle: function(index) {
       this.title.splice(index, 1);
       this.nextTodoId--;
     },
-    removeapprover: function (index) {
+    removeapprover: function(index) {
       this.listapprover.splice(index, 1);
       this.nextapproverId--;
     },
@@ -544,10 +544,10 @@ export default {
     },
     nextstepsecond() {
       if (
-        this.detail_forms !== "" &&
-        this.detail_forms !== null &&
-        this.tag_forms !== "" &&
-        this.tag_forms !== null
+        this.form_detail !== "" &&
+        this.form_detail !== null &&
+        this.tag_form !== "" &&
+        this.tag_form !== null
       ) {
         this.stepprocess = 3;
       } else {
@@ -579,6 +579,8 @@ export default {
           f_name: this.$store.getters.getUser.f_name,
           l_name: this.$store.getters.getUser.l_name,
           approval_name: this.listapprover,
+          form_detail: this.form_detail,
+          tag_form: this.tag_form,
         })
         .then((response) => {
           if (response.data == "กรุณากรอกชื่อคำร้อง") {
@@ -665,4 +667,3 @@ p {
   font-size: 60px;
 }
 </style>
-
