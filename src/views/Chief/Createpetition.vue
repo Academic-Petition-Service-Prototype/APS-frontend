@@ -123,18 +123,32 @@
                     
                   ></v-text-field>
 
+                  
+                </v-col>
+              </v-row>
+
+              <v-row>
+                <v-col>
                   <h1>หมวดหมู่คำร้อง</h1>
                   <v-autocomplete
                     class="cardshow"
                     v-model="tag_forms"
                     :items="tag"
-                    outlined
+                    
                     dense
-                    chips
+                    
                     small-chips
                     label="หมวดหมู่คำร้อง"
                     multiple
                   ></v-autocomplete>
+                  
+                </v-col>
+                <v-col>
+                  <v-btn @click="addtag"></v-btn>
+
+                  {{tag}}
+                  {{tag_forms}}
+                  
                 </v-col>
               </v-row>
 
@@ -426,7 +440,7 @@ export default {
   data() {
     return {
       tag:['a','b','c'],
-      tag_forms:"",
+      tag_forms:null,
       detail_forms:"",
       snackbarduplicate: false,
       snackbarspecifics: false,
@@ -515,6 +529,10 @@ export default {
       this.listapprover.splice(index, 1);
       this.nextapproverId--;
     },
+    addtag: function(){
+      this.tag.push(this.detail_forms);
+      
+    },
 
     nextstepfirst() {
       this.formHasErrors = false;
@@ -546,11 +564,13 @@ export default {
     },
     nextstepsecond() {
       if (this.detail_forms !== "" && this.detail_forms !== null 
-      && this.tag_forms !== "" && this.tag_forms !== null) {
+      && this.tag_forms !== "" && this.tag_forms !== null && this.tag_forms.length !== 0 ) {
         this.stepprocess = 3;
       } else {
         this.snackbarspecifics = true;
       }
+
+      console.log(this.tag_forms)
     },
 
     nextstep3() {
