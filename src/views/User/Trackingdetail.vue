@@ -4,17 +4,22 @@
     {{submition_detail}}
 
     <v-card class="cardshow">
-      <v-row>
+      <v-toolbar dark prominent color="#FFAB40">
+          <v-row>
         <v-col>
-          <v-btn class="ma-2" outlined color="error" @click="back">
-            ย้อนกลับ
-          </v-btn>
+         
+          <v-btn elevation="2" color="error" @click="back">
+        ย้อนกลับ
+      </v-btn>
         </v-col>
         <v-col align="center">
-          <h2>{{ submition_detail[0].form_name }}</h2>
+          <h1>{{ submition_detail[0].form_name }}</h1>
         </v-col>
         <v-col> </v-col>
       </v-row>
+      </v-toolbar>
+
+   
 
       <v-divider></v-divider>
 
@@ -82,6 +87,17 @@
                   required
                   disabled
                 ></v-text-field>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-col>
+                <h3>เวลาที่ส่งคำร้อง</h3>
+                <b-card class="text-center">
+                      <div>
+                        {{submition_detail[0].submit_date}}
+                      </div>
+                    </b-card>
+                
               </v-col>
             </v-row>
             <v-row>
@@ -218,7 +234,19 @@ export default {
 </script>
 
 <style scoped>
-.cardmargin {
+.bg-color {
+  background: #f0f0f0;
+  height: 100%;
+}
+
+.cardshow {
   margin: 2%;
+}
+h1 {
+  font-size: 50px;
+  padding: 2% 0% 0% 0%;
+}
+p {
+  font-size: 20px;
 }
 </style>

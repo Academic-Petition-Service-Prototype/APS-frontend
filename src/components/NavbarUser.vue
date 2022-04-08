@@ -37,9 +37,8 @@
 
       <v-row>
         <v-col class="text-white" align="center">
-          <p>คุณ : {{ firstname }} {{ lastname }}</p> 
-          <p v-if="role == 'user'">สถานะ : ผู้ยื่นนคำร้อง </p>
-          
+          ชื่อ : {{ firstname }} {{ lastname }}<br />
+          สถานะ : <v-if role="user">ผู้ยื่นคำร้อง</v-if>
         </v-col>
       </v-row>
       <v-divider></v-divider>
@@ -107,31 +106,37 @@ export default {
         icon: "file-document",
       },
       {
-        menu: "4",
+        menu: "3",
         text: "รายงานปัญหาไม่ระบุตัวตน",
         route: "/UserReport",
         icon: "alert-octagon",
       },
       {
         menu: "4",
-        text: "การร้องขอต่อระบบ",
-        route: "/request",
+        text: "การร้องขอคำร้องที่ไม่มีในระบบ",
+        route: "/UserRequest",
         icon: "alert-octagon",
       },
       {
-        menu: "3",
+        menu: "5",
         text: "ติดตามสถานะคำร้อง",
         route: "/UserTracking",
         icon: "alert-octagon",
       },
       {
-        menu: "3",
-        text: "ติดตามสถานะคำร้อง",
-        route: "/ReportTracking",
+        menu: "6",
+        text: "ติดตามสถานะรายงานปัญหาไม่ระบุตัวตน",
+        route: "/UserReportTracking",
         icon: "alert-octagon",
       },
       {
-        menu: "5",
+        menu: "7",
+        text: "ติดตามสถานะการร้องขอคำร้อง",
+        route: "/UserRequestTracking",
+        icon: "alert-octagon",
+      },
+      {
+        menu: "8",
         text: "โปรไฟล์",
         route: "/UserProfile",
         icon: "account",

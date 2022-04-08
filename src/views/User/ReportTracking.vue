@@ -1,5 +1,5 @@
 <template>
-  <div id="UserTrackingreport" class="bg-color">
+  <div id="UserReportTracking" class="bg-color">
     <NavbarUser />
     <!-- สถานะคำร้อง -->
     <v-card class="cardshow">
@@ -8,14 +8,12 @@
           class="text-center pa-5"
           style="font-size: 50px; padding: 2% 0% 0% 0%"
         >
-          การรายงานปัญหาแบบไม่ระบุตัวตน
+          สถานะการรายงานปัญหาไม่ระบุตัวตน
         </h1>
         <v-spacer></v-spacer>
       </v-toolbar>
-    </v-card>
- 
-    <!-- ของรายงาน -->
-    <v-card class="cardshow">
+
+      <!-- ของรายงาน -->
       <v-data-iterator
         :items="reports"
         :items-per-page.sync="itemsPerPage"
@@ -29,29 +27,39 @@
         <template v-slot:header>
           <v-row>
             <v-col>
+              <v-text-field
+                prepend-inner-icon="mdi-magnify"
+                label="ชื่อคำร้อง / ยื่นเรื่อง"
+                placeholder="ชื่อคำร้อง / ยื่นเรื่อง"
+                filled
+                rounded
+                dense
+                v-model="search"
+                class="cardshow"
+              >
+              </v-text-field>
               <template v-if="$vuetify.breakpoint.mdAndUp"> </template>
             </v-col>
           </v-row>
         </template>
         <template v-slot:default="props">
           <v-row class="text-center">
-            <v-col align="center"> <p>ลำดับ</p></v-col>
-
-            <v-col align="center"> <p>รายการ</p></v-col>
-            <v-col align="center"> <p>เวลา</p></v-col>
+            <v-col align="center" class="h3">ลำดับ</v-col>
+            <v-col align="center" class="h3">รายการ</v-col>
+            <v-col align="center" class="h3">วันที่ส่งคำร้อง</v-col>
           </v-row>
 
-          <v-row v-for="item in props.items" :key="item.title" class="cardshow">
+          <v-row
+            v-for="(item, index) in props.items"
+            :key="index"
+            class="cardshow"
+          >
             <v-expansion-panels>
               <v-expansion-panel>
-                <v-expansion-panel-header
-                color="#FFAB40"
-                >
-                  
-
+                <v-expansion-panel-header color="#FFAB40">
                   <v-row class="text-center">
-                    <v-col >
-                      <h3>{{ item.report_id }}</h3>
+                    <v-col>
+                      <h3>{{ index + 1 }}</h3>
                     </v-col>
                     <v-col>
                       <h4>{{ item.report_title }}</h4>
@@ -62,7 +70,6 @@
                   </v-row>
 
                   <!-- เเสดงชื่อเอกสาร -->
-                  
 
                   <!-- เเสดงขั้นนตอน-->
                 </v-expansion-panel-header>
@@ -184,7 +191,7 @@
 import NavbarUser from "../../components/NavbarUser.vue";
 import axios from "axios";
 export default {
-  name: "UserTrackingreport",
+  name: "UserReportTracking",
   components: {
     NavbarUser,
   },
@@ -197,14 +204,12 @@ export default {
       page: 1,
       itemsPerPage: 4,
       sortBy: "name",
-
-      petitionListById: [],
       reports: [],
     };
   },
   computed: {
     numberOfPages() {
-      return Math.ceil(this.petitionListById.length / this.itemsPerPage);
+      return Math.ceil(this.reports.length / this.itemsPerPage);
     },
     filteredKeys() {
       return this.keys.filter((key) => key !== "Name");
@@ -217,31 +222,6 @@ export default {
     },
   },
   methods: {
-    getpetition() {
-      axios
-        .post(process.env.VUE_APP_URL + "getsubmitformsbyagency", {
-          agency_id: this.$store.getters.getUser.agencies_id,
-        })
-        .then((response) => {
-          //handle success
-
-          // approval_order
-          this.petitionListById = response.data;
-          for (let i = 0; i < this.petitionListById.length; i++) {
-            this.tmp = JSON.stringify(this.petitionListById[i].approval_order);
-            this.tmp = this.tmp.replace(/\\/g, "");
-            this.specifics = this.tmp.replace(/\\/g, "");
-
-            var temp = this.specifics.slice(1, -1);
-            temp = JSON.parse(temp);
-            this.petitionListById[i].approval_order = temp;
-          }
-        })
-        .catch((error) => {
-          // handle error
-          console.log(error);
-        });
-    },
     getreport() {
       axios
         .post(process.env.VUE_APP_URL + "agencyreports", {
@@ -256,8 +236,23 @@ export default {
             } else {
               this.reports[i].report_state = 1;
             }
+
+            // date format
+            this.reports[i].report_created = new Date(
+              this.reports[i].report_created
+            );
+            this.reports[i].report_created = this.reports[
+              i
+            ].report_created.toLocaleDateString("th-TH", {
+              year: "numeric",
+              month: "numeric",
+              day: "numeric",
+              weekday: "short",
+              hour: "numeric",
+              minute: "numeric",
+            });
+            // date format
           }
-          console.log(response.data);
         })
         .catch((error) => {
           // handle error
@@ -275,7 +270,6 @@ export default {
     },
   },
   mounted() {
-    this.getpetition();
     this.getreport();
   },
 };
@@ -294,10 +288,10 @@ h1 {
   font-size: 50px;
   padding: 2% 0% 0% 0%;
 }
-h3{
+h3 {
   color: #f0f0f0;
 }
-h4{
+h4 {
   color: #f0f0f0;
 }
 </style>
