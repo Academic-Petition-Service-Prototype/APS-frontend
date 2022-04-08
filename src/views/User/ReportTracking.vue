@@ -8,7 +8,7 @@
           class="text-center pa-5"
           style="font-size: 50px; padding: 2% 0% 0% 0%"
         >
-          การรายงานปัญหาแบบไม่ระบุตัวตน
+          สถานะการร้องขอ
         </h1>
         <v-spacer></v-spacer>
       </v-toolbar>
