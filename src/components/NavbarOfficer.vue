@@ -7,11 +7,11 @@
           mdi-menu
         </v-icon>
       </v-app-bar-nav-icon>
-      <v-btn icon disabled>
-        <v-img height="160px" width="160px" src="../assets/logo.png"> </v-img>
-      </v-btn>
+      <div class="text-white title ml-4">{{ $route.name }}</div>
       <v-spacer></v-spacer>
-      <div class="text-white subtitle-1 mr-4">Last login: {{ lastlogin }}</div>
+      <div class="text-white subtitle-1 mr-4">
+        เข้าสู่ระบบครั้งสุดท้ายเมื่อ {{ lastlogin }}
+      </div>
       <v-btn elevation="2" color="error" @click="slideexit = !slideexit">
         Logout
       </v-btn>
@@ -133,6 +133,14 @@ export default {
     this.role = this.$store.getters.getUser.role;
     this.lastlogin = this.$store.getters.getUser.last_login;
     this.secretMessage = await AuthService.getSecretContent();
+    this.lastlogin = new Date(this.lastlogin);
+    this.lastlogin = this.lastlogin.toLocaleDateString("th-TH", {
+      year: "numeric",
+      month: "numeric",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+    });
   },
   methods: {
     logout() {
