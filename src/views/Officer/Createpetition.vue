@@ -3,11 +3,13 @@
   <div id="OfficerCreatepetition">
     <NavbarOF />
     <v-card class="cardshow">
-      <h1>
-        สร้างคำร้อง
-
-        <v-divider></v-divider>
-      </h1>
+      <v-toolbar dark prominent color="#6c757d">
+        <v-row>
+          <v-col align="center">
+            <p>สร้างคำร้อง</p>
+          </v-col>
+        </v-row>
+      </v-toolbar>
       <!-- ส่วนสร้างเอกสาร -->
       <v-stepper alt-labels v-model="stepprocess">
         <v-stepper-header>
@@ -117,8 +119,6 @@
                     label="รายละเอียดคำร้อง"
                     class="cardshow"
                     required
-                    
-                    
                   ></v-text-field>
 
                   <h1>หมวดหมู่คำร้อง</h1>
@@ -423,9 +423,9 @@ export default {
   },
   data() {
     return {
-      tag:['a','b','c'],
-      tag_forms:"",
-      detail_forms:"",
+      tag: ["a", "b", "c"],
+      tag_forms: "",
+      detail_forms: "",
       snackbarduplicate: false,
       snackbarspecifics: false,
       snackbartitle: false,
@@ -543,8 +543,12 @@ export default {
       });
     },
     nextstepsecond() {
-      if (this.detail_forms !== "" && this.detail_forms !== null 
-      && this.tag_forms !== "" && this.tag_forms !== null) {
+      if (
+        this.detail_forms !== "" &&
+        this.detail_forms !== null &&
+        this.tag_forms !== "" &&
+        this.tag_forms !== null
+      ) {
         this.stepprocess = 3;
       } else {
         this.snackbarspecifics = true;
@@ -656,6 +660,9 @@ h1 {
 }
 h3 {
   margin: 2%;
+}
+p {
+  font-size: 60px;
 }
 </style>
 
