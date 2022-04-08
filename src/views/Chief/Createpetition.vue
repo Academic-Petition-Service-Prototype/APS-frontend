@@ -3,11 +3,13 @@
   <div id="ChiefCreatepetition">
     <NavbarChief />
     <v-card class="cardshow">
-      <h1>
-        สร้างคำร้อง
-
-        <v-divider></v-divider>
-      </h1>
+      <v-toolbar dark prominent color="primary">
+        <v-row>
+          <v-col align="center">
+            <p>สร้างคำร้อง</p>
+          </v-col>
+        </v-row>
+      </v-toolbar>
       <!-- ส่วนสร้างเอกสาร -->
       <v-stepper alt-labels v-model="stepprocess">
         <v-stepper-header>
@@ -656,5 +658,8 @@ h1 {
 }
 h3 {
   margin: 2%;
+}
+p {
+  font-size: 60px;
 }
 </style>
