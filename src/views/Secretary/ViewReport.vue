@@ -2,7 +2,7 @@
   <div id="SecretaryReport" class="bg-color">
     <NavbarSecretary />
     <v-card class="cardshow">
-      <v-toolbar dark prominent color="#FFAB40">
+      <v-toolbar dark prominent color="#8BC34A">
         <h1 class="text-center pa-5">การรายงานปัญหาทั้งหมด</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
@@ -59,8 +59,15 @@
                 <v-col> <p>{{ item.report_created }}</p> </v-col>
                 <v-col>
                   
-          <v-btn disabled small class="mr-2" @click="chageState(item.report_id)">
-            {{ item.report_state }}
+          <v-btn small class="mr-2" disabled>
+            <h5 v-if="item.report_state == 'read'">
+                  อ่านเเล้ว
+            </h5>
+
+            <h5 v-if="item.report_state == 'unread'">
+                  ยังไม่ได้อ่าน
+            </h5>
+            
           </v-btn>
         
                 </v-col>
@@ -89,7 +96,7 @@
                 fab
                 dark
                 icon
-                color="#FFAB40"
+                color="#8BC34A"
                 class="mr-1"
                 @click="formerPage"
               >
@@ -99,7 +106,7 @@
                 fab
                 dark
                 icon
-                color="#FFAB40"
+                color="#8BC34A"
                 class="ml-1"
                 @click="nextPage"
               >

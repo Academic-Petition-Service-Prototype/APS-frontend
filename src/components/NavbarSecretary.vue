@@ -1,7 +1,7 @@
 <template>
   <div id="NavbarSecretary">
     <!-- Navbar -->
-    <v-app-bar color="#FFA726">
+    <v-app-bar color="#8BC34A">
       <v-app-bar-nav-icon @click="drawer = !drawer">
         <v-icon color="#FFFFFF">
           mdi-menu
@@ -13,7 +13,7 @@
         เข้าสู่ระบบครั้งสุดท้ายเมื่อ {{ lastlogin }}
       </div>
       <v-btn elevation="2" color="error" @click="slideexit = !slideexit">
-        Logout
+        ออกจากระบบ
       </v-btn>
     </v-app-bar>
     <!-- Navbar -->
@@ -37,8 +37,11 @@
 
       <v-row>
         <v-col class="text-white" align="center">
-          ชื่อ : {{ firstname }} {{ lastname }}<br />
-          สถานะ : {{ role }}
+          
+          <v-col class="text-white" align="center">
+          <p>คุณ : {{ firstname }} {{ lastname }}</p>
+          <p v-if="role == 'secretary'">สถานะ : เลขานุการ</p>
+        </v-col>
         </v-col>
       </v-row>
       <v-divider></v-divider>

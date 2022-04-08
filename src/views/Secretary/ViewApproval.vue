@@ -3,7 +3,7 @@
   <div id="SecretaryApproval" class="bg-color">
     <NavbarSecretary />
     <v-card class="cardshow">
-      <v-toolbar dark prominent color="#FFAB40">
+      <v-toolbar dark prominent color="#8BC34A">
         <h1>การอนุมัติคำร้อง</h1>
 
         <v-spacer></v-spacer>
@@ -56,10 +56,10 @@
                 <v-col> {{ item.submit_date }} </v-col>
 
                 <v-col>
-                  <v-btn @click="selectApprovaldetaill(item.submit_id)">
-                    <h4>
+                  <v-btn @click="selectApprovaldetaill(item.submit_id)" color="green">
+                    <h5>
                       ดูรายละเอียด
-                    </h4>
+                    </h5>
                   </v-btn>
                 </v-col>
               </v-row>
@@ -87,7 +87,7 @@
                 fab
                 dark
                 icon
-                color="#FFAB40"
+                color="#8BC34A"
                 class="mr-1"
                 @click="formerPage"
               >
@@ -97,7 +97,7 @@
                 fab
                 dark
                 icon
-                color="#FFAB40"
+                color="#8BC34A"
                 class="ml-1"
                 @click="nextPage"
               >
@@ -191,5 +191,9 @@ export default {
 h1 {
   font-size: 50px;
   padding: 2% 0% 0% 0%;
+}
+h5 {
+  color: #f0f0f0;
+  font-size: 15px;
 }
 </style>
