@@ -6,7 +6,7 @@
         <h1>เลือกแบบคำร้อง / ยื่นเรื่อง</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
-        <!-- {{petitionList}} -->
+      <!-- {{petitionList}} -->
       <v-data-iterator
         :items="petitionList"
         :items-per-page.sync="itemsPerPage"
@@ -25,35 +25,33 @@
             rounded
             label="ค้นหาคำร้อง"
             clearable
-            class="cardmargin "
+            class="cardmargin"
           ></v-text-field>
 
           <h3 class="textleft">ค้นหาตามหมวดหมู่</h3>
           <v-select
-          v-model="search"
-          :items="form_tag"
-          label="กรุณาเลือกหมวดหมู่"
-          outlined
-          class="cardmargin "
-        ></v-select>
+            v-model="search"
+            :items="form_tag"
+            label="กรุณาเลือกหมวดหมู่"
+            outlined
+            class="cardmargin"
+          ></v-select>
         </template>
 
         <template v-slot:default="prop">
           <v-container>
             <v-row>
-              <v-col align="left">
-                <h2>แนะนำสำหรับท่าน</h2>
-              </v-col>
+              <v-col align="left"> </v-col>
             </v-row>
             <v-row>
               <v-col
                 v-for="item in prop.items"
                 :key="item.name"
                 cols="12"
-                md="6"
+                md="4"
               >
                 <v-item>
-                  <v-card
+                  <!-- <v-card
                     class="d-flex align-center"
                     dark
                     height="200"
@@ -64,15 +62,48 @@
                     <v-row>
                       <v-col align="center">
                         <h2>{{ item.form_name }}</h2>
+                        
+                      </v-col>
+                      <v-col align="center">
+                        
                         <h5>{{ item.form_detail }}</h5>
                       </v-col>
                     </v-row>
+                  </v-card> -->
+                  <v-card
+                    color="#385F73"
+                    dark
+                    max-width="400"
+                    
+                    :to="item.route"
+                    @click="sentPetition(item.form_id)"
+                    v-if="item.form_status == 'active'"
+                  >
+                    <v-img
+                      class="white--text align-end"
+                      src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
+                    gradient="to top right, rgba(100,115,201,.33), rgba(25,32,72,.7)"
+                      
+                    >
+                      <v-card-title class="text-h5">
+                        <h2>{{ item.form_name }}</h2>
+                      </v-card-title>
+
+                      <v-card-subtitle
+                        ><h5>{{ item.form_detail }}</h5></v-card-subtitle
+                      >
+
+                      <v-card-actions>
+                        <v-btn text> Listen Now </v-btn>
+                      </v-card-actions>
+                      
+                    </v-img>
                   </v-card>
                 </v-item>
               </v-col>
             </v-row>
           </v-container>
-          <template v-if="search == ''">
+          <!-- <template v-if="search == ''">
             <v-stepper v-model="e1" class="cardmargin">
               <v-toolbar dark prominent color="#FFAB40">
                 <h1>แบบคำร้องที่ยอดนิยม</h1>
@@ -86,7 +117,7 @@
                       <v-col
                         v-for="item in prop.items"
                         :key="item.name"
-                        class=" petitiontitle"
+                        class="petitiontitle"
                         cols="12"
                         md="4"
                       >
@@ -113,7 +144,7 @@
                 </v-stepper-content>
               </v-stepper-items>
             </v-stepper>
-          </template>
+          </template> -->
         </template>
 
         <template v-slot:footer>
@@ -210,11 +241,8 @@ export default {
           // handle success
           this.petitionList = response.data;
           for (let i = 0; i < this.petitionList.length; i++) {
-
-            this.form_tag.push(this.petitionList[i].form_tag)
-            
+            this.form_tag.push(this.petitionList[i].form_tag);
           }
-
         })
         .catch((error) => {
           // handle error
@@ -245,15 +273,25 @@ export default {
 h1 {
   font-size: 50px;
   padding: 2% 0% 0% 0%;
-  
 }
-.textleft{
+.textleft {
   text-align: left;
   margin: 2%;
-
 }
 
 .petitiontitle {
   padding: 0px 30px 0px 30px;
 }
+ .bottom-gradient {
+    background-image: linear-gradient(to top, rgba(0, 0, 0, 0.4) 0%, transparent 72px);
+  }
+
+  .repeating-gradient {
+    background-image: repeating-linear-gradient(-45deg,
+                        rgba(255,0,0,.25),
+                        rgba(255,0,0,.25) 5px,
+                        rgba(0,0,255,.25) 5px,
+                        rgba(0,0,255,.25) 10px
+                      );
+  }
 </style>

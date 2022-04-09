@@ -6,7 +6,8 @@
         <h1 class="text-center pa-5">รายงานปัญหาไม่ระบุตัวตน</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
-
+      {{ valuedate }}
+      {{ time }}
       <v-form>
         <v-container>
           <v-row>
@@ -17,6 +18,48 @@
                 v-model="report_title"
               ></v-text-field>
             </v-col>
+            <v-col>
+              <div>
+                <label for="example-datepicker">กรุณาเลือกวันเกิดเหตุ</label>
+                <b-form-datepicker
+                  id="example-datepicker"
+                  v-model="valuedate"
+                  class="mb-2"
+                ></b-form-datepicker>
+                
+              </div>
+            </v-col>
+            <v-col>
+              <v-menu
+                ref="menu"
+                v-model="menu2"
+                :close-on-content-click="false"
+                :nudge-right="40"
+                :return-value.sync="time"
+                transition="scale-transition"
+                offset-y
+                max-width="290px"
+                min-width="290px"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-text-field
+                    v-model="time"
+                    label="กรุณาเลือกเวลาเกิดเหตุ"
+                    prepend-icon="mdi-clock-time-four-outline"
+                    readonly
+                    v-bind="attrs"
+                    v-on="on"
+                  ></v-text-field>
+                </template>
+                <v-time-picker
+                  v-if="menu2"
+                  v-model="time"
+                  full-width
+                  @click:minute="$refs.menu.save(time)"
+                ></v-time-picker>
+              </v-menu>
+            </v-col>
+
             <v-col cols="12">
               <v-textarea
                 solo
@@ -58,6 +101,11 @@ export default {
       textsnackbar: "",
       snackbar: false,
       timeout: 2000,
+      time: null,
+      valuedate:'',
+      menu2: false,
+      menu1: false,
+      dateFormatted: null,
     };
   },
   methods: {
@@ -80,7 +128,7 @@ export default {
             this.$swal({
               icon: "success",
               title: "รายงานปัญหาสำเร็จ",
-              text: "ส่งรายงาน "+this.report_title +" สำเร็จ ",
+              text: "ส่งรายงาน " + this.report_title + " สำเร็จ ",
               timer: 1500,
             });
 
@@ -98,6 +146,18 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+    formatDate(date) {
+      if (!date) return null;
+
+      const [year, month, day] = date.split("-");
+      return `${month}/${day}/${year}`;
+    },
+    parseDate(date) {
+      if (!date) return null;
+
+      const [month, day, year] = date.split("/");
+      return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
     },
   },
 };

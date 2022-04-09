@@ -3,18 +3,14 @@
     <!-- Navbar -->
     <v-app-bar color="primary">
       <v-app-bar-nav-icon @click="drawer = !drawer">
-        <v-icon color="#FFFFFF">
-          mdi-menu
-        </v-icon>
+        <v-icon color="#FFFFFF"> mdi-menu </v-icon>
       </v-app-bar-nav-icon>
       <div class="text-white title ml-4">{{ $route.name }}</div>
       <v-spacer></v-spacer>
       <div class="text-white subtitle-1 mr-4">
         เข้าสู่ระบบครั้งสุดท้ายเมื่อ {{ lastlogin }}
       </div>
-      <v-btn elevation="2" color="error" @click="slideexit = !slideexit">
-        ออกจากระบบ
-      </v-btn>
+      <v-btn elevation="2" color="error" @click="logout"> ออกจากระบบ </v-btn>
     </v-app-bar>
     <!-- Navbar -->
 
@@ -62,27 +58,7 @@
     </v-navigation-drawer>
     <!-- Sidebar -->
 
-    <!-- Dialog confirm -->
-    <v-dialog v-model="slideexit" width="700">
-      <v-card align="center" class="pa-10">
-        <h1>ออกจากระบบ</h1>
-        <v-divider></v-divider>
-        <h3>กด "ตกลง" เพื่อยืนยันการออกจากระบบ</h3>
-        <v-divider></v-divider>
-        <v-btn color="green darken-1" class="text-white mr-5" @click="logout">
-          ตกลง
-        </v-btn>
-
-        <v-btn
-          color="red darken-1"
-          class="text-white"
-          @click="slideexit = false"
-        >
-          ยกเลิก
-        </v-btn>
-      </v-card>
-    </v-dialog>
-    <!-- Dialog confirm -->
+    
   </div>
 </template>
 
@@ -92,7 +68,7 @@ export default {
   name: "NavbarChief",
   data: () => ({
     drawer: null,
-    slideexit: false,
+    
     firstname: "",
     lastname: "",
     role: "",
@@ -140,14 +116,14 @@ export default {
         route: "/requestlist",
         icon: "alert-octagon",
       },
-      
+
       {
         menu: "4",
         text: "ติดตามสถานะคำร้อง",
         route: "/ChiefTracking",
         icon: "marker-check",
       },
-      
+
       {
         menu: "6",
         text: "จัดการ Secretary",
@@ -188,9 +164,28 @@ export default {
   },
   methods: {
     logout() {
-      localStorage.clear();
-      this.$store.dispatch("logout");
-      this.$router.push("/login");
+      this.$swal({
+        title: "ท่านกำลังจะออกจากระบบ?",
+        text: "ท่านเเน่ใจว่าต้องการออกจากระบบ!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "ใช่, ฉันต้องการออกจากระบบ",
+        cancelButtonText: "ไม่, ฉันต้องการอยู่ในระบบต่อ",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$swal({
+            icon: 'success',
+            title: 'ขอบคุณ',
+            text:'ท่านออกจากระบบสำเร็จ',
+            timer: 1500,});
+          localStorage.clear();
+          this.$store.dispatch("logout");
+          this.$router.push("/login");
+          
+        }
+      });
     },
   },
 };
