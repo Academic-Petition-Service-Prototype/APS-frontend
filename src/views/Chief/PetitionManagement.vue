@@ -177,6 +177,23 @@ export default {
         .then((response) => {
           // handle success
           this.petitionList = response.data;
+          for (let i = 0; i < this.petitionList.length; i++) {
+            // date format
+            this.petitionList[i].created_date = new Date(
+              this.petitionList[i].created_date
+            );
+            this.petitionList[i].created_date = this.petitionList[
+              i
+            ].created_date.toLocaleDateString("th-TH", {
+              year: "numeric",
+              month: "numeric",
+              day: "numeric",
+              weekday: "short",
+              hour: "numeric",
+              minute: "numeric",
+            });
+            // date format
+          }
         })
         .catch((error) => {
           // handle error

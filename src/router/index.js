@@ -193,12 +193,12 @@ const routes = [
   //Chief
   {
     path: '/ChiefCheckapprovedlist',
-    name: 'ChiefCheckapprovedlist',
+    name: 'คำร้องที่รอการอนุมัติ',
     component: ChiefCheckapprovedlist 
   },
   {
     path: '/Approvedlist',
-    name: 'Approvedlist',
+    name: 'คำร้องที่อนุมัติแล้ว',
     component: Approvedlist 
   },
   {
@@ -208,37 +208,37 @@ const routes = [
   },
   {
     path: '/ChiefDashboard',
-    name: 'ChiefDashboard',
+    name: 'แดชบอร์ด',
     component: ChiefDashboard 
   },
   {
     path: '/ChiefOfficerManagement',
-    name: 'ChiefOfficerManagement',
+    name: 'จัดการ Officer',
     component: ChiefOfficerManagement 
   },
   {
     path: '/ChiefPetitionManagement',
-    name: 'ChiefPetitionManagement',
+    name: 'จัดการคำร้อง',
     component: ChiefPetitionManagement 
   },
   {
     path: '/ChiefProfile',
-    name: 'ChiefProfile',
+    name: 'โปรไฟล์',
     component: ChiefProfile 
   },
   {
     path: '/ChiefReport',
-    name: 'ChiefReport',
+    name: 'การรายงานปัญหา',
     component: ChiefReport 
   },
   {
     path: '/ChiefSecretaryManagement',
-    name: 'ChiefSecretaryManagement',
+    name: 'จัดการ Secretary',
     component: ChiefSecretaryManagement 
   },
   {
     path: '/ChiefTracking',
-    name: 'ChiefTracking',
+    name: 'ติดตามสถานะคำร้อง',
     component: ChiefTracking 
   },
   {
@@ -263,7 +263,7 @@ const routes = [
   },
   {
     path: '/Disapprovedlist',
-    name: 'Disapprovedlist',
+    name: 'คำร้องที่ไม่อนุมัติ',
     component: Disapprovedlist 
   },
   {
@@ -273,7 +273,7 @@ const routes = [
   },
   {
     path: '/requestlist',
-    name: 'requestlist',
+    name: 'การรายงานการร้องขอ',
     component: requestlist 
   },
   {

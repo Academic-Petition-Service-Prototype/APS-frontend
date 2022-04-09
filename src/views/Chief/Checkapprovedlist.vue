@@ -10,8 +10,8 @@
       </v-toolbar>
 
       {{ petitionListById }}
-    <br><br><br>
-      {{listapproval}}
+      <br /><br /><br />
+      {{ listapproval }}
       <v-data-iterator
         :items="listapproval"
         :items-per-page.sync="itemsPerPage"
@@ -50,43 +50,40 @@
             <v-col> สถานะ </v-col>
           </v-row>
 
-          <v-row >
-            <template v-for="(item, index) in props.items"  >
-              <div :key="index" >
-                <v-card-title
-            
-            >
-              <v-row class="text-center" align="center">
-                <v-col> {{ item.submit_id }} </v-col>
-                <v-col> {{ item.form_name }} </v-col>
-                <v-col> {{ item.fullname }}</v-col>
-                <v-col> {{ item.submit_date }} </v-col>
-                
+          <v-row>
+            <template v-for="(item, index) in props.items">
+              <div :key="index">
+                <v-card-title>
+                  <v-row class="text-center" align="center">
+                    <v-col> {{ item.submit_id }} </v-col>
+                    <v-col> {{ item.form_name }} </v-col>
+                    <v-col> {{ item.fullname }}</v-col>
+                    <v-col> {{ item.submit_date }} </v-col>
 
-                <v-col>
-                  <v-btn @click="selectApprovaldetaill(item.submit_id)">
-                    <template
-                      v-for="(approval_order, n) in item.approval_order"
-                    >
-                      <!-- {{ item.approval_order[n].approver_name.user_id}} -->
+                    <v-col>
+                      <v-btn @click="selectApprovaldetaill(item.submit_id)">
+                        <template
+                          v-for="(approval_order, n) in item.approval_order"
+                        >
+                          <!-- {{ item.approval_order[n].approver_name.user_id}} -->
 
-                      <h5
-                        :key="n"
-                        v-if="
-                          item.approval_order[n].approver_name.user_id == stong
-                        "
-                      >
-                        {{ item.approval_order[n].approver_state }}
-                      </h5>
-                    </template>
-                  </v-btn>
-                </v-col>
-              </v-row>
-            </v-card-title>
-                
+                          <h5
+                            :key="n"
+                            v-if="
+                              item.approval_order[n].approver_name.user_id ==
+                              stong
+                            "
+                          >
+                            {{ item.approval_order[n].approver_state }}
+                          </h5>
+                        </template>
+                      </v-btn>
+                    </v-col>
+                  </v-row>
+                </v-card-title>
               </div>
             </template>
-            
+
             <v-divider style="margin: 0px 10px 0px 10px"></v-divider>
           </v-row>
         </template>
@@ -155,7 +152,8 @@ export default {
       petitionListById: [],
       specifics: [],
       stong: this.$store.getters.getUser.user_id,
-      listapproval:[],
+      listapproval: [],
+      
     };
   },
   computed: {
@@ -187,50 +185,66 @@ export default {
             var temp = this.specifics.slice(1, -1);
             temp = JSON.parse(temp);
             this.petitionListById[i].approval_order = temp;
-            console.log(this.petitionListById[i].form_name);
-            console.log(this.stong)
+
+            // date format
+            this.petitionListById[i].submit_date = new Date(
+              this.petitionListById[i].submit_date
+            );
+            this.petitionListById[i].submit_date = this.petitionListById[
+              i
+            ].submit_date.toLocaleDateString("th-TH", {
+              year: "numeric",
+              month: "numeric",
+              day: "numeric",
+              weekday: "short",
+              hour: "numeric",
+              minute: "numeric",
+            });
+            // date format
+
             for (
               let j = 0;
               j < this.petitionListById[i].approval_order.length;
               j++
             ) {
-              
               if (
                 this.petitionListById[i].approval_order[j].approver_name
                   .user_id == this.$store.getters.getUser.user_id
               ) {
-                if (this.petitionListById[i].approval_order[0].approver_name.f_name == this.$store.getters.getUser.f_name &&
-                  this.petitionListById[i].approval_order[0].approver_name.l_name == this.$store.getters.getUser.l_name
-                  &&
-                  this.petitionListById[i].approval_order[0].approver_name.user_id == this.$store.getters.getUser.user_id
-                  &&
-                  this.petitionListById[i].approval_order[j].approver_state =='ยังไม่ได้อนุมัติ'
+                if (
+                  this.petitionListById[i].approval_order[0].approver_name
+                    .f_name == this.$store.getters.getUser.f_name &&
+                  this.petitionListById[i].approval_order[0].approver_name
+                    .l_name == this.$store.getters.getUser.l_name &&
+                  this.petitionListById[i].approval_order[0].approver_name
+                    .user_id == this.$store.getters.getUser.user_id 
+                  
                 ) {
-                 
+                  if (this.petitionListById[i].approval_order[j].approver_state ==
+                    "ยังไม่ได้อนุมัติ") {
+                    this.listapproval.push(this.petitionListById[i]);
+                  }
+                  
+                  console.log(this.petitionListById[i]);
+                  console.log("เงื่อนไข1");
+                } else if (
+                  this.petitionListById[i].approval_order[j].approver_state ==
+                  "อนุมัติแล้ว"
+                ) {
+                  console.log("เงื่อนไข2");
+                } else if (
+                  this.petitionListById[i].approval_order[j - 1]
+                    .approver_state == "อนุมัติแล้ว" &&
+                  this.petitionListById[i].approval_order[j].approver_state ==
+                    "ยังไม่ได้อนุมัติ"
+                ) {
+                  console.log("เงื่อนไขภ3");
+
                   this.listapproval.push(this.petitionListById[i]);
-                  console.log(this.petitionListById[i])
-                  console.log("เงื่อนไข1")
-                }
-                else if (this.petitionListById[i].approval_order[j].approver_state =='อนุมัติแล้ว') {
-                  
-                  console.log("เงื่อนไข2") 
-                }
-                else if (this.petitionListById[i].approval_order[j-1].approver_state =='อนุมัติแล้ว'
-                &&
-                this.petitionListById[i].approval_order[j].approver_state =='ยังไม่ได้อนุมัติ' ) {
-                  
-                  console.log("เงื่อนไขภ3")
-                  
-                  this.listapproval.push(this.petitionListById[i]);
-                }
-                else{
+                } else {
                   console.log("else");
-                  
                 }
-                
-               
-              }
-              else{
+              } else {
                 console.log("error0.0");
               }
             }
