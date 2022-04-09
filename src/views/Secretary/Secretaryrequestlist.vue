@@ -3,12 +3,12 @@
     <NavbarSecretary />
     <v-card class="cardshow">
       <v-toolbar dark prominent color="#8BC34A">
-        <h1 class="text-center pa-5">รายงานการร้องขอ</h1>
+        <h1 class="text-center pa-5">การร้องขอคำร้องที่ไม่มีในระบบ</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
-     
-        <v-data-iterator
-        :items="reports"
+
+      <v-data-iterator
+        :items="requests"
         :items-per-page.sync="itemsPerPage"
         :page.sync="page"
         :search="search"
@@ -19,16 +19,14 @@
       >
         <template v-slot:header>
           <v-row>
-            <v-col align="right"
-              ></v-col
-            >
+            <v-col align="right"></v-col>
           </v-row>
           <v-row>
             <v-col>
               <v-text-field
                 prepend-inner-icon="mdi-magnify"
-                label="ชื่อคำร้อง / ยื่นเรื่อง"
-                placeholder="ชื่อคำร้อง / ยื่นเรื่อง"
+                label="ชื่อการร้องขอคำร้อง"
+                placeholder="ชื่อการร้องขอคำร้อง"
                 filled
                 rounded
                 dense
@@ -43,33 +41,27 @@
 
         <template v-slot:default="props">
           <v-row class="text-center">
-            <v-col> ลำดับ </v-col>
-            <v-col> รายการ </v-col>
-            
-            <v-col> วันที่สร้าง </v-col>
-            <v-col> สถานะ </v-col>
+            <v-col class="h3">ลำดับ</v-col>
+            <v-col class="h3">รายการ</v-col>
+            <v-col class="h3">วันที่สร้าง</v-col>
+            <v-col class="h3">สถานะ</v-col>
           </v-row>
 
-          <v-row v-for="item in props.items" :key="item.text">
+          <v-row v-for="(item, index) in props.items" :key="index">
             <v-card-title>
               <v-row class="text-center" align="center">
-                <v-col> {{ item.report_id }} </v-col>
-                <v-col> {{ item.report_title }} </v-col>
-                
-                <v-col> <p>{{ item.report_created }}</p> </v-col>
+                <v-col> {{ index + 1 }} </v-col>
+                <v-col> {{ item.request_title }} </v-col>
+                <v-col>{{ item.request_created }}</v-col>
                 <v-col>
-                  
-          <v-btn small class="mr-2" @click="chageState(item.report_id)">
-            <h5 v-if="item.report_state == 'read'">
-                  อ่านเเล้ว
-            </h5>
-
-            <h5 v-if="item.report_state == 'unread'">
-                  ยังไม่ได้อ่าน
-            </h5>
-            
-          </v-btn>
-        
+                  <v-btn @click="chageState(item.request_id)">
+                    <div v-if="item.request_state == 'read'">
+                      อ่านเเล้ว
+                    </div>
+                    <div v-else-if="item.request_state == 'unread'">
+                      ยังไม่ได้อ่าน
+                    </div>
+                  </v-btn>
                 </v-col>
               </v-row>
             </v-card-title>
@@ -116,7 +108,6 @@
           </v-row>
         </template>
       </v-data-iterator>
-      
     </v-card>
   </div>
 </template>
@@ -138,31 +129,30 @@ export default {
       page: 1,
       itemsPerPage: 4,
       sortBy: "name",
-      reports: [],
-
+      requests: [],
     };
   },
   mounted() {
-    this.getreport();
+    this.getrequest();
   },
 
   methods: {
-    getreport() {
+    getrequest() {
       axios
-        .post(process.env.VUE_APP_URL + "agencyreports",{
-          agency_id: this.$store.getters.getUser.agencies_id
+        .post(process.env.VUE_APP_URL + "agencyrequests", {
+          agency_id: this.$store.getters.getUser.agencies_id,
         })
         .then((response) => {
           // handle success
-          this.reports = response.data;
-          for (let i = 0; i < this.reports.length; i++) {
+          this.requests = response.data;
+          for (let i = 0; i < this.requests.length; i++) {
             // date format
-            this.reports[i].report_created = new Date(
-              this.reports[i].report_created
+            this.requests[i].request_created = new Date(
+              this.requests[i].request_created
             );
-            this.reports[i].report_created = this.reports[
+            this.requests[i].request_created = this.requests[
               i
-            ].report_created.toLocaleDateString("th-TH", {
+            ].request_created.toLocaleDateString("th-TH", {
               year: "numeric",
               month: "numeric",
               day: "numeric",
@@ -178,14 +168,14 @@ export default {
           console.log(error);
         });
     },
-    chageState(report_id) {
+    chageState(request_id) {
       axios
-        .put(process.env.VUE_APP_URL + "reports", {
-          id: report_id,
+        .put(process.env.VUE_APP_URL + "requests", {
+          id: request_id,
         })
         .then(() => {
           // handle success
-          this.$router.push("/Secretaryrequestlistdetail/" + report_id);
+          this.$router.push("/Secretaryrequestlistdetail/" + request_id);
         })
         .catch((error) => {
           // handle error

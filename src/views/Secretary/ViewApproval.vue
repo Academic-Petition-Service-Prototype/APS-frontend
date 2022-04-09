@@ -24,8 +24,8 @@
             <v-col>
               <v-text-field
                 prepend-inner-icon="mdi-magnify"
-                label="ชื่อคำร้อง / ยื่นเรื่อง"
-                placeholder="ชื่อคำร้อง / ยื่นเรื่อง"
+                label="ชื่อคำร้อง"
+                placeholder="ชื่อคำร้อง"
                 filled
                 rounded
                 dense
@@ -40,26 +40,23 @@
 
         <template v-slot:default="props">
           <v-row class="text-center">
-            <v-col> ลำดับ </v-col>
-            <v-col> รายการ </v-col>
-            <v-col> ผู้ยื่นคำร้อง </v-col>
-            <v-col> วันที่ยื่นคำร้อง </v-col>
-            <v-col> สถานะ </v-col>
+            <v-col class="h3">ลำดับ</v-col>
+            <v-col class="h3">รายการ</v-col>
+            <v-col class="h3">ผู้ยื่นคำร้อง</v-col>
+            <v-col class="h3">วันที่ยื่นคำร้อง</v-col>
+            <v-col class="h3">การกระทำ</v-col>
           </v-row>
 
-          <v-row v-for="item in props.items" :key="item.text">
+          <v-row v-for="(item, index) in props.items" :key="index">
             <v-card-title>
               <v-row class="text-center" align="center">
-                <v-col> {{ item.submit_id }} </v-col>
+                <v-col> {{ index + 1 }} </v-col>
                 <v-col> {{ item.form_name }} </v-col>
                 <v-col> {{ item.fullname }}</v-col>
                 <v-col> {{ item.submit_date }} </v-col>
-
                 <v-col>
-                  <v-btn @click="selectApprovaldetaill(item.submit_id)" color="green">
-                    <h5>
-                      ดูรายละเอียด
-                    </h5>
+                  <v-btn @click="selectApprovaldetaill(item.submit_id)">
+                    ดูรายละเอียด
                   </v-btn>
                 </v-col>
               </v-row>
@@ -206,9 +203,5 @@ export default {
 h1 {
   font-size: 50px;
   padding: 2% 0% 0% 0%;
-}
-h5 {
-  color: #f0f0f0;
-  font-size: 15px;
 }
 </style>

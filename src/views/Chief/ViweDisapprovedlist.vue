@@ -4,7 +4,7 @@
     <v-card class="cardshow">
       <v-row>
         <v-col>
-          <v-btn class="ma-2" outlined color="error" @click="back">
+          <v-btn class="ma-2" outlined color="secondary" @click="back">
             ย้อนกลับ
           </v-btn>
         </v-col>
@@ -106,7 +106,7 @@
                 <v-row
                   v-if="
                     this.approver_detail[0].approval_order[0].approver_state ==
-                    'ยังไม่ได้อนุมัติ'
+                      'ยังไม่ได้อนุมัติ'
                   "
                 >
                   <v-col align="center">
@@ -122,7 +122,7 @@
                       color="error"
                       @click="disapproveddialog = true"
                     >
-                      ไม่อนุมัติ
+                      <span class="h3">ไม่อนุมัติ</span>
                     </v-btn>
                   </v-col>
                 </v-row>
@@ -152,14 +152,8 @@
                     "
                   >
                     <v-col align="center">
-                      <v-btn
-                        class="ma-2"
-                        
-                        color="error"
-                        width="500"
-                        height="80"
-                      >
-                        ไม่อนุมัติ
+                      <v-btn class="ma-2" color="error" width="500" height="80">
+                        <span class="h3">ไม่อนุมัติ</span>
                       </v-btn>
                     </v-col>
                   </v-row>
@@ -327,8 +321,11 @@ export default {
                 "อนุมัติแล้ว";
               this.submition_detail[i].submit_state++;
 
-              if (this.submition_detail[i].submit_state >= this.submition_detail[i].approval_order.length) {
-                this.getdisapproveddetail = 'ยื่นคำร้องสำเร็จ';
+              if (
+                this.submition_detail[i].submit_state >=
+                this.submition_detail[i].approval_order.length
+              ) {
+                this.getdisapproveddetail = "ยื่นคำร้องสำเร็จ";
               } else {
                 this.getdisapproveddetail = null;
               }
@@ -339,7 +336,6 @@ export default {
                   approval_order: this.submition_detail[i].approval_order,
                   submit_state: this.submition_detail[i].submit_state,
                   submit_refuse: this.getdisapproveddetail,
-                  
                 })
                 .then((response) => {
                   //handle success

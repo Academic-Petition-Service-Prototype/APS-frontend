@@ -23,22 +23,20 @@
       <!-- ส่วนตัวเลือกเมนู -->
       <v-row>
         <v-col align="center">
-          <v-btn fab width="auto" height="auto" class="mt-15">
-            <v-img
-              class="rounded-circle"
-              width="150"
-              height="150"
-              src="../assets/5074620687.jpg"
-            >
-            </v-img>
-          </v-btn>
+          <v-img
+            class="rounded-circle mt-15"
+            width="150"
+            height="150"
+            src="../assets/5074620687.jpg"
+          >
+          </v-img>
         </v-col>
       </v-row>
 
       <v-row>
         <v-col class="text-white" align="center">
-          <p>คุณ : {{ firstname }} {{ lastname }}</p> 
-          <p v-if="role == 'officer'">สถานะ : พนักงาน </p>
+          ชื่อ : {{ firstname }} {{ lastname }}<br />
+          สถานะ : <v-if role="user">พนักงาน</v-if>
         </v-col>
       </v-row>
       <v-divider></v-divider>
@@ -100,7 +98,7 @@ export default {
     menu: [
       {
         menu: "1",
-        text: "Dashboard",
+        text: "หน้าแรก",
         route: "/OfficerDashboard",
         icon: "home",
       },

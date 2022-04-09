@@ -1,23 +1,18 @@
 <template>
   <div id="SecretaryApprovaldetail">
     <NavbarSecretary />
-
     <v-card class="cardshow">
-      <v-toolbar dark prominent color="#8BC34A">
-          <v-row>
+      <v-row>
         <v-col>
-         
-          <v-btn elevation="2" color="error" @click="back">
-        ย้อนกลับ
-      </v-btn>
+          <v-btn class="ma-2" outlined color="secondary" @click="back">
+            ย้อนกลับ
+          </v-btn>
         </v-col>
         <v-col align="center">
-          <h1>{{ submition_detail[0].form_name }}</h1>
+          <h2>{{ submition_detail[0].form_name }}</h2>
         </v-col>
         <v-col> </v-col>
       </v-row>
-      </v-toolbar>
-    
 
       <v-divider></v-divider>
 
@@ -122,15 +117,32 @@
                     <b-card class="text-center">
                       <div>
                         <!-- {{ approver_display.approver_state }} -->
-                        <v-btn v-if="approver_display.approver_state == 'ยังไม่ได้อนุมัติ'" color="warning" block>
-                          ยังไม่ได้อนุมัติ 
+                        <v-btn
+                          v-if="
+                            approver_display.approver_state ==
+                              'ยังไม่ได้อนุมัติ'
+                          "
+                          color="warning"
+                          block
+                        >
+                          ยังไม่ได้อนุมัติ
                         </v-btn>
 
-                        <v-btn v-if="approver_display.approver_state == 'อนุมัติแล้ว'" color="green" block>
+                        <v-btn
+                          v-if="
+                            approver_display.approver_state == 'อนุมัติแล้ว'
+                          "
+                          color="green"
+                          block
+                        >
                           อนุมัติแล้ว
                         </v-btn>
 
-                        <v-btn v-if="approver_display.approver_state == 'ไม่อนุมัติ'" color="error" block>
+                        <v-btn
+                          v-if="approver_display.approver_state == 'ไม่อนุมัติ'"
+                          color="error"
+                          block
+                        >
                           ไม่อนุมัติ
                         </v-btn>
                       </div>

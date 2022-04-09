@@ -3,10 +3,10 @@
     <NavbarUser />
     <v-card class="cardmargin">
       <v-toolbar dark prominent color="#FFAB40">
-        <h1>เลือกแบบคำร้อง / ยื่นเรื่อง</h1>
+        <h1>เลือกแบบคำร้อง</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
-        <!-- {{petitionList}} -->
+      <!-- {{petitionList}} -->
       <v-data-iterator
         :items="petitionList"
         :items-per-page.sync="itemsPerPage"
@@ -30,12 +30,12 @@
 
           <h3 class="textleft">ค้นหาตามหมวดหมู่</h3>
           <v-select
-          v-model="search"
-          :items="form_tag"
-          label="กรุณาเลือกหมวดหมู่"
-          outlined
-          class="cardmargin "
-        ></v-select>
+            v-model="search"
+            :items="form_tag"
+            label="กรุณาเลือกหมวดหมู่"
+            outlined
+            class="cardmargin "
+          ></v-select>
         </template>
 
         <template v-slot:default="prop">
@@ -210,11 +210,8 @@ export default {
           // handle success
           this.petitionList = response.data;
           for (let i = 0; i < this.petitionList.length; i++) {
-
-            this.form_tag.push(this.petitionList[i].form_tag)
-            
+            this.form_tag.push(this.petitionList[i].form_tag);
           }
-
         })
         .catch((error) => {
           // handle error
@@ -245,12 +242,10 @@ export default {
 h1 {
   font-size: 50px;
   padding: 2% 0% 0% 0%;
-  
 }
-.textleft{
+.textleft {
   text-align: left;
   margin: 2%;
-
 }
 
 .petitiontitle {

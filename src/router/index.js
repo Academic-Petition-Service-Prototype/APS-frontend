@@ -46,8 +46,8 @@ import Approvedlist from'../views/Chief/Approvedlist.vue'
 import ViweApprovedlist from'../views/Chief/ViweApprovedlist.vue'
 import Disapprovedlist from'../views/Chief/Disapprovedlist.vue'
 import ViweDisapprovedlist from'../views/Chief/ViweDisapprovedlist.vue'
-import requestlist from'../views/Chief/requestlist.vue'
-import requestlistdetail from'../views/Chief/requestlistdetail.vue'
+import ChiefRequest from'../views/Chief/Request.vue'
+import ChiefRequestDetail from'../views/Chief/Requestdetail.vue'
 
 //Chief
 
@@ -108,7 +108,7 @@ const routes = [
   //User
   {
     path: '/UserDashboard',
-    name: 'แดชบอร์ด',
+    name: 'หน้าแรก',
     component: UserDashboard
   },
   {
@@ -138,12 +138,12 @@ const routes = [
   },
   {
     path: '/UserSentpetition/:id',
-    name: 'UserSentpetition',
+    name: 'ส่งคำร้อง',
     component: UserSentpetition 
   },
   {
     path: '/UserRequestTracking',
-    name: 'ติดตามสถานะการร้องขอคำร้อง',
+    name: 'ติดตามสถานะการร้องขอคำร้องที่ไม่มีในระบบ',
     component: UserRequestTracking 
   },
   {
@@ -152,24 +152,17 @@ const routes = [
     component: UserRequest 
   },
   {
-    path: '/Trackingdetail',
-    name: 'Trackingdetail',
-    component: Trackingdetail 
-  },
-  {
     path: '/Trackingdetail/:id',
-    name: 'Trackingdetail',
+    name: 'รายละเอียดคำร้อง',
     component: Trackingdetail 
   },
-  
-  
   //User
 
   //Officer
   
   {
     path: '/OfficerDashboard',
-    name: 'แดชบอร์ด',
+    name: 'หน้าแรก',
     component: OfficerDashboard
   },
   {
@@ -206,18 +199,13 @@ const routes = [
     component: Approvedlist 
   },
   {
-    path: '/ViweApprovedlist',
-    name: 'ViweApprovedlist',
-    component: ViweApprovedlist 
-  },
-  {
     path: '/ChiefDashboard',
-    name: 'แดชบอร์ด',
+    name: 'หน้าแรก',
     component: ChiefDashboard 
   },
   {
     path: '/ChiefOfficerManagement',
-    name: 'จัดการ Officer',
+    name: 'จัดการพนักงาน',
     component: ChiefOfficerManagement 
   },
   {
@@ -237,7 +225,7 @@ const routes = [
   },
   {
     path: '/ChiefSecretaryManagement',
-    name: 'จัดการ Secretary',
+    name: 'จัดการเลขานุการ',
     component: ChiefSecretaryManagement 
   },
   {
@@ -247,22 +235,22 @@ const routes = [
   },
   {
     path: '/ChiefReportDetail/:id',
-    name: 'ChiefReportDetail',
+    name: 'รายละเอียดการรายงานปัญหา',
     component: ChiefReportDetail 
   },
   {
     path: '/Approvaldetaill/:id',
-    name: 'Approvaldetaill',
+    name: 'รายละเอียดคำร้องที่อนุมัติแล้ว',
     component: Approvaldetaill 
   },
   {
     path: '/ViweApprovedlist/:id',
-    name: 'ViweApprovedlist',
+    name: 'รายละเอียดคำร้อง',
     component: ViweApprovedlist 
   },
   {
     path: '/ChiefCreatepetition',
-    name: 'ChiefCreatepetition',
+    name: 'สร้างคำร้อง',
     component: ChiefCreatepetition 
   },
   {
@@ -272,23 +260,18 @@ const routes = [
   },
   {
     path: '/ViweDisapprovedlist/:id',
-    name: 'ViweDisapprovedlist',
+    name: 'รายละเอียดคำร้องที่ไม่อนุมัติ',
     component: ViweDisapprovedlist 
   },
   {
-    path: '/requestlist',
-    name: 'การรายงานการร้องขอ',
-    component: requestlist 
+    path: '/ChiefRequest',
+    name: 'การร้องขอคำร้องที่ไม่มีในระบบ',
+    component: ChiefRequest 
   },
   {
-    path: '/requestlistdetail/',
-    name: 'ViweDisapprovedlist',
-    component: requestlistdetail 
-  },
-  {
-    path: '/requestlistdetail/:id',
-    name: 'ViweDisapprovedlist',
-    component: requestlistdetail 
+    path: '/ChiefRequestDetail/:id',
+    name: 'ChiefRequestDetail',
+    component: ChiefRequestDetail 
   },
   
 
@@ -297,7 +280,7 @@ const routes = [
   //Secretary
   {
     path: '/SecretaryDashboard',
-    name: 'แดชบอร์ด',
+    name: 'หน้าแรก',
     component: SecretaryDashboard
   },
   {
@@ -322,17 +305,17 @@ const routes = [
   },
   {
     path: '/ViewApprovaldetail/:id',
-    name: 'SecretaryViewApprovaldetail',
+    name: 'รายละเอียดคำร้อง',
     component: SecretaryViewApprovaldetail
   },
   {
     path: '/Secretaryrequestlist',
-    name: 'รายงานการร้องขอ',
+    name: 'การร้องขอคำร้องที่ไม่มีในระบบ',
     component: Secretaryrequestlist
   },
   {
     path: '/Secretaryrequestlistdetail/:id',
-    name: 'Secretaryrequestlistdetail',
+    name: 'รายละเอียดการร้องขอคำร้องที่ไม่มีในระบบ',
     component: Secretaryrequestlistdetail
   },
  

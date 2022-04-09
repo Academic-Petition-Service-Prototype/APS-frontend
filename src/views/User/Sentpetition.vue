@@ -4,7 +4,7 @@
     <NavbarUser />
     <v-card class="cardshow">
       <h1>
-        แบบคำร้อง / ยื่นเรื่อง
+        แบบคำร้อง
         <v-divider></v-divider>
       </h1>
 
@@ -215,7 +215,6 @@ export default {
               text: "กรุณากรอกข้อมูลให้ครบ",
               timer: 2000,
             });
-
           }
         })
         .catch((error) => {

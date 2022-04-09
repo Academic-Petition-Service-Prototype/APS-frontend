@@ -4,7 +4,7 @@
     <NavbarSecretary />
     <v-card class="cardshow">
       <v-toolbar dark prominent color="#8BC34A">
-        <h1 class="text-center pa-5">Dashboard</h1>
+        <h1 class="text-center pa-5">หน้าแรก</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
 
@@ -28,7 +28,7 @@
           </v-row>
         </v-img>
       </v-card>
-      
+
       <v-row>
         <v-col>
           <!-- รายงานเอกสารที่ทำไป -->
@@ -83,26 +83,21 @@
 
       <v-row>
         <v-col>
-          
-
-         
           <GChart
             type="ColumnChart"
             :data="chartData"
             :options="chartOptions"
-            
           />
-          
+
           <v-toolbar dark prominent color="#8BC34A">
-        <h1 class="text-center pa-5">แผนภูมิวงกลม</h1>
-        <v-spacer></v-spacer>
-      </v-toolbar>
+            <h1 class="text-center pa-5">แผนภูมิวงกลม</h1>
+            <v-spacer></v-spacer>
+          </v-toolbar>
 
           <GChart
             type="PieChart"
             :data="PieChart"
             :options="PieChartOptions2"
-            
           />
         </v-col>
       </v-row>
@@ -146,8 +141,13 @@ export default {
       sumreport: 10,
       sumrsuccess: 10,
       chartData: [
-        ["month", "คำร้องที่เข้ามาทั้งหมด", "รายงานที่ยังไม่ได้อ่าน", "คำร้องที่ต้องอนุมัติ"],
-        ["มกราคม", 80, 400, 200,],
+        [
+          "month",
+          "คำร้องที่เข้ามาทั้งหมด",
+          "รายงานที่ยังไม่ได้อ่าน",
+          "คำร้องที่ต้องอนุมัติ",
+        ],
+        ["มกราคม", 80, 400, 200],
         ["กุมภาพันธ์", 1170, 460, 250],
         ["มีนาคม", 660, 1120, 300],
         ["เมษายน", 1030, 540, 350],
@@ -164,22 +164,18 @@ export default {
         chart: {
           title: "Company Performance",
           subtitle: "Sales, Expenses, and Profit: 2014-2017",
-          
         },
-        colors: ['#31BDDC', '#FE6666', '#72D362'],
-         bars: 'horizontal',
-         
+        colors: ["#31BDDC", "#FE6666", "#72D362"],
+        bars: "horizontal",
       },
       PieChart: [
-        ['Task', 'Hours per Day'],
-          ['คำร้องที่เข้ามาทั้งหมด ',     11],
-          ['รายงานที่ยังไม่ได้อ่าน ',      2],
-          ['คำร้องที่ต้องอนุมัติ',  2],
-          
+        ["Task", "Hours per Day"],
+        ["คำร้องที่เข้ามาทั้งหมด ", 11],
+        ["รายงานที่ยังไม่ได้อ่าน ", 2],
+        ["คำร้องที่ต้องอนุมัติ", 2],
       ],
       PieChartOptions2: {
         chart: {
-          
           title: "Company Performance",
           subtitle: "Sales, Expenses, and Profit: 2014-2017",
         },
@@ -187,8 +183,6 @@ export default {
         bars: "horizontal",
         is3D: true,
         height: 500,
-        
-        
       },
     };
   },
@@ -223,8 +217,3 @@ h1 {
   font-size: 21px;
 }
 </style>
-
-
-
-
-

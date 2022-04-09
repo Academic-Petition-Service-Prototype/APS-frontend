@@ -29,8 +29,8 @@
             <v-col>
               <v-text-field
                 prepend-inner-icon="mdi-magnify"
-                label="ชื่อคำร้อง / ยื่นเรื่อง"
-                placeholder="ชื่อคำร้อง / ยื่นเรื่อง"
+                label="ชื่อหัวข้อการรายงานปัญหา"
+                placeholder="ชื่อหัวข้อการรายงานปัญหา"
                 filled
                 rounded
                 dense
@@ -102,33 +102,32 @@
                         <v-stepper-content step="1">
                           <v-card
                             class="mb-12"
-                            color="grey lighten-1"
+                            color="grey lighten-2"
                             height="200px"
                           >
-                            <h2 class="cardshow">รายละเอียด1</h2>
-                            <h2 class="cardshow">{{ item.report_detail }}</h2>
+                            <h2 class="cardshow">รายละเอียด</h2>
+                            <h5 class="cardshow">{{ item.report_detail }}</h5>
                           </v-card>
                         </v-stepper-content>
 
                         <v-stepper-content step="2">
                           <v-card
                             class="mb-12"
-                            color="grey lighten-1"
+                            color="grey lighten-2"
                             height="200px"
                           >
-                            <h2 class="cardshow">รายละเอียด2</h2>
-                            <h2 class="cardshow">{{ item.report_detail }}</h2>
+                            <h2 class="cardshow">รายละเอียด</h2>
+                            <h5 class="cardshow">{{ item.report_detail }}</h5>
                           </v-card>
                         </v-stepper-content>
-
                         <v-stepper-content step="3">
                           <v-card
                             class="mb-12"
-                            color="grey lighten-1"
+                            color="grey lighten-2"
                             height="200px"
                           >
-                            <h2 class="cardshow">รายละเอียด2</h2>
-                            <h2 class="cardshow">{{ item.report_detail }}</h2>
+                            <h2 class="cardshow">รายละเอียด</h2>
+                            <h5 class="cardshow">{{ item.report_detail }}</h5>
                           </v-card>
                         </v-stepper-content>
                       </v-stepper-items>
@@ -288,9 +287,7 @@ h1 {
   font-size: 50px;
   padding: 2% 0% 0% 0%;
 }
-h3 {
-  color: #f0f0f0;
-}
+h3,
 h4 {
   color: #f0f0f0;
 }
