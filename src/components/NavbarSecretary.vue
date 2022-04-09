@@ -109,7 +109,7 @@ export default {
       },
       {
         menu: "2",
-        text: "ติดตามสถานะคำร้อง/ปัญหา",
+        text: "ติดตามสถานะคำร้อง",
         route: "/SecretaryTracking",
         icon: "marker-check",
       },
@@ -123,6 +123,12 @@ export default {
         menu: "4",
         text: "การรายงานปัญหา",
         route: "/SecretaryViewReport",
+        icon: "alert-octagon",
+      },
+      {
+        menu: "4",
+        text: "รายงานการร้องขอ",
+        route: "/Secretaryrequestlist",
         icon: "alert-octagon",
       },
       {
