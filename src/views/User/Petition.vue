@@ -98,6 +98,7 @@
                           router
                           :to="item.route"
                           @click="sentPetition(item.form_id)"
+                          class="cardmargin"
                         >
                           <v-row>
                             <v-col align="center">

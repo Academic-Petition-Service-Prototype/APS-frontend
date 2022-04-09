@@ -104,32 +104,32 @@ const routes = [
   //User
   {
     path: '/UserDashboard',
-    name: 'UserDashboard',
+    name: 'แดชบอร์ด',
     component: UserDashboard
   },
   {
     path: '/UserPetition',
-    name: 'UserPetition',
+    name: 'ส่งคำร้อง',
     component: UserPetition
   },
   {
     path: '/UserProfile',
-    name: 'UserProfile',
+    name: 'โปรไฟล์',
     component: UserProfile
   },
   {
     path: '/UserReport',
-    name: 'UserReport',
+    name: 'รายงานปัญหาไม่ระบุตัวตน',
     component: UserReport
   },
   {
     path: '/UserReportTracking',
-    name: 'UserReportTracking',
+    name: 'ติดตามสถานะรายงานปัญหาไม่ระบุตัวตน',
     component: UserReportTracking
   },
   {
     path: '/UserTracking',
-    name: 'UserTracking',
+    name: 'ติดตามสถานะคำร้อง',
     component: UserTracking
   },
   {
@@ -139,12 +139,12 @@ const routes = [
   },
   {
     path: '/UserRequestTracking',
-    name: 'UserRequestTracking',
+    name: 'ติดตามสถานะการร้องขอคำร้อง',
     component: UserRequestTracking 
   },
   {
     path: '/UserRequest',
-    name: 'UserRequest',
+    name: 'การร้องขอคำร้องที่ไม่มีในระบบ',
     component: UserRequest 
   },
   {
