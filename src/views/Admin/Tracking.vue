@@ -2,11 +2,11 @@
   <div id="AdminTracking" class="bg-color">
     <NavbarAdmin />
     <v-card class="cardshow">
-      <v-toolbar dark prominent color="#FFAB40">
+      <v-toolbar dark prominent color="#00B8D4">
         <h1 class="text-center pa-5">สถานะคำร้อง</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
-      
+        
       <v-data-iterator
         :items="petitionListById"
         :items-per-page.sync="itemsPerPage"
@@ -37,9 +37,10 @@
         </template>
         <template v-slot:default="props">
           <v-row class="text-center">
-            <v-col> <h3>ลำดับ</h3></v-col>
+            <v-col align="center"> <p>ลำดับ</p></v-col>
 
-            <v-col align="left"> <h3>รายการ</h3></v-col>
+            <v-col align="center"> <p>รายการ</p></v-col>
+            <v-col align="center"> <p>เวลา</p></v-col>
           </v-row>
 
           <v-row
@@ -49,18 +50,21 @@
           >
             <v-expansion-panels>
               <v-expansion-panel>
-                <v-expansion-panel-header>
+                <v-expansion-panel-header color="#00B8D4" >
                   <v-row class="text-center">
-                    <v-col>
+                    <v-col >
                       <h3>{{ item.submit_id }}</h3>
                     </v-col>
                     <v-col>
                       <h4>{{ item.form_name }}</h4>
                     </v-col>
+                    <v-col>
+                      <h4>{{ item.submit_date }}</h4>
+                    </v-col>
                   </v-row>
 
                   <!-- เเสดงชื่อเอกสาร -->
-                  <v-spacer></v-spacer>
+                  
 
                   <!-- เเสดงขั้นนตอน-->
                 </v-expansion-panel-header>
@@ -158,7 +162,7 @@
                 fab
                 dark
                 icon
-                color="#FFAB40"
+                color="#00B8D4"
                 class="mr-1"
                 @click="formerPage"
               >
@@ -168,7 +172,7 @@
                 fab
                 dark
                 icon
-                color="#FFAB40"
+                color="#00B8D4"
                 class="ml-1"
                 @click="nextPage"
               >
@@ -229,7 +233,21 @@ export default {
             var temp = this.specifics.slice(1, -1);
             temp = JSON.parse(temp);
             this.petitionListById[i].approval_order = temp;
-            
+            // date format
+            this.petitionListById[i].submit_date = new Date(
+              this.petitionListById[i].submit_date
+            );
+            this.petitionListById[i].submit_date = this.petitionListById[
+              i
+            ].submit_date.toLocaleDateString("th-TH", {
+              year: "numeric",
+              month: "numeric",
+              day: "numeric",
+              weekday: "short",
+              hour: "numeric",
+              minute: "numeric",
+            });
+            // date format
           }
         })
         .catch((error) => {
@@ -270,5 +288,11 @@ export default {
 h1 {
   font-size: 50px;
   padding: 2% 0% 0% 0%;
+}
+h3{
+  color: #f0f0f0;
+}
+h4{
+  color: #f0f0f0;
 }
 </style>

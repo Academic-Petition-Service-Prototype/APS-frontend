@@ -1,7 +1,7 @@
 <template>
   <div id="NavbarAdmin">
     <!-- Navbar -->
-    <v-app-bar color="#FFA726">
+    <v-app-bar color="#00B8D4">
       <v-app-bar-nav-icon @click="drawer = !drawer">
         <v-icon color="#FFFFFF"> mdi-menu </v-icon>
       </v-app-bar-nav-icon>
@@ -121,11 +121,18 @@ export default {
         icon: "alert-octagon",
       },
       {
+        menu: "4",
+        text: "การรายงานการร้องขอ",
+        route: "/AdminViwerequestlist",
+        icon: "alert-octagon",
+      },
+      {
         menu: "5",
         text: "จัดการ Chief",
         route: "/AdminChiefManagement",
         icon: "account-star",
       },
+      
       {
         menu: "6",
         text: "จัดการ Secretary",

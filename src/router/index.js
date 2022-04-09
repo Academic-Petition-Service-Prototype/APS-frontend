@@ -70,9 +70,11 @@ import AdminProfile from '../views/Admin/Profile.vue'
 import AdminSecretaryManagement from '../views/Admin/SecretaryManagement.vue'
 import AdminTracking from '../views/Admin/Tracking.vue'
 import AdminUserManagement from '../views/Admin/UserManagement.vue'
-import AdminViewApproval from '../views/Admin/ViewApproval.vue'
+import AdminViewApproval from '../views/Admin/ViewAdminApproval.vue'
 import AdminViewReport from '../views/Admin/ViewReport.vue'
 import AdminAgencyManagement from '../views/Admin/AgencyManagement.vue'
+import AdminViwerequestlist from '../views/Admin/AdminViwerequestlist.vue'
+import AdminViewApprovaldetail from '../views/Admin/ViewAdminApprovaldetail.vue'
 
 //Admin
 
@@ -372,11 +374,7 @@ const routes = [
     name: 'AdminUserManagement',
     component: AdminUserManagement 
   },
-  {
-    path: '/AdminViewApproval',
-    name: 'AdminViewApproval',
-    component: AdminViewApproval 
-  },
+ 
   {
     path: '/AdminViewReport',
     name: 'AdminViewReport',
@@ -387,6 +385,23 @@ const routes = [
     name: 'AdminAgencyManagement',
     component: AdminAgencyManagement 
   },
+  {
+    path: '/AdminViwerequestlist',
+    name: 'AdminViwerequestlist',
+    component: AdminViwerequestlist 
+  },
+  {
+    path: '/AdminViewApproval',
+    name: 'AdminViewApproval',
+    component: AdminViewApproval 
+  },
+  {
+    path: '/AdminViewApproval/:id',
+    name: 'AdminViewApprovaldetail',
+    component: AdminViewApprovaldetail 
+  },
+  
+  
   //Admin
 
   //Other

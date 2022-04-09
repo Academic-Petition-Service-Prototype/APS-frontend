@@ -3,7 +3,7 @@
   <div id="AdminAgencyManagement">
     <NavbarAdmin />
     <v-card class="cardshow">
-      <v-toolbar dark prominent color="#FFAB40">
+      <v-toolbar dark prominent color="#00B8D4">
         <h1> จัดการ Agency</h1>
         <v-spacer></v-spacer>
         
@@ -94,7 +94,7 @@
                 fab
                 dark
                 icon
-                color="#FFAB40"
+                color="#00B8D4"
                 class="mr-1"
                 @click="formerPage"
               >
@@ -104,7 +104,7 @@
                 fab
                 dark
                 icon
-                color="#FFAB40"
+                color="#00B8D4"
                 class="ml-1"
                 @click="nextPage"
               >
