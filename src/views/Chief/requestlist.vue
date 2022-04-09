@@ -3,7 +3,7 @@
     <NavbarChief />
     <v-card class="cardshow">
       <v-toolbar dark prominent color="primary">
-        <h1 class="text-center pa-5">การรายงานปัญหาทั้งหมด</h1>
+        <h1 class="text-center pa-5">การรายงานการร้องขอคำร้อง</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
       
@@ -155,6 +155,23 @@ export default {
         .then((response) => {
           // handle success
           this.reports = response.data;
+          for (let i = 0; i < this.reports.length; i++) {
+            // date format
+            this.reports[i].report_created = new Date(
+              this.reports[i].report_created
+            );
+            this.reports[i].report_created = this.reports[
+              i
+            ].report_created.toLocaleDateString("th-TH", {
+              year: "numeric",
+              month: "numeric",
+              day: "numeric",
+              weekday: "short",
+              hour: "numeric",
+              minute: "numeric",
+            });
+            // date format
+          }
         })
         .catch((error) => {
           // handle error

@@ -143,7 +143,7 @@ export default {
       
       {
         menu: "4",
-        text: "ติดตามสถานะคำร้อง/ปัญหา",
+        text: "ติดตามสถานะคำร้อง",
         route: "/ChiefTracking",
         icon: "marker-check",
       },

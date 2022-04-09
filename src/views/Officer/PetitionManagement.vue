@@ -8,7 +8,7 @@
 
         <v-spacer></v-spacer>
       </v-toolbar>
-      
+
       <v-data-iterator
         :items="petitionList"
         :items-per-page.sync="itemsPerPage"
@@ -67,17 +67,19 @@
                   <v-switch
                     inset
                     v-model="item.switch"
-                    style="margin: 0px 0px 0px 40%;"
+                    style="margin: 0px 0px 0px 40%"
                   ></v-switch>
                 </v-col>
-                <v-col> <p>{{ item.created_date }}</p> </v-col>
                 <v-col>
-                  <v-btn icon><v-icon color="yellow">mdi-pencil</v-icon></v-btn>
+                  <p>{{ item.created_date }}</p>
+                </v-col>
+                <v-col>
+                  
                   <v-btn icon><v-icon color="red">mdi-delete</v-icon></v-btn>
                 </v-col>
               </v-row>
             </v-card-title>
-            <v-divider style="margin: 0px 10px 0px 10px;"></v-divider>
+            <v-divider style="margin: 0px 10px 0px 10px"></v-divider>
           </v-row>
         </template>
 
@@ -118,9 +120,6 @@
               </v-btn>
             </v-col>
           </v-row>
-
-
-
         </template>
       </v-data-iterator>
     </v-card>
@@ -146,7 +145,6 @@ export default {
       itemsPerPage: 4,
       sortBy: "name",
       petitionList: [],
-      
     };
   },
   methods: {
@@ -169,6 +167,23 @@ export default {
         .then((response) => {
           // handle success
           this.petitionList = response.data;
+          for (let i = 0; i < this.petitionList.length; i++) {
+            // date format
+            this.petitionList[i].created_date = new Date(
+              this.petitionList[i].created_date
+            );
+            this.petitionList[i].created_date = this.petitionList[
+              i
+            ].created_date.toLocaleDateString("th-TH", {
+              year: "numeric",
+              month: "numeric",
+              day: "numeric",
+              weekday: "short",
+              hour: "numeric",
+              minute: "numeric",
+            });
+            // date format
+          }
         })
         .catch((error) => {
           // handle error

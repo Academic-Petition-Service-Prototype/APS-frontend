@@ -112,7 +112,7 @@ export default {
       },
       {
         menu: "3",
-        text: "ติดตามสถานะคำร้อง/ปัญหา",
+        text: "ติดตามสถานะคำร้อง",
         route: "/OfficerTracking",
         icon: "marker-check",
       },

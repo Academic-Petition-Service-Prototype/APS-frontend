@@ -184,6 +184,23 @@ export default {
             var temp = this.specifics.slice(1, -1);
             temp = JSON.parse(temp);
             this.petitionListById[i].approval_order = temp;
+
+            // date format
+            this.petitionListById[i].submit_date = new Date(
+              this.petitionListById[i].submit_date
+            );
+            this.petitionListById[i].submit_date = this.petitionListById[
+              i
+            ].submit_date.toLocaleDateString("th-TH", {
+              year: "numeric",
+              month: "numeric",
+              day: "numeric",
+              weekday: "short",
+              hour: "numeric",
+              minute: "numeric",
+            });
+            // date format
+
             console.log(this.petitionListById[i].form_name);
             console.log(this.stong);
             for (
