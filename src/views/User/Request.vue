@@ -62,7 +62,7 @@ export default {
           if (response.data == "Please fill your information") {
             
             this.$swal({
-              icon: "error",
+              icon: "warning",
               title: "เกิดข้อผิดพลาดในการร้องขอคำร้อง",
               text: "กรุณากรอกข้อมูลให้ครบ",
               timer: 2000,

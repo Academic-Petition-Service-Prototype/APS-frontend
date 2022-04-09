@@ -71,7 +71,7 @@ export default {
         .then((response) => {
           if (response.data == "Please fill your information") {
             this.$swal({
-              icon: "error",
+              icon: "warning",
               title: "เกิดข้อผิดพลาดในการส่งรายงาน",
               text: "กรุณากรอกข้อมูลให้ครบ",
               timer: 2000,

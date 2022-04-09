@@ -3,9 +3,7 @@
     <!-- Navbar -->
     <v-app-bar color="#FFA726">
       <v-app-bar-nav-icon @click="drawer = !drawer">
-        <v-icon color="#FFFFFF">
-          mdi-menu
-        </v-icon>
+        <v-icon color="#FFFFFF"> mdi-menu </v-icon>
       </v-app-bar-nav-icon>
       <div class="text-white title ml-4">{{ $route.name }}</div>
       <v-spacer></v-spacer>
@@ -19,11 +17,11 @@
     <!-- Navbar -->
 
     <!-- Sidebar -->
-    <v-navigation-drawer v-model="drawer" app color="#424242" width="300">
+    <v-navigation-drawer v-model="drawer" app color="#424242" width="auto">
       <!-- ส่วนตัวเลือกเมนู -->
       <v-row>
         <v-col align="center">
-          <v-btn fab width="auto" height="auto" class="mt-15">
+          <v-btn fab width="100" height="auto" class="mt-15">
             <v-img
               class="rounded-circle"
               width="150"
@@ -53,9 +51,9 @@
           <v-list-item-icon>
             <v-icon color="#FFFFFF">mdi-{{ menu.icon }}</v-icon>
           </v-list-item-icon>
-          <v-list-item-title class="text-white">{{
-            menu.text
-          }}</v-list-item-title>
+          <v-list-item-title class="text-white">
+            {{menu.text}}
+          </v-list-item-title>
         </v-list-item>
       </v-list-item>
       <!-- ส่วนตัวเลือกเมนู -->
