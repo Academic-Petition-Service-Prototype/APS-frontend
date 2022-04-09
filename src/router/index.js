@@ -165,27 +165,27 @@ const routes = [
   
   {
     path: '/OfficerDashboard',
-    name: 'OfficerDashboard',
+    name: 'แดชบอร์ด',
     component: OfficerDashboard
   },
   {
     path: '/OfficerPetitionManagement',
-    name: 'OfficerPetitionManagement',
+    name: 'จัดการคำร้อง',
     component: OfficerPetitionManagement
   },
   {
     path: '/OfficerProfile',
-    name: 'OfficerProfile',
+    name: 'โปรไฟล์',
     component: OfficerProfile 
   },
   {
     path: '/OfficerTracking',
-    name: 'OfficerTracking',
+    name: 'ติดตามสถานะคำร้อง',
     component: OfficerTracking 
   },
   {
     path: '/OfficerCreatepetition',
-    name: 'OfficerCreatepetition',
+    name: 'สร้างคำร้อง',
     component: OfficerCreatepetition 
   },
   //Officer
