@@ -58,6 +58,8 @@ import SecretaryTracking from '../views/Secretary/Tracking.vue'
 import SecretaryViewApproval from '../views/Secretary/ViewApproval.vue'
 import SecretaryViewApprovaldetail from '../views/Secretary/ViewApprovaldetail.vue'
 import SecretaryViewReport from '../views/Secretary/ViewReport.vue'
+import Secretaryrequestlist from '../views/Secretary/Secretaryrequestlist.vue'
+import Secretaryrequestlistdetail from '../views/Secretary/Secretaryrequestlistdetail.vue'
 //Secretary
 
 //Admin
@@ -321,6 +323,17 @@ const routes = [
     name: 'SecretaryViewApprovaldetail',
     component: SecretaryViewApprovaldetail
   },
+  {
+    path: '/Secretaryrequestlist',
+    name: 'รายงานการร้องขอ',
+    component: Secretaryrequestlist
+  },
+  {
+    path: '/Secretaryrequestlistdetail/:id',
+    name: 'Secretaryrequestlistdetail',
+    component: Secretaryrequestlistdetail
+  },
+ 
   //Secretary
 
   //Admin

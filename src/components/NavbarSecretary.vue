@@ -126,6 +126,12 @@ export default {
         icon: "alert-octagon",
       },
       {
+        menu: "4",
+        text: "รายงานการร้องขอ",
+        route: "/Secretaryrequestlist",
+        icon: "alert-octagon",
+      },
+      {
         menu: "5",
         text: "โปรไฟล์",
         route: "/SecretaryProfile",
