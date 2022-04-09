@@ -120,7 +120,11 @@
                     class="cardshow"
                     required
                   ></v-text-field>
+                </v-col>
+              </v-row>
 
+              <v-row>
+                <v-col>
                   <h1>หมวดหมู่คำร้อง</h1>
                   <v-autocomplete
                     class="cardshow"
@@ -327,14 +331,25 @@
     </v-snackbar>
 
     <!-- ส่วนจัดเเสดงเวลากดออกจากหน้าสร้างคำร้อง -->
-    <v-dialog v-model="exitpention" persistent width="800">
-      <v-card align="center">
+    <v-dialog v-model="exitpention" width="800">
+      <v-card align="center" class="pa-10">
         <h1>ต้องการออกจากหน้าสร้างคำร้องหรือไม่</h1>
-
-        <v-btn color="green darken-1" text to="/ChiefPetitionManagement">
+        <v-divider></v-divider>
+        <h3>กด "ตกลง" เพื่อยืนยันการออกจากหน้าสร้างคำร้อง</h3>
+        <v-divider></v-divider>
+        <v-btn
+          color="green darken-1"
+          class="text-white mr-5"
+          to="/ChiefPetitionManagement"
+        >
           ตกลง
         </v-btn>
-        <v-btn color="red darken-1" text @click="exitpention = false">
+
+        <v-btn
+          color="red darken-1"
+          class="text-white"
+          @click="slideexit = false"
+        >
           ยกเลิก
         </v-btn>
       </v-card>
@@ -395,14 +410,14 @@ export default {
     };
   },
   methods: {
-    addNewtitle: function () {
+    addNewtitle: function() {
       this.title.push({
         id: this.nextTodoId++,
         title: this.newtitleText,
       });
       this.newtitleText = "";
     },
-    addapprovertitle: function () {
+    addapprovertitle: function() {
       if (this.newapproverText !== "" && this.newapproverText !== null) {
         let ifdup = false;
         for (let i = 0; i < this.listapprover.length; i++) {
@@ -439,11 +454,11 @@ export default {
         });
       }
     },
-    removetitle: function (index) {
+    removetitle: function(index) {
       this.title.splice(index, 1);
       this.nextTodoId--;
     },
-    removeapprover: function (index) {
+    removeapprover: function(index) {
       this.listapprover.splice(index, 1);
       this.nextapproverId--;
     },
@@ -459,10 +474,7 @@ export default {
         cancelButtonText: "ไม่, ฉันต้องการสร้างคำร้องต่อไป",
       }).then((result) => {
         if (result.isConfirmed) {
-          
-          
           this.$router.push("/ChiefPetitionManagement");
-          
         }
       });
     },

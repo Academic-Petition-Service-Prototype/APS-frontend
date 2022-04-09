@@ -327,14 +327,25 @@
     </v-snackbar>
 
     <!-- ส่วนจัดเเสดงเวลากดออกจากหน้าสร้างคำร้อง -->
-    <v-dialog v-model="exitpention" persistent width="800">
-      <v-card align="center">
+    <v-dialog v-model="exitpention" width="800">
+      <v-card align="center" class="pa-10">
         <h1>ต้องการออกจากหน้าสร้างคำร้องหรือไม่</h1>
-
-        <v-btn color="green darken-1" text to="/OfficerPetitionManagement">
+        <v-divider></v-divider>
+        <h3>กด "ตกลง" เพื่อยืนยันการออกจากหน้าสร้างคำร้อง</h3>
+        <v-divider></v-divider>
+        <v-btn
+          color="green darken-1"
+          class="text-white mr-5"
+          to="/OfficerPetitionManagement"
+        >
           ตกลง
         </v-btn>
-        <v-btn color="red darken-1" text @click="exitpention = false">
+
+        <v-btn
+          color="red darken-1"
+          class="text-white"
+          @click="slideexit = false"
+        >
           ยกเลิก
         </v-btn>
       </v-card>

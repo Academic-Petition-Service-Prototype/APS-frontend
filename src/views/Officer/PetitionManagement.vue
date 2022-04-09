@@ -4,8 +4,7 @@
     <NavbarOF />
     <v-card class="cardshow">
       <v-toolbar dark prominent color="#6c757d">
-        <h1>จัดการคำร้อง/ยื่นเรื่อง</h1>
-
+        <h1>จัดการคำร้อง</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
 
@@ -35,8 +34,8 @@
             <v-col>
               <v-text-field
                 prepend-inner-icon="mdi-magnify"
-                label="ชื่อคำร้อง / ยื่นเรื่อง"
-                placeholder="ชื่อคำร้อง / ยื่นเรื่อง"
+                label="ชื่อคำร้อง"
+                placeholder="ชื่อคำร้อง"
                 filled
                 rounded
                 dense
@@ -51,17 +50,17 @@
 
         <template v-slot:default="props">
           <v-row class="text-center">
-            <v-col> ลำดับ </v-col>
-            <v-col> รายการ </v-col>
-            <v-col> สถานะ </v-col>
-            <v-col> วันที่สร้าง </v-col>
-            <v-col> Action </v-col>
+            <v-col class="h3">ลำดับ</v-col>
+            <v-col class="h3">รายการ</v-col>
+            <v-col class="h3">เปิด/ปิดคำร้อง</v-col>
+            <v-col class="h3">วันที่สร้างคำร้อง</v-col>
+            <v-col class="h3">การกระทำ</v-col>
           </v-row>
 
-          <v-row v-for="item in props.items" :key="item.text">
+          <v-row v-for="(item, index) in props.items" :key="index">
             <v-card-title>
               <v-row class="text-center" align="center">
-                <v-col> {{ item.form_id }} </v-col>
+                <v-col> {{ index + 1 }} </v-col>
                 <v-col> {{ item.form_name }} </v-col>
                 <v-col>
                   <v-switch
@@ -74,7 +73,6 @@
                   <p>{{ item.created_date }}</p>
                 </v-col>
                 <v-col>
-                  
                   <v-btn icon><v-icon color="red">mdi-delete</v-icon></v-btn>
                 </v-col>
               </v-row>

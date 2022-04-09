@@ -19,22 +19,20 @@
       <!-- ส่วนตัวเลือกเมนู -->
       <v-row>
         <v-col align="center">
-          <v-btn fab width="auto" height="auto" class="mt-15">
-            <v-img
-              class="rounded-circle"
-              width="150"
-              height="150"
-              src="../assets/5074620687.jpg"
-            >
-            </v-img>
-          </v-btn>
+          <v-img
+            class="rounded-circle mt-15"
+            width="150"
+            height="150"
+            src="../assets/5074620687.jpg"
+          >
+          </v-img>
         </v-col>
       </v-row>
 
       <v-row>
         <v-col class="text-white" align="center">
-          <p>คุณ : {{ firstname }} {{ lastname }}</p>
-          <p v-if="role == 'chief'">สถานะ : หัวหน้าหน่วยงาน</p>
+          ชื่อ : {{ firstname }} {{ lastname }}<br />
+          สถานะ : <v-if role="chief">หัวหน้าหน่วยงาน</v-if>
         </v-col>
       </v-row>
       <v-divider></v-divider>
@@ -76,24 +74,24 @@ export default {
     menu: [
       {
         menu: "1",
-        text: "Dashboard",
+        text: "หน้าแรก",
         route: "/ChiefDashboard",
         icon: "home",
       },
       {
-        menu: "5",
+        menu: "2",
         text: "จัดการคำร้อง",
         route: "/ChiefPetitionManagement",
         icon: "file-document",
       },
       {
-        menu: "2",
+        menu: "3",
         text: "คำร้องที่รอการอนุมัติ",
         route: "/ChiefCheckapprovedlist",
         icon: "file-document",
       },
       {
-        menu: "5",
+        menu: "4",
         text: "คำร้องที่อนุมัติแล้ว",
         route: "/Approvedlist",
         icon: "file-document",
@@ -105,39 +103,39 @@ export default {
         icon: "file-document",
       },
       {
-        menu: "3",
+        menu: "6",
         text: "การรายงานปัญหา",
         route: "/ChiefReport",
         icon: "alert-octagon",
       },
       {
-        menu: "3",
-        text: "การรายการร้องขอ",
-        route: "/requestlist",
+        menu: "7",
+        text: "การร้องขอคำร้อง",
+        route: "/ChiefRequest",
         icon: "alert-octagon",
       },
 
       {
-        menu: "4",
+        menu: "8",
         text: "ติดตามสถานะคำร้อง",
         route: "/ChiefTracking",
         icon: "marker-check",
       },
 
       {
-        menu: "6",
+        menu: "9",
         text: "จัดการ Secretary",
         route: "/ChiefSecretaryManagement",
         icon: "bullseye-arrow",
       },
       {
-        menu: "7",
+        menu: "10",
         text: "จัดการ Officer",
         route: "/ChiefOfficerManagement",
         icon: "bullseye-arrow",
       },
       {
-        menu: "8",
+        menu: "11",
         text: "โปรไฟล์",
         route: "/ChiefProfile",
         icon: "account",

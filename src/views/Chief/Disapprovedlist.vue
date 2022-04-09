@@ -4,7 +4,7 @@
     <NavbarChief />
     <v-card class="cardshow">
       <v-toolbar dark prominent color="primary">
-        <h1 class="text-center pa-5">คำร้องที่อนุมัติแล้ว</h1>
+        <h1 class="text-center pa-5">คำร้องที่ไม่อนุมัติ</h1>
 
         <v-spacer></v-spacer>
       </v-toolbar>
@@ -27,8 +27,8 @@
             <v-col>
               <v-text-field
                 prepend-inner-icon="mdi-magnify"
-                label="ชื่อคำร้อง / ยื่นเรื่อง"
-                placeholder="ชื่อคำร้อง / ยื่นเรื่อง"
+                label="ชื่อคำร้อง"
+                placeholder="ชื่อคำร้อง"
                 filled
                 rounded
                 dense
@@ -43,11 +43,11 @@
 
         <template v-slot:default="props">
           <v-row class="text-center">
-            <v-col> ลำดับ </v-col>
-            <v-col> รายการ </v-col>
-            <v-col> ผู้ยื่นคำร้อง </v-col>
-            <v-col> วันที่ยื่นคำร้อง </v-col>
-            <v-col> สถานะ </v-col>
+            <v-col class="h3"> ลำดับ </v-col>
+            <v-col class="h3"> รายการ </v-col>
+            <v-col class="h3"> ผู้ยื่นคำร้อง </v-col>
+            <v-col class="h3"> วันที่ยื่นคำร้อง </v-col>
+            <v-col class="h3"> สถานะ </v-col>
           </v-row>
 
           <v-row>
@@ -55,27 +55,31 @@
               <div :key="index">
                 <v-card-title>
                   <v-row class="text-center" align="center">
-                    <v-col> {{ item.submit_id }} </v-col>
+                    <v-col> {{ index + 1 }} </v-col>
                     <v-col> {{ item.form_name }} </v-col>
                     <v-col> {{ item.fullname }}</v-col>
                     <v-col> {{ item.submit_date }} </v-col>
 
                     <v-col>
-                      <v-btn @click="selectApprovaldetaill(item.submit_id)" color="#F44336">
+                      <v-btn
+                        @click="selectApprovaldetaill(item.submit_id)"
+                        color="#F44336"
+                        class="text-white"
+                      >
                         <template
                           v-for="(approval_order, n) in item.approval_order"
                         >
                           <!-- {{ item.approval_order[n].approver_name.user_id}} -->
 
-                          <h5
+                          <div
                             :key="n"
                             v-if="
                               item.approval_order[n].approver_name.user_id ==
-                              stong
+                                stong
                             "
                           >
                             {{ item.approval_order[n].approver_state }}
-                          </h5>
+                          </div>
                         </template>
                       </v-btn>
                     </v-col>
@@ -117,7 +121,7 @@
                 fab
                 dark
                 icon
-                color="#primary"
+                color="primary"
                 class="ml-1"
                 @click="nextPage"
               >
@@ -210,14 +214,16 @@ export default {
                 this.petitionListById[i].approval_order[j].approver_name
                   .user_id == this.$store.getters.getUser.user_id
               ) {
-                  if (this.petitionListById[i].approval_order[j].approver_name
-                  .user_id == this.$store.getters.getUser.user_id &&
-                  this.petitionListById[i].approval_order[j].approver_state =='ไม่อนุมัติ'
-                  ) {
-                    this.listapproval.push(this.petitionListById[i]);
-                  } else {
-                     //   h 
-                  }
+                if (
+                  this.petitionListById[i].approval_order[j].approver_name
+                    .user_id == this.$store.getters.getUser.user_id &&
+                  this.petitionListById[i].approval_order[j].approver_state ==
+                    "ไม่อนุมัติ"
+                ) {
+                  this.listapproval.push(this.petitionListById[i]);
+                } else {
+                  //   h
+                }
               } else {
                 console.log("error0.0");
               }
@@ -262,7 +268,7 @@ h1 {
   font-size: 50px;
   padding: 2% 0% 0% 0%;
 }
-h5{
+h5 {
   color: #f0f0f0;
 }
 </style>

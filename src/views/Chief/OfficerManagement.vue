@@ -4,9 +4,8 @@
     <NavbarChief />
     <v-card class="cardshow">
       <v-toolbar dark prominent color="primary">
-        <h1>จัดการ Officer</h1>
+        <h1>จัดการพนักงาน</h1>
         <v-spacer></v-spacer>
-        
       </v-toolbar>
 
       <v-data-iterator
@@ -21,16 +20,22 @@
       >
         <template v-slot:header>
           <v-row>
-            <v-col align="right"><v-btn color="success" style="margin: 10px 10px -25px 10px" @click="dialogadd = !dialogadd">
-          เพิ่ม Officer
-        </v-btn></v-col>
+            <v-col align="right"
+              ><v-btn
+                color="success"
+                style="margin: 10px 10px -25px 10px"
+                @click="dialogadd = !dialogadd"
+              >
+                เพิ่มพนักงาน
+              </v-btn></v-col
+            >
           </v-row>
           <v-row>
             <v-col>
               <v-text-field
                 prepend-inner-icon="mdi-magnify"
-                label="ชื่อ Officer"
-                placeholder="ชื่อ Officer"
+                label="ชื่อพนักงาน"
+                placeholder="ชื่อพนักงาน"
                 filled
                 rounded
                 dense
@@ -166,7 +171,7 @@
       <!-- เพิ่มข้อมูล officer -->
       <v-dialog v-model="dialogadd" persistent max-width="1000px">
         <v-card align="center">
-          <h1>เพิ่มข้อมูล officer</h1>
+          <h1>เพิ่มข้อมูลพนักงาน</h1>
           <v-divider></v-divider>
           <form v-on:submit.prevent="addNewofficer">
             <v-container>

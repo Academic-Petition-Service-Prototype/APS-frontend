@@ -10,8 +10,8 @@
       <div class="text-white subtitle-1 mr-4">
         เข้าสู่ระบบครั้งสุดท้ายเมื่อ {{ lastlogin }}
       </div>
-      <v-btn elevation="2" color="error" @click="logout">
-        Logout
+      <v-btn elevation="2" color="error" @click="Logout()">
+        ออกจากระบบ
       </v-btn>
     </v-app-bar>
     <!-- Navbar -->
@@ -21,15 +21,13 @@
       <!-- ส่วนตัวเลือกเมนู -->
       <v-row>
         <v-col align="center">
-          <v-btn fab width="100" height="auto" class="mt-15">
-            <v-img
-              class="rounded-circle"
-              width="150"
-              height="150"
-              src="../assets/5074620687.jpg"
-            >
-            </v-img>
-          </v-btn>
+          <v-img
+            class="rounded-circle mt-15"
+            width="150"
+            height="150"
+            src="../assets/5074620687.jpg"
+          >
+          </v-img>
         </v-col>
       </v-row>
 
@@ -52,15 +50,13 @@
             <v-icon color="#FFFFFF">mdi-{{ menu.icon }}</v-icon>
           </v-list-item-icon>
           <v-list-item-title class="text-white">
-            {{menu.text}}
+            {{ menu.text }}
           </v-list-item-title>
         </v-list-item>
       </v-list-item>
       <!-- ส่วนตัวเลือกเมนู -->
     </v-navigation-drawer>
     <!-- Sidebar -->
-
-  
   </div>
 </template>
 
@@ -75,7 +71,7 @@ export default {
     role: "",
     lastlogin: "",
     menu: [
-      { menu: "1", text: "Dashboard", route: "/UserDashboard", icon: "home" },
+      { menu: "1", text: "หน้าแรก", route: "/UserDashboard", icon: "home" },
       {
         menu: "2",
         text: "ส่งคำร้อง",
@@ -152,14 +148,14 @@ export default {
       }).then((result) => {
         if (result.isConfirmed) {
           this.$swal({
-            icon: 'success',
-            title: 'ขอบคุณ',
-            text:'ท่านออกจากระบบสำเร็จ',
-            timer: 1500,});
+            icon: "success",
+            title: "ขอบคุณ",
+            text: "ท่านออกจากระบบสำเร็จ",
+            timer: 1500,
+          });
           localStorage.clear();
           this.$store.dispatch("logout");
           this.$router.push("/login");
-          
         }
       });
     },

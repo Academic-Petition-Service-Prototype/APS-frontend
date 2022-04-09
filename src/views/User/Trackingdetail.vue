@@ -1,25 +1,18 @@
 <template>
   <div id="UserTrackingdetail">
     <NavbarUser />
-    {{submition_detail}}
-
     <v-card class="cardshow">
-      <v-toolbar dark prominent color="#FFAB40">
-          <v-row>
+      <v-row>
         <v-col>
-         
-          <v-btn elevation="2" color="error" @click="back">
-        ย้อนกลับ
-      </v-btn>
+          <v-btn class="ma-2" outlined color="secondary" @click="back">
+            ย้อนกลับ
+          </v-btn>
         </v-col>
         <v-col align="center">
-          <h1>{{ submition_detail[0].form_name }}</h1>
+          <h2>{{ submition_detail[0].form_name }}</h2>
         </v-col>
-        <v-col> </v-col>
+        <v-col></v-col>
       </v-row>
-      </v-toolbar>
-
-   
 
       <v-divider></v-divider>
 
@@ -91,30 +84,16 @@
             </v-row>
             <v-row>
               <v-col>
-                <h3>เวลาที่ส่งคำร้อง</h3>
-                <b-card class="text-center">
-                      <div>
-                        {{submition_detail[0].submit_date}}
-                      </div>
-                    </b-card>
-                
-              </v-col>
-            </v-row>
-            <v-row>
-              <v-col>
                 <div
                   v-for="(titlespecifics, index) in titlespecifics"
                   :key="index"
                 >
                   <h3>{{ titlespecifics.title }}</h3>
-
-                  <v-col align="center">
-                    <b-card class="text-center">
-                      <div>
-                        {{ specificsdata[index] }}
-                      </div>
-                    </b-card>
-                  </v-col>
+                  <b-card class="text-center">
+                    <div>
+                      {{ specificsdata[index] }}
+                    </div>
+                  </b-card>
                 </div>
               </v-col>
             </v-row>
@@ -122,19 +101,16 @@
             <v-row class="text-center">
               <h2>รายละเอียด</h2>
               <v-col>
-                   <b-card class="text-center">
-                      <div>
-                        
-                        <p v-if="submition_detail[0].submit_refuse === null">
-                                กำลังดำเนิการ
-                              </p>
-                              <p v-if="submition_detail[0].submit_refuse !== null">
-                                {{ submition_detail[0].submit_refuse }}
-                              </p>
-                      </div>
-                    </b-card>
-                
-                
+                <b-card class="text-center">
+                  <div>
+                    <p v-if="submition_detail[0].submit_refuse === null">
+                      กำลังดำเนิการ
+                    </p>
+                    <p v-if="submition_detail[0].submit_refuse !== null">
+                      {{ submition_detail[0].submit_refuse }}
+                    </p>
+                  </div>
+                </b-card>
               </v-col>
             </v-row>
           </v-container>
@@ -205,9 +181,6 @@ export default {
             this.titlespecifics = temp;
           }
 
-
-          
-
           // approval_order
           this.submition_detail = response.data;
           for (let i = 0; i < this.submition_detail.length; i++) {
@@ -225,7 +198,6 @@ export default {
           console.log(error);
         });
     },
-    
   },
   mounted() {
     this.getapprovaldetaillbyid();

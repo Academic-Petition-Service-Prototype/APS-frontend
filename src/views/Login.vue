@@ -11,71 +11,76 @@
 
           <v-col class="bg-color-logo-formslogin">
             <h1 class="margin-login">เข้าสู่ระบบ</h1>
+            <v-form @submit.prevent="login()">
+              <!-- ช่อง Email -->
+              <v-row>
+                <v-col>
+                  <v-text-field
+                    v-model="email"
+                    label="Email"
+                    type="email"
+                    class="textfield-margin"
+                    :rules="rules.email"
+                    required
+                  >
+                    <template v-slot:prepend>
+                      <v-tooltip bottom>
+                        <template v-slot:activator="{ on }">
+                          <v-icon v-on="on"> mdi-account </v-icon>
+                        </template>
+                        ใส่อีเมลล์
+                      </v-tooltip>
+                    </template>
+                  </v-text-field>
+                </v-col>
+              </v-row>
+              <!-- ช่อง Email -->
 
-            <!-- ช่อง Email -->
-            <v-row>
-              <v-col>
-                <v-text-field
-                  v-model="email"
-                  label="Email"
-                  type="email"
-                  class="textfield-margin"
-                  :rules="rules.email"
-                  required
-                >
-                  <template v-slot:prepend>
-                    <v-tooltip bottom>
-                      <template v-slot:activator="{ on }">
-                        <v-icon v-on="on"> mdi-account </v-icon>
-                      </template>
-                      ใส่รหัสผ่านตามที่หน่วยงานของท่านได้เเจ้งไว้!
-                    </v-tooltip>
-                  </template>
-                </v-text-field>
-              </v-col>
-            </v-row>
-            <!-- ช่อง U-id -->
+              <!-- ช่อง password -->
+              <v-row>
+                <v-col>
+                  <v-text-field
+                    v-model="password"
+                    :rules="rules.email"
+                    label="Password"
+                    type="password"
+                    class="textfield-margin"
+                    required
+                  >
+                    <template v-slot:prepend>
+                      <v-tooltip bottom>
+                        <template v-slot:activator="{ on }">
+                          <v-icon v-on="on"> mdi-lock </v-icon>
+                        </template>
+                        ใส่รหัสผ่าน
+                      </v-tooltip>
+                    </template>
+                  </v-text-field>
+                </v-col>
+              </v-row>
+              <!-- ช่อง password -->
+              <v-row>
+                <v-col align="center">
+                  <v-btn color="primary" type="submit" width="300">
+                    เข้าสู่ระบบ
+                  </v-btn>
+                </v-col>
+              </v-row>
 
-            <!-- ช่อง pass -->
-            <v-row>
-              <v-col>
-                <v-text-field
-                  v-model="password"
-                  :rules="rules.email"
-                  label="Password"
-                  type="password"
-                  class="textfield-margin"
-                  required
-                >
-                  <template v-slot:prepend>
-                    <v-tooltip bottom>
-                      <template v-slot:activator="{ on }">
-                        <v-icon v-on="on"> mdi-lock </v-icon>
-                      </template>
-                      ใส่รหัสผ่าน
-                    </v-tooltip>
-                  </template>
-                </v-text-field>
-              </v-col>
-            </v-row>
-            <!-- ช่อง pass -->
-            <v-row>
-              <v-col align="center">
-                <v-btn color="primary" @click="login" width="300" right dark>
-                  เข้าสู่ระบบ
-                </v-btn>
-              </v-col>
-            </v-row>
+              <v-row>
+                <v-col align="center">
+                  ท่านลืมรหัสผ่านหรือเปล่า?
 
-            <v-row>
-              <v-col align="center">
-                ท่านลืมรหัสผ่านหรือเปล่า?
-
-                <v-btn text color="error" @click="dialogforgot = !dialogforgot">
-                  ลืมรหัสผ่าน
-                </v-btn>
-              </v-col>
-            </v-row>
+                  <v-btn
+                    text
+                    color="error"
+                    @click="dialogforgot = !dialogforgot"
+                  >
+                    ลืมรหัสผ่าน
+                  </v-btn>
+                </v-col>
+              </v-row>
+            </v-form>
           </v-col>
         </v-row>
       </v-col>
@@ -131,7 +136,7 @@ export default {
   data() {
     return {
       email: "",
-      password: "",
+      password: "123456",
       msg: "",
       forgotEmail: "",
       snackbar: false,

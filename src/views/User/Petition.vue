@@ -3,7 +3,7 @@
     <NavbarUser />
     <v-card class="cardmargin">
       <v-toolbar dark prominent color="#FFAB40">
-        <h1>เลือกแบบคำร้อง / ยื่นเรื่อง</h1>
+        <h1>เลือกแบบคำร้อง</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
       <!-- {{petitionList}} -->

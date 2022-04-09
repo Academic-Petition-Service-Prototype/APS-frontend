@@ -23,25 +23,20 @@
       <!-- ส่วนตัวเลือกเมนู -->
       <v-row>
         <v-col align="center">
-          <v-btn fab width="auto" height="auto" class="mt-15">
-            <v-img
-              class="rounded-circle"
-              width="150"
-              height="150"
-              src="../assets/5074620687.jpg"
-            >
-            </v-img>
-          </v-btn>
+          <v-img
+            class="rounded-circle mt-15"
+            width="150"
+            height="150"
+            src="../assets/5074620687.jpg"
+          >
+          </v-img>
         </v-col>
       </v-row>
 
       <v-row>
         <v-col class="text-white" align="center">
-          
-          <v-col class="text-white" align="center">
-          <p>คุณ : {{ firstname }} {{ lastname }}</p>
-          <p v-if="role == 'secretary'">สถานะ : เลขานุการ</p>
-        </v-col>
+          ชื่อ : {{ firstname }} {{ lastname }}<br />
+          สถานะ : <v-if role="secretary">เลขานุการ</v-if>
         </v-col>
       </v-row>
       <v-divider></v-divider>
@@ -83,7 +78,7 @@ export default {
     menu: [
       {
         menu: "1",
-        text: "Dashboard",
+        text: "หน้าแรก",
         route: "/SecretaryDashboard",
         icon: "home",
       },
@@ -106,21 +101,17 @@ export default {
         icon: "alert-octagon",
       },
       {
-        menu: "4",
-        text: "รายงานการร้องขอ",
+        menu: "5",
+        text: "การร้องขอคำร้อง",
         route: "/Secretaryrequestlist",
         icon: "alert-octagon",
       },
       {
-        menu: "5",
+        menu: "6",
         text: "โปรไฟล์",
         route: "/SecretaryProfile",
         icon: "account",
       },
-    ],
-    menuseting: [
-      { menu: "1", text: "เกี่ยวกับ", route: "/aboutme" },
-      { menu: "2", text: "ตั้งค่า", route: "/seting" },
     ],
   }),
   async created() {

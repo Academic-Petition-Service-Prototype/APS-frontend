@@ -3,10 +3,10 @@
     <NavbarSecretary />
     <v-card class="cardshow">
       <v-toolbar dark prominent color="#8BC34A">
-        <h1 class="text-center pa-5">การรายงานปัญหาทั้งหมด</h1>
+        <h1 class="text-center pa-5">การรายงานปัญหา</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
-      
+
       <v-data-iterator
         :items="reports"
         :items-per-page.sync="itemsPerPage"
@@ -19,16 +19,14 @@
       >
         <template v-slot:header>
           <v-row>
-            <v-col align="right"
-              ></v-col
-            >
+            <v-col align="right"></v-col>
           </v-row>
           <v-row>
             <v-col>
               <v-text-field
                 prepend-inner-icon="mdi-magnify"
-                label="ชื่อคำร้อง / ยื่นเรื่อง"
-                placeholder="ชื่อคำร้อง / ยื่นเรื่อง"
+                label="ชื่อรายงานปัญหา"
+                placeholder="ชื่อรายงานปัญหา"
                 filled
                 rounded
                 dense
@@ -43,33 +41,27 @@
 
         <template v-slot:default="props">
           <v-row class="text-center">
-            <v-col> ลำดับ </v-col>
-            <v-col> รายการ </v-col>
-            
-            <v-col> วันที่สร้าง </v-col>
-            <v-col> สถานะ </v-col>
+            <v-col class="h3">ลำดับ</v-col>
+            <v-col class="h3">รายการ</v-col>
+            <v-col class="h3">วันที่สร้าง</v-col>
+            <v-col class="h3">สถานะ</v-col>
           </v-row>
 
-          <v-row v-for="item in props.items" :key="item.text">
+          <v-row v-for="(item, index) in props.items" :key="index">
             <v-card-title>
               <v-row class="text-center" align="center">
-                <v-col> {{ item.report_id }} </v-col>
+                <v-col> {{ index + 1 }} </v-col>
                 <v-col> {{ item.report_title }} </v-col>
-                
-                <v-col> <p>{{ item.report_created }}</p> </v-col>
+                <v-col>{{ item.report_created }}</v-col>
                 <v-col>
-                  
-          <v-btn small class="mr-2" disabled>
-            <h5 v-if="item.report_state == 'read'">
-                  อ่านเเล้ว
-            </h5>
-
-            <h5 v-if="item.report_state == 'unread'">
-                  ยังไม่ได้อ่าน
-            </h5>
-            
-          </v-btn>
-        
+                  <v-btn disabled>
+                    <div v-if="item.report_state == 'read'">
+                      อ่านเเล้ว
+                    </div>
+                    <div v-else-if="item.report_state == 'unread'">
+                      ยังไม่ได้อ่าน
+                    </div>
+                  </v-btn>
                 </v-col>
               </v-row>
             </v-card-title>
@@ -116,7 +108,6 @@
           </v-row>
         </template>
       </v-data-iterator>
-      
     </v-card>
   </div>
 </template>
@@ -139,7 +130,6 @@ export default {
       itemsPerPage: 4,
       sortBy: "name",
       reports: [],
-
     };
   },
   mounted() {
@@ -149,8 +139,8 @@ export default {
   methods: {
     getreport() {
       axios
-        .post(process.env.VUE_APP_URL + "agencyreports",{
-          agency_id: this.$store.getters.getUser.agencies_id
+        .post(process.env.VUE_APP_URL + "agencyreports", {
+          agency_id: this.$store.getters.getUser.agencies_id,
         })
         .then((response) => {
           // handle success

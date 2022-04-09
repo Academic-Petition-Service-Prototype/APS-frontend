@@ -4,23 +4,20 @@
     <v-card class="cardmargin">
       <v-toolbar dark prominent color="primary">
         <h1>รายละเอียดการรายงานปัญหา</h1>
-
-        
       </v-toolbar>
-      
-      
       <v-form>
         <v-container class="text-center">
           <v-row>
             <v-col cols="12">
-              <v-card  outlined class="p-4 ">
-                
-                <h1>หัวข้อปัญหา</h1>
-                <h2 >{{ report_title }}</h2>
+              <v-card outlined class="p-4 ">
+                <h3>หัวข้อการร้องขอคำร้อง</h3>
+                <v-divider></v-divider>
+                <p class="h5">{{ report_title }}</p>
               </v-card>
               <v-card outlined class="p-4 mt-2">
-                <h1>รายละเอียดปัญหา</h1>
-                <h2 >{{ report_detail }}</h2>
+                <h3>รายละเอียดการร้องขอคำร้อง</h3>
+                <v-divider></v-divider>
+                <p class="h5">{{ report_detail }}</p>
               </v-card>
             </v-col>
             <v-col cols="12" class="text-center">

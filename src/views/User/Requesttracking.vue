@@ -4,10 +4,7 @@
     <!-- สถานะคำร้อง -->
     <v-card class="cardshow">
       <v-toolbar dark prominent color="#FFAB40">
-        <h1
-          class="text-center pa-5"
-          style="font-size: 50px; padding: 2% 0% 0% 0%"
-        >
+        <h1 class="text-center pa-5">
           สถานะการร้องขอคำร้องที่ไม่มีในระบบ
         </h1>
         <v-spacer></v-spacer>
@@ -29,8 +26,8 @@
             <v-col>
               <v-text-field
                 prepend-inner-icon="mdi-magnify"
-                label="ชื่อคำร้อง / ยื่นเรื่อง"
-                placeholder="ชื่อคำร้อง / ยื่นเรื่อง"
+                label="ชื่อหัวข้อการร้องขอคำร้องที่ไม่มีในระบบ"
+                placeholder="ชื่อหัวข้อการร้องขอคำร้องที่ไม่มีในระบบ"
                 filled
                 rounded
                 dense
@@ -102,33 +99,33 @@
                         <v-stepper-content step="1">
                           <v-card
                             class="mb-12"
-                            color="grey lighten-1"
+                            color="grey lighten-2"
                             height="200px"
                           >
-                            <h2 class="cardshow">รายละเอียด1</h2>
-                            <h2 class="cardshow">{{ item.request_detail }}</h2>
+                            <h2 class="cardshow">รายละเอียด</h2>
+                            <h5 class="cardshow">{{ item.request_detail }}</h5>
                           </v-card>
                         </v-stepper-content>
 
                         <v-stepper-content step="2">
                           <v-card
                             class="mb-12"
-                            color="grey lighten-1"
+                            color="grey lighten-2"
                             height="200px"
                           >
-                            <h2 class="cardshow">รายละเอียด2</h2>
-                            <h2 class="cardshow">{{ item.request_detail }}</h2>
+                            <h2 class="cardshow">รายละเอียด</h2>
+                            <h5 class="cardshow">{{ item.request_detail }}</h5>
                           </v-card>
                         </v-stepper-content>
 
                         <v-stepper-content step="3">
                           <v-card
                             class="mb-12"
-                            color="grey lighten-1"
+                            color="grey lighten-2"
                             height="200px"
                           >
-                            <h2 class="cardshow">รายละเอียด2</h2>
-                            <h2 class="cardshow">{{ item.request_detail }}</h2>
+                            <h2 class="cardshow">รายละเอียด</h2>
+                            <h5 class="cardshow">{{ item.request_detail }}</h5>
                           </v-card>
                         </v-stepper-content>
                       </v-stepper-items>

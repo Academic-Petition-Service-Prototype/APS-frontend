@@ -42,9 +42,9 @@
         </template>
         <template v-slot:default="props">
           <v-row class="text-center">
-            <v-col align="center" class="h3">ลำดับ</v-col>
-            <v-col align="center" class="h3">รายการ</v-col>
-            <v-col align="center" class="h3">วันที่ส่งคำร้อง</v-col>
+            <v-col class="h3">ลำดับ</v-col>
+            <v-col class="h3">รายการ</v-col>
+            <v-col class="h3">วันที่ส่งคำร้อง</v-col>
           </v-row>
 
           <v-row
@@ -124,7 +124,7 @@
                           >
                             <v-card
                               class="mb-12"
-                              color="grey lighten-1"
+                              color="grey lighten-2"
                               height="200px"
                             >
                               <h2 class="cardshow">รายละเอียด</h2>

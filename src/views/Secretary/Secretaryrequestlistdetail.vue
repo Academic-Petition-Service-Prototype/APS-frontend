@@ -3,24 +3,22 @@
     <NavbarSecretary />
     <v-card class="cardmargin">
       <v-toolbar dark prominent color="#8BC34A">
-        <h1>รายละเอียดการรายงานปัญหา</h1>
-
-        
+        <h1>รายละเอียดการร้องขอคำร้องที่ไม่มีในระบบ</h1>
       </v-toolbar>
-      
-      
+
       <v-form>
         <v-container class="text-center">
           <v-row>
             <v-col cols="12">
-              <v-card  outlined class="p-4 ">
-                
-                <h1>หัวข้อปัญหา</h1>
-                <h2 >{{ report_title }}</h2>
+              <v-card outlined class="p-4 ">
+                <h3>หัวข้อการร้องขอคำร้อง</h3>
+                <v-divider></v-divider>
+                <p class="h5">{{ request_title }}</p>
               </v-card>
               <v-card outlined class="p-4 mt-2">
-                <h1>รายละเอียดปัญหา</h1>
-                <h2 >{{ report_detail }}</h2>
+                <h3>รายละเอียดการร้องขอคำร้อง</h3>
+                <v-divider></v-divider>
+                <p class="h5">{{ request_detail }}</p>
               </v-card>
             </v-col>
             <v-col cols="12" class="text-center">
@@ -44,21 +42,21 @@ export default {
   },
   data() {
     return {
-      report_title: "",
-      report_detail: "",
+      request_title: "",
+      request_detail: "",
     };
   },
   methods: {
     back() {
       this.$router.push("/Secretaryrequestlist");
     },
-    getreportbyid() {
+    getrequestbyid() {
       axios
-        .get(process.env.VUE_APP_URL + "reports/" + this.$route.params.id)
+        .get(process.env.VUE_APP_URL + "requests/" + this.$route.params.id)
         .then((response) => {
           // handle success
-          this.report_title = response.data.report_title;
-          this.report_detail = response.data.report_detail;
+          this.request_title = response.data.request_title;
+          this.request_detail = response.data.request_detail;
         })
         .catch((error) => {
           // handle error
@@ -67,7 +65,7 @@ export default {
     },
   },
   mounted() {
-    this.getreportbyid();
+    this.getrequestbyid();
   },
 };
 </script>
