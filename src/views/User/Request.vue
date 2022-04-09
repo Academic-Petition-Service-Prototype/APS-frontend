@@ -60,17 +60,41 @@ export default {
         })
         .then((response) => {
           if (response.data == "Please fill your information") {
-            alert("กรุณากรอกข้อมูลให้ครบ");
+            
+            this.$swal({
+              icon: "error",
+              title: "เกิดข้อผิดพลาดในการร้องขอคำร้อง",
+              text: "กรุณากรอกข้อมูลให้ครบ",
+              timer: 2000,
+            });
           } else if (response.data == "Sent request successful") {
-            alert("การร้องขอคำร้องสำเร็จ");
+            this.$swal({
+              icon: "success",
+              title: "การร้องขอคำร้องสำเร็จ",
+              text: "ส่งรายงานการร้องขอคำร้อง "+this.request_title +" สำเร็จ ",
+              timer: 1500,
+            });
             this.request_title = "";
             this.request_detail = "";
           } else {
-            alert("เกิดข้อผิดพลาดในการร้องขอคำร้องสำเร็จ");
+             this.$swal({
+              icon: "error",
+              title: "เกิดข้อผิดพลาดในการร้องขอคำร้อง",
+              text: "เกิดข้อผิดพลาดในการร้องขอคำร้องที่ไม่ทราบสาเหตุ",
+              timer: 2000,
+              
+            });
           }
         })
         .catch((error) => {
-          console.log(error);
+          this.$swal({
+              icon: "error",
+              title: "เกิดข้อผิดพลาดในการร้องขอคำร้อง",
+              text: "เกิดข้อผิดพลาดในการร้องขอคำร้อง",
+              timer: 2000,
+              error
+            });
+          
         });
     },
   },

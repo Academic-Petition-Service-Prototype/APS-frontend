@@ -7,7 +7,7 @@
         แบบคำร้อง / ยื่นเรื่อง
         <v-divider></v-divider>
       </h1>
-     
+
       <h1 v-for="heard in heard" :key="heard" style="text-align: center">
         {{ petitionListById.form_name }}
       </h1>
@@ -182,8 +182,6 @@ export default {
           temp = this.specifics.slice(1, -1);
           temp = JSON.parse(temp);
           this.petitionListById.approval_name = temp;
-
-          
         })
         .catch((error) => {
           // handle error
@@ -199,8 +197,25 @@ export default {
           form_value: this.form_value,
         })
         .then((response) => {
-          if (response.data == "Sent petition successful") {
-            alert("ส่งคำร้อง" + this.petitionListById.form_name + "สำเร็จ");
+          if (this.form_value !== "" && this.form_value.length !== 0) {
+            if (response.data == "Sent petition successful") {
+              this.$swal({
+                icon: "success",
+                title: "การส่งคำร้องสำเร็จ",
+                text:
+                  "ส่งคำร้อง " + this.petitionListById.form_name + " สำเร็จ ",
+                timer: 1500,
+              });
+              this.$router.push("/UserPetition");
+            }
+          } else {
+            this.$swal({
+              icon: "error",
+              title: "เกิดข้อผิดพลาดในการร้องขอคำร้อง",
+              text: "กรุณากรอกข้อมูลให้ครบ",
+              timer: 2000,
+            });
+
           }
         })
         .catch((error) => {

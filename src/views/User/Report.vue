@@ -70,17 +70,29 @@ export default {
         })
         .then((response) => {
           if (response.data == "Please fill your information") {
-            this.textsnackbar = "กรุณากรอกข้อมูลให้ครบ";
-            this.colorsnackbar = "#DB4437";
-            this.snackbar = true;
+            this.$swal({
+              icon: "error",
+              title: "เกิดข้อผิดพลาดในการส่งรายงาน",
+              text: "กรุณากรอกข้อมูลให้ครบ",
+              timer: 2000,
+            });
           } else if (response.data == "Sent report successful") {
-            this.textsnackbar = "รายงานปัญหาสำเร็จ";
-            this.colorsnackbar = "#2E7D32";
-            this.snackbar = true;
+            this.$swal({
+              icon: "success",
+              title: "รายงานปัญหาสำเร็จ",
+              text: "ส่งรายงาน "+this.report_title +" สำเร็จ ",
+              timer: 1500,
+            });
+
             this.report_title = "";
             this.report_detail = "";
           } else {
-            alert("เกิดข้อผิดพลาดในการส่งรายงาน");
+            this.$swal({
+              icon: "error",
+              title: "เกิดข้อผิดพลาดในการส่งรายงาน",
+              text: "การส่งรายงานเกิดความผิดพลาด",
+              timer: 2000,
+            });
           }
         })
         .catch((error) => {
