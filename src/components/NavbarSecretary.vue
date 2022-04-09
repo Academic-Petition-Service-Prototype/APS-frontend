@@ -109,7 +109,7 @@ export default {
       },
       {
         menu: "2",
-        text: "ติดตามสถานะคำร้อง/ปัญหา",
+        text: "ติดตามสถานะคำร้อง",
         route: "/SecretaryTracking",
         icon: "marker-check",
       },

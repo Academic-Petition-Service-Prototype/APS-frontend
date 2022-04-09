@@ -293,27 +293,27 @@ const routes = [
   //Secretary
   {
     path: '/SecretaryDashboard',
-    name: 'SecretaryDashboard',
+    name: 'แดชบอร์ด',
     component: SecretaryDashboard
   },
   {
     path: '/SecretaryProfile',
-    name: 'SecretaryProfile',
+    name: 'โปรไฟล์',
     component: SecretaryProfile
   },
   {
     path: '/SecretaryTracking',
-    name: 'SecretaryTracking',
+    name: 'ติดตามสถานะคำร้อง',
     component: SecretaryTracking
   },
   {
     path: '/SecretaryViewApproval',
-    name: 'SecretaryViewApproval',
+    name: 'การอนุมัติคำร้อง',
     component: SecretaryViewApproval
   },
   {
     path: '/SecretaryViewReport',
-    name: 'SecretaryViewReport',
+    name: 'การรายงานปัญหา',
     component: SecretaryViewReport
   },
   {
