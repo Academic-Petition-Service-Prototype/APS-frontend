@@ -84,7 +84,7 @@
                   </form>
                   <v-row v-for="(title, index) in title" :key="title.id">
                     <v-col class="cardshow" align="center">
-                      {{ index+1 }}
+                      {{ index + 1 }}
                     </v-col>
                     <v-col class="cardshow" align="center">
                       {{ title.title }}
@@ -120,7 +120,10 @@
                     class="cardshow"
                     required
                   ></v-text-field>
-                    
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col>
                   <h1>หมวดหมู่คำร้อง</h1>
                   <v-autocomplete
                     class="cardshow"
@@ -133,6 +136,16 @@
                     label="หมวดหมู่คำร้อง"
                     multiple
                   ></v-autocomplete>
+                </v-col>
+                <v-col align="center">
+                  หากท่านต้องการสร้างหมวดหมู่ใหม่กดเพิ่ม "เพิ่มหมวดหมู่"
+                  <v-rol>
+                    <v-col align="center">
+                      <v-btn class="cardshow" @click="addtag()">
+                        เพิ่มหมวดหมู่
+                      </v-btn>
+                    </v-col>
+                  </v-rol>
                 </v-col>
               </v-row>
 
@@ -153,7 +166,9 @@
                   <h1>เพิ่มผู้อนุมัติ</h1>
                 </v-col>
               </v-row>
-
+              {{ newapproverText }}
+              <br /><br />
+              {{ listapprover }}
               <v-row>
                 <!-- ส่วนของเพิ่มหน้าผู้อนุมัติ -->
                 <div>
@@ -181,7 +196,7 @@
                     :key="listapprover.order"
                   >
                     <v-col class="cardshow" align="center">
-                      {{ index+1 }}
+                      {{ index + 1 }}
                     </v-col>
                     <v-col class="cardshow" align="center">
                       {{ listapprover.approver_name.f_name }}
@@ -314,43 +329,6 @@
       </v-stepper>
       <!-- ส่วนสร้างเอกสาร -->
     </v-card>
-
-    <!-- เเจ้งเตือน  -->
-    <v-snackbar v-model="snackbar">
-      {{ text }}
-
-      <template v-slot:action="{ attrs }">
-        <v-btn color="pink" text v-bind="attrs" @click="snackbar = false">
-          Close
-        </v-btn>
-      </template>
-    </v-snackbar>
-
-    <!-- ส่วนจัดเเสดงเวลากดออกจากหน้าสร้างคำร้อง -->
-    <v-dialog v-model="exitpention" width="800">
-      <v-card align="center" class="pa-10">
-        <h1>ต้องการออกจากหน้าสร้างคำร้องหรือไม่</h1>
-        <v-divider></v-divider>
-        <h3>กด "ตกลง" เพื่อยืนยันการออกจากหน้าสร้างคำร้อง</h3>
-        <v-divider></v-divider>
-        <v-btn
-          color="green darken-1"
-          class="text-white mr-5"
-          to="/OfficerPetitionManagement"
-        >
-          ตกลง
-        </v-btn>
-
-        <v-btn
-          color="red darken-1"
-          class="text-white"
-          @click="slideexit = false"
-        >
-          ยกเลิก
-        </v-btn>
-      </v-card>
-    </v-dialog>
-    <!-- ส่วนจัดเเสดงเวลากดออกจากหน้าสร้างคำร้อง -->
   </div>
   <!-- ส่วนจัดเเสดง -->
 </template>
@@ -406,8 +384,8 @@ export default {
     };
   },
   methods: {
-    leavepage(){
-        this.$swal({
+    leavepage() {
+      this.$swal({
         title: "ท่านกำลังจะออกจากหน้าสร้างคำร้อง ?",
         text: "ท่านเเน่ใจว่าต้องการออกจากหน้าสร้างคำร้อง!",
         icon: "warning",
@@ -418,10 +396,7 @@ export default {
         cancelButtonText: "ไม่, ฉันต้องการสร้างคำร้องต่อไป",
       }).then((result) => {
         if (result.isConfirmed) {
-          
-          
           this.$router.push("/OfficerPetitionManagement");
-          
         }
       });
     },
@@ -440,9 +415,15 @@ export default {
             this.listapprover[i].approver_name.user_id ===
             this.newapproverText.user_id
           ) {
+            console.log("if");
+            console.log(this.newapproverText.f_name);
+            console.log(this.listapprover[i].approver_name.f_name);
             ifdup = true;
           } else {
+            console.log("else");
             ifdup = false;
+            console.log(this.newapproverText.f_name);
+            console.log(this.listapprover[i].approver_name.f_name);
           }
         }
         if (ifdup == true) {
@@ -476,6 +457,40 @@ export default {
     removeapprover: function (index) {
       this.listapprover.splice(index, 1);
       this.nextapproverId--;
+    },
+
+    addtag() {
+      this.$swal({
+        title: "กรุณาใส่ชื่อหมวดหมู่ใหม่",
+        input: "text",
+        inputAttributes: {
+          autocapitalize: "off",
+        },
+        showCancelButton: true,
+        confirmButtonText: "เพิ่ม",
+        cancelButtonText: "ยกเลิก",
+        showLoaderOnConfirm: true,
+        preConfirm: (login) => {
+          return fetch(`//api.github.com/users/${login}`)
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error(response.statusText);
+              }
+              return response.json();
+            })
+            .catch((error) => {
+              this.$swal.showValidationMessage(`Request failed: ${error}`);
+            });
+        },
+        allowOutsideClick: () => !this.$swal.isLoading(),
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$swal.fire({
+            title: `${result.value.login}'s avatar`,
+            imageUrl: result.value.avatar_url,
+          });
+        }
+      });
     },
 
     nextstepfirst() {
@@ -522,8 +537,7 @@ export default {
         this.form_detail !== "" &&
         this.form_detail !== null &&
         this.tag_form !== "" &&
-        this.tag_form !== null
-        &&
+        this.tag_form !== null &&
         this.tag_form.length !== 0
       ) {
         this.stepprocess = 3;
@@ -584,7 +598,7 @@ export default {
             this.$swal({
               icon: "success",
               title: "สร้างคำร้องเสร็จสิ้น",
-              text: "ยินดีด้วยคุณสร้างคำร้อง "+this.forms.title+" สำเร็จ",
+              text: "ยินดีด้วยคุณสร้างคำร้อง " + this.forms.title + " สำเร็จ",
               timer: 1500,
             });
             this.$router.push("/OfficerPetitionManagement");
