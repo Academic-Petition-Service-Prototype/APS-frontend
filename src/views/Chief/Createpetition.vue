@@ -84,7 +84,7 @@
                   </form>
                   <v-row v-for="(title, index) in title" :key="title.id">
                     <v-col class="cardshow" align="center">
-                      {{ title.id }}
+                      {{ index+1 }}
                     </v-col>
                     <v-col class="cardshow" align="center">
                       {{ title.title }}
@@ -185,7 +185,7 @@
                     :key="listapprover.order"
                   >
                     <v-col class="cardshow" align="center">
-                      {{ listapprover.order }}
+                      {{ index+1 }}
                     </v-col>
                     <v-col class="cardshow" align="center">
                       {{ listapprover.approver_name.f_name }}
@@ -488,6 +488,8 @@ export default {
         this.form_detail !== null &&
         this.tag_form !== "" &&
         this.tag_form !== null
+        &&
+        this.tag_form.length !== 0
       ) {
         this.stepprocess = 3;
       } else {

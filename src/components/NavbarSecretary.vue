@@ -100,7 +100,7 @@ export default {
       },
       {
         menu: "5",
-        text: "การร้องขอคำร้อง",
+        text: "การร้องขอคำร้องเพิ่มเติม",
         route: "/Secretaryrequestlist",
         icon: "alert-octagon",
       },

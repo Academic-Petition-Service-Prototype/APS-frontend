@@ -108,14 +108,14 @@ export default {
       },
       {
         menu: "7",
-        text: "การร้องขอคำร้อง",
+        text: "การร้องขอคำร้องเพิ่มเติม",
         route: "/ChiefRequest",
         icon: "alert-octagon",
       },
 
       {
         menu: "8",
-        text: "ติดตามสถานะคำร้อง",
+        text: "ติดตามสถานะการร้องขอคำร้องเพิ่มเติม",
         route: "/ChiefTracking",
         icon: "marker-check",
       },

@@ -265,7 +265,7 @@ const routes = [
   },
   {
     path: '/ChiefRequest',
-    name: 'การร้องขอคำร้องที่ไม่มีในระบบ',
+    name: 'การร้องขอคำร้องเพิ่มเติม',
     component: ChiefRequest 
   },
   {
@@ -310,12 +310,12 @@ const routes = [
   },
   {
     path: '/Secretaryrequestlist',
-    name: 'การร้องขอคำร้องที่ไม่มีในระบบ',
+    name: 'การร้องขอคำร้องเพิ่มเติม',
     component: Secretaryrequestlist
   },
   {
     path: '/Secretaryrequestlistdetail/:id',
-    name: 'รายละเอียดการร้องขอคำร้องที่ไม่มีในระบบ',
+    name: 'รายละเอียดการร้องขอคำร้องเพิ่มเติม',
     component: Secretaryrequestlistdetail
   },
  
