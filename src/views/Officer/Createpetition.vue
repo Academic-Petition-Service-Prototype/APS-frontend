@@ -344,7 +344,7 @@ export default {
   data() {
     return {
       tag: ["a", "b", "c"],
-      tag_form: "",
+      tag_form: null,
       form_detail: "",
       stepprocess: 1,
       text: ``,
@@ -400,14 +400,14 @@ export default {
         }
       });
     },
-    addNewtitle: function () {
+    addNewtitle: function() {
       this.title.push({
         id: this.nextTodoId++,
         title: this.newtitleText,
       });
       this.newtitleText = "";
     },
-    addapprovertitle: function () {
+    addapprovertitle: function() {
       if (this.newapproverText !== "" && this.newapproverText !== null) {
         let ifdup = false;
         for (let i = 0; i < this.listapprover.length; i++) {
@@ -450,46 +450,73 @@ export default {
         });
       }
     },
-    removetitle: function (index) {
+    removetitle: function(index) {
       this.title.splice(index, 1);
       this.nextTodoId--;
     },
-    removeapprover: function (index) {
+    removeapprover: function(index) {
       this.listapprover.splice(index, 1);
       this.nextapproverId--;
     },
 
     addtag() {
       this.$swal({
-        title: "กรุณาใส่ชื่อหมวดหมู่ใหม่",
+        title: "กรุณากรอกชื่อหมวดหมู่คำร้อง",
         input: "text",
-        inputAttributes: {
-          autocapitalize: "off",
-        },
+        // inputValue: this.tag_form,
         showCancelButton: true,
         confirmButtonText: "เพิ่ม",
         cancelButtonText: "ยกเลิก",
         showLoaderOnConfirm: true,
-        preConfirm: (login) => {
-          return fetch(`//api.github.com/users/${login}`)
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error(response.statusText);
-              }
-              return response.json();
-            })
-            .catch((error) => {
-              this.$swal.showValidationMessage(`Request failed: ${error}`);
-            });
+        inputValidator: (value) => {
+          if (!value) {
+            return "กรุณากรอกชื่อหมวดหมู่คำร้อง";
+          } else {
+            this.tag_form = value;
+            axios
+              .post(process.env.VUE_APP_URL + "tags", {
+                users_id: this.$store.getters.getUser.user_id,
+                agencies_id: this.$store.getters.getUser.agencies_id,
+                tag_name: this.tag_form,
+              })
+              .then((response) => {
+                if (response.data == "กรุณากรอกชื่อหมวดหมู่คำร้อง") {
+                  this.$swal({
+                    icon: "error",
+                    title: "เกิดข้อผิดพลาดในการสร้างหมวดหมู่คำร้อง",
+                    text: "กรุณากรอกชื่อหมวดหมู่คำร้อง",
+                    timer: 2000,
+                  });
+                } else if (
+                  response.data == "แท็คนี้มีอยู่ในระบบของหน่วยงานแล้ว"
+                ) {
+                  this.$swal({
+                    icon: "error",
+                    title: "แท็คนี้มีอยู่ในระบบของหน่วยงานแล้ว",
+                    text: "กรุณาใช้ชื่อหมวดหมู่คำร้องอื่น",
+                    timer: 2000,
+                  });
+                } else if (response.data == "เพิ่มแท็คสำเร็จ") {
+                  this.$swal({
+                    icon: "success",
+                    title: "เพิ่มแท็คสำเร็จ",
+                    text: "เพิ่ม" + this.tag_form + "สำเร็จ ",
+                    timer: 2000,
+                  });
+                } else {
+                  this.$swal({
+                    icon: "error",
+                    title: "เกิดข้อผิดพลาด",
+                    text: "การสร้างแท็คเกิดข้อผิดพลาด",
+                    timer: 2000,
+                  });
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          }
         },
-        allowOutsideClick: () => !this.$swal.isLoading(),
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.$swal.fire({
-            title: `${result.value.login}'s avatar`,
-            imageUrl: result.value.avatar_url,
-          });
-        }
       });
     },
 
@@ -514,7 +541,8 @@ export default {
                 this.$swal({
                   icon: "warning",
                   title: "กรุณากรอกข้อมูลเฉพาะ",
-                  text: "เมื่อท่านเปิดใช้งานเพิ่มข้อมูลเฉพาะ กรุณากรอกข้อมูล และอย่าเว้นว่าง",
+                  text:
+                    "เมื่อท่านเปิดใช้งานเพิ่มข้อมูลเฉพาะ กรุณากรอกข้อมูล และอย่าเว้นว่าง",
                   timer: 5000,
                 });
 
@@ -591,7 +619,8 @@ export default {
             this.$swal({
               icon: "error",
               title: "ชื่อคำร้องนี้มีอยู่ในระบบแล้ว!",
-              text: "คำร้องของท่านมีในระบบอยู่เเล้วโปรดตรวจสอบปัจจัยที่ทำให้คำร้องของท่านต่่างจากในระบบ",
+              text:
+                "คำร้องของท่านมีในระบบอยู่เเล้วโปรดตรวจสอบปัจจัยที่ทำให้คำร้องของท่านต่่างจากในระบบ",
               timer: 2000,
             });
           } else {
