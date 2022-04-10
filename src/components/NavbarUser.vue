@@ -86,7 +86,7 @@ export default {
       },
       {
         menu: "4",
-        text: "การร้องขอคำร้องที่ไม่มีในระบบ",
+        text: "การร้องขอคำร้องเพิ่มเติม",
         route: "/UserRequest",
         icon: "alert-octagon",
       },
@@ -104,7 +104,7 @@ export default {
       },
       {
         menu: "7",
-        text: "ติดตามสถานะการร้องขอคำร้อง",
+        text: "ติดตามสถานะการร้องขอคำร้องเพิ่มเติม",
         route: "/UserRequestTracking",
         icon: "alert-octagon",
       },

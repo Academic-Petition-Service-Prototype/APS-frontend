@@ -3,7 +3,7 @@
     <NavbarUser />
     <v-card class="cardmargin">
       <v-toolbar dark prominent color="#FFAB40">
-        <h1 class="text-center pa-5">การร้องขอคำร้องที่ไม่มีในระบบ</h1>
+        <h1 class="text-center pa-5">การร้องขอคำร้องเพิ่มเติม</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
       <v-form>
@@ -60,7 +60,6 @@ export default {
         })
         .then((response) => {
           if (response.data == "Please fill your information") {
-            
             this.$swal({
               icon: "warning",
               title: "เกิดข้อผิดพลาดในการร้องขอคำร้อง",
@@ -71,30 +70,29 @@ export default {
             this.$swal({
               icon: "success",
               title: "การร้องขอคำร้องสำเร็จ",
-              text: "ส่งรายงานการร้องขอคำร้อง "+this.request_title +" สำเร็จ ",
+              text:
+                "ส่งรายงานการร้องขอคำร้อง " + this.request_title + " สำเร็จ ",
               timer: 1500,
             });
             this.request_title = "";
             this.request_detail = "";
           } else {
-             this.$swal({
+            this.$swal({
               icon: "error",
               title: "เกิดข้อผิดพลาดในการร้องขอคำร้อง",
               text: "เกิดข้อผิดพลาดในการร้องขอคำร้องที่ไม่ทราบสาเหตุ",
               timer: 2000,
-              
             });
           }
         })
         .catch((error) => {
           this.$swal({
-              icon: "error",
-              title: "เกิดข้อผิดพลาดในการร้องขอคำร้อง",
-              text: "เกิดข้อผิดพลาดในการร้องขอคำร้อง",
-              timer: 2000,
-              error
-            });
-          
+            icon: "error",
+            title: "เกิดข้อผิดพลาดในการร้องขอคำร้อง",
+            text: "เกิดข้อผิดพลาดในการร้องขอคำร้อง",
+            timer: 2000,
+            error,
+          });
         });
     },
   },
