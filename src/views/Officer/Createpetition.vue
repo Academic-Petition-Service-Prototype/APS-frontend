@@ -84,7 +84,7 @@
                   </form>
                   <v-row v-for="(title, index) in title" :key="title.id">
                     <v-col class="cardshow" align="center">
-                      {{ title.id }}
+                      {{ index + 1 }}
                     </v-col>
                     <v-col class="cardshow" align="center">
                       {{ title.title }}
@@ -120,7 +120,10 @@
                     class="cardshow"
                     required
                   ></v-text-field>
-
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col>
                   <h1>หมวดหมู่คำร้อง</h1>
                   <v-autocomplete
                     class="cardshow"
@@ -133,6 +136,16 @@
                     label="หมวดหมู่คำร้อง"
                     multiple
                   ></v-autocomplete>
+                </v-col>
+                <v-col align="center">
+                  หากท่านต้องการสร้างหมวดหมู่ใหม่กดเพิ่ม "เพิ่มหมวดหมู่"
+                  <v-rol>
+                    <v-col align="center">
+                      <v-btn class="cardshow" @click="addtag()">
+                        เพิ่มหมวดหมู่
+                      </v-btn>
+                    </v-col>
+                  </v-rol>
                 </v-col>
               </v-row>
 
@@ -153,7 +166,9 @@
                   <h1>เพิ่มผู้อนุมัติ</h1>
                 </v-col>
               </v-row>
-
+              {{ newapproverText }}
+              <br /><br />
+              {{ listapprover }}
               <v-row>
                 <!-- ส่วนของเพิ่มหน้าผู้อนุมัติ -->
                 <div>
@@ -181,7 +196,7 @@
                     :key="listapprover.order"
                   >
                     <v-col class="cardshow" align="center">
-                      {{ listapprover.order }}
+                      {{ index + 1 }}
                     </v-col>
                     <v-col class="cardshow" align="center">
                       {{ listapprover.approver_name.f_name }}
@@ -329,7 +344,7 @@ export default {
   data() {
     return {
       tag: ["a", "b", "c"],
-      tag_form: "",
+      tag_form: null,
       form_detail: "",
       stepprocess: 1,
       text: ``,
@@ -398,9 +413,15 @@ export default {
             this.listapprover[i].approver_name.user_id ===
             this.newapproverText.user_id
           ) {
+            console.log("if");
+            console.log(this.newapproverText.f_name);
+            console.log(this.listapprover[i].approver_name.f_name);
             ifdup = true;
           } else {
+            console.log("else");
             ifdup = false;
+            console.log(this.newapproverText.f_name);
+            console.log(this.listapprover[i].approver_name.f_name);
           }
         }
         if (ifdup == true) {
@@ -434,6 +455,67 @@ export default {
     removeapprover: function(index) {
       this.listapprover.splice(index, 1);
       this.nextapproverId--;
+    },
+
+    addtag() {
+      this.$swal({
+        title: "กรุณากรอกชื่อหมวดหมู่คำร้อง",
+        input: "text",
+        // inputValue: this.tag_form,
+        showCancelButton: true,
+        confirmButtonText: "เพิ่ม",
+        cancelButtonText: "ยกเลิก",
+        showLoaderOnConfirm: true,
+        inputValidator: (value) => {
+          if (!value) {
+            return "กรุณากรอกชื่อหมวดหมู่คำร้อง";
+          } else {
+            this.tag_form = value;
+            axios
+              .post(process.env.VUE_APP_URL + "tags", {
+                users_id: this.$store.getters.getUser.user_id,
+                agencies_id: this.$store.getters.getUser.agencies_id,
+                tag_name: this.tag_form,
+              })
+              .then((response) => {
+                if (response.data == "กรุณากรอกชื่อหมวดหมู่คำร้อง") {
+                  this.$swal({
+                    icon: "error",
+                    title: "เกิดข้อผิดพลาดในการสร้างหมวดหมู่คำร้อง",
+                    text: "กรุณากรอกชื่อหมวดหมู่คำร้อง",
+                    timer: 2000,
+                  });
+                } else if (
+                  response.data == "แท็คนี้มีอยู่ในระบบของหน่วยงานแล้ว"
+                ) {
+                  this.$swal({
+                    icon: "error",
+                    title: "แท็คนี้มีอยู่ในระบบของหน่วยงานแล้ว",
+                    text: "กรุณาใช้ชื่อหมวดหมู่คำร้องอื่น",
+                    timer: 2000,
+                  });
+                } else if (response.data == "เพิ่มแท็คสำเร็จ") {
+                  this.$swal({
+                    icon: "success",
+                    title: "เพิ่มแท็คสำเร็จ",
+                    text: "เพิ่ม" + this.tag_form + "สำเร็จ ",
+                    timer: 2000,
+                  });
+                } else {
+                  this.$swal({
+                    icon: "error",
+                    title: "เกิดข้อผิดพลาด",
+                    text: "การสร้างแท็คเกิดข้อผิดพลาด",
+                    timer: 2000,
+                  });
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+              });
+          }
+        },
+      });
     },
 
     nextstepfirst() {
@@ -481,7 +563,8 @@ export default {
         this.form_detail !== "" &&
         this.form_detail !== null &&
         this.tag_form !== "" &&
-        this.tag_form !== null
+        this.tag_form !== null &&
+        this.tag_form.length !== 0
       ) {
         this.stepprocess = 3;
       } else {
