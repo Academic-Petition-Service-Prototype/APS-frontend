@@ -243,8 +243,8 @@ export default {
   methods: {
     getpetition() {
       axios
-        .post(process.env.VUE_APP_URL + "getsubmitformsbyagency", {
-          agency_id: this.$store.getters.getUser.agencies_id,
+        .post(process.env.VUE_APP_URL + "getsubmitformsbyuser", {
+          user_id: this.$store.getters.getUser.user_id,
         })
         .then((response) => {
           //handle success

@@ -143,12 +143,12 @@ const routes = [
   },
   {
     path: '/UserRequestTracking',
-    name: 'ติดตามสถานะการร้องขอคำร้องที่ไม่มีในระบบ',
+    name: 'ติดตามสถานะการร้องขอคำร้องเพิ่มเติม',
     component: UserRequestTracking 
   },
   {
     path: '/UserRequest',
-    name: 'การร้องขอคำร้องที่ไม่มีในระบบ',
+    name: 'การร้องขอคำร้องเพิ่มเติม',
     component: UserRequest 
   },
   {

@@ -5,7 +5,7 @@
     <v-card class="cardshow">
       <v-toolbar dark prominent color="#FFAB40">
         <h1 class="text-center pa-5">
-          สถานะการร้องขอคำร้องที่ไม่มีในระบบ
+          สถานะการร้องขอคำร้องเพิ่มเติม
         </h1>
         <v-spacer></v-spacer>
       </v-toolbar>
@@ -26,8 +26,8 @@
             <v-col>
               <v-text-field
                 prepend-inner-icon="mdi-magnify"
-                label="ชื่อหัวข้อการร้องขอคำร้องที่ไม่มีในระบบ"
-                placeholder="ชื่อหัวข้อการร้องขอคำร้องที่ไม่มีในระบบ"
+                label="ชื่อหัวข้อการร้องขอคำร้องเพิ่มเติม"
+                placeholder="ชื่อหัวข้อการร้องขอคำร้องเพิ่มเติม"
                 filled
                 rounded
                 dense
