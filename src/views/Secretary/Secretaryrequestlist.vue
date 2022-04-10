@@ -3,7 +3,7 @@
     <NavbarSecretary />
     <v-card class="cardshow">
       <v-toolbar dark prominent color="#8BC34A">
-        <h1 class="text-center pa-5">การร้องขอคำร้องที่ไม่มีในระบบ</h1>
+        <h1 class="text-center pa-5">การร้องขอคำร้องเพิ่มเติม</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
 
@@ -25,8 +25,8 @@
             <v-col>
               <v-text-field
                 prepend-inner-icon="mdi-magnify"
-                label="ชื่อการร้องขอคำร้อง"
-                placeholder="ชื่อการร้องขอคำร้อง"
+                label="ชื่อการร้องขอคำร้องเพิ่มเติม"
+                placeholder="ชื่อการร้องขอคำร้องเพิ่มเติม"
                 filled
                 rounded
                 dense

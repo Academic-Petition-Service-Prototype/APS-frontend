@@ -55,8 +55,6 @@
       <!-- ส่วนตัวเลือกเมนู -->
     </v-navigation-drawer>
     <!-- Sidebar -->
-
-    
   </div>
 </template>
 
@@ -66,7 +64,7 @@ export default {
   name: "NavbarChief",
   data: () => ({
     drawer: null,
-    
+
     firstname: "",
     lastname: "",
     role: "",
@@ -110,14 +108,14 @@ export default {
       },
       {
         menu: "7",
-        text: "การร้องขอคำร้อง",
+        text: "การร้องขอคำร้องเพิ่มเติม",
         route: "/ChiefRequest",
         icon: "alert-octagon",
       },
 
       {
         menu: "8",
-        text: "ติดตามสถานะคำร้อง",
+        text: "ติดตามสถานะการร้องขอคำร้องเพิ่มเติม",
         route: "/ChiefTracking",
         icon: "marker-check",
       },
@@ -174,14 +172,14 @@ export default {
       }).then((result) => {
         if (result.isConfirmed) {
           this.$swal({
-            icon: 'success',
-            title: 'ขอบคุณ',
-            text:'ท่านออกจากระบบสำเร็จ',
-            timer: 1500,});
+            icon: "success",
+            title: "ขอบคุณ",
+            text: "ท่านออกจากระบบสำเร็จ",
+            timer: 1500,
+          });
           localStorage.clear();
           this.$store.dispatch("logout");
           this.$router.push("/login");
-          
         }
       });
     },

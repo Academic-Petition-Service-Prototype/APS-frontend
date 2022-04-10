@@ -3,7 +3,7 @@
     <NavbarChief />
     <v-card class="cardshow">
       <v-toolbar dark prominent color="primary">
-        <h1 class="text-center pa-5">การรายงานการร้องขอคำร้อง</h1>
+        <h1 class="text-center pa-5">การร้องขอคำร้องเพิ่มเติม</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
 
