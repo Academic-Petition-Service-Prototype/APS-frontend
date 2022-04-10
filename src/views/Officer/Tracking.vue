@@ -119,7 +119,7 @@
                           >
                             <v-card
                               class="mb-12"
-                              color="grey lighten-1"
+                              color="grey lighten-2"
                               height="200px"
                             >
                               <h2 class="cardshow">รายละเอียด</h2>

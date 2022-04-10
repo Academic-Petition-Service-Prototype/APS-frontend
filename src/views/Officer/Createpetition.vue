@@ -143,7 +143,7 @@
               ต่อไป
             </v-btn>
 
-            <v-btn text @click="stepprocess = 1"> ยกเลิก </v-btn>
+            <v-btn text @click="stepprocess = 1"> ย้อนกลับ </v-btn>
           </v-stepper-content>
 
           <v-stepper-content step="3" ref="Selectionapprover">
@@ -308,49 +308,12 @@
               สร้างคำร้อง
             </v-btn>
 
-            <v-btn text @click="stepprocess = 2"> ย้อนกลับ </v-btn>
+            <v-btn text @click="stepprocess = 3"> ย้อนกลับ </v-btn>
           </v-stepper-content>
         </v-stepper-items>
       </v-stepper>
       <!-- ส่วนสร้างเอกสาร -->
     </v-card>
-
-    <!-- เเจ้งเตือน  -->
-    <v-snackbar v-model="snackbar">
-      {{ text }}
-
-      <template v-slot:action="{ attrs }">
-        <v-btn color="pink" text v-bind="attrs" @click="snackbar = false">
-          Close
-        </v-btn>
-      </template>
-    </v-snackbar>
-
-    <!-- ส่วนจัดเเสดงเวลากดออกจากหน้าสร้างคำร้อง -->
-    <v-dialog v-model="exitpention" width="800">
-      <v-card align="center" class="pa-10">
-        <h1>ต้องการออกจากหน้าสร้างคำร้องหรือไม่</h1>
-        <v-divider></v-divider>
-        <h3>กด "ตกลง" เพื่อยืนยันการออกจากหน้าสร้างคำร้อง</h3>
-        <v-divider></v-divider>
-        <v-btn
-          color="green darken-1"
-          class="text-white mr-5"
-          to="/OfficerPetitionManagement"
-        >
-          ตกลง
-        </v-btn>
-
-        <v-btn
-          color="red darken-1"
-          class="text-white"
-          @click="slideexit = false"
-        >
-          ยกเลิก
-        </v-btn>
-      </v-card>
-    </v-dialog>
-    <!-- ส่วนจัดเเสดงเวลากดออกจากหน้าสร้างคำร้อง -->
   </div>
   <!-- ส่วนจัดเเสดง -->
 </template>
@@ -406,33 +369,28 @@ export default {
     };
   },
   methods: {
-    leavepage(){
-        this.$swal({
+    leavepage() {
+      this.$swal({
         title: "ท่านกำลังจะออกจากหน้าสร้างคำร้อง ?",
         text: "ท่านเเน่ใจว่าต้องการออกจากหน้าสร้างคำร้อง!",
         icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "ใช่, ฉันต้องการออกจากหน้าสร้างคำร้อง",
-        cancelButtonText: "ไม่, ฉันต้องการสร้างคำร้องต่อไป",
+        confirmButtonText: "ตกลง",
+        cancelButtonText: "ยกเลิก",
       }).then((result) => {
         if (result.isConfirmed) {
-          
-          
           this.$router.push("/OfficerPetitionManagement");
-          
         }
       });
     },
-    addNewtitle: function () {
+    addNewtitle: function() {
       this.title.push({
         id: this.nextTodoId++,
         title: this.newtitleText,
       });
       this.newtitleText = "";
     },
-    addapprovertitle: function () {
+    addapprovertitle: function() {
       if (this.newapproverText !== "" && this.newapproverText !== null) {
         let ifdup = false;
         for (let i = 0; i < this.listapprover.length; i++) {
@@ -469,11 +427,11 @@ export default {
         });
       }
     },
-    removetitle: function (index) {
+    removetitle: function(index) {
       this.title.splice(index, 1);
       this.nextTodoId--;
     },
-    removeapprover: function (index) {
+    removeapprover: function(index) {
       this.listapprover.splice(index, 1);
       this.nextapproverId--;
     },
@@ -499,7 +457,8 @@ export default {
                 this.$swal({
                   icon: "warning",
                   title: "กรุณากรอกข้อมูลเฉพาะ",
-                  text: "เมื่อท่านเปิดใช้งานเพิ่มข้อมูลเฉพาะ กรุณากรอกข้อมูล และอย่าเว้นว่าง",
+                  text:
+                    "เมื่อท่านเปิดใช้งานเพิ่มข้อมูลเฉพาะ กรุณากรอกข้อมูล และอย่าเว้นว่าง",
                   timer: 5000,
                 });
 
@@ -575,14 +534,15 @@ export default {
             this.$swal({
               icon: "error",
               title: "ชื่อคำร้องนี้มีอยู่ในระบบแล้ว!",
-              text: "คำร้องของท่านมีในระบบอยู่เเล้วโปรดตรวจสอบปัจจัยที่ทำให้คำร้องของท่านต่่างจากในระบบ",
+              text:
+                "คำร้องของท่านมีในระบบอยู่เเล้วโปรดตรวจสอบปัจจัยที่ทำให้คำร้องของท่านต่่างจากในระบบ",
               timer: 2000,
             });
           } else {
             this.$swal({
               icon: "success",
               title: "สร้างคำร้องเสร็จสิ้น",
-              text: "ยินดีด้วยคุณสร้างคำร้อง "+this.forms.title+" สำเร็จ",
+              text: "ยินดีด้วยคุณสร้างคำร้อง " + this.forms.title + " สำเร็จ",
               timer: 1500,
             });
             this.$router.push("/OfficerPetitionManagement");

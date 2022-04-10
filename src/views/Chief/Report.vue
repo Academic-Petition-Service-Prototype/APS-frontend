@@ -133,10 +133,14 @@ export default {
       reports: [],
     };
   },
-  mounted() {
-    this.getreport();
+  computed: {
+    numberOfPages() {
+      return Math.ceil(this.reports.length / this.itemsPerPage);
+    },
+    filteredKeys() {
+      return this.keys.filter((key) => key !== "Name");
+    },
   },
-
   methods: {
     getreport() {
       axios
@@ -192,6 +196,9 @@ export default {
     updateItemsPerPage(number) {
       this.itemsPerPage = number;
     },
+  },
+  mounted() {
+    this.getreport();
   },
 };
 </script>

@@ -6,7 +6,7 @@
         <h1 class="text-center pa-5">สถานะคำร้อง</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
-        
+
       <v-data-iterator
         :items="petitionListById"
         :items-per-page.sync="itemsPerPage"
@@ -50,9 +50,9 @@
           >
             <v-expansion-panels>
               <v-expansion-panel>
-                <v-expansion-panel-header color="#00B8D4" >
+                <v-expansion-panel-header color="#00B8D4">
                   <v-row class="text-center">
-                    <v-col >
+                    <v-col>
                       <h3>{{ item.submit_id }}</h3>
                     </v-col>
                     <v-col>
@@ -64,7 +64,6 @@
                   </v-row>
 
                   <!-- เเสดงชื่อเอกสาร -->
-                  
 
                   <!-- เเสดงขั้นนตอน-->
                 </v-expansion-panel-header>
@@ -101,7 +100,9 @@
                         </template>
 
                         <v-stepper-step
-                          :complete="item.submit_state > item.approval_order.length"
+                          :complete="
+                            item.submit_state > item.approval_order.length
+                          "
                           step=""
                           color="green"
                         >
@@ -119,7 +120,7 @@
                           >
                             <v-card
                               class="mb-12"
-                              color="grey lighten-1"
+                              color="grey lighten-2"
                               height="200px"
                             >
                               <h2 class="cardshow">รายละเอียด</h2>
@@ -205,7 +206,6 @@ export default {
       itemsPerPage: 4,
       sortBy: "name",
       petitionListById: [],
-      
     };
   },
   computed: {
@@ -289,10 +289,10 @@ h1 {
   font-size: 50px;
   padding: 2% 0% 0% 0%;
 }
-h3{
+h3 {
   color: #f0f0f0;
 }
-h4{
+h4 {
   color: #f0f0f0;
 }
 </style>

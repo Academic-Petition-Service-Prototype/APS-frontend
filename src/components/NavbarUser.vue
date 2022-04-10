@@ -10,7 +10,7 @@
       <div class="text-white subtitle-1 mr-4">
         เข้าสู่ระบบครั้งสุดท้ายเมื่อ {{ lastlogin }}
       </div>
-      <v-btn elevation="2" color="error" @click="Logout()">
+      <v-btn elevation="2" color="error" @click="logout()">
         ออกจากระบบ
       </v-btn>
     </v-app-bar>
@@ -141,10 +141,8 @@ export default {
         text: "ท่านเเน่ใจว่าต้องการออกจากระบบ!",
         icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "ใช่, ฉันต้องการออกจากระบบ",
-        cancelButtonText: "ไม่, ฉันต้องการอยู่ในระบบต่อ",
+        confirmButtonText: "ตกลง",
+        cancelButtonText: "ยกเลิก",
       }).then((result) => {
         if (result.isConfirmed) {
           this.$swal({

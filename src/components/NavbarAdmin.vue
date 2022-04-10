@@ -10,7 +10,7 @@
       <div class="text-white subtitle-1 mr-4">
         เข้าสู่ระบบครั้งสุดท้ายเมื่อ {{ lastlogin }}
       </div>
-      <v-btn elevation="2" color="error" @click="logout">
+      <v-btn elevation="2" color="error" @click="logout()">
         Logout
       </v-btn>
     </v-app-bar>
@@ -57,8 +57,6 @@
       <!-- ส่วนตัวเลือกเมนู -->
     </v-navigation-drawer>
     <!-- Sidebar -->
-
-  
   </div>
 </template>
 
@@ -68,7 +66,7 @@ export default {
   name: "NavbarAdmin",
   data: () => ({
     drawer: null,
-   
+
     firstname: "",
     lastname: "",
     role: "",
@@ -163,21 +161,19 @@ export default {
         text: "ท่านเเน่ใจว่าต้องการออกจากระบบ!",
         icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "ใช่, ฉันต้องการออกจากระบบ",
-        cancelButtonText: "ไม่, ฉันต้องการอยู่ในระบบต่อ",
+        confirmButtonText: "ตกลง",
+        cancelButtonText: "ยกเลิก",
       }).then((result) => {
         if (result.isConfirmed) {
           this.$swal({
-            icon: 'success',
-            title: 'ขอบคุณ',
-            text:'ท่านออกจากระบบสำเร็จ',
-            timer: 1500,});
+            icon: "success",
+            title: "ขอบคุณ",
+            text: "ท่านออกจากระบบสำเร็จ",
+            timer: 1500,
+          });
           localStorage.clear();
           this.$store.dispatch("logout");
           this.$router.push("/login");
-          
         }
       });
     },

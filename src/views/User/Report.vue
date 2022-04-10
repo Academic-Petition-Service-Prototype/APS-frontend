@@ -6,8 +6,6 @@
         <h1 class="text-center pa-5">รายงานปัญหาไม่ระบุตัวตน</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
-      {{ valuedate }}
-      {{ time }}
       <v-form>
         <v-container>
           <v-row>
@@ -23,10 +21,9 @@
                 <label for="example-datepicker">กรุณาเลือกวันเกิดเหตุ</label>
                 <b-form-datepicker
                   id="example-datepicker"
-                  v-model="valuedate"
+                  v-model="date"
                   class="mb-2"
                 ></b-form-datepicker>
-                
               </div>
             </v-col>
             <v-col>
@@ -77,11 +74,6 @@
         </v-container>
       </v-form>
     </v-card>
-    <!-- ป้ายเเจ้งเตือน -->
-    <v-snackbar v-model="snackbar" :timeout="timeout" :color="colorsnackbar">
-      {{ textsnackbar }}
-    </v-snackbar>
-    <!-- ป้ายเเจ้งเตือน -->
   </div>
 </template>
 
@@ -97,12 +89,9 @@ export default {
     return {
       report_title: "",
       report_detail: "",
-      colorsnackbar: "",
-      textsnackbar: "",
-      snackbar: false,
       timeout: 2000,
-      time: null,
-      valuedate:'',
+      time: "",
+      date: "",
       menu2: false,
       menu1: false,
       dateFormatted: null,
@@ -115,6 +104,7 @@ export default {
           users_id: this.$store.getters.getUser.user_id,
           report_title: this.report_title,
           report_detail: this.report_detail,
+          report_occur: this.date + " " + this.time,
         })
         .then((response) => {
           if (response.data == "Please fill your information") {

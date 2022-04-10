@@ -136,6 +136,14 @@ export default {
       requests: [],
     };
   },
+  computed: {
+    numberOfPages() {
+      return Math.ceil(this.requests.length / this.itemsPerPage);
+    },
+    filteredKeys() {
+      return this.keys.filter((key) => key !== "Name");
+    },
+  },
   methods: {
     getrequest() {
       axios

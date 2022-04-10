@@ -8,9 +8,9 @@
         <v-spacer></v-spacer>
       </v-toolbar>
 
-      {{ petitionListById }}
+      <!-- {{ petitionListById }}
       <br /><br /><br />
-      {{ listapproval }}
+      {{ listapproval }} -->
       <v-data-iterator
         :items="listapproval"
         :items-per-page.sync="itemsPerPage"

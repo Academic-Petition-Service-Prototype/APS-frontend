@@ -194,16 +194,6 @@
         <!-- ส่วนจัดเเสดงเวลากดไม่อนุมัติ -->
       </v-card>
     </v-card>
-
-    <!-- เเจ้งเตือน  -->
-    <v-snackbar v-model="notnull" color="red accent-2">
-      <h3>กรุณาใส่ข้อความ โปรดอย่าเว้นว่าง</h3>
-
-      <template v-slot:action="{ attrs }">
-        <v-btn text v-bind="attrs" @click="notnull = false"> ปิด </v-btn>
-      </template>
-    </v-snackbar>
-    <!-- เเจ้งเตือน  -->
     <!-- ส่วนจัดเเสดง -->
   </div>
 </template>

@@ -13,7 +13,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 import 'sweetalert2/dist/sweetalert2.min.css';
 
 const options = {
-  confirmButtonColor: '#41b882',
+  confirmButtonColor: '#3085d6',
   cancelButtonColor: '#ff7674',
 };
 
