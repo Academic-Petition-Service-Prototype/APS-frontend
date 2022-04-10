@@ -120,7 +120,7 @@
                     class="cardshow"
                     required
                   ></v-text-field>
-
+                    
                   <h1>หมวดหมู่คำร้อง</h1>
                   <v-autocomplete
                     class="cardshow"
@@ -308,7 +308,7 @@
               สร้างคำร้อง
             </v-btn>
 
-            <v-btn text @click="stepprocess = 2"> ย้อนกลับ </v-btn>
+            <v-btn text @click="stepprocess = 3"> ย้อนกลับ </v-btn>
           </v-stepper-content>
         </v-stepper-items>
       </v-stepper>
@@ -523,6 +523,8 @@ export default {
         this.form_detail !== null &&
         this.tag_form !== "" &&
         this.tag_form !== null
+        &&
+        this.tag_form.length !== 0
       ) {
         this.stepprocess = 3;
       } else {
