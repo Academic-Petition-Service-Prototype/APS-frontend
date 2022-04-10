@@ -73,7 +73,6 @@
                   <p>{{ item.created_date }}</p>
                 </v-col>
                 <v-col>
-                  <v-btn icon><v-icon color="yellow">mdi-pencil</v-icon></v-btn>
                   <v-btn icon><v-icon color="red">mdi-delete</v-icon></v-btn>
                 </v-col>
               </v-row>
