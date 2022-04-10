@@ -1,21 +1,16 @@
-//
 <template>
   <div id="NavbarChief">
     <!-- Navbar -->
-    <v-app-bar color="#FFA726">
+    <v-app-bar color="primary">
       <v-app-bar-nav-icon @click="drawer = !drawer">
-        <v-icon color="#FFFFFF">
-          mdi-menu
-        </v-icon>
+        <v-icon color="#FFFFFF"> mdi-menu </v-icon>
       </v-app-bar-nav-icon>
-      <v-btn icon disabled>
-        <v-img height="160px" width="160px" src="../assets/logo.png"> </v-img>
-      </v-btn>
+      <div class="text-white title ml-4">{{ $route.name }}</div>
       <v-spacer></v-spacer>
-      <div class="text-white subtitle-1 mr-4">Last login: {{ lastlogin }}</div>
-      <v-btn elevation="2" color="error" @click="slideexit = !slideexit">
-        Logout
-      </v-btn>
+      <div class="text-white subtitle-1 mr-4">
+        เข้าสู่ระบบครั้งสุดท้ายเมื่อ {{ lastlogin }}
+      </div>
+      <v-btn elevation="2" color="error" @click="logout()"> ออกจากระบบ </v-btn>
     </v-app-bar>
     <!-- Navbar -->
 
@@ -24,22 +19,20 @@
       <!-- ส่วนตัวเลือกเมนู -->
       <v-row>
         <v-col align="center">
-          <v-btn fab width="auto" height="auto" class="mt-15">
-            <v-img
-              class="rounded-circle"
-              width="150"
-              height="150"
-              src="../assets/5074620687.jpg"
-            >
-            </v-img>
-          </v-btn>
+          <v-img
+            class="rounded-circle mt-15"
+            width="150"
+            height="150"
+            src="../assets/5074620687.jpg"
+          >
+          </v-img>
         </v-col>
       </v-row>
 
       <v-row>
         <v-col class="text-white" align="center">
           ชื่อ : {{ firstname }} {{ lastname }}<br />
-          สถานะ : {{ role }}
+          สถานะ : <v-if role="chief">หัวหน้าหน่วยงาน</v-if>
         </v-col>
       </v-row>
       <v-divider></v-divider>
@@ -62,28 +55,6 @@
       <!-- ส่วนตัวเลือกเมนู -->
     </v-navigation-drawer>
     <!-- Sidebar -->
-
-    <!-- Dialog confirm -->
-    <v-dialog v-model="slideexit" width="700">
-      <v-card align="center" class="pa-10">
-        <h1>ออกจากระบบ</h1>
-        <v-divider></v-divider>
-        <h3>กด "ตกลง" เพื่อยืนยันการออกจากระบบ</h3>
-        <v-divider></v-divider>
-        <v-btn color="green darken-1" class="text-white mr-5" @click="logout">
-          ตกลง
-        </v-btn>
-
-        <v-btn
-          color="red darken-1"
-          class="text-white"
-          @click="slideexit = false"
-        >
-          ยกเลิก
-        </v-btn>
-      </v-card>
-    </v-dialog>
-    <!-- Dialog confirm -->
   </div>
 </template>
 
@@ -93,7 +64,7 @@ export default {
   name: "NavbarChief",
   data: () => ({
     drawer: null,
-    slideexit: false,
+
     firstname: "",
     lastname: "",
     role: "",
@@ -101,48 +72,68 @@ export default {
     menu: [
       {
         menu: "1",
-        text: "Dashboard",
+        text: "หน้าแรก",
         route: "/ChiefDashboard",
         icon: "home",
       },
       {
         menu: "2",
-        text: "การอนุมัติคำร้อง",
-        route: "/ChiefApproval",
-        icon: "file-document",
-      },
-      {
-        menu: "3",
-        text: "การรายงานปัญหา",
-        route: "/ChiefReport",
-        icon: "alert-octagon",
-      },
-      {
-        menu: "4",
-        text: "ติดตามสถานะคำร้อง/ปัญหา",
-        route: "/ChiefTracking",
-        icon: "marker-check",
-      },
-      {
-        menu: "5",
         text: "จัดการคำร้อง",
         route: "/ChiefPetitionManagement",
         icon: "file-document",
       },
       {
+        menu: "3",
+        text: "คำร้องที่รอการอนุมัติ",
+        route: "/ChiefCheckapprovedlist",
+        icon: "file-document",
+      },
+      {
+        menu: "4",
+        text: "คำร้องที่อนุมัติแล้ว",
+        route: "/Approvedlist",
+        icon: "file-document",
+      },
+      {
+        menu: "5",
+        text: "คำร้องที่ไม่อนุมัติ",
+        route: "/Disapprovedlist",
+        icon: "file-document",
+      },
+      {
         menu: "6",
+        text: "การรายงานปัญหา",
+        route: "/ChiefReport",
+        icon: "alert-octagon",
+      },
+      {
+        menu: "7",
+        text: "การร้องขอคำร้องเพิ่มเติม",
+        route: "/ChiefRequest",
+        icon: "alert-octagon",
+      },
+
+      {
+        menu: "8",
+        text: "ติดตามสถานะการร้องขอคำร้องเพิ่มเติม",
+        route: "/ChiefTracking",
+        icon: "marker-check",
+      },
+
+      {
+        menu: "9",
         text: "จัดการ Secretary",
         route: "/ChiefSecretaryManagement",
         icon: "bullseye-arrow",
       },
       {
-        menu: "7",
+        menu: "10",
         text: "จัดการ Officer",
         route: "/ChiefOfficerManagement",
         icon: "bullseye-arrow",
       },
       {
-        menu: "8",
+        menu: "11",
         text: "โปรไฟล์",
         route: "/ChiefProfile",
         icon: "account",
@@ -158,12 +149,37 @@ export default {
     this.role = this.$store.getters.getUser.role;
     this.lastlogin = this.$store.getters.getUser.last_login;
     this.secretMessage = await AuthService.getSecretContent();
+    this.lastlogin = new Date(this.lastlogin);
+    this.lastlogin = this.lastlogin.toLocaleDateString("th-TH", {
+      year: "numeric",
+      month: "numeric",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+    });
   },
   methods: {
     logout() {
-      localStorage.clear();
-      this.$store.dispatch("logout");
-      this.$router.push("/login");
+      this.$swal({
+        title: "ท่านกำลังจะออกจากระบบ?",
+        text: "ท่านเเน่ใจว่าต้องการออกจากระบบ!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "ตกลง",
+        cancelButtonText: "ยกเลิก",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$swal({
+            icon: "success",
+            title: "ขอบคุณ",
+            text: "ท่านออกจากระบบสำเร็จ",
+            timer: 1500,
+          });
+          localStorage.clear();
+          this.$store.dispatch("logout");
+          this.$router.push("/login");
+        }
+      });
     },
   },
 };

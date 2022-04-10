@@ -1,17 +1,17 @@
 <template>
   <!-- ส่วนจัดเเสดง -->
-  <div id="ChiefApproval" class="bg-color">
+  <div id="ChiefApprovedlist" class="bg-color">
     <NavbarChief />
     <v-card class="cardshow">
-      <v-toolbar dark prominent color="#FFAB40">
-        <h1 class="text-center pa-5">การอนุมัติคำร้อง</h1>
+      <v-toolbar dark prominent color="primary">
+        <h1 class="text-center pa-5">คำร้องที่อนุมัติแล้ว</h1>
 
         <v-spacer></v-spacer>
       </v-toolbar>
 
-      {{ petitionListById }}
-    <br><br><br>
-      {{listapproval}}
+      <!-- {{ petitionListById }}
+      <br /><br /><br />
+      {{ listapproval }} -->
       <v-data-iterator
         :items="listapproval"
         :items-per-page.sync="itemsPerPage"
@@ -27,8 +27,8 @@
             <v-col>
               <v-text-field
                 prepend-inner-icon="mdi-magnify"
-                label="ชื่อคำร้อง / ยื่นเรื่อง"
-                placeholder="ชื่อคำร้อง / ยื่นเรื่อง"
+                label="ชื่อคำร้อง"
+                placeholder="ชื่อคำร้อง"
                 filled
                 rounded
                 dense
@@ -43,50 +43,51 @@
 
         <template v-slot:default="props">
           <v-row class="text-center">
-            <v-col> ลำดับ </v-col>
-            <v-col> รายการ </v-col>
-            <v-col> ผู้ยื่นคำร้อง </v-col>
-            <v-col> วันที่ยื่นคำร้อง </v-col>
-            <v-col> สถานะ </v-col>
+            <v-col class="h3"> ลำดับ </v-col>
+            <v-col class="h3"> รายการ </v-col>
+            <v-col class="h3"> ผู้ยื่นคำร้อง </v-col>
+            <v-col class="h3"> วันที่ยื่นคำร้อง </v-col>
+            <v-col class="h3"> สถานะ </v-col>
           </v-row>
 
-          <v-row >
-            <template v-for="(item, index) in props.items"  >
-              <div :key="index" >
-                <v-card-title
-            
-            >
-              <v-row class="text-center" align="center">
-                <v-col> {{ item.submit_id }} </v-col>
-                <v-col> {{ item.form_name }} </v-col>
-                <v-col> {{ item.fullname }}</v-col>
-                <v-col> {{ item.submit_date }} </v-col>
-                
+          <v-row>
+            <template v-for="(item, index) in props.items">
+              <div :key="index">
+                <v-card-title>
+                  <v-row class="text-center" align="center">
+                    <v-col> {{ index + 1 }} </v-col>
+                    <v-col> {{ item.form_name }} </v-col>
+                    <v-col> {{ item.fullname }}</v-col>
+                    <v-col> {{ item.submit_date }} </v-col>
 
-                <v-col>
-                  <v-btn @click="selectApprovaldetaill(item.submit_id)">
-                    <template
-                      v-for="(approval_order, n) in item.approval_order"
-                    >
-                      <!-- {{ item.approval_order[n].approver_name.user_id}} -->
-
-                      <p
-                        :key="n"
-                        v-if="
-                          item.approval_order[n].approver_name.user_id == stong
-                        "
+                    <v-col>
+                      <v-btn
+                        @click="selectApprovaldetaill(item.submit_id)"
+                        color="#4CAF50"
+                        class="text-white"
                       >
-                        {{ item.approval_order[n].approver_state }}
-                      </p>
-                    </template>
-                  </v-btn>
-                </v-col>
-              </v-row>
-            </v-card-title>
-                
+                        <template
+                          v-for="(approval_order, n) in item.approval_order"
+                        >
+                          <!-- {{ item.approval_order[n].approver_name.user_id}} -->
+
+                          <div
+                            :key="n"
+                            v-if="
+                              item.approval_order[n].approver_name.user_id ==
+                                stong
+                            "
+                          >
+                            {{ item.approval_order[n].approver_state }}
+                          </div>
+                        </template>
+                      </v-btn>
+                    </v-col>
+                  </v-row>
+                </v-card-title>
               </div>
             </template>
-            
+
             <v-divider style="margin: 0px 10px 0px 10px"></v-divider>
           </v-row>
         </template>
@@ -110,7 +111,7 @@
                 fab
                 dark
                 icon
-                color="#FFAB40"
+                color="primary"
                 class="mr-1"
                 @click="formerPage"
               >
@@ -120,7 +121,7 @@
                 fab
                 dark
                 icon
-                color="#FFAB40"
+                color="primary"
                 class="ml-1"
                 @click="nextPage"
               >
@@ -139,7 +140,7 @@
 import NavbarChief from "../../components/NavbarChief.vue";
 import axios from "axios";
 export default {
-  name: "ChiefApproval",
+  name: "ChiefApprovedlist",
   components: {
     NavbarChief,
   },
@@ -155,7 +156,7 @@ export default {
       petitionListById: [],
       specifics: [],
       stong: this.$store.getters.getUser.user_id,
-      listapproval:[],
+      listapproval: [],
     };
   },
   computed: {
@@ -187,50 +188,45 @@ export default {
             var temp = this.specifics.slice(1, -1);
             temp = JSON.parse(temp);
             this.petitionListById[i].approval_order = temp;
+
+            // date format
+            this.petitionListById[i].submit_date = new Date(
+              this.petitionListById[i].submit_date
+            );
+            this.petitionListById[i].submit_date = this.petitionListById[
+              i
+            ].submit_date.toLocaleDateString("th-TH", {
+              year: "numeric",
+              month: "numeric",
+              day: "numeric",
+              weekday: "short",
+              hour: "numeric",
+              minute: "numeric",
+            });
+            // date format
+
             console.log(this.petitionListById[i].form_name);
-            console.log(this.stong)
+            console.log(this.stong);
             for (
               let j = 0;
               j < this.petitionListById[i].approval_order.length;
               j++
             ) {
-              
               if (
                 this.petitionListById[i].approval_order[j].approver_name
                   .user_id == this.$store.getters.getUser.user_id
               ) {
-                if (this.petitionListById[i].approval_order[0].approver_name.f_name == this.$store.getters.getUser.f_name &&
-                  this.petitionListById[i].approval_order[0].approver_name.l_name == this.$store.getters.getUser.l_name
-                  &&
-                  this.petitionListById[i].approval_order[0].approver_name.user_id == this.$store.getters.getUser.user_id
-                  &&
-                  this.petitionListById[i].approval_order[j].approver_state =='ยังไม่ได้อนุมัติ'
+                if (
+                  this.petitionListById[i].approval_order[j].approver_name
+                    .user_id == this.$store.getters.getUser.user_id &&
+                  this.petitionListById[i].approval_order[j].approver_state ==
+                    "อนุมัติแล้ว"
                 ) {
-                 
                   this.listapproval.push(this.petitionListById[i]);
-                  console.log(this.petitionListById[i])
-                  console.log("เงื่อนไข1")
+                } else {
+                  //   h
                 }
-                else if (this.petitionListById[i].approval_order[j].approver_state =='อนุมัติแล้ว') {
-                  
-                  console.log("เงื่อนไข2") 
-                }
-                else if (this.petitionListById[i].approval_order[j-1].approver_state =='อนุมัติแล้ว'
-                &&
-                this.petitionListById[i].approval_order[j].approver_state =='ยังไม่ได้อนุมัติ' ) {
-                  
-                  console.log("เงื่อนไขภ3")
-                  
-                  this.listapproval.push(this.petitionListById[i]);
-                }
-                else{
-                  console.log("else");
-                  
-                }
-                
-               
-              }
-              else{
+              } else {
                 console.log("error0.0");
               }
             }
@@ -251,7 +247,7 @@ export default {
       this.itemsPerPage = number;
     },
     selectApprovaldetaill(submit_id) {
-      this.$router.push("/Approvaldetaill/" + submit_id);
+      this.$router.push("/ViweApprovedlist/" + submit_id);
     },
   },
 
@@ -273,5 +269,8 @@ export default {
 h1 {
   font-size: 50px;
   padding: 2% 0% 0% 0%;
+}
+h5 {
+  color: #f0f0f0;
 }
 </style>

@@ -3,11 +3,13 @@
   <div id="ChiefCreatepetition">
     <NavbarChief />
     <v-card class="cardshow">
-      <h1>
-        สร้างคำร้อง
-
-        <v-divider></v-divider>
-      </h1>
+      <v-toolbar dark prominent color="primary">
+        <v-row>
+          <v-col align="center">
+            <p>สร้างคำร้อง</p>
+          </v-col>
+        </v-row>
+      </v-toolbar>
       <!-- ส่วนสร้างเอกสาร -->
       <v-stepper alt-labels v-model="stepprocess">
         <v-stepper-header>
@@ -17,13 +19,24 @@
 
           <v-divider></v-divider>
 
-          <v-stepper-step :complete="stepprocess > 2" step="2" color="green">
+          <v-stepper-step
+            :complete="stepprocess > 2"
+            step="2"
+            color="green"
+            class="text-center"
+          >
+            รายละเอียด และ จัดหมวดหมู่คำร้อง
+          </v-stepper-step>
+
+          <v-divider></v-divider>
+
+          <v-stepper-step :complete="stepprocess > 3" step="3" color="green">
             ผู้อนุมัติ
           </v-stepper-step>
 
           <v-divider></v-divider>
 
-          <v-stepper-step step="3" color="green">
+          <v-stepper-step step="4" color="green">
             ตัวอย่างคำร้อง
           </v-stepper-step>
         </v-stepper-header>
@@ -71,7 +84,7 @@
                   </form>
                   <v-row v-for="(title, index) in title" :key="title.id">
                     <v-col class="cardshow" align="center">
-                      {{ title.id }}
+                      {{ index+1 }}
                     </v-col>
                     <v-col class="cardshow" align="center">
                       {{ title.title }}
@@ -90,10 +103,54 @@
               ต่อไป
             </v-btn>
 
-            <v-btn text @click="exitpention = true"> ยกเลิก </v-btn>
+            <v-btn text @click="leavepage"> ยกเลิก </v-btn>
           </v-stepper-content>
 
-          <v-stepper-content step="2" ref="Selectionapprover">
+          <v-stepper-content step="2">
+            <v-card class="mb-12" color="#ECEFF1">
+              <!-- หน้าสร้างหัวข้อ -->
+
+              <v-row>
+                <v-col>
+                  <h1>รายละเอียดคำร้อง</h1>
+
+                  <v-text-field
+                    v-model="form_detail"
+                    label="รายละเอียดคำร้อง"
+                    class="cardshow"
+                    required
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+
+              <v-row>
+                <v-col>
+                  <h1>หมวดหมู่คำร้อง</h1>
+                  <v-autocomplete
+                    class="cardshow"
+                    v-model="tag_form"
+                    :items="tag"
+                    outlined
+                    dense
+                    chips
+                    small-chips
+                    label="หมวดหมู่คำร้อง"
+                    multiple
+                  ></v-autocomplete>
+                </v-col>
+              </v-row>
+
+              <!-- หน้าสร้างหัวข้อ -->
+            </v-card>
+
+            <v-btn type="submit" color="primary" @click="nextstepsecond">
+              ต่อไป
+            </v-btn>
+
+            <v-btn text @click="stepprocess = 1"> ย้อนกลับ </v-btn>
+          </v-stepper-content>
+
+          <v-stepper-content step="3" ref="Selectionapprover">
             <v-card class="mb-12" color="#ECEFF1">
               <v-row>
                 <v-col class="cardshow">
@@ -128,7 +185,7 @@
                     :key="listapprover.order"
                   >
                     <v-col class="cardshow" align="center">
-                      {{ listapprover.order }}
+                      {{ index+1 }}
                     </v-col>
                     <v-col class="cardshow" align="center">
                       {{ listapprover.approver_name.f_name }}
@@ -144,12 +201,12 @@
               </v-row>
             </v-card>
 
-            <v-btn color="primary" @click="nextstepsecond"> ต่อไป </v-btn>
+            <v-btn color="primary" @click="nextstep3"> ต่อไป </v-btn>
 
-            <v-btn text @click="stepprocess = 1"> ย้อนกลับ </v-btn>
+            <v-btn text @click="stepprocess = 2"> ย้อนกลับ </v-btn>
           </v-stepper-content>
 
-          <v-stepper-content step="3">
+          <v-stepper-content step="4">
             <v-card class="mb-12" color="#ECEFF1">
               <h1>ตัวอย่างคำร้อง</h1>
               <!-- ส่วนเเสดงหน้าการเเสดงตัวอย่าง -->
@@ -255,107 +312,12 @@
               สร้างคำร้อง
             </v-btn>
 
-            <v-btn text @click="stepprocess = 2"> ย้อนกลับ </v-btn>
+            <v-btn text @click="stepprocess = 3"> ย้อนกลับ </v-btn>
           </v-stepper-content>
         </v-stepper-items>
       </v-stepper>
       <!-- ส่วนสร้างเอกสาร -->
     </v-card>
-
-    <!-- เเจ้งเตือน  -->
-    <v-snackbar v-model="snackbar">
-      {{ text }}
-
-      <template v-slot:action="{ attrs }">
-        <v-btn color="pink" text v-bind="attrs" @click="snackbar = false">
-          Close
-        </v-btn>
-      </template>
-    </v-snackbar>
-
-    <!-- ส่วนจัดเเสดงเวลากดออกจากหน้าสร้างคำร้อง -->
-    <v-dialog v-model="exitpention" persistent width="800">
-      <v-card align="center">
-        <h1>ต้องการออกจากหน้าสร้างคำร้องหรือไม่</h1>
-
-        <v-btn color="green darken-1" text to="/ChiefPetitionManagement">
-          ตกลง
-        </v-btn>
-        <v-btn color="red darken-1" text @click="exitpention = false">
-          ยกเลิก
-        </v-btn>
-      </v-card>
-    </v-dialog>
-    <!-- ส่วนจัดเเสดงเวลากดออกจากหน้าสร้างคำร้อง -->
-    <!-- เเจ้งเตื่อน ให้ใส่ คำร้อง -->
-    <v-snackbar v-model="snackbartitle" :timeout="timeouttitle">
-      กรุณากรอกชื่อคำร้องให้ถูกต้อง !
-
-      <template v-slot:action="{ attrs }">
-        <v-btn color="blue" text v-bind="attrs" @click="snackbartitle = false">
-          Close
-        </v-btn>
-      </template>
-    </v-snackbar>
-
-    <!-- เเจ้งเตื่อน ให้ใส่ คำร้อง -->
-
-    <!-- เเจ้งเตื่อน ให้ใส่ คำร้อง -->
-    <v-snackbar v-model="snackbarspecifics" :timeout="timeouttitle">
-      กรุณากรอกข้อมูลเฉพาะด้วย
-      <br />
-      หลังจากเปิดให้ใส่ข้อมูลเฉพาะ !
-
-      <template v-slot:action="{ attrs }">
-        <v-btn
-          color="blue"
-          text
-          v-bind="attrs"
-          @click="snackbarspecifics = false"
-        >
-          Close
-        </v-btn>
-      </template>
-    </v-snackbar>
-
-    <!-- เเจ้งเตื่อน ให้ใส่ คำร้อง -->
-
-    <!-- เเจ้งเตื่อน ให้ใส่ ผู้อนุมัติ -->
-    <v-snackbar v-model="snackbarapprover" :timeout="timeoutapprover">
-      กรุณาเลือกผู้อนุมัติ !
-
-      <template v-slot:action="{ attrs }">
-        <v-btn
-          color="blue"
-          text
-          v-bind="attrs"
-          @click="snackbarapprover = false"
-        >
-          Close
-        </v-btn>
-      </template>
-    </v-snackbar>
-
-    <!-- เเจ้งเตื่อน ให้ใส่ ผู้อนุมัติ -->
-    <!-- เเจ้งเตื่อน ให้ใส่ ผู้อนุมัติ -->
-    <v-snackbar v-model="snackbarduplicate" :timeout="timeoutapprover">
-      ผู้อนุมัติซ้ำหับรายการที่มีอยู่
-      <br />
-      โปรดเลือกใหม่ !
-
-      <template v-slot:action="{ attrs }">
-        <v-btn
-          color="blue"
-          text
-          v-bind="attrs"
-          @click="snackbarduplicate = false"
-        >
-          Close
-        </v-btn>
-      </template>
-    </v-snackbar>
-
-    <!-- เเจ้งเตื่อน ให้ใส่ ผู้อนุมัติ -->
   </div>
   <!-- ส่วนจัดเเสดง -->
 </template>
@@ -370,14 +332,10 @@ export default {
   },
   data() {
     return {
-      snackbarduplicate: false,
-      snackbarspecifics: false,
-      snackbartitle: false,
-      snackbarapprover: false,
-      timeoutapprover: 2000,
-      exitpention: false,
+      tag: ["a", "b", "c"],
+      tag_form: "",
+      form_detail: "",
       stepprocess: 1,
-      snackbar: false,
       text: ``,
       numspecifics: 1,
       profile: [
@@ -415,25 +373,33 @@ export default {
     };
   },
   methods: {
-    addNewtitle: function () {
+    addNewtitle: function() {
       this.title.push({
         id: this.nextTodoId++,
         title: this.newtitleText,
       });
       this.newtitleText = "";
     },
-    addapprovertitle: function () {
+    addapprovertitle: function() {
       if (this.newapproverText !== "" && this.newapproverText !== null) {
         let ifdup = false;
         for (let i = 0; i < this.listapprover.length; i++) {
-          if (this.listapprover[i].approver_name.user_id === this.newapproverText.user_id) {
+          if (
+            this.listapprover[i].approver_name.user_id ===
+            this.newapproverText.user_id
+          ) {
             ifdup = true;
           } else {
             ifdup = false;
           }
         }
         if (ifdup == true) {
-          this.snackbarduplicate = true;
+          this.$swal({
+            icon: "warning",
+            title: "ไม่สามารถเลือกผู้อนุมัติซ้ำได้ โปรดเลือกใหม่!",
+            text: "ท่านเลือกผู้อนุมัติที่อยู่ในลำดับเเล้วโปรดเลือกใหม่",
+            timer: 2000,
+          });
         } else {
           this.listapprover.push({
             order: this.nextapproverId++,
@@ -442,18 +408,38 @@ export default {
           });
           this.newapproverText = "";
         }
-        
       } else {
-        this.snackbarapprover = true;
+        this.$swal({
+          icon: "warning",
+          title: "ท่านยังไม่ได้เลือกผู้อนุมัติโปรดเลือกก่อน!",
+          text: "ก่อนจะกดปุ่มเพิ่มโปรดเลือกรายชื่อผู้อนุมัติก่อน",
+          timer: 2000,
+        });
       }
     },
-    removetitle: function (index) {
+    removetitle: function(index) {
       this.title.splice(index, 1);
       this.nextTodoId--;
     },
-    removeapprover: function (index) {
+    removeapprover: function(index) {
       this.listapprover.splice(index, 1);
       this.nextapproverId--;
+    },
+    leavepage() {
+      this.$swal({
+        title: "ท่านกำลังจะออกจากหน้าสร้างคำร้อง ?",
+        text: "ท่านเเน่ใจว่าต้องการออกจากหน้าสร้างคำร้อง!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "ตกลง",
+        cancelButtonText: "ยกเลิก",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$router.push("/ChiefPetitionManagement");
+        }
+      });
     },
 
     nextstepfirst() {
@@ -462,14 +448,26 @@ export default {
 
       Object.keys(this.form).forEach((f) => {
         if (!this.form[f]) {
-          this.snackbartitle = true;
+          this.$swal({
+            icon: "warning",
+            title: "กรุณาใส่ชื่อหัวข้อ",
+            text: "กรุณากรอกข้อมูลให้ครบ และอย่าเว้นว่าง",
+            timer: 2000,
+          });
           this.formHasErrors = true;
           this.$refs[f].validate(true);
         } else {
           if (this.forms.specifics == true) {
             Object.keys(this.form).forEach((f) => {
               if (this.title >= 0) {
-                this.snackbarspecifics = true;
+                this.$swal({
+                  icon: "warning",
+                  title: "กรุณากรอกข้อมูลเฉพาะ",
+                  text:
+                    "เมื่อท่านเปิดใช้งานเพิ่มข้อมูลเฉพาะ กรุณากรอกข้อมูล และอย่าเว้นว่าง",
+                  timer: 5000,
+                });
+
                 this.formHasErrors = true;
                 this.$refs[f].validate(true);
                 console.log(this.newtitleText);
@@ -484,16 +482,41 @@ export default {
         console.log(this.form);
       });
     },
-
     nextstepsecond() {
+      if (
+        this.form_detail !== "" &&
+        this.form_detail !== null &&
+        this.tag_form !== "" &&
+        this.tag_form !== null
+        &&
+        this.tag_form.length !== 0
+      ) {
+        this.stepprocess = 3;
+      } else {
+        this.$swal({
+          icon: "warning",
+          title: "กรุณากรอกข้อมูลให้ครบถ้วน",
+          text: "กรุณากรอกข้อมูลให้ครบ",
+          timer: 5000,
+        });
+      }
+    },
+
+    nextstep3() {
       this.approver = false;
 
       Object.keys(this.Selectionapprover).forEach((f) => {
         if (this.listapprover >= 0) {
-          this.approverError = true;
+          this.$swal({
+            icon: "warning",
+            title: "โปรดเลือกผู้อนุมัติ !",
+            text: "ในการสร้างคำร้อง ได้โปรดเลือกผู้อนุมัติอย่างน้อย 1 คนขึ้นไป",
+            timer: 2000,
+          });
+
           this.$refs[f].validate(true);
         } else {
-          this.stepprocess = 3;
+          this.stepprocess = 4;
         }
         console.log(this.Selectionapprover);
       });
@@ -508,18 +531,29 @@ export default {
           f_name: this.$store.getters.getUser.f_name,
           l_name: this.$store.getters.getUser.l_name,
           approval_name: this.listapprover,
+          form_detail: this.form_detail,
+          tag_form: this.tag_form,
         })
         .then((response) => {
           if (response.data == "กรุณากรอกชื่อคำร้อง") {
             alert("กรุณากรอกชื่อคำร้อง");
           } else if (response.data == "ชื่อคำร้องนี้มีอยู่ในระบบแล้ว") {
             alert("ชื่อคำร้องนี้มีอยู่ในระบบแล้ว");
+            this.$swal({
+              icon: "error",
+              title: "ชื่อคำร้องนี้มีอยู่ในระบบแล้ว!",
+              text:
+                "คำร้องของท่านมีในระบบอยู่เเล้วโปรดตรวจสอบปัจจัยที่ทำให้คำร้องของท่านต่่างจากในระบบ",
+              timer: 2000,
+            });
           } else {
-            // this.textsnackbar = "รายงานปัญหาสำเร็จ";
-            // this.colorsnackbar = "#2E7D32";
-            // this.snackbar = true;
-            alert("สร้างคำร้องสำเร็จ");
-            this.$router.push("/ChiefPetitionManagement");
+            this.$swal({
+              icon: "success",
+              title: "สร้างคำร้องเสร็จสิ้น",
+              text: "ยินดีด้วยคุณสร้างคำร้อง " + this.forms.title + " สำเร็จ",
+              timer: 1500,
+            });
+            this.$router.push("/OfficerPetitionManagement");
           }
         })
         .catch((error) => {
@@ -589,5 +623,8 @@ h1 {
 }
 h3 {
   margin: 2%;
+}
+p {
+  font-size: 60px;
 }
 </style>

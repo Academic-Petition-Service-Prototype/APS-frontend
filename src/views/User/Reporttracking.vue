@@ -1,5 +1,5 @@
 <template>
-  <div id="UserTracking" class="bg-color">
+  <div id="UserReportTracking" class="bg-color">
     <NavbarUser />
     <!-- สถานะคำร้อง -->
     <v-card class="cardshow">
@@ -8,12 +8,14 @@
           class="text-center pa-5"
           style="font-size: 50px; padding: 2% 0% 0% 0%"
         >
-          สถานะคำร้อง
+          สถานะการรายงานปัญหาไม่ระบุตัวตน
         </h1>
         <v-spacer></v-spacer>
       </v-toolbar>
+
+      <!-- ของรายงาน -->
       <v-data-iterator
-        :items="petitionListById"
+        :items="reports"
         :items-per-page.sync="itemsPerPage"
         :page.sync="page"
         :search="search"
@@ -27,8 +29,8 @@
             <v-col>
               <v-text-field
                 prepend-inner-icon="mdi-magnify"
-                label="ชื่อคำร้อง"
-                placeholder="ชื่อคำร้อง"
+                label="ชื่อหัวข้อการรายงานปัญหา"
+                placeholder="ชื่อหัวข้อการรายงานปัญหา"
                 filled
                 rounded
                 dense
@@ -42,15 +44,15 @@
         </template>
         <template v-slot:default="props">
           <v-row class="text-center">
-            <v-col class="h3">ลำดับ</v-col>
-            <v-col class="h3">รายการ</v-col>
-            <v-col class="h3">วันที่ส่งคำร้อง</v-col>
+            <v-col align="center" class="h3">ลำดับ</v-col>
+            <v-col align="center" class="h3">รายการ</v-col>
+            <v-col align="center" class="h3">วันที่ส่งคำร้อง</v-col>
           </v-row>
 
           <v-row
             v-for="(item, index) in props.items"
             :key="index"
-            class="cardshow text-center "
+            class="cardshow"
           >
             <v-expansion-panels>
               <v-expansion-panel>
@@ -60,10 +62,10 @@
                       <h3>{{ index + 1 }}</h3>
                     </v-col>
                     <v-col>
-                      <h4>{{ item.form_name }}</h4>
+                      <h4>{{ item.report_title }}</h4>
                     </v-col>
                     <v-col>
-                      <h4>{{ item.submit_date }}</h4>
+                      <h4>{{ item.report_created }}</h4>
                     </v-col>
                   </v-row>
 
@@ -71,85 +73,63 @@
 
                   <!-- เเสดงขั้นนตอน-->
                 </v-expansion-panel-header>
+
                 <v-expansion-panel-content>
                   <!-- เเสดงเนื้อหาข้างใน -->
 
                   <v-container id="inspire">
-                    <v-stepper alt-labels v-model="item.submit_state">
+                    <v-stepper alt-labels v-model="item.report_state">
                       <v-stepper-header>
-                        <v-divider></v-divider>
                         <v-stepper-step
-                          :complete="item.submit_state >= 1"
-                          step=""
+                          :complete="item.report_state > 1"
+                          step="1"
                           color="green"
                         >
-                          รับเรื่องคำร้องเเล้ว
+                          ส่งยื่นคำร้อง
                         </v-stepper-step>
+
                         <v-divider></v-divider>
-
-                        <template
-                          v-for="(approval_order, n) in item.approval_order"
-                        >
-                          <v-stepper-step
-                            :key="n"
-                            :complete="item.submit_state > n + 1"
-                            step=""
-                            color="green"
-                          >
-                            {{ item.approval_order[n].approver_name.f_name }}
-
-                            {{ item.approval_order[n].approver_name.l_name }}
-                          </v-stepper-step>
-                          <v-divider :key="approval_order"></v-divider>
-                        </template>
 
                         <v-stepper-step
-                          :complete="
-                            item.submit_state > item.approval_order.length
-                          "
-                          step=""
+                          :complete="item.report_state > 2"
+                          step="2"
                           color="green"
                         >
-                          ยื่นคำร้องสำเร็จ
+                          รับคำร้องเข้าระบบ
                         </v-stepper-step>
-                        <v-divider></v-divider>
                       </v-stepper-header>
                       <v-stepper-items>
-                        <template
-                          v-for="(approval_order, n) in item.approval_order"
-                        >
-                          <v-stepper-content
-                            :step="n + 2"
-                            :key="approval_order"
+                        <v-stepper-content step="1">
+                          <v-card
+                            class="mb-12"
+                            color="grey lighten-2"
+                            height="200px"
                           >
-                            <v-card
-                              class="mb-12"
-                              color="grey lighten-2"
-                              height="200px"
-                            >
-                              <h2 class="cardshow">รายละเอียด</h2>
-                              <p v-if="item.submit_refuse === null">
-                                กำลังดำเนิการ
-                              </p>
-                              <p v-if="item.submit_refuse !== null">
-                                {{ item.submit_refuse }}
-                              </p>
-                            </v-card>
-                          </v-stepper-content>
-                        </template>
-                        <v-card>
-                          <v-row>
-                            <v-col>
-                              <v-btn
-                                class="cardshow"
-                                @click="selecttrackingdetaill(item.submit_id)"
-                                color="info"
-                              >
-                                ดูรายละเอียดคำร้อง
-                              </v-btn>
-                            </v-col>
-                          </v-row>
-                        </v-card>
+                            <h2 class="cardshow">รายละเอียด</h2>
+                            <h5 class="cardshow">{{ item.report_detail }}</h5>
+                          </v-card>
+                        </v-stepper-content>
+
+                        <v-stepper-content step="2">
+                          <v-card
+                            class="mb-12"
+                            color="grey lighten-2"
+                            height="200px"
+                          >
+                            <h2 class="cardshow">รายละเอียด</h2>
+                            <h5 class="cardshow">{{ item.report_detail }}</h5>
+                          </v-card>
+                        </v-stepper-content>
+                        <v-stepper-content step="3">
+                          <v-card
+                            class="mb-12"
+                            color="grey lighten-2"
+                            height="200px"
+                          >
+                            <h2 class="cardshow">รายละเอียด</h2>
+                            <h5 class="cardshow">{{ item.report_detail }}</h5>
+                          </v-card>
+                        </v-stepper-content>
                       </v-stepper-items>
                     </v-stepper>
                   </v-container>
@@ -202,7 +182,7 @@
       </v-data-iterator>
       <!-- วนเเสดงรายการสถาณะเอสาร -->
     </v-card>
-    <!-- สถานะคำร้อง -->
+    <!-- ของรายงาน -->
   </div>
 </template>
 
@@ -210,7 +190,7 @@
 import NavbarUser from "../../components/NavbarUser.vue";
 import axios from "axios";
 export default {
-  name: "UserTracking",
+  name: "UserReportTracking",
   components: {
     NavbarUser,
   },
@@ -223,12 +203,12 @@ export default {
       page: 1,
       itemsPerPage: 4,
       sortBy: "name",
-      petitionListById: [],
+      reports: [],
     };
   },
   computed: {
     numberOfPages() {
-      return Math.ceil(this.petitionListById.length / this.itemsPerPage);
+      return Math.ceil(this.reports.length / this.itemsPerPage);
     },
     filteredKeys() {
       return this.keys.filter((key) => key !== "Name");
@@ -241,31 +221,28 @@ export default {
     },
   },
   methods: {
-    getpetition() {
+    getreport() {
       axios
-        .post(process.env.VUE_APP_URL + "getsubmitformsbyuser", {
-          user_id: this.$store.getters.getUser.user_id,
+        .post(process.env.VUE_APP_URL + "agencyreports", {
+          agency_id: this.$store.getters.getUser.agencies_id,
         })
         .then((response) => {
-          //handle success
+          // handle success
+          this.reports = response.data;
+          for (let i = 0; i < this.reports.length; i++) {
+            if (this.reports[i].report_state == "read") {
+              this.reports[i].report_state = 3;
+            } else {
+              this.reports[i].report_state = 1;
+            }
 
-          // approval_order
-          this.petitionListById = response.data;
-          for (let i = 0; i < this.petitionListById.length; i++) {
-            this.tmp = JSON.stringify(this.petitionListById[i].approval_order);
-            this.tmp = this.tmp.replace(/\\/g, "");
-            this.specifics = this.tmp.replace(/\\/g, "");
-
-            var temp = this.specifics.slice(1, -1);
-            temp = JSON.parse(temp);
-            this.petitionListById[i].approval_order = temp;
             // date format
-            this.petitionListById[i].submit_date = new Date(
-              this.petitionListById[i].submit_date
+            this.reports[i].report_created = new Date(
+              this.reports[i].report_created
             );
-            this.petitionListById[i].submit_date = this.petitionListById[
+            this.reports[i].report_created = this.reports[
               i
-            ].submit_date.toLocaleDateString("th-TH", {
+            ].report_created.toLocaleDateString("th-TH", {
               year: "numeric",
               month: "numeric",
               day: "numeric",
@@ -290,12 +267,9 @@ export default {
     updateItemsPerPage(number) {
       this.itemsPerPage = number;
     },
-    selecttrackingdetaill(submit_id) {
-      this.$router.push("/Trackingdetail/" + submit_id);
-    },
   },
   mounted() {
-    this.getpetition();
+    this.getreport();
   },
 };
 </script>
@@ -313,9 +287,7 @@ h1 {
   font-size: 50px;
   padding: 2% 0% 0% 0%;
 }
-h3 {
-  color: #f0f0f0;
-}
+h3,
 h4 {
   color: #f0f0f0;
 }

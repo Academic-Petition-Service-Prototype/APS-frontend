@@ -3,10 +3,31 @@
   <div id="OfficeDashboard">
     <NavbarOF />
     <v-card class="cardshow">
-      <v-toolbar dark prominent color="#FFAB40">
-        <h1>Dashboard</h1>
+      <v-toolbar dark prominent color="#6c757d">
+        <h1>หน้าแรก</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
+
+      <v-card height="200px">
+        <v-img
+          height="200px"
+          src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
+        >
+          <!-- <div class="fill-height repeating-gradient"></div> -->
+          <v-row>
+            <v-col>
+              <p class="banneruser">สวัสดี !</p>
+            </v-col>
+            <v-col align="center">
+              <p class="banneruserf_name">
+                คุณ {{ profile[0].f_name }}
+                <br />
+                เช้านี้คุณต้องการทำอะไร ?
+              </p>
+            </v-col>
+          </v-row>
+        </v-img>
+      </v-card>
 
       <v-row>
         <v-col>
@@ -62,7 +83,7 @@
 
       <v-row>
         <v-col>
-          <v-toolbar dark prominent color="#FFAB40">
+          <v-toolbar dark prominent color="#6c757d">
             <h1>จำนวณคำร้อง / รายงาน</h1>
             <v-spacer></v-spacer>
           </v-toolbar>
@@ -89,6 +110,17 @@ export default {
   },
   data() {
     return {
+      profile: [
+        {
+          f_name: this.$store.getters.getUser.f_name,
+          l_name: this.$store.getters.getUser.l_name,
+          gender: this.$store.getters.getUser.gender,
+          email: this.$store.getters.getUser.email,
+          tel_num: this.$store.getters.getUser.tel_num,
+          address: this.$store.getters.getUser.address,
+          role: this.$store.getters.getUser.role,
+        },
+      ],
       datastu: [
         {
           id: "01",
@@ -131,14 +163,30 @@ export default {
 </script>
 
 <style scoped>
+.bg-color {
+  background: #f0f0f0;
+  height: 100%;
+}
+.cardmargin {
+  margin: 2%;
+}
+
+.box-margin {
+  margin: 5%;
+}
 h1 {
   font-size: 50px;
   padding: 2% 0% 0% 0%;
 }
-.cardshow {
-  margin: 2%;
+.banneruser {
+  font-size: 80px;
+  padding: 10%;
+  margin: -25px -100px -50px 50px;
 }
-.box-margin {
-  margin: 5%;
+.banneruserf_name {
+  font-size: 25px;
+  margin: -50px 100px -50px 50px;
+  padding: 15%;
+  font-size: 21px;
 }
 </style>

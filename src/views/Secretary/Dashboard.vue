@@ -3,11 +3,32 @@
   <div id="DashboardSTU">
     <NavbarSecretary />
     <v-card class="cardshow">
-      <v-toolbar dark prominent color="#FFAB40">
-        <h1 class="text-center pa-5">Dashboard</h1>
+      <v-toolbar dark prominent color="#8BC34A">
+        <h1 class="text-center pa-5">หน้าแรก</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
-      
+
+      <v-card height="200px">
+        <v-img
+          height="200px"
+          src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
+        >
+          <!-- <div class="fill-height repeating-gradient"></div> -->
+          <v-row>
+            <v-col>
+              <p class="banneruser">สวัสดี !</p>
+            </v-col>
+            <v-col align="center">
+              <p class="banneruserf_name">
+                คุณ {{ profile[0].f_name }}
+                <br />
+                เช้านี้คุณต้องการทำอะไร ?
+              </p>
+            </v-col>
+          </v-row>
+        </v-img>
+      </v-card>
+
       <v-row>
         <v-col>
           <!-- รายงานเอกสารที่ทำไป -->
@@ -62,26 +83,21 @@
 
       <v-row>
         <v-col>
-          
-
-         
           <GChart
             type="ColumnChart"
             :data="chartData"
             :options="chartOptions"
-            
           />
-          
-          <v-toolbar dark prominent color="#FFAB40">
-        <h1 class="text-center pa-5">แผนภูมิวงกลม</h1>
-        <v-spacer></v-spacer>
-      </v-toolbar>
+
+          <v-toolbar dark prominent color="#8BC34A">
+            <h1 class="text-center pa-5">แผนภูมิวงกลม</h1>
+            <v-spacer></v-spacer>
+          </v-toolbar>
 
           <GChart
             type="PieChart"
             :data="PieChart"
             :options="PieChartOptions2"
-            
           />
         </v-col>
       </v-row>
@@ -100,6 +116,17 @@ export default {
   },
   data() {
     return {
+      profile: [
+        {
+          f_name: this.$store.getters.getUser.f_name,
+          l_name: this.$store.getters.getUser.l_name,
+          gender: this.$store.getters.getUser.gender,
+          email: this.$store.getters.getUser.email,
+          tel_num: this.$store.getters.getUser.tel_num,
+          address: this.$store.getters.getUser.address,
+          role: this.$store.getters.getUser.role,
+        },
+      ],
       datastu: [
         {
           id: "01",
@@ -114,8 +141,13 @@ export default {
       sumreport: 10,
       sumrsuccess: 10,
       chartData: [
-        ["month", "คำร้องที่เข้ามาทั้งหมด", "รายงานที่ยังไม่ได้อ่าน", "คำร้องที่ต้องอนุมัติ"],
-        ["มกราคม", 80, 400, 200,],
+        [
+          "month",
+          "คำร้องที่เข้ามาทั้งหมด",
+          "รายงานที่ยังไม่ได้อ่าน",
+          "คำร้องที่ต้องอนุมัติ",
+        ],
+        ["มกราคม", 80, 400, 200],
         ["กุมภาพันธ์", 1170, 460, 250],
         ["มีนาคม", 660, 1120, 300],
         ["เมษายน", 1030, 540, 350],
@@ -132,22 +164,18 @@ export default {
         chart: {
           title: "Company Performance",
           subtitle: "Sales, Expenses, and Profit: 2014-2017",
-          
         },
-        colors: ['#31BDDC', '#FE6666', '#72D362'],
-         bars: 'horizontal',
-         
+        colors: ["#31BDDC", "#FE6666", "#72D362"],
+        bars: "horizontal",
       },
       PieChart: [
-        ['Task', 'Hours per Day'],
-          ['คำร้องที่เข้ามาทั้งหมด ',     11],
-          ['รายงานที่ยังไม่ได้อ่าน ',      2],
-          ['คำร้องที่ต้องอนุมัติ',  2],
-          
+        ["Task", "Hours per Day"],
+        ["คำร้องที่เข้ามาทั้งหมด ", 11],
+        ["รายงานที่ยังไม่ได้อ่าน ", 2],
+        ["คำร้องที่ต้องอนุมัติ", 2],
       ],
       PieChartOptions2: {
         chart: {
-          
           title: "Company Performance",
           subtitle: "Sales, Expenses, and Profit: 2014-2017",
         },
@@ -155,8 +183,6 @@ export default {
         bars: "horizontal",
         is3D: true,
         height: 500,
-        
-        
       },
     };
   },
@@ -171,6 +197,7 @@ export default {
 .cardmargin {
   margin: 2%;
 }
+
 .box-margin {
   margin: 5%;
 }
@@ -178,9 +205,15 @@ h1 {
   font-size: 50px;
   padding: 2% 0% 0% 0%;
 }
+.banneruser {
+  font-size: 80px;
+  padding: 10%;
+  margin: -25px -100px -50px 50px;
+}
+.banneruserf_name {
+  font-size: 25px;
+  margin: -50px 100px -50px 50px;
+  padding: 15%;
+  font-size: 21px;
+}
 </style>
-
-
-
-
-

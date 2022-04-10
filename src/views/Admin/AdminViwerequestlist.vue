@@ -1,16 +1,14 @@
 <template>
-  <!-- ส่วนจัดเเสดง -->
-  <div id="AdminApproval" class="bg-color">
+  <div id="ChiefReport" class="bg-color">
     <NavbarAdmin />
     <v-card class="cardshow">
-      <v-toolbar dark prominent color="#FFAB40">
-        <h1 class="text-center pa-5">การอนุมัติคำร้อง</h1>
-
+      <v-toolbar dark prominent color="#00B8D4">
+        <h1 class="text-center pa-5">การรายงานการร้องขอคำร้อง</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
-
+      
       <v-data-iterator
-        :items="petitionListById"
+        :items="reports"
         :items-per-page.sync="itemsPerPage"
         :page.sync="page"
         :search="search"
@@ -20,6 +18,11 @@
         class="text-center"
       >
         <template v-slot:header>
+          <v-row>
+            <v-col align="right"
+              ></v-col
+            >
+          </v-row>
           <v-row>
             <v-col>
               <v-text-field
@@ -42,29 +45,35 @@
           <v-row class="text-center">
             <v-col> ลำดับ </v-col>
             <v-col> รายการ </v-col>
-            <v-col> ผู้ยื่นคำร้อง </v-col>
-            <v-col> วันที่ยื่นคำร้อง </v-col>
+            
+            <v-col> วันที่สร้าง </v-col>
             <v-col> สถานะ </v-col>
           </v-row>
 
           <v-row v-for="item in props.items" :key="item.text">
             <v-card-title>
               <v-row class="text-center" align="center">
-                <v-col> {{ item.submit_id }} </v-col>
-                <v-col> {{ item.form_name }} </v-col>
-                <v-col> {{ item.fullname }}</v-col>
-                <v-col> {{ item.submit_date }} </v-col>
+                <v-col> {{ item.report_id }} </v-col>
+                <v-col> {{ item.report_title }} </v-col>
+                
+                <v-col> <p>{{ item.report_created }}</p> </v-col>
                 <v-col>
-                  <v-btn
-                    @click="selectApprovaldetaill(item.submit_id)"
-                    disabled
-                  >
-                    {{ item.approval_order[0].approver_state }}</v-btn
-                  >
+                  
+          <v-btn small class="mr-2" @click="chageState(item.report_id)">
+            <h5 v-if="item.report_state == 'read'">
+                  อ่านเเล้ว
+            </h5>
+
+            <h5 v-if="item.report_state == 'unread'">
+                  ยังไม่ได้อ่าน
+            </h5>
+            
+          </v-btn>
+        
                 </v-col>
               </v-row>
             </v-card-title>
-            <v-divider style="margin: 0px 10px 0px 10px"></v-divider>
+            <v-divider style="margin: 0px 10px 0px 10px;"></v-divider>
           </v-row>
         </template>
 
@@ -87,7 +96,7 @@
                 fab
                 dark
                 icon
-                color="#FFAB40"
+                color="#00B8D4"
                 class="mr-1"
                 @click="formerPage"
               >
@@ -97,7 +106,7 @@
                 fab
                 dark
                 icon
-                color="#FFAB40"
+                color="#00B8D4"
                 class="ml-1"
                 @click="nextPage"
               >
@@ -107,50 +116,76 @@
           </v-row>
         </template>
       </v-data-iterator>
+      
     </v-card>
   </div>
-  <!-- ส่วนจัดเเสดง -->
 </template>
 
 <script>
 import NavbarAdmin from "../../components/NavbarAdmin.vue";
 import axios from "axios";
 export default {
-  name: "AdminApproval",
+  name: "AdminReport",
   components: {
     NavbarAdmin,
   },
   data() {
     return {
-      itemsPerPageArray: [4, 8, 12],
+      vitemsPerPageArray: [4, 8, 12],
       search: "",
       filter: {},
       sortDesc: false,
       page: 1,
       itemsPerPage: 4,
       sortBy: "name",
-      petitionListById: [],
-      specifics: [],
+      reports: [],
+
     };
+  },
+  mounted() {
+    this.getreport();
   },
 
   methods: {
-    getpetition() {
+    getreport() {
       axios
-        .get(process.env.VUE_APP_URL + "getsubmitforms")
+        .post(process.env.VUE_APP_URL + "agencyreports",{
+          agency_id: this.$store.getters.getUser.agencies_id
+        })
         .then((response) => {
-          //handle success
-          // approval_order
-          this.petitionListById = response.data;
-          for (let i = 0; i < this.petitionListById.length; i++) {
-            this.tmp = JSON.stringify(this.petitionListById[i].approval_order);
-            this.tmp = this.tmp.replace(/\\/g, "");
-            this.specifics = this.tmp.replace(/\\/g, "");
-
-            var temp = this.specifics.slice(1, -1);
-            temp = JSON.parse(temp);
-            this.petitionListById[i].approval_order = temp;
+          // handle success
+          this.reports = response.data;
+          for (let i = 0; i < this.reports.length; i++) {
+            // date format
+            this.reports[i].report_created = new Date(
+              this.reports[i].report_created
+            );
+            this.reports[i].report_created = this.reports[
+              i
+            ].report_created.toLocaleDateString("th-TH", {
+              year: "numeric",
+              month: "numeric",
+              day: "numeric",
+              weekday: "short",
+              hour: "numeric",
+              minute: "numeric",
+            });
+            // date format
           }
+        })
+        .catch((error) => {
+          // handle error
+          console.log(error);
+        });
+    },
+    chageState(report_id) {
+      axios
+        .put(process.env.VUE_APP_URL + "reports", {
+          id: report_id,
+        })
+        .then(() => {
+          // handle success
+          this.$router.push("/ChiefReportDetail/" + report_id);
         })
         .catch((error) => {
           // handle error
@@ -167,10 +202,6 @@ export default {
       this.itemsPerPage = number;
     },
   },
-
-  mounted() {
-    this.getpetition();
-  },
 };
 </script>
 
@@ -179,6 +210,7 @@ export default {
   background: #f0f0f0;
   height: 100%;
 }
+
 .cardshow {
   margin: 2%;
 }

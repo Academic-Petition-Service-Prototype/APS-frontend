@@ -1,6 +1,6 @@
 <template>
-  <div id="SecretaryApprovaldetail">
-    <NavbarSecretary />
+  <div id="UserTrackingdetail">
+    <NavbarUser />
     <v-card class="cardshow">
       <v-row>
         <v-col>
@@ -11,7 +11,7 @@
         <v-col align="center">
           <h2>{{ submition_detail[0].form_name }}</h2>
         </v-col>
-        <v-col> </v-col>
+        <v-col></v-col>
       </v-row>
 
       <v-divider></v-divider>
@@ -89,66 +89,28 @@
                   :key="index"
                 >
                   <h3>{{ titlespecifics.title }}</h3>
-
-                  <v-col align="center">
-                    <b-card class="text-center">
-                      <div>
-                        {{ specificsdata[index] }}
-                      </div>
-                    </b-card>
-                  </v-col>
+                  <b-card class="text-center">
+                    <div>
+                      {{ specificsdata[index] }}
+                    </div>
+                  </b-card>
                 </div>
               </v-col>
             </v-row>
 
             <v-row class="text-center">
-              <h2>รายชื่อผู้อนุมัติ</h2>
+              <h2>รายละเอียด</h2>
               <v-col>
-                <div
-                  v-for="(approver_display, index) in approver_display"
-                  :key="index"
-                >
-                  <h4>
-                    {{ approver_display.approver_name.f_name }}
-                    {{ approver_display.approver_name.l_name }}
-                  </h4>
-
-                  <v-col align="center">
-                    <b-card class="text-center">
-                      <div>
-                        <!-- {{ approver_display.approver_state }} -->
-                        <v-btn
-                          v-if="
-                            approver_display.approver_state ==
-                              'ยังไม่ได้อนุมัติ'
-                          "
-                          color="warning"
-                          block
-                        >
-                          ยังไม่ได้อนุมัติ
-                        </v-btn>
-
-                        <v-btn
-                          v-if="
-                            approver_display.approver_state == 'อนุมัติแล้ว'
-                          "
-                          color="green"
-                          block
-                        >
-                          อนุมัติแล้ว
-                        </v-btn>
-
-                        <v-btn
-                          v-if="approver_display.approver_state == 'ไม่อนุมัติ'"
-                          color="error"
-                          block
-                        >
-                          ไม่อนุมัติ
-                        </v-btn>
-                      </div>
-                    </b-card>
-                  </v-col>
-                </div>
+                <b-card class="text-center">
+                  <div>
+                    <p v-if="submition_detail[0].submit_refuse === null">
+                      กำลังดำเนิการ
+                    </p>
+                    <p v-if="submition_detail[0].submit_refuse !== null">
+                      {{ submition_detail[0].submit_refuse }}
+                    </p>
+                  </div>
+                </b-card>
               </v-col>
             </v-row>
           </v-container>
@@ -160,12 +122,12 @@
   </div>
 </template>
 <script>
-import NavbarSecretary from "../../components/NavbarSecretary.vue";
+import NavbarUser from "../../components/NavbarUser.vue";
 import axios from "axios";
 export default {
-  name: "SecretaryApprovaldetail",
+  name: "UserTrackingdetail",
   components: {
-    NavbarSecretary,
+    NavbarUser,
   },
   data() {
     return {
@@ -184,7 +146,7 @@ export default {
   },
   methods: {
     back() {
-      this.$router.push("/SecretaryViewApproval");
+      this.$router.push("/UserTracking");
     },
     getapprovaldetaillbyid() {
       axios

@@ -11,8 +11,15 @@ import UserDashboard from '../views/User/Dashboard.vue'
 import UserPetition from '../views/User/Petition.vue'
 import UserProfile from '../views/User/Profile.vue'
 import UserReport from '../views/User/Report.vue'
+import UserReportTracking from '../views/User/Reporttracking.vue'
 import UserTracking from '../views/User/Tracking.vue'
 import UserSentpetition from '../views/User/Sentpetition.vue'
+import UserRequest from '../views/User/Request.vue'
+import UserRequestTracking from '../views/User/Requesttracking.vue'
+import Trackingdetail from '../views/User/Trackingdetail.vue'
+
+
+
 //User
 
 //Officer
@@ -24,7 +31,7 @@ import OfficerCreatepetition from'../views/Officer/Createpetition.vue'
 //Officer
 
 //Chief
-import ChiefApproval from '../views/Chief/Approval.vue'
+import ChiefCheckapprovedlist from '../views/Chief/Checkapprovedlist.vue'
 import ChiefDashboard from '../views/Chief/Dashboard.vue'
 import ChiefOfficerManagement from '../views/Chief/OfficerManagement.vue'
 import ChiefPetitionManagement from '../views/Chief/PetitionManagement.vue'
@@ -35,6 +42,13 @@ import ChiefTracking from '../views/Chief/Tracking.vue'
 import ChiefReportDetail from '../views/Chief/ReportDetail.vue'
 import Approvaldetaill from '../views/Chief/Approvaldetaill.vue'
 import ChiefCreatepetition from'../views/Chief/Createpetition.vue'
+import Approvedlist from'../views/Chief/Approvedlist.vue'
+import ViweApprovedlist from'../views/Chief/ViweApprovedlist.vue'
+import Disapprovedlist from'../views/Chief/Disapprovedlist.vue'
+import ViweDisapprovedlist from'../views/Chief/ViweDisapprovedlist.vue'
+import ChiefRequest from'../views/Chief/Request.vue'
+import ChiefRequestDetail from'../views/Chief/Requestdetail.vue'
+
 //Chief
 
 //Secretary
@@ -44,6 +58,8 @@ import SecretaryTracking from '../views/Secretary/Tracking.vue'
 import SecretaryViewApproval from '../views/Secretary/ViewApproval.vue'
 import SecretaryViewApprovaldetail from '../views/Secretary/ViewApprovaldetail.vue'
 import SecretaryViewReport from '../views/Secretary/ViewReport.vue'
+import Secretaryrequestlist from '../views/Secretary/Secretaryrequestlist.vue'
+import Secretaryrequestlistdetail from '../views/Secretary/Secretaryrequestlistdetail.vue'
 //Secretary
 
 //Admin
@@ -54,9 +70,11 @@ import AdminProfile from '../views/Admin/Profile.vue'
 import AdminSecretaryManagement from '../views/Admin/SecretaryManagement.vue'
 import AdminTracking from '../views/Admin/Tracking.vue'
 import AdminUserManagement from '../views/Admin/UserManagement.vue'
-import AdminViewApproval from '../views/Admin/ViewApproval.vue'
+import AdminViewApproval from '../views/Admin/ViewAdminApproval.vue'
 import AdminViewReport from '../views/Admin/ViewReport.vue'
 import AdminAgencyManagement from '../views/Admin/AgencyManagement.vue'
+import AdminViwerequestlist from '../views/Admin/AdminViwerequestlist.vue'
+import AdminViewApprovaldetail from '../views/Admin/ViewAdminApprovaldetail.vue'
 
 //Admin
 
@@ -90,33 +108,53 @@ const routes = [
   //User
   {
     path: '/UserDashboard',
-    name: 'UserDashboard',
+    name: 'หน้าแรก',
     component: UserDashboard
   },
   {
     path: '/UserPetition',
-    name: 'UserPetition',
+    name: 'ส่งคำร้อง',
     component: UserPetition
   },
   {
     path: '/UserProfile',
-    name: 'UserProfile',
+    name: 'โปรไฟล์',
     component: UserProfile
   },
   {
     path: '/UserReport',
-    name: 'UserReport',
+    name: 'รายงานปัญหาไม่ระบุตัวตน',
     component: UserReport
   },
   {
+    path: '/UserReportTracking',
+    name: 'ติดตามสถานะรายงานปัญหาไม่ระบุตัวตน',
+    component: UserReportTracking
+  },
+  {
     path: '/UserTracking',
-    name: 'UserTracking',
+    name: 'ติดตามสถานะคำร้อง',
     component: UserTracking
   },
   {
     path: '/UserSentpetition/:id',
-    name: 'UserSentpetition',
+    name: 'ส่งคำร้อง',
     component: UserSentpetition 
+  },
+  {
+    path: '/UserRequestTracking',
+    name: 'ติดตามสถานะการร้องขอคำร้องเพิ่มเติม',
+    component: UserRequestTracking 
+  },
+  {
+    path: '/UserRequest',
+    name: 'การร้องขอคำร้องเพิ่มเติม',
+    component: UserRequest 
+  },
+  {
+    path: '/Trackingdetail/:id',
+    name: 'รายละเอียดคำร้อง',
+    component: Trackingdetail 
   },
   //User
 
@@ -124,120 +162,163 @@ const routes = [
   
   {
     path: '/OfficerDashboard',
-    name: 'OfficerDashboard',
+    name: 'หน้าแรก',
     component: OfficerDashboard
   },
   {
     path: '/OfficerPetitionManagement',
-    name: 'OfficerPetitionManagement',
+    name: 'จัดการคำร้อง',
     component: OfficerPetitionManagement
   },
   {
     path: '/OfficerProfile',
-    name: 'OfficerProfile',
+    name: 'โปรไฟล์',
     component: OfficerProfile 
   },
   {
     path: '/OfficerTracking',
-    name: 'OfficerTracking',
+    name: 'ติดตามสถานะคำร้อง',
     component: OfficerTracking 
   },
   {
     path: '/OfficerCreatepetition',
-    name: 'OfficerCreatepetition',
+    name: 'สร้างคำร้อง',
     component: OfficerCreatepetition 
   },
   //Officer
 
   //Chief
   {
-    path: '/ChiefApproval',
-    name: 'ChiefApproval',
-    component: ChiefApproval 
+    path: '/ChiefCheckapprovedlist',
+    name: 'คำร้องที่รอการอนุมัติ',
+    component: ChiefCheckapprovedlist 
+  },
+  {
+    path: '/Approvedlist',
+    name: 'คำร้องที่อนุมัติแล้ว',
+    component: Approvedlist 
   },
   {
     path: '/ChiefDashboard',
-    name: 'ChiefDashboard',
+    name: 'หน้าแรก',
     component: ChiefDashboard 
   },
   {
     path: '/ChiefOfficerManagement',
-    name: 'ChiefOfficerManagement',
+    name: 'จัดการพนักงาน',
     component: ChiefOfficerManagement 
   },
   {
     path: '/ChiefPetitionManagement',
-    name: 'ChiefPetitionManagement',
+    name: 'จัดการคำร้อง',
     component: ChiefPetitionManagement 
   },
   {
     path: '/ChiefProfile',
-    name: 'ChiefProfile',
+    name: 'โปรไฟล์',
     component: ChiefProfile 
   },
   {
     path: '/ChiefReport',
-    name: 'ChiefReport',
+    name: 'การรายงานปัญหา',
     component: ChiefReport 
   },
   {
     path: '/ChiefSecretaryManagement',
-    name: 'ChiefSecretaryManagement',
+    name: 'จัดการเลขานุการ',
     component: ChiefSecretaryManagement 
   },
   {
     path: '/ChiefTracking',
-    name: 'ChiefTracking',
+    name: 'ติดตามสถานะคำร้อง',
     component: ChiefTracking 
   },
   {
     path: '/ChiefReportDetail/:id',
-    name: 'ChiefReportDetail',
+    name: 'รายละเอียดการรายงานปัญหา',
     component: ChiefReportDetail 
   },
   {
     path: '/Approvaldetaill/:id',
-    name: 'Approvaldetaill',
+    name: 'รายละเอียดคำร้องที่อนุมัติแล้ว',
     component: Approvaldetaill 
   },
   {
+    path: '/ViweApprovedlist/:id',
+    name: 'รายละเอียดคำร้อง',
+    component: ViweApprovedlist 
+  },
+  {
     path: '/ChiefCreatepetition',
-    name: 'ChiefCreatepetition',
+    name: 'สร้างคำร้อง',
     component: ChiefCreatepetition 
   },
+  {
+    path: '/Disapprovedlist',
+    name: 'คำร้องที่ไม่อนุมัติ',
+    component: Disapprovedlist 
+  },
+  {
+    path: '/ViweDisapprovedlist/:id',
+    name: 'รายละเอียดคำร้องที่ไม่อนุมัติ',
+    component: ViweDisapprovedlist 
+  },
+  {
+    path: '/ChiefRequest',
+    name: 'การร้องขอคำร้องเพิ่มเติม',
+    component: ChiefRequest 
+  },
+  {
+    path: '/ChiefRequestDetail/:id',
+    name: 'ChiefRequestDetail',
+    component: ChiefRequestDetail 
+  },
+  
+
   //Chief
 
   //Secretary
   {
     path: '/SecretaryDashboard',
-    name: 'SecretaryDashboard',
+    name: 'หน้าแรก',
     component: SecretaryDashboard
   },
   {
     path: '/SecretaryProfile',
-    name: 'SecretaryProfile',
+    name: 'โปรไฟล์',
     component: SecretaryProfile
   },
   {
     path: '/SecretaryTracking',
-    name: 'SecretaryTracking',
+    name: 'ติดตามสถานะคำร้อง',
     component: SecretaryTracking
   },
   {
     path: '/SecretaryViewApproval',
-    name: 'SecretaryViewApproval',
+    name: 'การอนุมัติคำร้อง',
     component: SecretaryViewApproval
   },
   {
     path: '/SecretaryViewReport',
-    name: 'SecretaryViewReport',
+    name: 'การรายงานปัญหา',
     component: SecretaryViewReport
   },
   {
     path: '/ViewApprovaldetail/:id',
-    name: 'SecretaryViewApprovaldetail',
+    name: 'รายละเอียดคำร้อง',
     component: SecretaryViewApprovaldetail
   },
+  {
+    path: '/Secretaryrequestlist',
+    name: 'การร้องขอคำร้องเพิ่มเติม',
+    component: Secretaryrequestlist
+  },
+  {
+    path: '/Secretaryrequestlistdetail/:id',
+    name: 'รายละเอียดการร้องขอคำร้องเพิ่มเติม',
+    component: Secretaryrequestlistdetail
+  },
+ 
   //Secretary
 
   //Admin
@@ -276,11 +357,7 @@ const routes = [
     name: 'AdminUserManagement',
     component: AdminUserManagement 
   },
-  {
-    path: '/AdminViewApproval',
-    name: 'AdminViewApproval',
-    component: AdminViewApproval 
-  },
+ 
   {
     path: '/AdminViewReport',
     name: 'AdminViewReport',
@@ -291,6 +368,23 @@ const routes = [
     name: 'AdminAgencyManagement',
     component: AdminAgencyManagement 
   },
+  {
+    path: '/AdminViwerequestlist',
+    name: 'AdminViwerequestlist',
+    component: AdminViwerequestlist 
+  },
+  {
+    path: '/AdminViewApproval',
+    name: 'AdminViewApproval',
+    component: AdminViewApproval 
+  },
+  {
+    path: '/AdminViewApproval/:id',
+    name: 'AdminViewApprovaldetail',
+    component: AdminViewApprovaldetail 
+  },
+  
+  
   //Admin
 
   //Other

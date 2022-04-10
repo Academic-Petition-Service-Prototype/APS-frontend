@@ -2,10 +2,12 @@
   <div id="SecretaryReport" class="bg-color">
     <NavbarAdmin />
     <v-card class="cardshow">
-      <v-toolbar dark prominent color="#FFAB40">
+      <v-toolbar dark prominent color="#00B8D4">
         <h1 class="text-center pa-5">การรายงานปัญหาทั้งหมด</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
+
+    
       <v-data-iterator
         :items="reports"
         :items-per-page.sync="itemsPerPage"
@@ -91,7 +93,7 @@
                 fab
                 dark
                 icon
-                color="#FFAB40"
+                color="#00B8D4"
                 class="mr-1"
                 @click="formerPage"
               >
@@ -101,7 +103,7 @@
                 fab
                 dark
                 icon
-                color="#FFAB40"
+                color="#00B8D4"
                 class="ml-1"
                 @click="nextPage"
               >
@@ -146,6 +148,23 @@ export default {
         .then((response) => {
           // handle success
           this.reports = response.data;
+          for (let i = 0; i < this.reports.length; i++) {
+            // date format
+            this.reports[i].report_created = new Date(
+              this.reports[i].report_created
+            );
+            this.reports[i].report_created = this.reports[
+              i
+            ].report_created.toLocaleDateString("th-TH", {
+              year: "numeric",
+              month: "numeric",
+              day: "numeric",
+              weekday: "short",
+              hour: "numeric",
+              minute: "numeric",
+            });
+            // date format
+          }
         })
         .catch((error) => {
           // handle error

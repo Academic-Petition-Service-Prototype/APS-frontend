@@ -1,10 +1,10 @@
 <template>
-  <div id="ChiefApprovaldetail">
+  <div id="ChiefViweDisapprovedlist">
     <NavbarChief />
     <v-card class="cardshow">
       <v-row>
         <v-col>
-          <v-btn class="ma-2" outlined color="error" @click="back">
+          <v-btn class="ma-2" outlined color="secondary" @click="back">
             ย้อนกลับ
           </v-btn>
         </v-col>
@@ -122,7 +122,7 @@
                       color="error"
                       @click="disapproveddialog = true"
                     >
-                      ไม่อนุมัติ
+                      <span class="h3">ไม่อนุมัติ</span>
                     </v-btn>
                   </v-col>
                 </v-row>
@@ -153,7 +153,7 @@
                   >
                     <v-col align="center">
                       <v-btn class="ma-2" color="error" width="500" height="80">
-                        ไม่อนุมัติ
+                        <span class="h3">ไม่อนุมัติ</span>
                       </v-btn>
                     </v-col>
                   </v-row>
@@ -201,7 +201,7 @@
 import NavbarChief from "../../components/NavbarChief.vue";
 import axios from "axios";
 export default {
-  name: "ChiefApprovaldetail",
+  name: "ChiefViweDisapprovedlist",
   components: {
     NavbarChief,
   },
@@ -221,7 +221,7 @@ export default {
   },
   methods: {
     back() {
-      this.$router.push("/ChiefCheckapprovedlist");
+      this.$router.push("/Disapprovedlist");
     },
     getapprovaldetaillbyid() {
       axios
@@ -294,84 +294,56 @@ export default {
         });
     },
     approve() {
-      this.$swal
-        .fire({
-          title: "ยืนยันการอนุมัติ ?",
-          text:
-            "ยืนยันการที่จะอนุมัติ " +
-            this.submition_detail[0].form_name +
-            " !",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonText: "ตกลง",
-          cancelButtonText: "ยกเลิก",
-        })
-        .then((result) => {
-          if (result.isConfirmed) {
-            for (let i = 0; i < this.submition_detail.length; i++) {
-              for (
-                let j = 0;
-                j < this.submition_detail[i].approval_order.length;
-                j++
+      if (confirm("ยืนยันการอนุมัติ")) {
+        this.statuscheck = false;
+
+        for (let i = 0; i < this.submition_detail.length; i++) {
+          for (
+            let j = 0;
+            j < this.submition_detail[i].approval_order.length;
+            j++
+          ) {
+            if (
+              this.submition_detail[i].approval_order[j].approver_name
+                .user_id == this.$store.getters.getUser.user_id
+            ) {
+              this.submition_detail[i].approval_order[j].approver_state =
+                "อนุมัติแล้ว";
+              this.submition_detail[i].submit_state++;
+
+              if (
+                this.submition_detail[i].submit_state >=
+                this.submition_detail[i].approval_order.length
               ) {
-                if (
-                  this.submition_detail[i].approval_order[j].approver_name
-                    .user_id == this.$store.getters.getUser.user_id
-                ) {
-                  this.submition_detail[i].approval_order[j].approver_state =
-                    "อนุมัติแล้ว";
-                  this.submition_detail[i].submit_state++;
-
-                  if (
-                    this.submition_detail[i].submit_state >=
-                    this.submition_detail[i].approval_order.length
-                  ) {
-                    this.getdisapproveddetail = "ยื่นคำร้องสำเร็จ";
-                  } else {
-                    this.getdisapproveddetail = null;
-                  }
-
-                  axios
-                    .post(process.env.VUE_APP_URL + "approvepetition", {
-                      submit_id: this.submition_detail[i].submit_id,
-                      approval_order: this.submition_detail[i].approval_order,
-                      submit_state: this.submition_detail[i].submit_state,
-                      submit_refuse: this.getdisapproveddetail,
-                    })
-                    .then((response) => {
-                      //handle success
-                      if (response.data == "Approve petition successful") {
-                        this.$swal({
-                          icon: "success",
-                          title: "อนุมัติคำร้องสำเร็จ",
-                          text:
-                            "อนุมัติคำร้อง " +
-                            this.submition_detail[0].form_name +
-                            " สำเร็จ ",
-                          timer: 1500,
-                        });
-                        this.$router.push("/ChiefCheckapprovedlist");
-                      } else {
-                        this.$swal({
-                          icon: "error",
-                          title: "อนุมัติคำร้องไม่สำเร็จ",
-                          text:
-                            "อนุมัติคำร้อง " +
-                            this.submition_detail[0].form_name +
-                            " ไม่สำเร็จ ",
-                          timer: 1500,
-                        });
-                      }
-                    })
-                    .catch((error) => {
-                      // handle error
-                      console.log(error);
-                    });
-                }
+                this.getdisapproveddetail = "ยื่นคำร้องสำเร็จ";
+              } else {
+                this.getdisapproveddetail = null;
               }
+
+              axios
+                .post(process.env.VUE_APP_URL + "approvepetition", {
+                  submit_id: this.submition_detail[i].submit_id,
+                  approval_order: this.submition_detail[i].approval_order,
+                  submit_state: this.submition_detail[i].submit_state,
+                  submit_refuse: this.getdisapproveddetail,
+                })
+                .then((response) => {
+                  //handle success
+                  if (response.data == "Approve petition successful") {
+                    alert("อนุมัติคำร้องสำเร็จ");
+                    this.$router.push("/ChiefCheckapprovedlist");
+                  } else {
+                    alert("อนุมัติคำร้องไม่สำเร็จ!");
+                  }
+                })
+                .catch((error) => {
+                  // handle error
+                  console.log(error);
+                });
             }
           }
-        });
+        }
+      }
     },
     disapproved() {
       if (this.getdisapproveddetail != "") {
@@ -401,26 +373,10 @@ export default {
                 .then((response) => {
                   //handle success
                   if (response.data == "Approve petition successful") {
-                    this.$swal({
-                      icon: "success",
-                      title: "ปฏิเสธคำร้องสำเร็จ",
-                      text:
-                        "ปฏิเสธคำร้อง " +
-                        this.submition_detail[0].form_name +
-                        " สำเร็จ ",
-                      timer: 1500,
-                    });
+                    alert("ปฏิเสธคำร้องสำเร็จ");
                     this.$router.push("/ChiefCheckapprovedlist");
                   } else {
-                    this.$swal({
-                      icon: "error",
-                      title: "ปฏิเสธคำร้องไม่สำเร็จ",
-                      text:
-                        "ปฏิเสธคำร้อง " +
-                        this.submition_detail[0].form_name +
-                        " ไม่สำเร็จ ",
-                      timer: 1500,
-                    });
+                    alert("ปฏิเสธคำร้องไม่สำเร็จ!");
                   }
                 })
                 .catch((error) => {

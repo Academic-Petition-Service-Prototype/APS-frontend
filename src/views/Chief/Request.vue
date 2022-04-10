@@ -1,15 +1,14 @@
 <template>
-  <!-- ส่วนจัดเเสดง -->
-  <div id="ChiefPetitionManagement">
+  <div id="ChiefRequest" class="bg-color">
     <NavbarChief />
     <v-card class="cardshow">
       <v-toolbar dark prominent color="primary">
-        <h1>จัดการคำร้อง</h1>
+        <h1 class="text-center pa-5">การร้องขอคำร้องเพิ่มเติม</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
 
       <v-data-iterator
-        :items="petitionList"
+        :items="requests"
         :items-per-page.sync="itemsPerPage"
         :page.sync="page"
         :search="search"
@@ -20,22 +19,14 @@
       >
         <template v-slot:header>
           <v-row>
-            <v-col align="right"
-              ><v-btn
-                color="success"
-                style="margin: 10px 10px -25px 10px"
-                to="/ChiefCreatepetition"
-              >
-                สร้างคำร้อง
-              </v-btn></v-col
-            >
+            <v-col align="right"></v-col>
           </v-row>
           <v-row>
             <v-col>
               <v-text-field
                 prepend-inner-icon="mdi-magnify"
-                label="ชื่อคำร้อง"
-                placeholder="ชื่อคำร้อง"
+                label="ชื่อคำร้อง / ยื่นเรื่อง"
+                placeholder="ชื่อคำร้อง / ยื่นเรื่อง"
                 filled
                 rounded
                 dense
@@ -50,30 +41,31 @@
 
         <template v-slot:default="props">
           <v-row class="text-center">
-            <v-col class="h3"> ลำดับ </v-col>
-            <v-col class="h3"> รายการ </v-col>
-            <v-col class="h3"> สถานะ </v-col>
-            <v-col class="h3"> วันที่สร้าง </v-col>
-            <v-col class="h3"> การกระทำ </v-col>
+            <v-col class="h3">ลำดับ</v-col>
+            <v-col class="h3">รายการ</v-col>
+            <v-col class="h3">วันที่ส่งการร้องขอ</v-col>
+            <v-col class="h3">สถานะ</v-col>
           </v-row>
 
           <v-row v-for="(item, index) in props.items" :key="index">
             <v-card-title>
               <v-row class="text-center" align="center">
                 <v-col> {{ index + 1 }} </v-col>
-                <v-col> {{ item.form_name }} </v-col>
+                <v-col> {{ item.request_title }} </v-col>
+
                 <v-col>
-                  <v-switch
-                    inset
-                    v-model="item.switch"
-                    style="margin: 0px 0px 0px 40%;"
-                  ></v-switch>
+                  <p>{{ item.request_created }}</p>
                 </v-col>
                 <v-col>
-                  <p>{{ item.created_date }}</p>
-                </v-col>
-                <v-col>
-                  <v-btn icon><v-icon color="red">mdi-delete</v-icon></v-btn>
+                  <v-btn @click="chageState(item.request_id)">
+                    <div v-if="item.request_state == 'read'">
+                      อ่านเเล้ว
+                    </div>
+
+                    <div v-if="item.request_state == 'unread'">
+                      ยังไม่ได้อ่าน
+                    </div>
+                  </v-btn>
                 </v-col>
               </v-row>
             </v-card-title>
@@ -120,70 +112,55 @@
           </v-row>
         </template>
       </v-data-iterator>
-      <!-- </v-container> -->
     </v-card>
   </div>
-  <!-- ส่วนจัดเเสดง -->
 </template>
 
 <script>
 import NavbarChief from "../../components/NavbarChief.vue";
 import axios from "axios";
 export default {
-  name: "ChiefPetitionManagement",
+  name: "ChiefRequest",
   components: {
     NavbarChief,
   },
   data() {
     return {
-      itemsPerPageArray: [4, 8, 12],
+      vitemsPerPageArray: [4, 8, 12],
       search: "",
       filter: {},
       sortDesc: false,
       page: 1,
       itemsPerPage: 4,
       sortBy: "name",
-      petitionList: [],
-
-      items: [
-        {
-          no: "1",
-          text: "ฟรอมที่ 1",
-          agency: "ศึกษาทั่วไป",
-          satatus: true,
-          switch: false,
-          datecreation: "6/12/2564",
-        },
-      ],
+      requests: [],
     };
   },
   computed: {
     numberOfPages() {
-      return Math.ceil(this.items.length / this.itemsPerPage);
+      return Math.ceil(this.requests.length / this.itemsPerPage);
     },
     filteredKeys() {
       return this.keys.filter((key) => key !== "Name");
     },
   },
   methods: {
-    getpetition() {
+    getrequest() {
       axios
-        .post(process.env.VUE_APP_URL + "getforms", {
-          user_id: this.$store.getters.getUser.user_id,
-          role: this.$store.getters.getUser.role,
-          agency: this.$store.getters.getUser.agency_name,
+        .post(process.env.VUE_APP_URL + "agencyrequests", {
+          agency_id: this.$store.getters.getUser.agencies_id,
         })
         .then((response) => {
           // handle success
-          this.petitionList = response.data;
-          for (let i = 0; i < this.petitionList.length; i++) {
+          this.requests = response.data;
+          for (let i = 0; i < this.requests.length; i++) {
             // date format
-            this.petitionList[i].created_date = new Date(
-              this.petitionList[i].created_date
+            this.requests[i].request_created = new Date(
+              this.requests[i].request_created
             );
-            this.petitionList[i].created_date = this.petitionList[
+            this.requests[i].request_created = this.requests[
               i
-            ].created_date.toLocaleDateString("th-TH", {
+            ].request_created.toLocaleDateString("th-TH", {
               year: "numeric",
               month: "numeric",
               day: "numeric",
@@ -193,6 +170,20 @@ export default {
             });
             // date format
           }
+        })
+        .catch((error) => {
+          // handle error
+          console.log(error);
+        });
+    },
+    chageState(request_id) {
+      axios
+        .put(process.env.VUE_APP_URL + "requests", {
+          id: request_id,
+        })
+        .then(() => {
+          // handle success
+          this.$router.push("/ChiefRequestDetail/" + request_id);
         })
         .catch((error) => {
           // handle error
@@ -210,20 +201,22 @@ export default {
     },
   },
   mounted() {
-    this.getpetition();
+    this.getrequest();
   },
 };
 </script>
 
 <style scoped>
-h1 {
-  font-size: 50px;
-  padding: 2% 0% 0% 0%;
+.bg-color {
+  background: #f0f0f0;
+  height: 100%;
 }
+
 .cardshow {
   margin: 2%;
 }
-.btn-margin {
-  margin: 3%;
+h1 {
+  font-size: 50px;
+  padding: 2% 0% 0% 0%;
 }
 </style>

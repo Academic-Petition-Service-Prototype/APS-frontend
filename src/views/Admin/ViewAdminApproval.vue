@@ -1,15 +1,16 @@
 <template>
   <!-- ส่วนจัดเเสดง -->
-  <div id="ChiefPetitionManagement">
-    <NavbarChief />
+  <div id="AdminApproval" class="bg-color">
+    <NavbarAdmin />
     <v-card class="cardshow">
-      <v-toolbar dark prominent color="primary">
-        <h1>จัดการคำร้อง</h1>
+      <v-toolbar dark prominent color="#00B8D4">
+        <h1 class="text-center pa-5">การอนุมัติคำร้อง</h1>
+      
         <v-spacer></v-spacer>
       </v-toolbar>
-
+   
       <v-data-iterator
-        :items="petitionList"
+        :items="petitionListById"
         :items-per-page.sync="itemsPerPage"
         :page.sync="page"
         :search="search"
@@ -20,22 +21,11 @@
       >
         <template v-slot:header>
           <v-row>
-            <v-col align="right"
-              ><v-btn
-                color="success"
-                style="margin: 10px 10px -25px 10px"
-                to="/ChiefCreatepetition"
-              >
-                สร้างคำร้อง
-              </v-btn></v-col
-            >
-          </v-row>
-          <v-row>
             <v-col>
               <v-text-field
                 prepend-inner-icon="mdi-magnify"
-                label="ชื่อคำร้อง"
-                placeholder="ชื่อคำร้อง"
+                label="ชื่อคำร้อง / ยื่นเรื่อง"
+                placeholder="ชื่อคำร้อง / ยื่นเรื่อง"
                 filled
                 rounded
                 dense
@@ -50,34 +40,30 @@
 
         <template v-slot:default="props">
           <v-row class="text-center">
-            <v-col class="h3"> ลำดับ </v-col>
-            <v-col class="h3"> รายการ </v-col>
-            <v-col class="h3"> สถานะ </v-col>
-            <v-col class="h3"> วันที่สร้าง </v-col>
-            <v-col class="h3"> การกระทำ </v-col>
+            <v-col> ลำดับ </v-col>
+            <v-col> รายการ </v-col>
+            <v-col> ผู้ยื่นคำร้อง </v-col>
+            <v-col> วันที่ยื่นคำร้อง </v-col>
+            <v-col> สถานะ </v-col>
           </v-row>
 
-          <v-row v-for="(item, index) in props.items" :key="index">
+          <v-row v-for="item in props.items" :key="item.text">
             <v-card-title>
               <v-row class="text-center" align="center">
-                <v-col> {{ index + 1 }} </v-col>
+                <v-col> {{ item.submit_id }} </v-col>
                 <v-col> {{ item.form_name }} </v-col>
+                <v-col> {{ item.fullname }}</v-col>
+                <v-col> {{ item.submit_date }} </v-col>
                 <v-col>
-                  <v-switch
-                    inset
-                    v-model="item.switch"
-                    style="margin: 0px 0px 0px 40%;"
-                  ></v-switch>
-                </v-col>
-                <v-col>
-                  <p>{{ item.created_date }}</p>
-                </v-col>
-                <v-col>
-                  <v-btn icon><v-icon color="red">mdi-delete</v-icon></v-btn>
+                  <v-btn @click="selectApprovaldetaill(item.submit_id)" color="green">
+                    <h5>
+                      ดูรายละเอียด
+                    </h5>
+                  </v-btn>
                 </v-col>
               </v-row>
             </v-card-title>
-            <v-divider style="margin: 0px 10px 0px 10px;"></v-divider>
+            <v-divider style="margin: 0px 10px 0px 10px"></v-divider>
           </v-row>
         </template>
 
@@ -100,7 +86,7 @@
                 fab
                 dark
                 icon
-                color="primary"
+                color="#00B8D4"
                 class="mr-1"
                 @click="formerPage"
               >
@@ -110,7 +96,7 @@
                 fab
                 dark
                 icon
-                color="primary"
+                color="#00B8D4"
                 class="ml-1"
                 @click="nextPage"
               >
@@ -120,19 +106,18 @@
           </v-row>
         </template>
       </v-data-iterator>
-      <!-- </v-container> -->
     </v-card>
   </div>
   <!-- ส่วนจัดเเสดง -->
 </template>
 
 <script>
-import NavbarChief from "../../components/NavbarChief.vue";
+import NavbarAdmin from "../../components/NavbarAdmin.vue";
 import axios from "axios";
 export default {
-  name: "ChiefPetitionManagement",
+  name: "AdminApproval",
   components: {
-    NavbarChief,
+    NavbarAdmin,
   },
   data() {
     return {
@@ -143,47 +128,35 @@ export default {
       page: 1,
       itemsPerPage: 4,
       sortBy: "name",
-      petitionList: [],
-
-      items: [
-        {
-          no: "1",
-          text: "ฟรอมที่ 1",
-          agency: "ศึกษาทั่วไป",
-          satatus: true,
-          switch: false,
-          datecreation: "6/12/2564",
-        },
-      ],
+      petitionListById: [],
+      specifics: [],
+      
     };
   },
-  computed: {
-    numberOfPages() {
-      return Math.ceil(this.items.length / this.itemsPerPage);
-    },
-    filteredKeys() {
-      return this.keys.filter((key) => key !== "Name");
-    },
-  },
+
   methods: {
     getpetition() {
       axios
-        .post(process.env.VUE_APP_URL + "getforms", {
-          user_id: this.$store.getters.getUser.user_id,
-          role: this.$store.getters.getUser.role,
-          agency: this.$store.getters.getUser.agency_name,
-        })
+        .get(process.env.VUE_APP_URL + "getsubmitforms")
         .then((response) => {
-          // handle success
-          this.petitionList = response.data;
-          for (let i = 0; i < this.petitionList.length; i++) {
+          //handle success
+          // approval_order
+          this.petitionListById = response.data;
+          for (let i = 0; i < this.petitionListById.length; i++) {
+            this.tmp = JSON.stringify(this.petitionListById[i].approval_order);
+            this.tmp = this.tmp.replace(/\\/g, "");
+            this.specifics = this.tmp.replace(/\\/g, "");
+
+            var temp = this.specifics.slice(1, -1);
+            temp = JSON.parse(temp);
+            this.petitionListById[i].approval_order = temp;
             // date format
-            this.petitionList[i].created_date = new Date(
-              this.petitionList[i].created_date
+            this.petitionListById[i].submit_date = new Date(
+              this.petitionListById[i].submit_date
             );
-            this.petitionList[i].created_date = this.petitionList[
+            this.petitionListById[i].submit_date = this.petitionListById[
               i
-            ].created_date.toLocaleDateString("th-TH", {
+            ].submit_date.toLocaleDateString("th-TH", {
               year: "numeric",
               month: "numeric",
               day: "numeric",
@@ -192,12 +165,16 @@ export default {
               minute: "numeric",
             });
             // date format
+            
           }
         })
         .catch((error) => {
           // handle error
           console.log(error);
         });
+    },
+    selectApprovaldetaill(submit_id) {
+      this.$router.push("/AdminViewApproval/" + submit_id);
     },
     nextPage() {
       if (this.page + 1 <= this.numberOfPages) this.page += 1;
@@ -209,6 +186,7 @@ export default {
       this.itemsPerPage = number;
     },
   },
+
   mounted() {
     this.getpetition();
   },
@@ -216,14 +194,15 @@ export default {
 </script>
 
 <style scoped>
-h1 {
-  font-size: 50px;
-  padding: 2% 0% 0% 0%;
+.bg-color {
+  background: #f0f0f0;
+  height: 100%;
 }
 .cardshow {
   margin: 2%;
 }
-.btn-margin {
-  margin: 3%;
+h1 {
+  font-size: 50px;
+  padding: 2% 0% 0% 0%;
 }
 </style>
