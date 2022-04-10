@@ -10,6 +10,7 @@
           </v-col>
         </v-row>
       </v-toolbar>
+      {{ tag }}
       <!-- ส่วนสร้างเอกสาร -->
       <v-stepper alt-labels v-model="stepprocess">
         <v-stepper-header>
@@ -343,7 +344,7 @@ export default {
   },
   data() {
     return {
-      tag: ["a", "b", "c"],
+      tag: [],
       tag_form: null,
       form_detail: "",
       stepprocess: 1,
@@ -658,6 +659,20 @@ export default {
           console.log(error);
         });
     },
+    gettagsbyagency() {
+      axios
+        .post(process.env.VUE_APP_URL + "tagsbyagency", {
+          agency_id: this.$store.getters.getUser.agencies_id,
+        })
+        .then((response) => {
+          // handle success
+          this.tag = response.data;
+        })
+        .catch((error) => {
+          // handle error
+          console.log(error);
+        });
+    },
   },
   watch: {
     name() {
@@ -681,6 +696,7 @@ export default {
   },
   mounted() {
     this.getchieflist();
+    this.gettagsbyagency();
   },
 };
 </script>
