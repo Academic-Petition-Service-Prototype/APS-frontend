@@ -15,7 +15,7 @@
     <!-- Navbar -->
 
     <!-- Sidebar -->
-    <v-navigation-drawer v-model="drawer" app color="#424242" width="300">
+    <v-navigation-drawer v-model="drawer" app color="#424242" width="auto">
       <!-- ส่วนตัวเลือกเมนู -->
       <v-row>
         <v-col align="center">
