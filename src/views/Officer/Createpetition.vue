@@ -489,18 +489,18 @@ export default {
                     timer: 2000,
                   });
                 } else if (
-                  response.data == "แท็คนี้มีอยู่ในระบบของหน่วยงานแล้ว"
+                  response.data == "หมวดหมู่นี้มีอยู่ในระบบของหน่วยงานแล้ว"
                 ) {
                   this.$swal({
                     icon: "error",
-                    title: "แท็คนี้มีอยู่ในระบบของหน่วยงานแล้ว",
+                    title: "หมวดหมู่นี้มีอยู่ในระบบของหน่วยงานแล้ว",
                     text: "กรุณาใช้ชื่อหมวดหมู่คำร้องอื่น",
                     timer: 2000,
                   });
-                } else if (response.data == "เพิ่มแท็คสำเร็จ") {
+                } else if (response.data == "เพิ่มหมวดหมู่สำเร็จ") {
                   this.$swal({
                     icon: "success",
-                    title: "เพิ่มแท็คสำเร็จ",
+                    title: "เพิ่มหมวดหมู่สำเร็จ",
                     text: "เพิ่ม" + this.tag_form + "สำเร็จ ",
                     timer: 2000,
                   });
@@ -508,7 +508,7 @@ export default {
                   this.$swal({
                     icon: "error",
                     title: "เกิดข้อผิดพลาด",
-                    text: "การสร้างแท็คเกิดข้อผิดพลาด",
+                    text: "การสร้างหมวดหมู่เกิดข้อผิดพลาด",
                     timer: 2000,
                   });
                 }
