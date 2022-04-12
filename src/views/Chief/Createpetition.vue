@@ -3,7 +3,7 @@
   <div id="ChiefCreatepetition">
     <NavbarChief />
     <v-card class="cardshow">
-      <v-toolbar dark prominent color="#6c757d">
+      <v-toolbar dark prominent color="primary">
         <v-row>
           <v-col align="center">
             <p>สร้างคำร้อง</p>
