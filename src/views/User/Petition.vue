@@ -33,7 +33,6 @@
             v-model="search"
             :items="tag"
             :item-text="(item) => item.tag_name"
-
             return-object
             label="กรุณาเลือกหมวดหมู่"
             outlined
@@ -76,7 +75,7 @@
                   <v-card
                     color="#385F73"
                     dark
-                    max-width="400"
+                    max-width="500"
                     
                     :to="item.route"
                     @click="sentPetition(item.form_id)"
@@ -89,7 +88,7 @@
                       
                     >
                       <v-card-title class="text-h5">
-                        <h2>{{ item.form_name }}</h2>
+                        <h5>{{ item.form_name }}</h5>
                       </v-card-title>
 
                       <v-card-subtitle
@@ -97,7 +96,7 @@
                       >
 
                       <v-card-actions>
-                        <v-btn text> Listen Now </v-btn>
+                        <v-btn text> #{{ item.tags_id }}</v-btn>
                       </v-card-actions>
                       
                     </v-img>
