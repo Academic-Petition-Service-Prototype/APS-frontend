@@ -10,7 +10,6 @@
           </v-col>
         </v-row>
       </v-toolbar>
-      {{ tag }}
       <!-- ส่วนสร้างเอกสาร -->
       <v-stepper alt-labels v-model="stepprocess">
         <v-stepper-header>
@@ -58,7 +57,6 @@
                     label="ชื่อหัวข้อ"
                     class="cardshow"
                     required
-                    :error-messages="errorMessages"
                     :rules="[() => !!forms.title || 'กรุณาใส่ชื่อหัวข้อ']"
                   ></v-text-field>
                 </v-col>
@@ -130,6 +128,7 @@
                     class="cardshow"
                     v-model="tag_form"
                     :items="tag"
+                    :item-text="(item) => item.tag_name"
                     outlined
                     dense
                     chips
@@ -347,7 +346,7 @@ export default {
       tag: [],
       tag_form: null,
       form_detail: "",
-      stepprocess: 1,
+      stepprocess: 3,
       text: ``,
       numspecifics: 1,
       profile: [
@@ -399,30 +398,32 @@ export default {
         }
       });
     },
-    addNewtitle: function() {
+    addNewtitle: function () {
       this.title.push({
         id: this.nextTodoId++,
         title: this.newtitleText,
       });
       this.newtitleText = "";
     },
-    addapprovertitle: function() {
+    addapprovertitle: function () {
       if (this.newapproverText !== "" && this.newapproverText !== null) {
         let ifdup = false;
         for (let i = 0; i < this.listapprover.length; i++) {
           if (
-            this.listapprover[i].approver_name.user_id ===
+            this.listapprover[i].approver_name.user_id ==
             this.newapproverText.user_id
+            &&
+            this.listapprover[i].approver_name[i].f_name ==
+            this.newapproverText.f_name
+            &&
+            this.listapprover[i].approver_name[i].l_name ==
+            this.newapproverText.l_name
           ) {
-            console.log("if");
-            console.log(this.newapproverText.f_name);
-            console.log(this.listapprover[i].approver_name.f_name);
+            console.log("if ddf");
             ifdup = true;
           } else {
             console.log("else");
             ifdup = false;
-            console.log(this.newapproverText.f_name);
-            console.log(this.listapprover[i].approver_name.f_name);
           }
         }
         if (ifdup == true) {
@@ -449,11 +450,11 @@ export default {
         });
       }
     },
-    removetitle: function(index) {
+    removetitle: function (index) {
       this.title.splice(index, 1);
       this.nextTodoId--;
     },
-    removeapprover: function(index) {
+    removeapprover: function (index) {
       this.listapprover.splice(index, 1);
       this.nextapproverId--;
     },
@@ -540,8 +541,7 @@ export default {
                 this.$swal({
                   icon: "warning",
                   title: "กรุณากรอกข้อมูลเฉพาะ",
-                  text:
-                    "เมื่อท่านเปิดใช้งานเพิ่มข้อมูลเฉพาะ กรุณากรอกข้อมูล และอย่าเว้นว่าง",
+                  text: "เมื่อท่านเปิดใช้งานเพิ่มข้อมูลเฉพาะ กรุณากรอกข้อมูล และอย่าเว้นว่าง",
                   timer: 5000,
                 });
 
@@ -618,8 +618,7 @@ export default {
             this.$swal({
               icon: "error",
               title: "ชื่อคำร้องนี้มีอยู่ในระบบแล้ว!",
-              text:
-                "คำร้องของท่านมีในระบบอยู่เเล้วโปรดตรวจสอบปัจจัยที่ทำให้คำร้องของท่านต่่างจากในระบบ",
+              text: "คำร้องของท่านมีในระบบอยู่เเล้วโปรดตรวจสอบปัจจัยที่ทำให้คำร้องของท่านต่่างจากในระบบ",
               timer: 2000,
             });
           } else {
@@ -672,14 +671,6 @@ export default {
           // handle error
           console.log(error);
         });
-    },
-  },
-  watch: {
-    name() {
-      this.errorMessages = "";
-    },
-    approver() {
-      this.approvererrorMessages = "";
     },
   },
   computed: {
