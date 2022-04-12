@@ -6,7 +6,7 @@
         <h1>เลือกแบบคำร้อง</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
-      <!-- {{petitionList}} -->
+      {{petitionList}}
       <v-data-iterator
         :items="petitionList"
         :items-per-page.sync="itemsPerPage"
@@ -31,7 +31,10 @@
           <h3 class="textleft">ค้นหาตามหมวดหมู่</h3>
           <v-select
             v-model="search"
-            :items="form_tag"
+            :items="tag"
+            :item-text="(item) => item.tag_name"
+
+            return-object
             label="กรุณาเลือกหมวดหมู่"
             outlined
             class="cardmargin"
@@ -209,7 +212,7 @@ export default {
       keys: ["Name"],
       petitionList: [],
       e1: 1,
-      form_tag: [],
+      tag: [],
     };
   },
   computed: {
@@ -221,6 +224,7 @@ export default {
     },
   },
   methods: {
+    
     nextPage() {
       if (this.page + 1 <= this.numberOfPages) this.page += 1;
     },
@@ -252,9 +256,24 @@ export default {
     sentPetition(form_id) {
       this.$router.push("/UserSentpetition/" + form_id);
     },
+    gettagsbyagency() {
+      axios
+        .post(process.env.VUE_APP_URL + "tagsbyagency", {
+          agency_id: this.$store.getters.getUser.agencies_id,
+        })
+        .then((response) => {
+          // handle success
+          this.tag = response.data;
+        })
+        .catch((error) => {
+          // handle error
+          console.log(error);
+        });
+    },
   },
   mounted() {
     this.getpetition();
+    this.gettagsbyagency();
   },
 };
 </script>
