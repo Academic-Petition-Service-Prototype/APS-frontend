@@ -124,6 +124,9 @@
               <v-row>
                 <v-col>
                   <h1>หมวดหมู่คำร้อง</h1>
+
+                  {{tag}}
+                  {{tag_form}}
                   <v-autocomplete
                     class="cardshow"
                     v-model="tag_form"
@@ -134,7 +137,8 @@
                     chips
                     small-chips
                     label="หมวดหมู่คำร้อง"
-                    multiple
+                    
+                    return-object
                   ></v-autocomplete>
                 </v-col>
                 <v-col align="center">
@@ -346,7 +350,7 @@ export default {
       tag: [],
       tag_form: null,
       form_detail: "",
-      stepprocess: 3,
+      stepprocess: 2,
       text: ``,
       numspecifics: 1,
       profile: [
@@ -608,7 +612,7 @@ export default {
           l_name: this.$store.getters.getUser.l_name,
           approval_name: this.listapprover,
           form_detail: this.form_detail,
-          tag_form: this.tag_form,
+          tag_id : this.tag_form.tag_id,
         })
         .then((response) => {
           if (response.data == "กรุณากรอกชื่อคำร้อง") {
