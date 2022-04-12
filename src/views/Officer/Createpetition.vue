@@ -125,8 +125,7 @@
                 <v-col>
                   <h1>หมวดหมู่คำร้อง</h1>
 
-                  {{tag}}
-                  {{tag_form}}
+                  
                   <v-autocomplete
                     class="cardshow"
                     v-model="tag_form"
@@ -170,9 +169,7 @@
                   <h1>เพิ่มผู้อนุมัติ</h1>
                 </v-col>
               </v-row>
-              {{ newapproverText }}
-              <br /><br />
-              {{ listapprover }}
+              
               <v-row>
                 <!-- ส่วนของเพิ่มหน้าผู้อนุมัติ -->
                 <div>
@@ -350,7 +347,7 @@ export default {
       tag: [],
       tag_form: null,
       form_detail: "",
-      stepprocess: 2,
+      stepprocess: 1,
       text: ``,
       numspecifics: 1,
       profile: [
