@@ -39,6 +39,7 @@
           <v-row class="text-center">
             <v-col class="h3">ลำดับ</v-col>
             <v-col class="h3">รายการ</v-col>
+            <v-col align="center" class="h3">ผู้ส่งคำร้อง</v-col>
             <v-col class="h3">เวลา</v-col>
           </v-row>
 
@@ -56,6 +57,9 @@
                     </v-col>
                     <v-col>
                       <h4>{{ item.form_name }}</h4>
+                    </v-col>
+                    <v-col>
+                      <h4>{{ item.fullname }}</h4>
                     </v-col>
                     <v-col>
                       <h4>{{ item.submit_date }}</h4>
