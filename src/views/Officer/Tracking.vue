@@ -6,7 +6,7 @@
         <h1 class="text-center pa-5">สถานะคำร้อง</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
-
+  {{petitionListById}}
       <v-data-iterator
         :items="petitionListById"
         :items-per-page.sync="itemsPerPage"
@@ -39,6 +39,7 @@
           <v-row class="text-center">
             <v-col align="center" class="h3">ลำดับ</v-col>
             <v-col align="center" class="h3">รายการ</v-col>
+            <v-col align="center" class="h3">ผู้ส่งคำร้อง</v-col>
             <v-col align="center" class="h3">วันที่ส่งคำร้อง</v-col>
           </v-row>
 
@@ -56,6 +57,9 @@
                     </v-col>
                     <v-col>
                       <h4>{{ item.form_name }}</h4>
+                    </v-col>
+                    <v-col>
+                      <h4>{{ item.fullname }}</h4>
                     </v-col>
                     <v-col>
                       <h4>{{ item.submit_date }}</h4>
