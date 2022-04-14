@@ -17,6 +17,8 @@ import UserSentpetition from '../views/User/Sentpetition.vue'
 import UserRequest from '../views/User/Request.vue'
 import UserRequestTracking from '../views/User/Requesttracking.vue'
 import Trackingdetail from '../views/User/Trackingdetail.vue'
+import Userabout from '../views/User/Userabout.vue'
+import guidepentions from '../views/User/guidepentions.vue'
 
 
 
@@ -156,6 +158,18 @@ const routes = [
     name: 'รายละเอียดคำร้อง',
     component: Trackingdetail 
   },
+  {
+    path: '/Userabout',
+    name: 'เกี่ยวกับเรา',
+    component: Userabout 
+  },
+  {
+    path: '/guidepentions',
+    name: 'วิธีใช่งาน การส่งคำร้อง',
+    component: guidepentions 
+  },
+  
+  
   //User
 
   //Officer

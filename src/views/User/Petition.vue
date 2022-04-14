@@ -6,11 +6,11 @@
         <h1>เลือกแบบคำร้อง</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
-      {{ petitionList }}
+      <!-- {{ petitionList }}
       <br /><br />
       <br />
 
-      {{ tag }}
+      {{ tag }} -->
       <v-data-iterator
         :items="petitionList"
         :items-per-page.sync="itemsPerPage"
