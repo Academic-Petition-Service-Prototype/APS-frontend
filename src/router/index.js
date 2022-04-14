@@ -64,6 +64,7 @@ import Secretaryrequestlistdetail from '../views/Secretary/Secretaryrequestlistd
 
 //Admin
 import AdminChiefManagement from '../views/Admin/ChiefManagement.vue'
+import AdminChiefEdit from '../views/Admin/Editchief.vue'
 import AdminDashboard from '../views/Admin/Dashboard.vue'
 import AdminOfficerManagement from '../views/Admin/OfficerManagement.vue'
 import AdminProfile from '../views/Admin/Profile.vue'
@@ -75,6 +76,8 @@ import AdminViewReport from '../views/Admin/ViewReport.vue'
 import AdminAgencyManagement from '../views/Admin/AgencyManagement.vue'
 import AdminViwerequestlist from '../views/Admin/AdminViwerequestlist.vue'
 import AdminViewApprovaldetail from '../views/Admin/ViewAdminApprovaldetail.vue'
+import AdminTagManagement from '../views/Admin/TagManagement.vue'
+
 
 //Admin
 
@@ -324,12 +327,17 @@ const routes = [
   //Admin
   {
     path: '/AdminChiefManagement',
-    name: 'AdminChiefManagement',
+    name: 'จัดการหัวหน้าหน่วยงาน',
     component: AdminChiefManagement 
   },
   {
+    path: '/AdminChiefEdit/:id',
+    name: 'แก้ไขหัวหน้าหน่วยงาน',
+    component: AdminChiefEdit 
+  },
+  {
     path: '/AdminDashboard',
-    name: 'AdminDashboard',
+    name: 'หน้าแรก',
     component: AdminDashboard 
   },
   {
@@ -349,7 +357,7 @@ const routes = [
   },
   {
     path: '/AdminTracking',
-    name: 'AdminTracking',
+    name: 'ติดตามสถานะคำร้อง',
     component: AdminTracking 
   },
   {
@@ -360,7 +368,7 @@ const routes = [
  
   {
     path: '/AdminViewReport',
-    name: 'AdminViewReport',
+    name: 'การรายงานปัญหา',
     component: AdminViewReport 
   },
   {
@@ -370,18 +378,23 @@ const routes = [
   },
   {
     path: '/AdminViwerequestlist',
-    name: 'AdminViwerequestlist',
+    name: 'การร้องขอคำร้องเพิ่มเติม',
     component: AdminViwerequestlist 
   },
   {
     path: '/AdminViewApproval',
-    name: 'AdminViewApproval',
+    name: 'การอนุมัติคำร้อง',
     component: AdminViewApproval 
   },
   {
     path: '/AdminViewApproval/:id',
     name: 'AdminViewApprovaldetail',
     component: AdminViewApprovaldetail 
+  },
+  {
+    path: '/AdminTagManagement',
+    name: 'จัดการหมวดหมู่คำร้อง',
+    component: AdminTagManagement 
   },
   
   
