@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import About from '../views/About.vue'
+import PageNotFound from '../views/PageNotFound.vue'
 // Global
 
 //User
@@ -84,7 +85,6 @@ import AdminTagManagement from '../views/Admin/TagManagement.vue'
 //Other
 import viewpentitiontrackingbyofficer from '../views/Other/viewpentitiontrackingbyofficer.vue'
 //Other
-
 
 Vue.use(VueRouter)
 
@@ -405,6 +405,11 @@ const routes = [
     path: '/viewpentitiontrackingbyofficer',
     name: 'viewpentitiontrackingbyofficer',
     component: viewpentitiontrackingbyofficer 
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    name: 'Page not found 404',
+    component: PageNotFound
   },
   //Other
 
