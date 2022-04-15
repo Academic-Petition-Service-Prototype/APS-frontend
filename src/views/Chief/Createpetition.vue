@@ -395,7 +395,7 @@ export default {
         cancelButtonText: "ยกเลิก",
       }).then((result) => {
         if (result.isConfirmed) {
-          this.$router.push("/OfficerPetitionManagement");
+          this.$router.push("/ChiefPetitionManagement");
         }
       });
     },
