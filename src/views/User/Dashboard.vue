@@ -3,36 +3,11 @@
   <div id="UserDashboard">
     <NavbarUser />
     <v-card class="cardshow">
-      <!-- <v-toolbar dark prominent color="#FFAB40">
-        <h1>หน้าแรก</h1>
-        <v-spacer></v-spacer>
-      </v-toolbar> -->
-
-      <!-- <v-row> -->
-
-      <!-- <v-col> -->
-      <!-- รายงานเอกสารที่ทำไป -->
-
-      <!-- <b-card
-            :img-src="require('../../assets/Docicon.png')"
-            img-width="130"
-            img-height="130"
-            img-left="true"
-            class="mb-3 box-margin"
-          >
-            <b-card-text> คำร้องที่ส่งทั้งหมด </b-card-text>
-            <h5>{{ sumpentition }}</h5>
-          </b-card> -->
-
-      <!-- รายงานเอกสารที่ทำไป -->
-      <!-- </v-col> -->
-      <!-- </v-row> -->
       <v-card height="300px">
         <v-img
           height="300px"
           src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
         >
-          <!-- <div class="fill-height repeating-gradient"></div> -->
           <v-row>
             <v-col>
               <p class="banneruser">สวัสดี !</p>
@@ -48,57 +23,36 @@
         </v-img>
       </v-card>
     </v-card>
-    <v-card class="cardshow">
-      <v-col>
-        <template>
-          <v-carousel
-            hide-delimiters
-            :show-arrows="false"
-            height="250px"
-            
-            cycle
-          >
-            <v-carousel-item
-              v-for="(item, i) in items"
-              :key="i"
-              :src="item.src"
-              reverse-transition="fade-transition"
-              transition="fade-transition"
-            >
-            </v-carousel-item>
-          </v-carousel>
-        </template>
-      </v-col>
-    </v-card>
+
     <v-card class="cardshow">
       <v-row>
         <v-col>
-          <v-card class="cardshow">
-            <v-toolbar dark prominent color="#FFAB40">
-              <h1>ข่าวสาร</h1>
-              <v-spacer></v-spacer>
-            </v-toolbar>
-            dfdf
-          </v-card>
-        </v-col>
+          <v-toolbar dark prominent color="#FFAB40">
+            <h1>คู่มือ / การใช้งาน</h1>
+            <v-spacer></v-spacer>
+          </v-toolbar>
 
-        <v-col>
-          <v-card class="cardshow">
-            <v-toolbar dark prominent color="#FFAB40">
-              <h1>คู่มือ / การใช้งาน</h1>
-              <v-spacer></v-spacer>
-            </v-toolbar>
-            คู่มือ
-          </v-card>
+          <v-slide-group class="pa-4" show-arrows>
+            <v-slide-item v-for="item in Guide" :key="item">
+              <v-btn
+                class="ma-4"
+                height="400"
+                width="300"
+                :to="item.path"
+                :color="item.color"
+              >
+                <v-row>
+                  <v-col>
+                    <h3>{{ item.text }}</h3>
+                    <h3>{{ item.text2 }}</h3>
+                  </v-col>
+                </v-row>
+              </v-btn>
+            </v-slide-item>
+          </v-slide-group>
         </v-col>
       </v-row>
     </v-card>
-    <!-- <v-card class="cardshow">
-      <v-toolbar dark prominent color="#FFAB40">
-        <h1>สาระอื่นๆ</h1>
-        <v-spacer></v-spacer>
-      </v-toolbar>
-    </v-card> -->
   </div>
 </template>
 
@@ -122,18 +76,31 @@ export default {
           role: this.$store.getters.getUser.role,
         },
       ],
-      items: [
+      Guide: [
         {
-          src: "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg",
+          id: 1,
+          text: "การส่งคำร้อง",
+          path: "/guidepentions",
+          color: "#FFAB40",
         },
         {
-          src: "https://cdn.vuetifyjs.com/images/carousel/sky.jpg",
+          id: 2,
+          text: "การรายงานปัญหา",
+          text2: "แบบไม่ระบุตัวตน",
+          path: "/guidereport",
+          color: "#485460",
         },
         {
-          src: "https://cdn.vuetifyjs.com/images/carousel/bird.jpg",
+          id: 3,
+          text: "การร้องคำร้องเพิ่มเติม",
+          path: "/guiderequest",
+          color: "primary",
         },
         {
-          src: "https://cdn.vuetifyjs.com/images/carousel/planet.jpg",
+          id: 5,
+          text: "เกี่ยวกับเรา",
+          path: "/Userabout",
+          color: "#00B8D4",
         },
       ],
       datastu: [
@@ -198,6 +165,10 @@ h1 {
   font-size: 50px;
   padding: 2% 0% 0% 0%;
 }
+h3 {
+  color: #f0f0f0;
+  padding: 2% 0% 0% 0%;
+}
 .banneruser {
   font-size: 80px;
   padding: 10%;
@@ -207,6 +178,9 @@ h1 {
   font-size: 25px;
   margin: -20px 100px -50px 50px;
   padding: 15%;
+}
+.text-warp {
+  word-break: break-all;
 }
 </style>
 

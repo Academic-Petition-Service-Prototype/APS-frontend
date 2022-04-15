@@ -95,6 +95,7 @@
                             :complete="item.submit_state > n + 1"
                             step=""
                             color="green"
+                            
                           >
                             {{ item.approval_order[n].approver_name.f_name }}
 
