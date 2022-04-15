@@ -19,6 +19,10 @@ import UserRequestTracking from '../views/User/Requesttracking.vue'
 import Trackingdetail from '../views/User/Trackingdetail.vue'
 import Userabout from '../views/User/Userabout.vue'
 import guidepentions from '../views/User/guidepentions.vue'
+import guidereport from '../views/User/guidereport.vue'
+import guiderequest from '../views/User/guiderequest.vue'
+
+
 
 
 
@@ -165,9 +169,21 @@ const routes = [
   },
   {
     path: '/guidepentions',
-    name: 'วิธีใช่งาน การส่งคำร้อง',
+    name: 'วิธีใช้งาน การส่งคำร้อง',
     component: guidepentions 
   },
+  {
+    path: '/guidereport',
+    name: 'วิธีใช้งาน การรายงานปัญหา ',
+    component: guidereport 
+  },
+  {
+    path: '/guiderequest',
+    name: 'วิธีใช้งาน การร้องขอ ',
+    component: guiderequest 
+  },
+  
+  
   
   
   //User

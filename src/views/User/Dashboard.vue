@@ -87,20 +87,14 @@ export default {
           id: 2,
           text: "การรายงานปัญหา",
           text2: "แบบไม่ระบุตัวตน",
-          path: "/About",
+          path: "/guidereport",
           color: "#485460",
         },
         {
           id: 3,
           text: "การร้องคำร้องเพิ่มเติม",
-          path: "/About",
+          path: "/guiderequest",
           color: "primary",
-        },
-        {
-          id: 4,
-          text: "การติดตามสถานะ",
-          path: "/About",
-          color: "#8BC34A",
         },
         {
           id: 5,

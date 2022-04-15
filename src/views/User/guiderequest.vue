@@ -6,7 +6,7 @@
       <v-row>
         <v-col id="#">
           <v-btn text width="auto" height="auto" class="cardmargin">
-            <h1>#การส่งคำร้อง</h1>
+            <h1>#การร้องขอคำร้องเพิ่มเติม</h1>
           </v-btn>
           <v-divider class="dividermagin"></v-divider>
         </v-col>
