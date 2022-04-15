@@ -16,12 +16,12 @@
         <v-col>
           <h4 id="1">
             <v-btn text width="auto" height="auto"> <h1>1.</h1> </v-btn
-            >เมื่อผู้ใช้งานต้องการที่จะยื่นคำร้อง ! ไปที่เมนู "ส่งคำร้อง"
+            >เมื่อผู้ใช้งานต้องการที่จะ รายงานปัญหา! ไปที่เมนู  <br> "รายงานปัญหาไม่ระบุตัวตน"
           </h4>
         </v-col>
         <v-col align="center">
           <v-img
-            src="../../assets/gudesenpentions1.png"
+            src="../../assets/guidereport1.png"
             width="500px"
             height="300px"
           >
@@ -34,7 +34,7 @@
       <v-row>
         <v-col align="center">
           <v-img
-            src="../../assets/gudesenpentions2.png"
+            src="../../assets/guidereport2.png"
             width="500px"
             height="350px"
           >
@@ -43,7 +43,7 @@
         <v-col>
           <h4 id="2">
             <v-btn text width="auto" height="auto"> <h1>2.</h1> </v-btn>
-            เลือกแบบคำร้อง ที่ท่านต้องการยื่นคำร้องที่มีภายในระบบของท่าน
+            กรอกชื่อรายงานปัญาหาของท่าน
             <br />
           </h4>
         </v-col>
@@ -55,12 +55,12 @@
         <v-col>
           <h4 id="3">
             <v-btn text width="auto" height="auto"> <h1>3.</h1> </v-btn
-            >ท่านสามารถเลือกการค้นหาคำร้องโดยช่องค้นหาตามหมวดหมู่
+            > เลือก วัน เดือน ปี ที่เกิดเหตุ
           </h4>
         </v-col>
         <v-col align="center">
           <v-img
-            src="../../assets/gudesenpentions3.png"
+            src="../../assets/guidereport3.png"
             width="500px"
             height="300px"
           >
@@ -73,7 +73,7 @@
       <v-row>
         <v-col align="center">
           <v-img
-            src="../../assets/gudesenpentions2.png"
+            src="../../assets/guidereport4.png"
             width="500px"
             height="350px"
           >
@@ -82,7 +82,7 @@
         <v-col>
           <h4 id="4">
             <v-btn text width="auto" height="auto"> <h1>4.</h1> </v-btn>
-            กรอกข้อมูลตามรายละเอียดคำร้องที่ท่านเลือก
+            หลังจากเลือก วัน เดือน ปี ก็เลือก ช่วงเวลาที่เกิดเหตุ
             <br />
           </h4>
         </v-col>
@@ -94,17 +94,13 @@
         <v-col>
           <h4 id="5">
             <v-btn text width="auto" height="auto"> <h1>5.</h1> </v-btn
-            >ท่านสามารถติดตามคำร้องหลังจากท่านทำการส่งคำร้องไปแล้ว
-            <p>
-              หลังจากส่งคำร้องไปยังผู้อนุมัติแล้ว <br />
-              ท่านสามารถทรายสถานะเอกสารของท่านได้โดยแถบเมนู <br />
-              "ติดตามสถานะคำร้อง"
-            </p>
+            >กรอกรายละเอียดถึงปััญาหาที่เกิดขขึ้น
+            
           </h4>
         </v-col>
         <v-col align="center">
           <v-img
-            src="../../assets/gudesenpentions1.png"
+            src="../../assets/guidereport5.png"
             width="500px"
             height="300px"
           >
@@ -113,10 +109,23 @@
       </v-row>
 
       <v-divider class="dividermagin"></v-divider>
+
+      <v-row>
+        <v-col>
+          <h4 id="6">
+            <v-btn text width="auto" height="auto"> <h1>#การติดตามการรายงาน <br> ปัญหาที่รายงานไป</h1> </v-btn>
+            
+            
+            
+          </h4>
+        </v-col>
+      </v-row>
+
+      <v-divider class="dividermagin"></v-divider>
       <v-row>
         <v-col align="center">
           <v-img
-            src="../../assets/gudesenpentions2.png"
+            src="../../assets/guidereport6.png"
             width="500px"
             height="350px"
           >
@@ -125,11 +134,9 @@
         <v-col>
           <h4 id="6">
             <v-btn text width="auto" height="auto"> <h1>6.</h1> </v-btn>
-            เมื่อคำร้องของท่าน
-            <h5>ไม่ถูกอนุมัติ !</h5>
-            <br />
+            สามารถติดตามการรายงานปัญาหาปบบไม่ระบุตัวตนได้
             <p>
-              เมื่อคำร้องของท่านถูกผู้อนุมัติปฏิเสธการยื่นคำร้องระบบจะมีการเเต้งเตือนพร้อมแสดงรายละเอียดจากผู้อนุมัติโดยตรงเพื่อแก้ไข
+              โดยไปที่แทบเมนู เลือก  <br> "ติดตามสถานะรายงานแบบไม่ระบุตัวตน"
             </p>
           </h4>
         </v-col>
@@ -141,17 +148,17 @@
         <v-col>
           <h4 id="7">
             <v-btn text width="auto" height="auto"> <h1>7.</h1> </v-btn
-            >เมื่อได้รับการอนุมัติหมดเแล้ว ?
+            >จะทราบได้ยังไงว่าปัญหาได้รับทราบเเล้ว ?
             <p>
-              หลังจากส่งคำร้องไปยังผู้อนุมัติแล้ว <br />
-              เเล้วผ่านการอนุมัติทั้งหมดในรายละเอียดจะเเสดง <br />
-              รายละเอียดคำร้องของท่านว่าผ่านการอนุมัติแล้ว
+              ในหน้าต่างการรายงานปัญาหา จะมีสถานะบอกว่า <br />
+              กำลังอยู่ในขั้นตอนที่หัวหน้ารับทราบเเล้วหรือยังบอก <br />
+              เเล้วมีราบละเอียดที่เรากรอกไป ประกอบอยู่ด้วย
             </p>
           </h4>
         </v-col>
         <v-col align="center">
           <v-img
-            src="../../assets/gudesenpentions1.png"
+            src="../../assets/guidereport7.png"
             width="500px"
             height="300px"
           >

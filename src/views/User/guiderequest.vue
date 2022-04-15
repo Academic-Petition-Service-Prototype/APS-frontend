@@ -16,12 +16,12 @@
         <v-col>
           <h4 id="1">
             <v-btn text width="auto" height="auto"> <h1>1.</h1> </v-btn
-            >เมื่อผู้ใช้งานต้องการที่จะยื่นคำร้อง ! ไปที่เมนู "ส่งคำร้อง"
+            >เมื่อผู้ใช้งานต้องการที่จะยื่นคำร้องเพิ่มเติม ไปที่เมนู  <br> "การร้องขอคำร้องเพิ่มเติม"
           </h4>
         </v-col>
         <v-col align="center">
           <v-img
-            src="../../assets/gudesenpentions1.png"
+            src="../../assets/guiderequest1.png"
             width="500px"
             height="300px"
           >
@@ -34,7 +34,7 @@
       <v-row>
         <v-col align="center">
           <v-img
-            src="../../assets/gudesenpentions2.png"
+            src="../../assets/guiderequest2.png"
             width="500px"
             height="350px"
           >
@@ -60,7 +60,7 @@
         </v-col>
         <v-col align="center">
           <v-img
-            src="../../assets/gudesenpentions3.png"
+            src="../../assets/guiderequest3.png"
             width="500px"
             height="300px"
           >
@@ -71,18 +71,10 @@
       <v-divider class="dividermagin"></v-divider>
 
       <v-row>
-        <v-col align="center">
-          <v-img
-            src="../../assets/gudesenpentions2.png"
-            width="500px"
-            height="350px"
-          >
-          </v-img>
-        </v-col>
+        
         <v-col>
           <h4 id="4">
-            <v-btn text width="auto" height="auto"> <h1>4.</h1> </v-btn>
-            กรอกข้อมูลตามรายละเอียดคำร้องที่ท่านเลือก
+            <v-btn text width="auto" height="auto"> <h1>#การติดตามการร้องขอ <br> คำร้องเพิ่มเติม</h1>  </v-btn>
             <br />
           </h4>
         </v-col>
@@ -92,19 +84,17 @@
 
       <v-row>
         <v-col>
-          <h4 id="5">
-            <v-btn text width="auto" height="auto"> <h1>5.</h1> </v-btn
-            >ท่านสามารถติดตามคำร้องหลังจากท่านทำการส่งคำร้องไปแล้ว
+          <h4 id="4">
+            <v-btn text width="auto" height="auto"> <h1>4.</h1> </v-btn
+            >สามารถติดตามการร้องขอคำร้องเพิ่มเติม
             <p>
-              หลังจากส่งคำร้องไปยังผู้อนุมัติแล้ว <br />
-              ท่านสามารถทรายสถานะเอกสารของท่านได้โดยแถบเมนู <br />
-              "ติดตามสถานะคำร้อง"
+              โดยไปที่แทบเมนู เลือก  <br> "ติดตามสถานะการร้องขอคำร้องเพิ่มเติม"
             </p>
           </h4>
         </v-col>
         <v-col align="center">
           <v-img
-            src="../../assets/gudesenpentions1.png"
+            src="../../assets/guiderequest4.png"
             width="500px"
             height="300px"
           >
@@ -116,20 +106,20 @@
       <v-row>
         <v-col align="center">
           <v-img
-            src="../../assets/gudesenpentions2.png"
+            src="../../assets/guiderequest5.png"
             width="500px"
             height="350px"
           >
           </v-img>
         </v-col>
         <v-col>
-          <h4 id="6">
-            <v-btn text width="auto" height="auto"> <h1>6.</h1> </v-btn>
-            เมื่อคำร้องของท่าน
-            <h5>ไม่ถูกอนุมัติ !</h5>
-            <br />
+          <h4 id="5">
+            <v-btn text width="auto" height="auto"> <h1>5.</h1> </v-btn>
+            จะทราบได้ยังไงว่าการร้องขอเพิ่มเติมได้รับทราบเเล้ว ?
             <p>
-              เมื่อคำร้องของท่านถูกผู้อนุมัติปฏิเสธการยื่นคำร้องระบบจะมีการเเต้งเตือนพร้อมแสดงรายละเอียดจากผู้อนุมัติโดยตรงเพื่อแก้ไข
+              ในหน้าต่างการร้องขอเพิ่มเติม จะมีสถานะบอกว่า <br />
+              กำลังอยู่ในขั้นตอนที่หัวหน้ารับทราบเเล้วหรือยังบอก <br />
+              เเล้วมีราบละเอียดที่เรากรอกไป ประกอบอยู่ด้วย
             </p>
           </h4>
         </v-col>
@@ -137,29 +127,7 @@
 
       <v-divider class="dividermagin"></v-divider>
 
-       <v-row>
-        <v-col>
-          <h4 id="7">
-            <v-btn text width="auto" height="auto"> <h1>7.</h1> </v-btn
-            >เมื่อได้รับการอนุมัติหมดเแล้ว ?
-            <p>
-              หลังจากส่งคำร้องไปยังผู้อนุมัติแล้ว <br />
-              เเล้วผ่านการอนุมัติทั้งหมดในรายละเอียดจะเเสดง <br />
-              รายละเอียดคำร้องของท่านว่าผ่านการอนุมัติแล้ว
-            </p>
-          </h4>
-        </v-col>
-        <v-col align="center">
-          <v-img
-            src="../../assets/gudesenpentions1.png"
-            width="500px"
-            height="300px"
-          >
-          </v-img>
-        </v-col>
-      </v-row>
-
-      <v-divider class="dividermagin"></v-divider>
+       
 
        <v-row>
         

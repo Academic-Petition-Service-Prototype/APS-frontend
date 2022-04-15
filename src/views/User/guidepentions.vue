@@ -73,7 +73,7 @@
       <v-row>
         <v-col align="center">
           <v-img
-            src="../../assets/gudesenpentions2.png"
+            src="../../assets/gudesenpentions4.png"
             width="500px"
             height="350px"
           >
@@ -104,7 +104,7 @@
         </v-col>
         <v-col align="center">
           <v-img
-            src="../../assets/gudesenpentions1.png"
+            src="../../assets/gudesenpentions5.png"
             width="500px"
             height="300px"
           >
@@ -116,7 +116,7 @@
       <v-row>
         <v-col align="center">
           <v-img
-            src="../../assets/gudesenpentions2.png"
+            src="../../assets/gudesenpentions6.png"
             width="500px"
             height="350px"
           >
@@ -151,7 +151,7 @@
         </v-col>
         <v-col align="center">
           <v-img
-            src="../../assets/gudesenpentions1.png"
+            src="../../assets/gudesenpentions7.png"
             width="500px"
             height="300px"
           >
