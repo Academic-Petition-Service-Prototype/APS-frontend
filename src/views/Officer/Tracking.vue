@@ -6,7 +6,6 @@
         <h1 class="text-center pa-5">สถานะคำร้อง</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
-  {{petitionListById}}
       <v-data-iterator
         :items="petitionListById"
         :items-per-page.sync="itemsPerPage"
