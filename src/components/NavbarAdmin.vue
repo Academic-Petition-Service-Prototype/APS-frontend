@@ -11,7 +11,7 @@
         เข้าสู่ระบบครั้งสุดท้ายเมื่อ {{ lastlogin }}
       </div>
       <v-btn elevation="2" color="error" @click="logout()">
-        Logout
+        ออกจากระบบ
       </v-btn>
     </v-app-bar>
     <!-- Navbar -->
@@ -34,7 +34,7 @@
       <v-row>
         <v-col class="text-white" align="center">
           ชื่อ : {{ firstname }} {{ lastname }}<br />
-          สถานะ : {{ role }}
+          สถานะ : <span v-if="(role = 'admin')">ผู้ดูแลระบบ</span>
         </v-col>
       </v-row>
       <v-divider></v-divider>
@@ -74,19 +74,19 @@ export default {
     menu: [
       {
         menu: "1",
-        text: "Dashboard",
+        text: "หน้าแรก",
         route: "/AdminDashboard",
         icon: "home",
       },
       {
         menu: "2",
-        text: "ติดตามสถานะคำร้อง/ปัญหา",
+        text: "ติดตามสถานะคำร้อง",
         route: "/AdminTracking",
         icon: "marker-check",
       },
       {
         menu: "3",
-        text: "การอนุมัติ",
+        text: "การอนุมัติคำร้อง",
         route: "/AdminViewApproval",
         icon: "text-box-check",
       },
@@ -97,43 +97,49 @@ export default {
         icon: "alert-octagon",
       },
       {
-        menu: "4",
-        text: "การรายงานการร้องขอ",
+        menu: "5",
+        text: "การร้องขอคำร้องเพิ่มเติม",
         route: "/AdminViwerequestlist",
         icon: "alert-octagon",
       },
       {
-        menu: "5",
-        text: "จัดการ Chief",
+        menu: "6",
+        text: "จัดการหัวหน้าหน่วยงาน",
         route: "/AdminChiefManagement",
         icon: "account-star",
       },
 
       {
-        menu: "6",
-        text: "จัดการ Secretary",
+        menu: "7",
+        text: "จัดการเลขานุการ",
         route: "/AdminSecretaryManagement",
         icon: "book-account",
       },
       {
-        menu: "7",
-        text: "จัดการ Officer",
+        menu: "8",
+        text: "จัดการพนักงาน",
         route: "/AdminOfficerManagement",
         icon: "account-tie",
       },
       {
-        menu: "8",
-        text: "จัดการ User",
+        menu: "9",
+        text: "จัดการผู้ยื่นคำร้ง",
         route: "/AdminUserManagement",
         icon: "account-multiple",
       },
       {
-        menu: "9",
-        text: "จัดการ Agency",
+        menu: "10",
+        text: "จัดการหน่วยงาน",
         route: "/AdminAgencyManagement",
         icon: "home-group",
       },
-      { menu: "9", text: "โปรไฟล์", route: "/AdminProfile", icon: "account" },
+      {
+        menu: "11",
+        text: "จัดการหมวดหมู่คำร้อง",
+        route: "/AdminTagManagement",
+        icon: "home-group",
+      },
+      { menu: "12", text: "โปรไฟล์", route: "/AdminProfile", icon: "account" },
     ],
   }),
   async created() {
