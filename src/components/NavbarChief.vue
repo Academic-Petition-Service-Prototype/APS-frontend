@@ -60,6 +60,7 @@
 
 <script>
 import AuthService from "@/services/AuthService.js";
+
 export default {
   name: "NavbarChief",
   data: () => ({
@@ -86,19 +87,19 @@ export default {
         menu: "3",
         text: "คำร้องที่รอการอนุมัติ",
         route: "/ChiefCheckapprovedlist",
-        icon: "file-document",
+        icon: "file-document-multiple",
       },
       {
         menu: "4",
         text: "คำร้องที่อนุมัติแล้ว",
         route: "/Approvedlist",
-        icon: "file-document",
+        icon: "note-check",
       },
       {
         menu: "5",
         text: "คำร้องที่ไม่อนุมัติ",
         route: "/Disapprovedlist",
-        icon: "file-document",
+        icon: "note-remove",
       },
       {
         menu: "6",
@@ -110,7 +111,7 @@ export default {
         menu: "7",
         text: "การร้องขอคำร้องเพิ่มเติม",
         route: "/ChiefRequest",
-        icon: "alert-octagon",
+        icon: "dots-horizontal-circle-outline",
       },
 
       {
@@ -124,13 +125,13 @@ export default {
         menu: "9",
         text: "จัดการ Secretary",
         route: "/ChiefSecretaryManagement",
-        icon: "bullseye-arrow",
+        icon: "account-multiple-plus",
       },
       {
         menu: "10",
         text: "จัดการ Officer",
         route: "/ChiefOfficerManagement",
-        icon: "bullseye-arrow",
+        icon: "account-multiple-plus",
       },
       {
         menu: "11",

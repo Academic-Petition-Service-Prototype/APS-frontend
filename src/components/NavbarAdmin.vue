@@ -100,7 +100,7 @@ export default {
         menu: "5",
         text: "การร้องขอคำร้องเพิ่มเติม",
         route: "/AdminViwerequestlist",
-        icon: "alert-octagon",
+        icon: "dots-horizontal-circle-outline",
       },
       {
         menu: "6",
@@ -123,7 +123,7 @@ export default {
       },
       {
         menu: "9",
-        text: "จัดการผู้ยื่นคำร้ง",
+        text: "จัดการผู้ยื่นคำร้อง",
         route: "/AdminUserManagement",
         icon: "account-multiple",
       },
@@ -137,7 +137,7 @@ export default {
         menu: "11",
         text: "จัดการหมวดหมู่คำร้อง",
         route: "/AdminTagManagement",
-        icon: "home-group",
+        icon: "format-list-bulleted-type",
       },
       { menu: "12", text: "โปรไฟล์", route: "/AdminProfile", icon: "account" },
     ],

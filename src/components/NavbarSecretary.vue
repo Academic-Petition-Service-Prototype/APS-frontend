@@ -102,7 +102,7 @@ export default {
         menu: "5",
         text: "การร้องขอคำร้องเพิ่มเติม",
         route: "/Secretaryrequestlist",
-        icon: "alert-octagon",
+        icon: "dots-horizontal-circle-outline",
       },
       {
         menu: "6",

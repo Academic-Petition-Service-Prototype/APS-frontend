@@ -90,7 +90,7 @@ export default {
         menu: "3",
         text: "ติดตามสถานะคำร้อง",
         route: "/OfficerTracking",
-        icon: "marker-check",
+        icon: "map-marker-multiple",
       },
       {
         menu: "4",
