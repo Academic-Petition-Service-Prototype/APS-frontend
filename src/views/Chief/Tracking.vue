@@ -137,6 +137,19 @@
                             </v-card>
                           </v-stepper-content>
                         </template>
+                        <v-card>
+                          <v-row>
+                            <v-col>
+                              <v-btn
+                                class="cardshow"
+                                @click="selecttrackingdetaill(item.submit_id)"
+                                color="info"
+                              >
+                                ดูรายละเอียดคำร้อง
+                              </v-btn>
+                            </v-col>
+                          </v-row>
+                        </v-card>
                       </v-stepper-items>
                     </v-stepper>
                   </v-container>
@@ -275,6 +288,9 @@ export default {
     },
     updateItemsPerPage(number) {
       this.itemsPerPage = number;
+    },
+    selecttrackingdetaill(submit_id) {
+      this.$router.push("/ChiefTrackingdetail/" + submit_id);
     },
   },
   mounted() {

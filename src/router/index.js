@@ -34,6 +34,7 @@ import OfficerDashboard from '../views/Officer/Dashboard.vue'
 import OfficerPetitionManagement from '../views/Officer/PetitionManagement.vue'
 import OfficerProfile from '../views/Officer/Profile.vue'
 import OfficerTracking from '../views/Officer/Tracking.vue'
+import OfficerTrackingdetail from '../views/Officer/Trackingdetail.vue'
 import OfficerCreatepetition from'../views/Officer/Createpetition.vue'
 //Officer
 
@@ -55,6 +56,7 @@ import Disapprovedlist from'../views/Chief/Disapprovedlist.vue'
 import ViweDisapprovedlist from'../views/Chief/ViweDisapprovedlist.vue'
 import ChiefRequest from'../views/Chief/Request.vue'
 import ChiefRequestDetail from'../views/Chief/Requestdetail.vue'
+import ChiefTrackingdetail from'../views/Chief/Trackingdetail.vue'
 
 //Chief
 
@@ -214,10 +216,16 @@ const routes = [
     component: OfficerTracking 
   },
   {
+    path: '/OfficerTrackingdetail/:id',
+    name: 'รายละเอียดสถานะคำร้อง',
+    component: OfficerTrackingdetail 
+  },
+  {
     path: '/OfficerCreatepetition',
     name: 'สร้างคำร้อง',
     component: OfficerCreatepetition 
   },
+  
   //Officer
 
   //Chief
@@ -265,6 +273,12 @@ const routes = [
     path: '/ChiefTracking',
     name: 'ติดตามสถานะคำร้อง',
     component: ChiefTracking 
+  },
+  
+  {
+    path: '/ChiefTrackingdetail/:id',
+    name: 'รายละเอียดสถานะคำร้อง',
+    component: ChiefTrackingdetail 
   },
   {
     path: '/ChiefReportDetail/:id',

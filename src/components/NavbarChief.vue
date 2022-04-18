@@ -116,7 +116,7 @@ export default {
 
       {
         menu: "8",
-        text: "ติดตามสถานะการร้องขอคำร้องเพิ่มเติม",
+        text: "ติดตามสถานะการร้องขอคำร้อง",
         route: "/ChiefTracking",
         icon: "marker-check",
       },
