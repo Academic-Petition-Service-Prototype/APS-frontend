@@ -64,6 +64,7 @@ import ChiefTrackingdetail from'../views/Chief/Trackingdetail.vue'
 import SecretaryDashboard from '../views/Secretary/Dashboard.vue'
 import SecretaryProfile from '../views/Secretary/Profile.vue'
 import SecretaryTracking from '../views/Secretary/Tracking.vue'
+import SecretaryTrackingdetail from '../views/Secretary/Trackingdetail.vue'
 import SecretaryViewApproval from '../views/Secretary/ViewApproval.vue'
 import SecretaryViewApprovaldetail from '../views/Secretary/ViewApprovaldetail.vue'
 import SecretaryViewReport from '../views/Secretary/ViewReport.vue'
@@ -365,6 +366,13 @@ const routes = [
     name: 'รายละเอียดการร้องขอคำร้องเพิ่มเติม',
     component: Secretaryrequestlistdetail
   },
+  {
+    path: '/SecretaryTrackingdetail/:id',
+    name: 'รายละเอียดสถานะคำร้อง',
+    component: SecretaryTrackingdetail
+  },
+
+  
  
   //Secretary
 

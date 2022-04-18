@@ -3,7 +3,18 @@
   <div id="UserDashboard">
     <NavbarUser />
     <v-card class="cardshow">
-      <v-card height="300px">
+      <!-- ตอนเช้า -->
+      <v-card height="300px" 
+      v-if="
+          d == '5' 
+          || d == '6'
+          || d == '7'
+          || d == '8'
+          || d == '9'
+          || d == '10'
+          || d == '11'
+
+          ">
         <v-img
           height="300px"
           src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
@@ -23,6 +34,126 @@
           </v-row>
         </v-img>
       </v-card>
+
+      <!-- ตอนเช้า -->
+      <!-- ตอนเทียง -->
+      <v-card height="300px" 
+      v-if="
+          d == '12' 
+          ">
+        <v-img
+          height="300px"
+          src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
+        >
+          <v-row>
+            <v-col>
+              <p class="banneruser">สวัสดี !</p>
+            </v-col>
+            <v-col align="center">
+              <p class="banneruserf_name">
+                คุณ {{ profile[0].f_name }}
+                <br />
+                เที่ยงแล้วอย่าลืมหาอะไรทานด้วยหล่ะ
+                
+              </p>
+            </v-col>
+          </v-row>
+        </v-img>
+      </v-card>
+      <!-- ตอนเทียง -->
+      <!-- ตอนบ่าย -->
+      <v-card height="300px" 
+      v-if="
+          d == '13' 
+          || d == '14'
+          || d == '15'
+          ">
+        <v-img
+          height="300px"
+          src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
+        >
+          <v-row>
+            <v-col>
+              <p class="banneruser">สวัสดี !</p>
+            </v-col>
+            <v-col align="center">
+              <p class="banneruserf_name">
+                คุณ {{ profile[0].f_name }}
+                <br />
+                บ่ายนี้คุณต้องการทำอะไร ?
+                
+              </p>
+            </v-col>
+          </v-row>
+        </v-img>
+      </v-card>
+      <!-- ตอนบ่าย -->
+
+      <!-- ตอนเย็น -->
+      <v-card height="300px" 
+      v-if="
+          d == '16' 
+          || d == '17'
+          || d == '18'
+          ">
+        <v-img
+          height="300px"
+          src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
+        >
+          <v-row>
+            <v-col>
+              <p class="banneruser">สวัสดี !</p>
+            </v-col>
+            <v-col align="center">
+              <p class="banneruserf_name">
+                คุณ {{ profile[0].f_name }}
+                <br />
+                เย็นนี้คุณต้องการทำอะไร ?
+                
+              </p>
+            </v-col>
+          </v-row>
+        </v-img>
+      </v-card>
+
+      <!-- ตอนเย็น -->
+
+      <!-- ตอนดึก -->
+      <v-card height="300px" 
+      v-if="
+          d == '19' 
+          || d == '20'
+          || d == '21'
+          || d == '22'
+          || d == '23'
+          || d == '0'
+          || d == '1'
+          || d == '2'
+          || d == '3'
+          || d == '4'
+
+          ">
+        <v-img
+          height="300px"
+          src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
+        >
+          <v-row>
+            <v-col>
+              <p class="banneruser">สวัสดี !</p>
+            </v-col>
+            <v-col align="center">
+              <p class="banneruserf_name">
+                คุณ {{ profile[0].f_name }}
+                <br />
+                ดึกแล้วอย่าลืมพักผ่อนด้วยหล่ะ ?
+                
+              </p>
+            </v-col>
+          </v-row>
+        </v-img>
+      </v-card>
+
+      <!-- ตอนดึก -->
     </v-card>
 
     <v-card class="cardshow">
@@ -30,7 +161,7 @@
         <v-col>
           <v-toolbar dark prominent color="#FFAB40">
             <h1>คู่มือ / การใช้งาน</h1>
-            {{d}}
+            
             <v-spacer></v-spacer>
           </v-toolbar>
 
@@ -67,9 +198,7 @@ export default {
   },
   data() {
     return {
-      d: new Date(
-        
-      ),
+      d: new Date().getHours(),
       
       profile: [
         {
