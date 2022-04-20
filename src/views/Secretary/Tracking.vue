@@ -92,32 +92,7 @@
                               step=""
                               color="green"
                             >
-                              <h2 class="cardshow">รายละเอียด</h2>
-                              <p v-if="item.submit_refuse === null">
-                                กำลังดำเนิการ
-                              </p>
-                              <p v-if="item.submit_refuse !== null">
-                                {{ item.submit_refuse }}
-                              </p>
-                            </v-card>
-                          </v-stepper-content>
-                        </template>
-                        <v-card>
-                          <v-row>
-                            <v-col>
-                              <v-btn
-                                class="cardshow"
-                                @click="selecttrackingdetaill(item.submit_id)"
-                                color="info"
-                              >
-                                ดูรายละเอียดคำร้อง
-                              </v-btn>
-                            </v-col>
-                          </v-row>
-                        </v-card>
-                      </v-stepper-items>
-                    </v-stepper>
-                  </v-container>
+                              {{ item.approval_order[n].approver_name.f_name }}
 
                               {{ item.approval_order[n].approver_name.l_name }}
                             </v-stepper-step>
@@ -296,9 +271,6 @@ export default {
     },
     updateItemsPerPage(number) {
       this.itemsPerPage = number;
-    },
-    selecttrackingdetaill(submit_id) {
-      this.$router.push("/SecretaryTrackingdetail/" + submit_id);
     },
   },
   mounted() {
