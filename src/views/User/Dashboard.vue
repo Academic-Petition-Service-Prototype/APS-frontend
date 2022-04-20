@@ -226,12 +226,6 @@ export default {
           color: "primary",
         },
       ],
-<<<<<<< HEAD
-      
-      
-      
-=======
->>>>>>> hotfix
     };
   },
   methods:{
