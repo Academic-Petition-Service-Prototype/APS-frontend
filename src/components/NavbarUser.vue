@@ -25,7 +25,7 @@
             class="rounded-circle mt-15"
             width="150"
             height="150"
-            src="../assets/5074620687.jpg"
+            :src="url"
           >
           </v-img>
         </v-col>
@@ -34,7 +34,7 @@
       <v-row>
         <v-col class="text-white" align="center">
           ชื่อ : {{ firstname }} {{ lastname }}<br />
-          สถานะ : <v-if role="user">ผู้ยื่นคำร้อง</v-if>
+          สถานะ : <span v-if="(role = 'user')">ผู้ยื่นคำร้อง</span>
         </v-col>
       </v-row>
       <v-divider></v-divider>
@@ -66,6 +66,7 @@ export default {
   name: "NavbarUser",
   data: () => ({
     drawer: null,
+    url: null,
     firstname: "",
     lastname: "",
     role: "",
@@ -124,6 +125,7 @@ export default {
     this.lastname = this.$store.getters.getUser.l_name;
     this.role = this.$store.getters.getUser.role;
     this.lastlogin = this.$store.getters.getUser.last_login;
+    this.url = process.env.VUE_APP_USER_IMG + this.$store.getters.getUser.img;
     this.secretMessage = await AuthService.getSecretContent();
     this.lastlogin = new Date(this.lastlogin);
     this.lastlogin = this.lastlogin.toLocaleDateString("th-TH", {
@@ -149,7 +151,7 @@ export default {
             icon: "success",
             title: "ขอบคุณ",
             text: "ท่านออกจากระบบสำเร็จ",
-            timer: 1500,
+            timer: 2000,
           });
           localStorage.clear();
           this.$store.dispatch("logout");

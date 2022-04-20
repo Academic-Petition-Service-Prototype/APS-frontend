@@ -39,18 +39,16 @@
 
           <template v-slot:default="props">
             <v-row class="text-center">
-              <v-col class="h3" md="2"> ลำดับ </v-col>
-              <v-col class="h3" md="5"> รายการ </v-col>
-              <v-col class="h3" md="3"> วันที่ร้องขอคำร้อง </v-col>
+              <v-col class="h3" md="6"> รายการ </v-col>
+              <v-col class="h3" md="4"> วันที่ร้องขอคำร้อง </v-col>
               <v-col class="h3" md="2"> สถานะ </v-col>
             </v-row>
 
             <v-row v-for="(item, index) in props.items" :key="index">
               <v-card-title>
                 <v-row class="text-center" align="center">
-                  <v-col md="2"> {{ index + 1 }} </v-col>
-                  <v-col md="5"> {{ item.request_title }} </v-col>
-                  <v-col md="3">{{ item.request_created }}</v-col>
+                  <v-col md="6"> {{ item.request_title }} </v-col>
+                  <v-col md="4">{{ item.request_created }}</v-col>
                   <v-col md="2">
                     <v-btn disabled>
                       <div v-if="item.request_state == 'read'">

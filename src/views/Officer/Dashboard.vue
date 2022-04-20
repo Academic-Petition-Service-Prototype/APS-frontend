@@ -4,7 +4,7 @@
     <NavbarOF />
     <v-card class="cardshow">
       <v-toolbar dark prominent color="#6c757d">
-        <h1>หน้าแรก</h1>
+        <h1 class="text-center pa-5">หน้าแรก</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
 
@@ -212,11 +212,6 @@ export default {
         {
           f_name: this.$store.getters.getUser.f_name,
           l_name: this.$store.getters.getUser.l_name,
-          gender: this.$store.getters.getUser.gender,
-          email: this.$store.getters.getUser.email,
-          tel_num: this.$store.getters.getUser.tel_num,
-          address: this.$store.getters.getUser.address,
-          role: this.$store.getters.getUser.role,
         },
       ],
       PieChart: [

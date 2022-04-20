@@ -1,6 +1,6 @@
 <template>
   <!-- ส่วนจัดเเสดง -->
-  <div id="UserDashboard">
+  <div id="UserGuidePetition">
     <NavbarUser />
     <div class="cardmargin">
       <v-row>
@@ -137,7 +137,7 @@
 
       <v-divider class="dividermagin"></v-divider>
 
-       <v-row>
+      <v-row>
         <v-col>
           <h4 id="7">
             <v-btn text width="auto" height="auto"> <h1>7.</h1> </v-btn
@@ -161,8 +161,7 @@
 
       <v-divider class="dividermagin"></v-divider>
 
-       <v-row>
-        
+      <v-row>
         <v-col align="center">
           Copyright © Academic Petition Service 2022 All Right Reserved
         </v-col>
@@ -170,24 +169,22 @@
     </div>
     <div>
       <v-menu offset-y>
-      <template v-slot:activator="{ on, attrs }">
-      <v-btn fab color="#FFAB40" 
-      fixed 
-      bottom  
-      right 
-      large 
-      elevated="1"
-      v-bind="attrs"
-      v-on="on"
-      href="#"
-      >
-        <v-icon>mdi-arrow-up</v-icon>
-        
-      </v-btn>
-      </template>
-
-      
-
+        <template v-slot:activator="{ on, attrs }">
+          <v-btn
+            fab
+            color="#FFAB40"
+            fixed
+            bottom
+            right
+            large
+            elevated="1"
+            v-bind="attrs"
+            v-on="on"
+            href="#"
+          >
+            <v-icon>mdi-arrow-up</v-icon>
+          </v-btn>
+        </template>
       </v-menu>
     </div>
   </div>
@@ -196,25 +193,9 @@
 <script>
 import NavbarUser from "../../components/NavbarUser.vue";
 export default {
-  name: "UserDashboard",
+  name: "UserGuidePetition",
   components: {
     NavbarUser,
-  },
-  data() {
-    return {
-      
-      profile: [
-        {
-          f_name: this.$store.getters.getUser.f_name,
-          l_name: this.$store.getters.getUser.l_name,
-          gender: this.$store.getters.getUser.gender,
-          email: this.$store.getters.getUser.email,
-          tel_num: this.$store.getters.getUser.tel_num,
-          address: this.$store.getters.getUser.address,
-          role: this.$store.getters.getUser.role,
-        },
-      ],
-    };
   },
 };
 </script>
@@ -260,8 +241,7 @@ h5 {
   margin-bottom: 0px;
   transform-origin: center center;
 }
-.green{
+.green {
   color: green;
 }
 </style>
-

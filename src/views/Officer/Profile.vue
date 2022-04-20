@@ -3,7 +3,7 @@
   <div id="OfficerProfile">
     <NavbarOF />
     <v-card class="cardshow">
-      <h1>ข้อมูลผู้ใช้งาน</h1>
+      <h1>ข้อมูลพนักงาน</h1>
       <v-divider></v-divider>
       <v-row>
         <v-col align="center">

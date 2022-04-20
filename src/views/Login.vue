@@ -11,7 +11,7 @@
 
           <v-col class="bg-color-logo-formslogin">
             <h1 class="margin-login">เข้าสู่ระบบ</h1>
-            <v-form @submit.prevent="login()">
+            <v-form v-model="isValid" @submit.prevent="login()">
               <!-- ช่อง Email -->
               <v-row>
                 <v-col>
@@ -20,7 +20,7 @@
                     label="Email"
                     type="email"
                     class="textfield-margin"
-                    :rules="rules.email"
+                    :rules="email_rules"
                     required
                   >
                     <template v-slot:prepend>
@@ -41,7 +41,7 @@
                 <v-col>
                   <v-text-field
                     v-model="password"
-                    :rules="rules.email"
+                    :rules="password_rules"
                     label="Password"
                     type="password"
                     class="textfield-margin"
@@ -61,7 +61,12 @@
               <!-- ช่อง password -->
               <v-row>
                 <v-col align="center">
-                  <v-btn color="primary" type="submit" width="300">
+                  <v-btn
+                    color="primary"
+                    type="submit"
+                    :disabled="!isValid"
+                    width="300"
+                  >
                     เข้าสู่ระบบ
                   </v-btn>
                 </v-col>
@@ -142,9 +147,16 @@ export default {
       snackbar: false,
       dialogforgot: false,
       timeout: 2000,
-      rules: {
-        email: [(val) => (val || "").length > 0 || "This field is required"],
-      },
+      isValid: true,
+      // rules
+      email_rules: [
+        (value) => !!value || "จำเป็น",
+        (value) => {
+          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          return pattern.test(value) || "รูปแบบอีเมลผิด";
+        },
+      ],
+      password_rules: [(value) => !!value || "จำเป็น"],
     };
   },
   components: {
@@ -162,7 +174,7 @@ export default {
         this.$swal({
           icon: "success",
           title: "เข้าสู่ระบบสำเร็จ",
-          timer: 1500,
+          timer: 2000,
         });
         const token = response.token;
         const user = response.user;

@@ -3,125 +3,94 @@
     <NavbarSecretary />
     <v-card class="cardshow">
       <v-toolbar dark prominent color="#8BC34A">
-        <h1 class="text-center pa-5">สถานะคำร้อง</h1>
+        <h1 class="text-center pa-5">ติดตามสถานะคำร้อง</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
 
-      <v-data-iterator
-        :items="petitionListById"
-        :items-per-page.sync="itemsPerPage"
-        :page.sync="page"
-        :search="search"
-        :sort-by="sortBy.toLowerCase()"
-        :sort-desc="sortDesc"
-        hide-default-footer
-        class="text-center"
-      >
-        <template v-slot:header>
-          <v-row>
-            <v-col>
-              <v-text-field
-                prepend-inner-icon="mdi-magnify"
-                label="ชื่อคำร้อง"
-                placeholder="ชื่อคำร้อง"
-                filled
-                rounded
-                dense
-                v-model="search"
-                class="cardshow"
-              >
-              </v-text-field>
-              <template v-if="$vuetify.breakpoint.mdAndUp"> </template>
-            </v-col>
-          </v-row>
-        </template>
-        <template v-slot:default="props">
-          <v-row class="text-center">
-            <v-col class="h3">ลำดับ</v-col>
-            <v-col class="h3">รายการ</v-col>
-            <v-col class="h3">เวลา</v-col>
-          </v-row>
+      <v-container>
+        <v-data-iterator
+          :items="petitionListById"
+          :items-per-page.sync="itemsPerPage"
+          :page.sync="page"
+          :search="search"
+          :sort-by="sortBy.toLowerCase()"
+          :sort-desc="sortDesc"
+          hide-default-footer
+          class="text-center"
+        >
+          <template v-slot:header>
+            <v-row>
+              <v-col>
+                <v-text-field
+                  prepend-inner-icon="mdi-magnify"
+                  label="รายการคำร้อง / วันที่"
+                  placeholder="รายการคำร้อง / วันที่"
+                  filled
+                  rounded
+                  dense
+                  v-model="search"
+                  class="cardshow"
+                >
+                </v-text-field>
+                <template v-if="$vuetify.breakpoint.mdAndUp"> </template>
+              </v-col>
+            </v-row>
+          </template>
+          <template v-slot:default="props">
+            <v-row class="text-center">
+              <v-col class="h3" md="5">รายการ</v-col>
+              <v-col class="h3" md="3">ผู้ส่งคำร้อง</v-col>
+              <v-col class="h3" md="4">วันที่ส่งคำร้อง</v-col>
+            </v-row>
 
-          <v-row
-            v-for="(item, index) in props.items"
-            :key="index"
-            class="cardshow text-center"
-          >
-            <v-expansion-panels>
-              <v-expansion-panel>
-                <v-expansion-panel-header color="#8BC34A">
-                  <v-row class="text-center">
-                    <v-col>
-                      <h3>{{ index + 1 }}</h3>
-                    </v-col>
-                    <v-col>
-                      <h4>{{ item.form_name }}</h4>
-                    </v-col>
-                    <v-col>
-                      <h4>{{ item.submit_date }}</h4>
-                    </v-col>
-                  </v-row>
+            <v-row
+              v-for="(item, index) in props.items"
+              :key="index"
+              class="cardshow text-center"
+            >
+              <v-expansion-panels>
+                <v-expansion-panel>
+                  <v-expansion-panel-header color="#8BC34A">
+                    <v-row class="text-center">
+                      <v-col md="5">
+                        <h4>{{ item.form_name }}</h4>
+                      </v-col>
+                      <v-col md="3">
+                        <h4>{{ item.fullname }}</h4>
+                      </v-col>
+                      <v-col md="4">
+                        <h4>{{ item.submit_date }}</h4>
+                      </v-col>
+                    </v-row>
 
-                  <!-- เเสดงชื่อเอกสาร -->
+                    <!-- เเสดงชื่อเอกสาร -->
 
-                  <!-- เเสดงขั้นนตอน-->
-                </v-expansion-panel-header>
-                <v-expansion-panel-content>
-                  <!-- เเสดงเนื้อหาข้างใน -->
+                    <!-- เเสดงขั้นนตอน-->
+                  </v-expansion-panel-header>
+                  <v-expansion-panel-content>
+                    <!-- เเสดงเนื้อหาข้างใน -->
 
-                  <v-container id="inspire">
-                    <v-stepper alt-labels v-model="item.submit_state">
-                      <v-stepper-header>
-                        <v-divider></v-divider>
-                        <v-stepper-step
-                          :complete="item.submit_state >= 1"
-                          step=""
-                          color="green"
-                        >
-                          รับเรื่องคำร้องเเล้ว
-                        </v-stepper-step>
-                        <v-divider></v-divider>
-
-                        <template
-                          v-for="(approval_order, n) in item.approval_order"
-                        >
+                    <v-container id="inspire">
+                      <v-stepper alt-labels v-model="item.submit_state">
+                        <v-stepper-header>
+                          <v-divider></v-divider>
                           <v-stepper-step
-                            :key="n"
-                            :complete="item.submit_state > n + 1"
+                            :complete="item.submit_state >= 1"
                             step=""
                             color="green"
                           >
-                            {{ item.approval_order[n].approver_name.f_name }}
-
-                            {{ item.approval_order[n].approver_name.l_name }}
+                            รับเรื่องคำร้องเเล้ว
                           </v-stepper-step>
-                          <v-divider :key="approval_order"></v-divider>
-                        </template>
+                          <v-divider></v-divider>
 
-                        <v-stepper-step
-                          :complete="
-                            item.submit_state > item.approval_order.length
-                          "
-                          step=""
-                          color="green"
-                        >
-                          ยื่นคำร้องสำเร็จ
-                        </v-stepper-step>
-                        <v-divider></v-divider>
-                      </v-stepper-header>
-
-                      <v-stepper-items>
-                        <template
-                          v-for="(approval_order, n) in item.approval_order"
-                        >
-                          <v-stepper-content
-                            :step="n + 2"
-                            :key="approval_order"
+                          <template
+                            v-for="(approval_order, n) in item.approval_order"
                           >
-                            <v-card
-                              class="mb-12"
-                              color="grey lighten-2"
-                              height="200px"
+                            <v-stepper-step
+                              :key="n"
+                              :complete="item.submit_state > n + 1"
+                              step=""
+                              color="green"
                             >
                               <h2 class="cardshow">รายละเอียด</h2>
                               <p v-if="item.submit_refuse === null">
@@ -150,52 +119,97 @@
                     </v-stepper>
                   </v-container>
 
-                  <!-- เเสดงเนื้อหาข้างใน -->
-                </v-expansion-panel-content>
-              </v-expansion-panel>
-            </v-expansion-panels>
-          </v-row>
-        </template>
+                              {{ item.approval_order[n].approver_name.l_name }}
+                            </v-stepper-step>
+                            <v-divider :key="approval_order"></v-divider>
+                          </template>
 
-        <template v-slot:footer>
-          <v-row class="mt-2" align="center" justify="center">
-            <v-menu offset-y> </v-menu>
+                          <v-stepper-step
+                            :complete="
+                              item.submit_state > item.approval_order.length
+                            "
+                            step=""
+                            color="green"
+                          >
+                            ยื่นคำร้องสำเร็จ
+                          </v-stepper-step>
+                          <v-divider></v-divider>
+                        </v-stepper-header>
 
-            <v-spacer></v-spacer>
+                        <v-stepper-items>
+                          <template
+                            v-for="(approval_order, n) in item.approval_order"
+                          >
+                            <v-stepper-content
+                              :step="n + 2"
+                              :key="approval_order"
+                            >
+                              <v-card
+                                class="mb-12"
+                                color="grey lighten-2"
+                                height="200px"
+                              >
+                                <h2 class="cardshow">รายละเอียด</h2>
+                                <p v-if="item.submit_refuse === null">
+                                  กำลังดำเนิการ
+                                </p>
+                                <p v-if="item.submit_refuse !== null">
+                                  {{ item.submit_refuse }}
+                                </p>
+                              </v-card>
+                            </v-stepper-content>
+                          </template>
+                        </v-stepper-items>
+                      </v-stepper>
+                    </v-container>
+
+                    <!-- เเสดงเนื้อหาข้างใน -->
+                  </v-expansion-panel-content>
+                </v-expansion-panel>
+              </v-expansion-panels>
+            </v-row>
+          </template>
+
+          <template v-slot:footer>
+            <v-row class="mt-2" align="center" justify="center">
+              <v-menu offset-y> </v-menu>
+
+              <v-spacer></v-spacer>
+              <v-row>
+                <v-col align="center">
+                  <span class="mr-4 grey--text">
+                    Page {{ page }} of {{ numberOfPages }}
+                  </span>
+                </v-col>
+              </v-row>
+            </v-row>
             <v-row>
               <v-col align="center">
-                <span class="mr-4 grey--text">
-                  Page {{ page }} of {{ numberOfPages }}
-                </span>
+                <v-btn
+                  fab
+                  dark
+                  icon
+                  color="#8BC34A"
+                  class="mr-1"
+                  @click="formerPage"
+                >
+                  <v-icon>mdi-chevron-left</v-icon>
+                </v-btn>
+                <v-btn
+                  fab
+                  dark
+                  icon
+                  color="#8BC34A"
+                  class="ml-1"
+                  @click="nextPage"
+                >
+                  <v-icon>mdi-chevron-right</v-icon>
+                </v-btn>
               </v-col>
             </v-row>
-          </v-row>
-          <v-row>
-            <v-col align="center">
-              <v-btn
-                fab
-                dark
-                icon
-                color="#8BC34A"
-                class="mr-1"
-                @click="formerPage"
-              >
-                <v-icon>mdi-chevron-left</v-icon>
-              </v-btn>
-              <v-btn
-                fab
-                dark
-                icon
-                color="#8BC34A"
-                class="ml-1"
-                @click="nextPage"
-              >
-                <v-icon>mdi-chevron-right</v-icon>
-              </v-btn>
-            </v-col>
-          </v-row>
-        </template>
-      </v-data-iterator>
+          </template>
+        </v-data-iterator>
+      </v-container>
       <!-- วนเเสดงรายการสถาณะเอสาร -->
     </v-card>
   </div>
@@ -211,12 +225,11 @@ export default {
   },
   data() {
     return {
-      itemsPerPageArray: [4, 8, 12],
       search: "",
       filter: {},
       sortDesc: false,
       page: 1,
-      itemsPerPage: 4,
+      itemsPerPage: 5,
       sortBy: "name",
       petitionListById: [],
     };

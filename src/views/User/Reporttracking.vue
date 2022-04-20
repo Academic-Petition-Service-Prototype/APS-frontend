@@ -14,172 +14,170 @@
       </v-toolbar>
 
       <!-- ของรายงาน -->
-      <v-data-iterator
-        :items="reports"
-        :items-per-page.sync="itemsPerPage"
-        :page.sync="page"
-        :search="search"
-        :sort-by="sortBy.toLowerCase()"
-        :sort-desc="sortDesc"
-        hide-default-footer
-        class="text-center"
-      >
-        <template v-slot:header>
-          <v-row>
-            <v-col>
-              <v-text-field
-                prepend-inner-icon="mdi-magnify"
-                label="ชื่อหัวข้อการรายงานปัญหา"
-                placeholder="ชื่อหัวข้อการรายงานปัญหา"
-                filled
-                rounded
-                dense
-                v-model="search"
-                class="cardshow"
-              >
-              </v-text-field>
-              <template v-if="$vuetify.breakpoint.mdAndUp"> </template>
-            </v-col>
-          </v-row>
-        </template>
-        <template v-slot:default="props">
-          <v-row class="text-center">
-            <v-col align="center" class="h3">ลำดับ</v-col>
-            <v-col align="center" class="h3">รายการ</v-col>
-            <v-col align="center" class="h3">วันที่ส่งคำร้อง</v-col>
-          </v-row>
-
-          <v-row
-            v-for="(item, index) in props.items"
-            :key="index"
-            class="cardshow"
-          >
-            <v-expansion-panels>
-              <v-expansion-panel>
-                <v-expansion-panel-header color="#FFAB40">
-                  <v-row class="text-center">
-                    <v-col>
-                      <h3>{{ index + 1 }}</h3>
-                    </v-col>
-                    <v-col>
-                      <h4>{{ item.report_title }}</h4>
-                    </v-col>
-                    <v-col>
-                      <h4>{{ item.report_created }}</h4>
-                    </v-col>
-                  </v-row>
-
-                  <!-- เเสดงชื่อเอกสาร -->
-
-                  <!-- เเสดงขั้นนตอน-->
-                </v-expansion-panel-header>
-
-                <v-expansion-panel-content>
-                  <!-- เเสดงเนื้อหาข้างใน -->
-
-                  <v-container id="inspire">
-                    <v-stepper alt-labels v-model="item.report_state">
-                      <v-stepper-header>
-                        <v-stepper-step
-                          :complete="item.report_state > 1"
-                          step="1"
-                          color="green"
-                        >
-                          ส่งยื่นคำร้อง
-                        </v-stepper-step>
-
-                        <v-divider></v-divider>
-
-                        <v-stepper-step
-                          :complete="item.report_state > 2"
-                          step="2"
-                          color="green"
-                        >
-                          รับคำร้องเข้าระบบ
-                        </v-stepper-step>
-                      </v-stepper-header>
-                      <v-stepper-items>
-                        <v-stepper-content step="1">
-                          <v-card
-                            class="mb-12"
-                            color="grey lighten-2"
-                            height="200px"
-                          >
-                            <h2 class="cardshow">รายละเอียด</h2>
-                            <h5 class="cardshow">{{ item.report_detail }}</h5>
-                          </v-card>
-                        </v-stepper-content>
-
-                        <v-stepper-content step="2">
-                          <v-card
-                            class="mb-12"
-                            color="grey lighten-2"
-                            height="200px"
-                          >
-                            <h2 class="cardshow">รายละเอียด</h2>
-                            <h5 class="cardshow">{{ item.report_detail }}</h5>
-                          </v-card>
-                        </v-stepper-content>
-                        <v-stepper-content step="3">
-                          <v-card
-                            class="mb-12"
-                            color="grey lighten-2"
-                            height="200px"
-                          >
-                            <h2 class="cardshow">รายละเอียด</h2>
-                            <h5 class="cardshow">{{ item.report_detail }}</h5>
-                          </v-card>
-                        </v-stepper-content>
-                      </v-stepper-items>
-                    </v-stepper>
-                  </v-container>
-
-                  <!-- เเสดงเนื้อหาข้างใน -->
-                </v-expansion-panel-content>
-              </v-expansion-panel>
-            </v-expansion-panels>
-          </v-row>
-        </template>
-
-        <template v-slot:footer>
-          <v-row class="mt-2" align="center" justify="center">
-            <v-menu offset-y> </v-menu>
-
-            <v-spacer></v-spacer>
+      <v-container>
+        <v-data-iterator
+          :items="reports"
+          :items-per-page.sync="itemsPerPage"
+          :page.sync="page"
+          :search="search"
+          :sort-by="sortBy.toLowerCase()"
+          :sort-desc="sortDesc"
+          hide-default-footer
+          class="text-center"
+        >
+          <template v-slot:header>
             <v-row>
-              <v-col align="center">
-                <span class="mr-4 grey--text">
-                  Page {{ page }} of {{ numberOfPages }}
-                </span>
+              <v-col>
+                <v-text-field
+                  prepend-inner-icon="mdi-magnify"
+                  label="หัวข้อการรายงานปัญหา / วันที่"
+                  placeholder="หัวข้อการรายงานปัญหา / วันที่"
+                  filled
+                  rounded
+                  dense
+                  v-model="search"
+                  class="cardshow"
+                >
+                </v-text-field>
+                <template v-if="$vuetify.breakpoint.mdAndUp"> </template>
               </v-col>
             </v-row>
-          </v-row>
-          <v-row>
-            <v-col align="center">
-              <v-btn
-                fab
-                dark
-                icon
-                color="#FFAB40"
-                class="mr-1"
-                @click="formerPage"
-              >
-                <v-icon>mdi-chevron-left</v-icon>
-              </v-btn>
-              <v-btn
-                fab
-                dark
-                icon
-                color="#FFAB40"
-                class="ml-1"
-                @click="nextPage"
-              >
-                <v-icon>mdi-chevron-right</v-icon>
-              </v-btn>
-            </v-col>
-          </v-row>
-        </template>
-      </v-data-iterator>
+          </template>
+          <template v-slot:default="props">
+            <v-row class="text-center">
+              <v-col class="h3" md="8">รายการ</v-col>
+              <v-col class="h3" md="4">วันที่ส่งคำร้อง</v-col>
+            </v-row>
+
+            <v-row
+              v-for="(item, index) in props.items"
+              :key="index"
+              class="cardshow"
+            >
+              <v-expansion-panels>
+                <v-expansion-panel>
+                  <v-expansion-panel-header color="#FFAB40">
+                    <v-row class="text-center">
+                      <v-col md="8">
+                        <h4>{{ item.report_title }}</h4>
+                      </v-col>
+                      <v-col md="4">
+                        <h4>{{ item.report_created }}</h4>
+                      </v-col>
+                    </v-row>
+
+                    <!-- เเสดงชื่อเอกสาร -->
+
+                    <!-- เเสดงขั้นนตอน-->
+                  </v-expansion-panel-header>
+
+                  <v-expansion-panel-content>
+                    <!-- เเสดงเนื้อหาข้างใน -->
+
+                    <v-container id="inspire">
+                      <v-stepper alt-labels v-model="item.report_state">
+                        <v-stepper-header>
+                          <v-stepper-step
+                            :complete="item.report_state > 1"
+                            step="1"
+                            color="green"
+                          >
+                            ส่งยื่นคำร้อง
+                          </v-stepper-step>
+
+                          <v-divider></v-divider>
+
+                          <v-stepper-step
+                            :complete="item.report_state > 2"
+                            step="2"
+                            color="green"
+                          >
+                            รับคำร้องเข้าระบบ
+                          </v-stepper-step>
+                        </v-stepper-header>
+                        <v-stepper-items>
+                          <v-stepper-content step="1">
+                            <v-card
+                              class="mb-12"
+                              color="grey lighten-2"
+                              height="200px"
+                            >
+                              <h2 class="cardshow">รายละเอียด</h2>
+                              <h5 class="cardshow">{{ item.report_detail }}</h5>
+                            </v-card>
+                          </v-stepper-content>
+
+                          <v-stepper-content step="2">
+                            <v-card
+                              class="mb-12"
+                              color="grey lighten-2"
+                              height="200px"
+                            >
+                              <h2 class="cardshow">รายละเอียด</h2>
+                              <h5 class="cardshow">{{ item.report_detail }}</h5>
+                            </v-card>
+                          </v-stepper-content>
+                          <v-stepper-content step="3">
+                            <v-card
+                              class="mb-12"
+                              color="grey lighten-2"
+                              height="200px"
+                            >
+                              <h2 class="cardshow">รายละเอียด</h2>
+                              <h5 class="cardshow">{{ item.report_detail }}</h5>
+                            </v-card>
+                          </v-stepper-content>
+                        </v-stepper-items>
+                      </v-stepper>
+                    </v-container>
+
+                    <!-- เเสดงเนื้อหาข้างใน -->
+                  </v-expansion-panel-content>
+                </v-expansion-panel>
+              </v-expansion-panels>
+            </v-row>
+          </template>
+
+          <template v-slot:footer>
+            <v-row class="mt-2" align="center" justify="center">
+              <v-menu offset-y> </v-menu>
+
+              <v-spacer></v-spacer>
+              <v-row>
+                <v-col align="center">
+                  <span class="mr-4 grey--text">
+                    Page {{ page }} of {{ numberOfPages }}
+                  </span>
+                </v-col>
+              </v-row>
+            </v-row>
+            <v-row>
+              <v-col align="center">
+                <v-btn
+                  fab
+                  dark
+                  icon
+                  color="#FFAB40"
+                  class="mr-1"
+                  @click="formerPage"
+                >
+                  <v-icon>mdi-chevron-left</v-icon>
+                </v-btn>
+                <v-btn
+                  fab
+                  dark
+                  icon
+                  color="#FFAB40"
+                  class="ml-1"
+                  @click="nextPage"
+                >
+                  <v-icon>mdi-chevron-right</v-icon>
+                </v-btn>
+              </v-col>
+            </v-row>
+          </template>
+        </v-data-iterator>
+      </v-container>
       <!-- วนเเสดงรายการสถาณะเอสาร -->
     </v-card>
     <!-- ของรายงาน -->
@@ -196,12 +194,11 @@ export default {
   },
   data() {
     return {
-      itemsPerPageArray: [4, 8, 12],
       search: "",
       filter: {},
       sortDesc: false,
       page: 1,
-      itemsPerPage: 4,
+      itemsPerPage: 5,
       sortBy: "name",
       reports: [],
     };

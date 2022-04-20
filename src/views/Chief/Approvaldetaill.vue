@@ -348,7 +348,7 @@ export default {
                             "อนุมัติคำร้อง " +
                             this.submition_detail[0].form_name +
                             " สำเร็จ ",
-                          timer: 1500,
+                          timer: 2000,
                         });
                         this.$router.push("/ChiefCheckapprovedlist");
                       } else {
@@ -359,7 +359,7 @@ export default {
                             "อนุมัติคำร้อง " +
                             this.submition_detail[0].form_name +
                             " ไม่สำเร็จ ",
-                          timer: 1500,
+                          timer: 2000,
                         });
                       }
                     })
@@ -408,7 +408,7 @@ export default {
                         "ปฏิเสธคำร้อง " +
                         this.submition_detail[0].form_name +
                         " สำเร็จ ",
-                      timer: 1500,
+                      timer: 2000,
                     });
                     this.$router.push("/ChiefCheckapprovedlist");
                   } else {
@@ -419,7 +419,7 @@ export default {
                         "ปฏิเสธคำร้อง " +
                         this.submition_detail[0].form_name +
                         " ไม่สำเร็จ ",
-                      timer: 1500,
+                      timer: 2000,
                     });
                   }
                 })
