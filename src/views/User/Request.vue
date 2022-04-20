@@ -72,7 +72,7 @@ export default {
               title: "การร้องขอคำร้องสำเร็จ",
               text:
                 "ส่งรายงานการร้องขอคำร้อง " + this.request_title + " สำเร็จ ",
-              timer: 1500,
+              timer: 2000,
             });
             this.request_title = "";
             this.request_detail = "";

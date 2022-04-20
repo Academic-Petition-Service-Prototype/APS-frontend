@@ -1,14 +1,14 @@
 <template>
   <!-- ส่วนจัดเเสดง -->
-  <div id="AdminEditChief">
+  <div id="AdminEditUser">
     <NavbarAdmin />
     <v-card class="cardshow">
       <h1>
-        แก้ไขข้อมูลหัวหน้าหน่วยงาน
+        แก้ไขข้อมูลผู้ยื่นคำร้อง
         <v-divider></v-divider>
       </h1>
 
-      <v-form v-model="isValid" @submit.prevent="editchief()">
+      <v-form v-model="isValid" @submit.prevent="edituser()">
         <v-container>
           <v-row>
             <v-col align="center">
@@ -121,7 +121,7 @@
 import NavbarAdmin from "../../components/NavbarAdmin.vue";
 import axios from "axios";
 export default {
-  name: "AdminEditChief",
+  name: "AdminEditUser",
   components: {
     NavbarAdmin,
   },
@@ -176,7 +176,7 @@ export default {
           this.form.tel_num = response.data.tel_num;
           this.form.img = response.data.img;
           this.form.agency_id = response.data.agencies_id;
-          this.url = process.env.VUE_APP_CHIEF_IMG + this.form.img;
+          this.url = process.env.VUE_APP_USER_IMG + this.form.img;
         })
         .catch((error) => {
           // handle error
@@ -184,14 +184,14 @@ export default {
         });
     },
 
-    editchief() {
+    edituser() {
       let formData = new FormData();
       if (this.form.img != this.form.img_tmp) {
         formData.append("img", this.form.img);
       }
       // formData.append("email", this.form.email);
       formData.append("password", this.form.password);
-      formData.append("role", "chief");
+      formData.append("role", "user");
       formData.append("f_name", this.form.f_name);
       formData.append("l_name", this.form.l_name);
       formData.append("tel_num", this.form.tel_num);
@@ -225,7 +225,7 @@ export default {
           } else if (response.data == "อัพเดตข้อมูลสำเร็จ") {
             this.$swal({
               icon: "success",
-              title: "แก้ไขข้อมูลหัวหน้าหน่วยงานสำเร็จ",
+              title: "แก้ไขข้อมูลผู้ยื่นคำร้องสำเร็จ",
               text:
                 "ยินดีด้วยคุณแก้ไขข้อมูล " +
                 this.form.f_name +
@@ -234,7 +234,7 @@ export default {
                 " สำเร็จ",
               timer: 2000,
             });
-            this.$router.push("/AdminChiefManagement");
+            this.$router.push("/AdminUserManagement");
           } else {
             this.$swal({
               icon: "error",
@@ -246,7 +246,7 @@ export default {
                 this.form.l_name,
               timer: 2000,
             });
-            this.$router.push("/AdminChiefManagement");
+            this.$router.push("/AdminUserManagement");
           }
         })
         .catch((error) => {
@@ -273,8 +273,8 @@ export default {
 
     cancel() {
       this.$swal({
-        title: "ท่านกำลังจะออกจากหน้าแก้ไขหัวหน้าหน่วยงาน?",
-        text: "ท่านเเน่ใจว่าต้องการออกจากหน้าแก้ไขหัวหน้าหน่วยงาน!",
+        title: "ท่านกำลังจะออกจากหน้าแก้ไขผู้ยื่นคำร้อง?",
+        text: "ท่านเเน่ใจว่าต้องการออกจากหน้าแก้ไขผู้ยื่นคำร้อง!",
         icon: "warning",
         width: 650,
         showCancelButton: true,
@@ -282,7 +282,7 @@ export default {
         cancelButtonText: "ยกเลิก",
       }).then((result) => {
         if (result.isConfirmed) {
-          this.$router.push("/AdminChiefManagement");
+          this.$router.push("/AdminUserManagement");
         }
       });
     },

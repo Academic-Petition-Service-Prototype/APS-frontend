@@ -1,14 +1,14 @@
 <template>
   <!-- ส่วนจัดเเสดง -->
-  <div id="AdminEditChief">
-    <NavbarAdmin />
+  <div id="ChiefEditOfficer">
+    <NavbarChief />
     <v-card class="cardshow">
       <h1>
-        แก้ไขข้อมูลหัวหน้าหน่วยงาน
+        แก้ไขข้อมูลพนักงาน
         <v-divider></v-divider>
       </h1>
 
-      <v-form v-model="isValid" @submit.prevent="editchief()">
+      <v-form v-model="isValid" @submit.prevent="editofficer()">
         <v-container>
           <v-row>
             <v-col align="center">
@@ -30,6 +30,7 @@
             <v-col cols="12" md="6">
               <v-text-field
                 v-model="form.email"
+                disabled
                 :rules="email_rules"
                 type="email"
                 label="อีเมล"
@@ -88,19 +89,6 @@
               ></v-text-field>
             </v-col>
           </v-row>
-
-          <v-row>
-            <v-col>
-              <v-select
-                v-model="form.agency_id"
-                :rules="general_rules"
-                :items="agencylist"
-                item-text="agency_name"
-                item-value="agency_id"
-                label="เลือกหน่วยงาน"
-              ></v-select>
-            </v-col>
-          </v-row>
           <v-btn
             color="green text-white"
             class="mr-5"
@@ -118,12 +106,12 @@
   </div>
 </template>
 <script>
-import NavbarAdmin from "../../components/NavbarAdmin.vue";
+import NavbarChief from "../../components/NavbarChief.vue";
 import axios from "axios";
 export default {
-  name: "AdminEditChief",
+  name: "ChiefEditOfficer",
   components: {
-    NavbarAdmin,
+    NavbarChief,
   },
   data() {
     return {
@@ -135,12 +123,11 @@ export default {
         gender: "",
         address: "",
         tel_num: "",
-        img: {},
-        agency_id: "",
+        img: [],
+        img_tmp: [],
       },
       isValid: true,
       url: null,
-      agencylist: [],
       email_rules: [
         (value) => !!value || "จำเป็น",
         (value) => (value || "").length <= 30 || "สูงสุด 30 ตัวอักษร",
@@ -175,8 +162,8 @@ export default {
           this.form.address = response.data.address;
           this.form.tel_num = response.data.tel_num;
           this.form.img = response.data.img;
-          this.form.agency_id = response.data.agencies_id;
-          this.url = process.env.VUE_APP_CHIEF_IMG + this.form.img;
+          this.form.img_tmp = response.data.img;
+          this.url = process.env.VUE_APP_OFFICER_IMG + this.form.img;
         })
         .catch((error) => {
           // handle error
@@ -184,20 +171,20 @@ export default {
         });
     },
 
-    editchief() {
+    editofficer() {
       let formData = new FormData();
       if (this.form.img != this.form.img_tmp) {
         formData.append("img", this.form.img);
       }
       // formData.append("email", this.form.email);
       formData.append("password", this.form.password);
-      formData.append("role", "chief");
+      formData.append("role", "officer");
       formData.append("f_name", this.form.f_name);
       formData.append("l_name", this.form.l_name);
       formData.append("tel_num", this.form.tel_num);
       formData.append("gender", this.form.gender);
       formData.append("address", this.form.address);
-      formData.append("agencies_id", this.form.agency_id);
+      formData.append("agencies_id", this.$store.getters.getUser.agencies_id);
 
       axios
         .patch(
@@ -225,7 +212,7 @@ export default {
           } else if (response.data == "อัพเดตข้อมูลสำเร็จ") {
             this.$swal({
               icon: "success",
-              title: "แก้ไขข้อมูลหัวหน้าหน่วยงานสำเร็จ",
+              title: "แก้ไขข้อมูลพนักงานสำเร็จ",
               text:
                 "ยินดีด้วยคุณแก้ไขข้อมูล " +
                 this.form.f_name +
@@ -234,7 +221,7 @@ export default {
                 " สำเร็จ",
               timer: 2000,
             });
-            this.$router.push("/AdminChiefManagement");
+            this.$router.push("/ChiefOfficerManagement");
           } else {
             this.$swal({
               icon: "error",
@@ -246,23 +233,10 @@ export default {
                 this.form.l_name,
               timer: 2000,
             });
-            this.$router.push("/AdminChiefManagement");
+            this.$router.push("/ChiefOfficerManagement");
           }
         })
         .catch((error) => {
-          console.log(error);
-        });
-    },
-
-    getallagency() {
-      axios
-        .get(process.env.VUE_APP_URL + "agency")
-        .then((response) => {
-          //handle success
-          this.agencylist = response.data;
-        })
-        .catch((error) => {
-          // handle error
           console.log(error);
         });
     },
@@ -273,22 +247,21 @@ export default {
 
     cancel() {
       this.$swal({
-        title: "ท่านกำลังจะออกจากหน้าแก้ไขหัวหน้าหน่วยงาน?",
-        text: "ท่านเเน่ใจว่าต้องการออกจากหน้าแก้ไขหัวหน้าหน่วยงาน!",
+        title: "ท่านกำลังจะออกจากหน้าแก้ไขพนักงาน?",
+        text: "ท่านเเน่ใจว่าต้องการออกจากหน้าแก้ไขพนักงาน!",
         icon: "warning",
-        width: 650,
+        width: 550,
         showCancelButton: true,
         confirmButtonText: "ตกลง",
         cancelButtonText: "ยกเลิก",
       }).then((result) => {
         if (result.isConfirmed) {
-          this.$router.push("/AdminChiefManagement");
+          this.$router.push("/ChiefOfficerManagement");
         }
       });
     },
   },
   mounted() {
-    this.getallagency();
     this.getuserbyid();
   },
 };

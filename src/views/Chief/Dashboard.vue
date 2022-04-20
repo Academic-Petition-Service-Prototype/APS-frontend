@@ -4,7 +4,7 @@
     <NavbarChief />
     <v-card class="cardshow">
       <v-toolbar dark prominent color="primary">
-        <h1>หน้าแรก</h1>
+        <h1 class="text-center pa-5">หน้าแรก</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
 

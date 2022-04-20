@@ -4,7 +4,7 @@
     <NavbarAdmin />
     <v-card class="cardshow">
       <v-toolbar dark prominent color="#00B8D4">
-        <h1>จัดการหัวหน้าหน่วยงาน</h1>
+        <h1 class="text-center pa-5">จัดการหัวหน้าหน่วยงาน</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
 
@@ -63,12 +63,12 @@
                   <v-col md="2"> {{ item.agency_name }} </v-col>
                   <v-col md="4"> {{ item.registered }} </v-col>
                   <v-col md="2">
-                    <v-btn icon
-                      ><v-icon color="yellow" @click="editchief(item.user_id)"
-                        >mdi-pencil</v-icon
-                      ></v-btn
+                    <v-btn icon @click="editchief(item.user_id)"
+                      ><v-icon color="yellow">mdi-pencil</v-icon></v-btn
                     >
-                    <v-btn icon
+                    <v-btn
+                      icon
+                      @click="deletechief(item.user_id, item.fullname)"
                       ><v-icon color="red" @click="dialogdel = !dialogdel"
                         >mdi-delete</v-icon
                       ></v-btn
@@ -311,12 +311,15 @@ export default {
     nextPage() {
       if (this.page + 1 <= this.numberOfPages) this.page += 1;
     },
+
     formerPage() {
       if (this.page - 1 >= 1) this.page -= 1;
     },
+
     updateItemsPerPage(number) {
       this.itemsPerPage = number;
     },
+
     resetadd() {
       this.form = {
         email: "",
@@ -331,9 +334,11 @@ export default {
       };
       this.dialogadd = false;
     },
+
     Preview_image() {
-      this.url = URL.createObjectURL(process.env.VUE_APP_IMG + this.form.img);
+      this.url = URL.createObjectURL(this.form.img);
     },
+
     addchief() {
       let formData = new FormData();
 
@@ -358,9 +363,9 @@ export default {
           if (response.data == "Add chief success") {
             this.$swal({
               icon: "success",
-              title: "เพิ่มหัวหน้าหน่วยงาน",
+              title: "เพิ่มหัวหน้าหน่วยงานสำเร็จ",
               text:
-                "ส่งรายงาน " +
+                "เพิ่มหัวหน้าหน่วยงาน " +
                 this.form.f_name +
                 " " +
                 this.form.l_name +
@@ -377,10 +382,11 @@ export default {
           }
         })
         .then(() => {
-          window.location.reload();
+          this.$router.go();
         })
         .catch((error) => console.log(error));
     },
+
     getallchief() {
       axios
         .post(process.env.VUE_APP_URL + "getusers", {
@@ -414,6 +420,7 @@ export default {
           console.log(error);
         });
     },
+
     getallagency() {
       axios
         .get(process.env.VUE_APP_URL + "agency")
@@ -426,8 +433,52 @@ export default {
           console.log(error);
         });
     },
+
     editchief(user_id) {
       this.$router.push("/AdminChiefEdit/" + user_id);
+    },
+
+    deletechief(user_id, fullname) {
+      this.$swal({
+        title: "ท่านแน่ใจหรือว่าต้องการจะลบหัวหน้าหน่วยงาน?",
+        icon: "warning",
+        width: 600,
+        showCancelButton: true,
+        confirmButtonText: "ตกลง",
+        cancelButtonText: "ยกเลิก",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axios
+            .delete(process.env.VUE_APP_URL + "users/" + user_id, {
+              data: {
+                role: "chief",
+              },
+            })
+            .then((response) => {
+              // handle success
+              if (response.data == "ลบ chief สำเร็จ") {
+                this.$swal({
+                  icon: "success",
+                  title: "ลบหัวหน้าหน่วยงานสำเร็จ",
+                  text: "ลบหัวหน้าหน่วยงาน " + fullname + " สำเร็จ",
+                  timer: 2000,
+                });
+                this.$router.go();
+              } else {
+                this.$swal({
+                  icon: "error",
+                  title: "ลบหัวหน้าหน่วยงานไม่สำเร็จ",
+                  text: "เกิดข้อผิดพลาดในการลบหัวหน้าหน่วยงาน",
+                  timer: 2000,
+                });
+              }
+            })
+            .catch((error) => {
+              // handle error
+              console.log(error);
+            });
+        }
+      });
     },
   },
   mounted() {

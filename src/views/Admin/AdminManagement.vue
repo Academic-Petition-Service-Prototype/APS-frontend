@@ -1,21 +1,20 @@
 <template>
   <!-- ส่วนจัดเเสดง -->
-  <div id="ChiefOfficerManagement">
-    <NavbarChief />
+  <div id="AdminAdminManagement">
+    <NavbarAdmin />
     <v-card class="cardshow">
-      <v-toolbar dark prominent color="primary">
-        <h1 class="text-center pa-5">จัดการพนักงาน</h1>
+      <v-toolbar dark prominent color="#00B8D4">
+        <h1 class="text-center pa-5">จัดการผู้ดูแลระบบ</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
 
       <v-container>
         <v-data-iterator
-          :items="listOfficer"
+          :items="adminlist"
           :items-per-page.sync="itemsPerPage"
           :page.sync="page"
           :search="search"
           :sort-by="sortBy.toLowerCase()"
-          :sort-desc="sortDesc"
           hide-default-footer
           class="text-center"
         >
@@ -27,7 +26,7 @@
                   style="margin: 10px 10px -25px 10px"
                   @click="dialogadd = !dialogadd"
                 >
-                  เพิ่มพนักงาน
+                  เพิ่มผู้ดูแลระบบ
                 </v-btn></v-col
               >
             </v-row>
@@ -35,8 +34,8 @@
               <v-col>
                 <v-text-field
                   prepend-inner-icon="mdi-magnify"
-                  label="ชื่อพนักงาน"
-                  placeholder="ชื่อพนักงาน"
+                  label="ชื่อผู้ดูแลระบบ / หน่วยงาน"
+                  placeholder="ชื่อผู้ดูแลระบบ / หน่วยงาน"
                   filled
                   rounded
                   dense
@@ -50,32 +49,32 @@
           </template>
 
           <template v-slot:default="props">
-            <v-row>
-              <v-col class="h3" md="5"> ชื่อ-นามสกุล </v-col>
-              <v-col class="h3" md="1"> เพศ </v-col>
+            <v-row class="text-center">
+              <v-col class="h3" md="4"> ชื่อ-นามสกุล </v-col>
+              <v-col class="h3" md="2"> หน่วยงาน </v-col>
               <v-col class="h3" md="4"> วันที่เพิ่มเข้าสู่ระบบ </v-col>
               <v-col class="h3" md="2"> การกระทำ </v-col>
             </v-row>
 
-            <v-row v-for="item in props.items" :key="item.text">
+            <v-row v-for="(item, index) in props.items" :key="index">
               <v-card-title>
-                <v-row class="text-center">
-                  <v-col md="5"> {{ item.fullname }}</v-col>
-                  <v-col md="1"> {{ item.gender }} </v-col>
+                <v-row class="text-center" align="center">
+                  <v-col md="4"> {{ item.fullname }}</v-col>
+                  <v-col md="2"> {{ item.agency_name }} </v-col>
                   <v-col md="4"> {{ item.registered }} </v-col>
                   <v-col md="2">
-                    <v-btn icon @click="editofficer(item.user_id)"
+                    <v-btn icon @click="editadmin(item.user_id)"
                       ><v-icon color="yellow">mdi-pencil</v-icon></v-btn
                     >
                     <v-btn
                       icon
-                      @click="deleteofficer(item.user_id, item.fullname)"
+                      @click="deleteadmin(item.user_id, item.fullname)"
                       ><v-icon color="red">mdi-delete</v-icon></v-btn
                     >
                   </v-col>
                 </v-row>
               </v-card-title>
-              <v-divider style="margin: 0px 10px 0px 10px;"></v-divider>
+              <v-divider style="margin: 0px 10px 0px 10px"></v-divider>
             </v-row>
           </template>
 
@@ -98,7 +97,7 @@
                   fab
                   dark
                   icon
-                  color="primary"
+                  color="#00B8D4"
                   class="mr-1"
                   @click="formerPage"
                 >
@@ -108,7 +107,7 @@
                   fab
                   dark
                   icon
-                  color="primary"
+                  color="#00B8D4"
                   class="ml-1"
                   @click="nextPage"
                 >
@@ -119,13 +118,12 @@
           </template>
         </v-data-iterator>
       </v-container>
-
-      <!-- เพิ่มข้อมูล officer -->
+      <!-- เพิ่มข้อมูล admin -->
       <v-dialog v-model="dialogadd" persistent max-width="1000px">
         <v-card align="center">
-          <h1>เพิ่มพนักงาน</h1>
+          <h1>เพิ่มข้อมูลผู้ดูแลระบบ</h1>
           <v-divider></v-divider>
-          <v-form v-model="isValid" @submit.prevent="addofficer()">
+          <v-form @submit.prevent="addadmin()" v-model="isValid">
             <template>
               <v-container>
                 <v-row>
@@ -204,6 +202,7 @@
                       label="ที่อยู่"
                       required
                     ></v-text-field>
+
                   </v-col>
                 </v-row>
                 <v-btn
@@ -221,34 +220,31 @@
           </v-form>
         </v-card>
       </v-dialog>
-      <!-- เพิ่มข้อมูล officer -->
+      <!-- เพิ่มข้อมูล admin -->
     </v-card>
   </div>
   <!-- ส่วนจัดเเสดง -->
 </template>
 
 <script>
-import NavbarChief from "../../components/NavbarChief.vue";
+import NavbarAdmin from "../../components/NavbarAdmin.vue";
 import axios from "axios";
 export default {
-  name: "ChiefOfficerManagement",
+  name: "AdminAdminManagement",
   components: {
-    NavbarChief,
+    NavbarAdmin,
   },
   data() {
     return {
-      // ของตัวตาราง
       search: "",
       filter: {},
-      sortDesc: false,
       page: 1,
       itemsPerPage: 5,
       sortBy: "name",
-      // ของตัวตาราง
       url: null,
+      adminlist: [],
+      agencylist: [],
       isValid: true,
-      listOfficer: [],
-
       // rules
       email_rules: [
         (value) => !!value || "จำเป็น",
@@ -275,10 +271,9 @@ export default {
 
       // ของตัวไดอล็อค
       dialogadd: false,
-      dialogdel: false,
       // ของตัวไดอล็อค
 
-      // ฟอร์มเพิ่มข้อมูลพนักงาน
+      // ฟอร์มเพิ่มข้อมูลผู้ดูแลระบบ
       form: {
         email: "",
         password: "",
@@ -288,32 +283,63 @@ export default {
         address: "",
         tel_num: "",
         img: [],
-        agency_id: this.$store.getters.getUser.agencies_id,
+        agency_id: "",
       },
     };
   },
   computed: {
     numberOfPages() {
-      return Math.ceil(this.listOfficer.length / this.itemsPerPage);
+      return Math.ceil(this.adminlist.length / this.itemsPerPage);
     },
     filteredKeys() {
       return this.keys.filter((key) => key !== "Name");
     },
   },
   methods: {
-    addofficer() {
+    nextPage() {
+      if (this.page + 1 <= this.numberOfPages) this.page += 1;
+    },
+
+    formerPage() {
+      if (this.page - 1 >= 1) this.page -= 1;
+    },
+
+    updateItemsPerPage(number) {
+      this.itemsPerPage = number;
+    },
+
+    resetadd() {
+      this.form = {
+        email: "",
+        password: "",
+        f_name: "",
+        l_name: "",
+        gender: "",
+        address: "",
+        tel_num: "",
+        img: [],
+        agency_id: "",
+      };
+      this.dialogadd = false;
+    },
+
+    Preview_image() {
+      this.url = URL.createObjectURL(this.form.img);
+    },
+
+    addadmin() {
       let formData = new FormData();
 
       formData.append("email", this.form.email);
       formData.append("password", this.form.password);
-      formData.append("role", "officer");
+      formData.append("role", "admin");
       formData.append("f_name", this.form.f_name);
       formData.append("l_name", this.form.l_name);
       formData.append("tel_num", this.form.tel_num);
       formData.append("gender", this.form.gender);
       formData.append("address", this.form.address);
       formData.append("img", this.form.img);
-      formData.append("agencies_id", this.form.agency_id);
+      formData.append("agencies_id", 2);
 
       axios
         .post(process.env.VUE_APP_URL + "users", formData, {
@@ -322,48 +348,49 @@ export default {
           },
         })
         .then((response) => {
-          if (response.data == "Add officer success") {
+          if (response.data == "Add admin success") {
             this.$swal({
               icon: "success",
-              title: "เพิ่มพนักงานสำเร็จ",
+              title: "เพิ่มผู้ดูแลระบบสำเร็จ",
               text:
-                "เพิ่มพนักงาน " +
+                "เพิ่มผู้ดูแลระบบ " +
                 this.form.f_name +
                 " " +
                 this.form.l_name +
                 " สำเร็จ ",
               timer: 2000,
             });
-            this.$router.go();
-          } else if (response.data == "อีเมลนี้มีอยู่ในระบบแล้ว") {
+          } else {
             this.$swal({
               icon: "error",
-              title: "เพิ่มพนักงานไม่สำเร็จ",
-              text: "อีเมลนี้มีอยู่ในระบบแล้ว",
+              title: "เพิ่มผู้ดูแลระบบไม่สำเร็จ",
+              text: "เกิดข้อผิดพลาดในการเพิ่มผู้ดูแลระบบ",
               timer: 2000,
             });
           }
         })
+        .then(() => {
+          this.$router.go();
+        })
         .catch((error) => console.log(error));
     },
 
-    getofficer() {
+    getalladmin() {
       axios
         .post(process.env.VUE_APP_URL + "getusers", {
           role: this.$store.getters.getUser.role,
-          roletarget: "officer",
-          agency_id: this.$store.getters.getUser.agencies_id,
+          roletarget: "admin",
         })
         .then((response) => {
           //handle success
-          this.listOfficer = response.data;
+          this.adminlist = response.data;
 
-          for (let i = 0; i < this.listOfficer.length; i++) {
+          for (let i = 0; i < this.adminlist.length; i++) {
             // date format
-            this.listOfficer[i].registered = new Date(
-              this.listOfficer[i].registered
+            this.adminlist[i].registered = new Date(
+              this.adminlist[i].registered
             );
-            this.listOfficer[i].registered = this.listOfficer[
+            this.adminlist[i].registered = this.adminlist[
               i
             ].registered.toLocaleDateString("th-TH", {
               year: "numeric",
@@ -382,29 +409,26 @@ export default {
         });
     },
 
-    resetadd() {
-      this.form = {
-        email: "",
-        password: "",
-        f_name: "",
-        l_name: "",
-        gender: "",
-        address: "",
-        tel_num: "",
-        img: [],
-        agency_id: "",
-      };
-      this.url = null;
-      this.dialogadd = false;
+    getallagency() {
+      axios
+        .get(process.env.VUE_APP_URL + "agency")
+        .then((response) => {
+          //handle success
+          this.agencylist = response.data;
+        })
+        .catch((error) => {
+          // handle error
+          console.log(error);
+        });
     },
 
-    editofficer(user_id) {
-      this.$router.push("/ChiefOfficerEdit/" + user_id);
+    editadmin(user_id) {
+      this.$router.push("/AdminadminEdit/" + user_id);
     },
 
-    deleteofficer(user_id, fullname) {
+    deleteadmin(user_id, fullname) {
       this.$swal({
-        title: "ท่านแน่ใจหรือว่าต้องการจะลบพนักงาน?",
+        title: "ท่านแน่ใจหรือว่าต้องการจะลบผู้ดูแลระบบ?",
         icon: "warning",
         width: 600,
         showCancelButton: true,
@@ -415,24 +439,24 @@ export default {
           axios
             .delete(process.env.VUE_APP_URL + "users/" + user_id, {
               data: {
-                role: "officer",
+                role: "admin",
               },
             })
             .then((response) => {
               // handle success
-              if (response.data == "ลบ officer สำเร็จ") {
+              if (response.data == "ลบ admin สำเร็จ") {
                 this.$swal({
                   icon: "success",
-                  title: "ลบพนักงานสำเร็จ",
-                  text: "ลบพนักงาน " + fullname + " สำเร็จ",
+                  title: "ลบผู้ดูแลระบบสำเร็จ",
+                  text: "ลบผู้ดูแลระบบ " + fullname + " สำเร็จ",
                   timer: 2000,
                 });
                 this.$router.go();
               } else {
                 this.$swal({
                   icon: "error",
-                  title: "ลบพนักงานไม่สำเร็จ",
-                  text: "เกิดข้อผิดพลาดในการลบพนักงาน",
+                  title: "ลบผู้ดูแลระบบไม่สำเร็จ",
+                  text: "เกิดข้อผิดพลาดในการลบผู้ดูแลระบบ",
                   timer: 2000,
                 });
               }
@@ -444,25 +468,10 @@ export default {
         }
       });
     },
-
-    Preview_image() {
-      this.url = URL.createObjectURL(this.form.img);
-    },
-
-    nextPage() {
-      if (this.page + 1 <= this.numberOfPages) this.page += 1;
-    },
-
-    formerPage() {
-      if (this.page - 1 >= 1) this.page -= 1;
-    },
-
-    updateItemsPerPage(number) {
-      this.itemsPerPage = number;
-    },
   },
   mounted() {
-    this.getofficer();
+    this.getalladmin();
+    this.getallagency();
   },
 };
 </script>

@@ -125,7 +125,6 @@
                 <v-col>
                   <h1>หมวดหมู่คำร้อง</h1>
 
-                  
                   <v-autocomplete
                     class="cardshow"
                     v-model="tag_form"
@@ -136,19 +135,18 @@
                     chips
                     small-chips
                     label="หมวดหมู่คำร้อง"
-                    
                     return-object
                   ></v-autocomplete>
                 </v-col>
                 <v-col align="center">
                   หากท่านต้องการสร้างหมวดหมู่ใหม่กดเพิ่ม "เพิ่มหมวดหมู่"
-                  <v-rol>
+                  <v-row>
                     <v-col align="center">
                       <v-btn class="cardshow" @click="addtag()">
                         เพิ่มหมวดหมู่
                       </v-btn>
                     </v-col>
-                  </v-rol>
+                  </v-row>
                 </v-col>
               </v-row>
 
@@ -169,7 +167,7 @@
                   <h1>เพิ่มผู้อนุมัติ</h1>
                 </v-col>
               </v-row>
-             
+
               <v-row>
                 <!-- ส่วนของเพิ่มหน้าผู้อนุมัติ -->
                 <div>
@@ -362,7 +360,7 @@ export default {
       ],
       forms: [
         {
-          title: " ",
+          title: "",
           specifics: true,
           approver: true,
         },
@@ -390,6 +388,7 @@ export default {
         title: "ท่านกำลังจะออกจากหน้าสร้างคำร้อง ?",
         text: "ท่านเเน่ใจว่าต้องการออกจากหน้าสร้างคำร้อง!",
         icon: "warning",
+        width: 550,
         showCancelButton: true,
         confirmButtonText: "ตกลง",
         cancelButtonText: "ยกเลิก",
@@ -399,26 +398,24 @@ export default {
         }
       });
     },
-    addNewtitle: function () {
+    addNewtitle: function() {
       this.title.push({
         id: this.nextTodoId++,
         title: this.newtitleText,
       });
       this.newtitleText = "";
     },
-    addapprovertitle: function () {
+    addapprovertitle: function() {
       if (this.newapproverText !== "" && this.newapproverText !== null) {
         let ifdup = false;
         for (let i = 0; i < this.listapprover.length; i++) {
           if (
             this.listapprover[i].approver_name.user_id ==
-            this.newapproverText.user_id
-            &&
+              this.newapproverText.user_id &&
             this.listapprover[i].approver_name[i].f_name ==
-            this.newapproverText.f_name
-            &&
+              this.newapproverText.f_name &&
             this.listapprover[i].approver_name[i].l_name ==
-            this.newapproverText.l_name
+              this.newapproverText.l_name
           ) {
             console.log("if ddf");
             ifdup = true;
@@ -451,11 +448,11 @@ export default {
         });
       }
     },
-    removetitle: function (index) {
+    removetitle: function(index) {
       this.title.splice(index, 1);
       this.nextTodoId--;
     },
-    removeapprover: function (index) {
+    removeapprover: function(index) {
       this.listapprover.splice(index, 1);
       this.nextapproverId--;
     },
@@ -501,9 +498,10 @@ export default {
                   this.$swal({
                     icon: "success",
                     title: "เพิ่มหมวดหมู่สำเร็จ",
-                    text: "เพิ่ม" + this.tag_form + "สำเร็จ ",
+                    text: "เพิ่ม " + this.tag_form + " สำเร็จ",
                     timer: 2000,
                   });
+                  this.$router.go();
                 } else {
                   this.$swal({
                     icon: "error",
@@ -542,7 +540,8 @@ export default {
                 this.$swal({
                   icon: "warning",
                   title: "กรุณากรอกข้อมูลเฉพาะ",
-                  text: "เมื่อท่านเปิดใช้งานเพิ่มข้อมูลเฉพาะ กรุณากรอกข้อมูล และอย่าเว้นว่าง",
+                  text:
+                    "เมื่อท่านเปิดใช้งานเพิ่มข้อมูลเฉพาะ กรุณากรอกข้อมูล และอย่าเว้นว่าง",
                   timer: 5000,
                 });
 
@@ -605,31 +604,32 @@ export default {
           users_id: this.$store.getters.getUser.user_id,
           form_name: this.forms.title,
           form_specific: this.title,
-          f_name: this.$store.getters.getUser.f_name,
-          l_name: this.$store.getters.getUser.l_name,
           approval_name: this.listapprover,
           form_detail: this.form_detail,
-          tag_id : this.tag_form.tag_id,
+          tag_id: this.tag_form.tag_id,
         })
         .then((response) => {
           if (response.data == "กรุณากรอกชื่อคำร้อง") {
-            alert("กรุณากรอกชื่อคำร้อง");
+            this.$swal({
+              icon: "error",
+              title: "กรุณากรอกชื่อคำร้อง",
+              timer: 2000,
+            });
           } else if (response.data == "ชื่อคำร้องนี้มีอยู่ในระบบแล้ว") {
-            alert("ชื่อคำร้องนี้มีอยู่ในระบบแล้ว");
             this.$swal({
               icon: "error",
               title: "ชื่อคำร้องนี้มีอยู่ในระบบแล้ว!",
-              text: "คำร้องของท่านมีในระบบอยู่เเล้วโปรดตรวจสอบปัจจัยที่ทำให้คำร้องของท่านต่่างจากในระบบ",
+              text: "คำร้องของท่านมีในระบบอยู่เเล้ว",
               timer: 2000,
             });
           } else {
             this.$swal({
               icon: "success",
-              title: "สร้างคำร้องเสร็จสิ้น",
+              title: "สร้างคำร้องสำเร็จ",
               text: "ยินดีด้วยคุณสร้างคำร้อง " + this.forms.title + " สำเร็จ",
-              timer: 1500,
+              timer: 2000,
             });
-            this.$router.push("/OfficerPetitionManagement");
+            this.$router.push("/ChiefPetitionManagement");
           }
         })
         .catch((error) => {
@@ -647,12 +647,6 @@ export default {
         .then((response) => {
           // handle success
           this.approverlist = response.data;
-
-          // this.approverlist.forEach((approver) => {
-          //   // this.approver[0].id.push(approver.user_id);
-          //   this.approver.push(approver.f_name + " " + approver.l_name);
-          //   console.log(this.approver[0].id);
-          // });
         })
         .catch((error) => {
           // handle error

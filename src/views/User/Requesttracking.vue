@@ -26,8 +26,8 @@
             <v-col>
               <v-text-field
                 prepend-inner-icon="mdi-magnify"
-                label="ชื่อหัวข้อการร้องขอคำร้องเพิ่มเติม"
-                placeholder="ชื่อหัวข้อการร้องขอคำร้องเพิ่มเติม"
+                label="หัวข้อการร้องขอคำร้องเพิ่มเติม / วันที่"
+                placeholder="หัวข้อการร้องขอคำร้องเพิ่มเติม / วันที่"
                 filled
                 rounded
                 dense
@@ -41,9 +41,8 @@
         </template>
         <template v-slot:default="props">
           <v-row class="text-center">
-            <v-col align="center" class="h3">ลำดับ</v-col>
-            <v-col align="center" class="h3">รายการ</v-col>
-            <v-col align="center" class="h3">วันที่ส่งคำร้อง</v-col>
+            <v-col class="h3" md="8">รายการ</v-col>
+            <v-col class="h3" md="4">วันที่ส่งคำร้อง</v-col>
           </v-row>
 
           <v-row
@@ -55,13 +54,10 @@
               <v-expansion-panel>
                 <v-expansion-panel-header color="#FFAB40">
                   <v-row class="text-center">
-                    <v-col>
-                      <h3>{{ index + 1 }}</h3>
-                    </v-col>
-                    <v-col>
+                    <v-col md="8">
                       <h4>{{ item.request_title }}</h4>
                     </v-col>
-                    <v-col>
+                    <v-col md="4">
                       <h4>{{ item.request_created }}</h4>
                     </v-col>
                   </v-row>
@@ -194,12 +190,11 @@ export default {
   },
   data() {
     return {
-      itemsPerPageArray: [4, 8, 12],
       search: "",
       filter: {},
       sortDesc: false,
       page: 1,
-      itemsPerPage: 4,
+      itemsPerPage: 5,
       sortBy: "name",
       requests: [],
     };

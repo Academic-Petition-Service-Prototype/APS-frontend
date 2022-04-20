@@ -3,14 +3,10 @@
     <NavbarUser />
     <v-card class="cardmargin">
       <v-toolbar dark prominent color="#FFAB40">
-        <h1>เลือกแบบคำร้อง</h1>
+        <h1 class="text-center pa-5">เลือกแบบคำร้อง</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
-      <!-- {{ petitionList }}
-      <br /><br />
-      <br />
 
-      {{ tag }} -->
       <v-data-iterator
         :items="petitionList"
         :items-per-page.sync="itemsPerPage"
@@ -62,7 +58,7 @@
                     max-width="500"
                     :to="item.route"
                     @click="sentPetition(item.form_id)"
-                    v-if="item.form_status == 'active'"
+                    v-if="item.form_status == 1"
                   >
                     <v-img
                       class="white--text align-end"
@@ -145,11 +141,10 @@ export default {
       filter: {},
       sortDesc: false,
       page: 1,
-      itemsPerPage: 4,
+      itemsPerPage: 5,
       sortBy: "name",
       keys: ["Name"],
       petitionList: [],
-      e1: 1,
       tag: [],
     };
   },
@@ -182,15 +177,12 @@ export default {
           // handle success
           this.petitionList = response.data;
           for (let i = 0; i < this.petitionList.length; i++) {
-           console.log( this.petitionList[i].tags_id)
-           
-           
+            console.log(this.petitionList[i].tags_id);
           }
 
           for (let j = 0; j < this.tag.length; j++) {
-              console.log("ฟอมเเทค"+this.tag[j])
-             
-           }
+            console.log("ฟอมเเทค" + this.tag[j]);
+          }
         })
         .catch((error) => {
           // handle error

@@ -204,7 +204,7 @@ export default {
                 title: "การส่งคำร้องสำเร็จ",
                 text:
                   "ส่งคำร้อง " + this.petitionListById.form_name + " สำเร็จ ",
-                timer: 1500,
+                timer: 2000,
               });
               this.$router.push("/UserPetition");
             }

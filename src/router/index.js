@@ -18,15 +18,9 @@ import UserSentpetition from '../views/User/Sentpetition.vue'
 import UserRequest from '../views/User/Request.vue'
 import UserRequestTracking from '../views/User/Requesttracking.vue'
 import Trackingdetail from '../views/User/Trackingdetail.vue'
-import Userabout from '../views/User/Userabout.vue'
 import guidepentions from '../views/User/guidepentions.vue'
 import guidereport from '../views/User/guidereport.vue'
 import guiderequest from '../views/User/guiderequest.vue'
-
-
-
-
-
 //User
 
 //Officer
@@ -41,21 +35,23 @@ import OfficerCreatepetition from'../views/Officer/Createpetition.vue'
 import ChiefCheckapprovedlist from '../views/Chief/Checkapprovedlist.vue'
 import ChiefDashboard from '../views/Chief/Dashboard.vue'
 import ChiefOfficerManagement from '../views/Chief/OfficerManagement.vue'
+import ChiefOfficerEdit from '../views/Chief/Editofficer.vue'
 import ChiefPetitionManagement from '../views/Chief/PetitionManagement.vue'
 import ChiefProfile from '../views/Chief/Profile.vue'
 import ChiefReport from '../views/Chief/Report.vue'
 import ChiefSecretaryManagement from '../views/Chief/SecretaryManagement.vue'
+import ChiefSecretaryEdit from '../views/Chief/Editsecretary.vue'
 import ChiefTracking from '../views/Chief/Tracking.vue'
 import ChiefReportDetail from '../views/Chief/ReportDetail.vue'
 import Approvaldetaill from '../views/Chief/Approvaldetaill.vue'
 import ChiefCreatepetition from'../views/Chief/Createpetition.vue'
+import ChiefEditpetition from'../views/Chief/Editpetition.vue'
 import Approvedlist from'../views/Chief/Approvedlist.vue'
 import ViweApprovedlist from'../views/Chief/ViweApprovedlist.vue'
 import Disapprovedlist from'../views/Chief/Disapprovedlist.vue'
 import ViweDisapprovedlist from'../views/Chief/ViweDisapprovedlist.vue'
 import ChiefRequest from'../views/Chief/Request.vue'
 import ChiefRequestDetail from'../views/Chief/Requestdetail.vue'
-
 //Chief
 
 //Secretary
@@ -71,26 +67,25 @@ import Secretaryrequestlistdetail from '../views/Secretary/Secretaryrequestlistd
 
 //Admin
 import AdminChiefManagement from '../views/Admin/ChiefManagement.vue'
+import AdminAdminManagement from '../views/Admin/AdminManagement.vue'
 import AdminChiefEdit from '../views/Admin/Editchief.vue'
 import AdminDashboard from '../views/Admin/Dashboard.vue'
 import AdminOfficerManagement from '../views/Admin/OfficerManagement.vue'
+import AdminOfficerEdit from '../views/Admin/Editofficer.vue'
 import AdminProfile from '../views/Admin/Profile.vue'
 import AdminSecretaryManagement from '../views/Admin/SecretaryManagement.vue'
+import AdminSecretaryEdit from '../views/Admin/Editsecretary.vue'
 import AdminTracking from '../views/Admin/Tracking.vue'
 import AdminUserManagement from '../views/Admin/UserManagement.vue'
+import AdminUserEdit from '../views/Admin/Edituser.vue'
 import AdminViewApproval from '../views/Admin/ViewAdminApproval.vue'
 import AdminViewReport from '../views/Admin/ViewReport.vue'
 import AdminAgencyManagement from '../views/Admin/AgencyManagement.vue'
+import AdminAgencyEdit from '../views/Admin/Editagency.vue'
 import AdminViwerequestlist from '../views/Admin/AdminViwerequestlist.vue'
 import AdminViewApprovaldetail from '../views/Admin/ViewAdminApprovaldetail.vue'
 import AdminTagManagement from '../views/Admin/TagManagement.vue'
-
-
 //Admin
-
-//Other
-import viewpentitiontrackingbyofficer from '../views/Other/viewpentitiontrackingbyofficer.vue'
-//Other
 
 Vue.use(VueRouter)
 
@@ -166,11 +161,6 @@ const routes = [
     component: Trackingdetail 
   },
   {
-    path: '/Userabout',
-    name: 'เกี่ยวกับเรา',
-    component: Userabout 
-  },
-  {
     path: '/guidepentions',
     name: 'วิธีใช้งาน การส่งคำร้อง',
     component: guidepentions 
@@ -182,7 +172,7 @@ const routes = [
   },
   {
     path: '/guiderequest',
-    name: 'วิธีใช้งาน การร้องขอ ',
+    name: 'วิธีใช้งาน การร้องขอคำร้องเพิ่มเติม ',
     component: guiderequest 
   },
   
@@ -242,6 +232,11 @@ const routes = [
     component: ChiefOfficerManagement 
   },
   {
+    path: '/ChiefOfficerEdit/:id',
+    name: 'แก้ไขพนักงาน',
+    component: ChiefOfficerEdit
+  },
+  {
     path: '/ChiefPetitionManagement',
     name: 'จัดการคำร้อง',
     component: ChiefPetitionManagement 
@@ -260,6 +255,11 @@ const routes = [
     path: '/ChiefSecretaryManagement',
     name: 'จัดการเลขานุการ',
     component: ChiefSecretaryManagement 
+  },
+  {
+    path: '/ChiefSecretaryEdit/:id',
+    name: 'แก้ไขเลขานุการ',
+    component: ChiefSecretaryEdit
   },
   {
     path: '/ChiefTracking',
@@ -285,6 +285,11 @@ const routes = [
     path: '/ChiefCreatepetition',
     name: 'สร้างคำร้อง',
     component: ChiefCreatepetition 
+  },
+  {
+    path: '/ChiefEditpetition/:id',
+    name: 'แก้ไขคำร้อง',
+    component: ChiefEditpetition,
   },
   {
     path: '/Disapprovedlist',
@@ -366,14 +371,24 @@ const routes = [
     component: AdminChiefEdit 
   },
   {
+    path: '/AdminAdminManagement',
+    name: 'จัดการผู้ดูแลระบบ',
+    component: AdminAdminManagement 
+  },
+  {
     path: '/AdminDashboard',
     name: 'หน้าแรก',
     component: AdminDashboard 
   },
   {
     path: '/AdminOfficerManagement',
-    name: 'AdminOfficerManagement',
+    name: 'จักการพนักงาน',
     component: AdminOfficerManagement 
+  },
+  {
+    path: '/AdminOfficerEdit/:id',
+    name: 'แก้ไขเลขานุการ',
+    component: AdminOfficerEdit 
   },
   {
     path: '/AdminProfile',
@@ -382,8 +397,13 @@ const routes = [
   },
   {
     path: '/AdminSecretaryManagement',
-    name: 'AdminSecretaryManagement',
+    name: 'จัดการเลขานุการ',
     component: AdminSecretaryManagement 
+  },
+  {
+    path: '/AdminSecretaryEdit/:id',
+    name: 'แก้ไขเลขานุการ',
+    component: AdminSecretaryEdit 
   },
   {
     path: '/AdminTracking',
@@ -392,10 +412,14 @@ const routes = [
   },
   {
     path: '/AdminUserManagement',
-    name: 'AdminUserManagement',
+    name: 'จัดการผู้ยื่นคำร้อง',
     component: AdminUserManagement 
   },
- 
+  {
+    path: '/AdminUserEdit/:id',
+    name: 'แก้ไขผู้ยื่นคำร้อง',
+    component: AdminUserEdit 
+  },
   {
     path: '/AdminViewReport',
     name: 'การรายงานปัญหา',
@@ -403,8 +427,13 @@ const routes = [
   },
   {
     path: '/AdminAgencyManagement',
-    name: 'AdminAgencyManagement',
+    name: 'จัดการหน่วยงาน',
     component: AdminAgencyManagement 
+  },
+  {
+    path: '/AdminAgencyEdit/:id',
+    name: 'แก้ไขหน่วยงาน',
+    component: AdminAgencyEdit 
   },
   {
     path: '/AdminViwerequestlist',
@@ -431,11 +460,6 @@ const routes = [
   //Admin
 
   //Other
-  {
-    path: '/viewpentitiontrackingbyofficer',
-    name: 'viewpentitiontrackingbyofficer',
-    component: viewpentitiontrackingbyofficer 
-  },
   {
     path: "/:pathMatch(.*)*",
     name: 'Page not found 404',

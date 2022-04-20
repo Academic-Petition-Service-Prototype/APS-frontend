@@ -1,12 +1,12 @@
 <template>
   <!-- ส่วนจัดเเสดง -->
-  <div id="OfficerCreatepetition">
-    <NavbarOF />
+  <div id="ChiefEditpetition">
+    <NavbarChief />
     <v-card class="cardshow">
-      <v-toolbar dark prominent color="#6c757d">
+      <v-toolbar dark prominent color="primary">
         <v-row>
           <v-col align="center">
-            <p>สร้างคำร้อง</p>
+            <p>แก้ไขคำร้อง</p>
           </v-col>
         </v-row>
       </v-toolbar>
@@ -16,7 +16,6 @@
           <v-stepper-step :complete="stepprocess > 1" step="1" color="green">
             สร้างหัวข้อ
           </v-stepper-step>
-
           <v-divider></v-divider>
 
           <v-stepper-step
@@ -45,18 +44,15 @@
           <v-stepper-content step="1" ref="form">
             <v-card class="mb-12" color="#ECEFF1">
               <!-- หน้าสร้างหัวข้อ -->
-
               <v-row>
                 <v-col>
                   <h1>สร้างหัวข้อคำร้อง</h1>
-
                   <v-text-field
                     ref="forms.title"
                     name="forms.title"
                     v-model="forms.title"
                     label="ชื่อหัวข้อ"
                     class="cardshow"
-                    required
                     :rules="[() => !!forms.title || 'กรุณาใส่ชื่อหัวข้อ']"
                   ></v-text-field>
                 </v-col>
@@ -64,11 +60,11 @@
               <v-row>
                 <v-col class="cardshow">
                   คำร้องนี้ต้องการข้อมูลเฉพาะเพิ่ม
-                  <v-switch v-model="forms.specifics"></v-switch>
+                  <v-switch v-model="forms[0].specifics"></v-switch>
                 </v-col>
               </v-row>
 
-              <v-row v-if="forms.specifics == true">
+              <v-row v-if="forms[0].specifics == true">
                 <div>
                   <form v-on:submit.prevent="addNewtitle">
                     <v-col class="cardshow" align="center">
@@ -81,12 +77,12 @@
                       <v-btn type="submit">เพิ่ม</v-btn>
                     </v-col>
                   </form>
-                  <v-row v-for="(title, index) in title" :key="title.id">
+                  <v-row v-for="(titles, index) in title" :key="titles.id">
                     <v-col class="cardshow" align="center">
                       {{ index + 1 }}
                     </v-col>
                     <v-col class="cardshow" align="center">
-                      {{ title.title }}
+                      {{ title[index].title }}
                     </v-col>
                     <v-col class="cardshow" align="center">
                       <v-btn @click="removetitle(index)"> ลบ </v-btn>
@@ -222,7 +218,7 @@
               <h1>
                 {{ forms.title }}
               </h1>
-              <v-form v-model="valid" v-for="profile in profile" :key="profile">
+              <v-form v-for="profile in profile" :key="profile">
                 <v-container>
                   <v-row>
                     <v-col cols="12" md="4">
@@ -317,8 +313,8 @@
               <!-- ส่วนเเสดงหน้าการเเสดงตัวอย่าง -->
             </v-card>
 
-            <v-btn color="primary" @click="createpetition()">
-              สร้างคำร้อง
+            <v-btn color="primary" @click="editpetition()">
+              แก้ไขคำร้อง
             </v-btn>
 
             <v-btn text @click="stepprocess = 3"> ย้อนกลับ </v-btn>
@@ -332,12 +328,12 @@
 </template>
 
 <script>
-import NavbarOF from "../../components/NavbarOfficer.vue";
+import NavbarChief from "../../components/NavbarChief.vue";
 import axios from "axios";
 export default {
-  name: "OfficerCreatepetition",
+  name: "ChiefEditpetition",
   components: {
-    NavbarOF,
+    NavbarChief,
   },
   data() {
     return {
@@ -359,9 +355,8 @@ export default {
       ],
       forms: [
         {
-          title: " ",
+          title: "",
           specifics: true,
-          approver: true,
         },
       ],
       newtitleText: "",
@@ -384,8 +379,8 @@ export default {
   methods: {
     leavepage() {
       this.$swal({
-        title: "ท่านกำลังจะออกจากหน้าสร้างคำร้อง ?",
-        text: "ท่านเเน่ใจว่าต้องการออกจากหน้าสร้างคำร้อง!",
+        title: "ท่านกำลังจะออกจากหน้าแก้ไขคำร้อง ?",
+        text: "ท่านเเน่ใจว่าต้องการออกจากหน้าแก้ไขคำร้อง!",
         icon: "warning",
         width: 550,
         showCancelButton: true,
@@ -393,7 +388,7 @@ export default {
         cancelButtonText: "ยกเลิก",
       }).then((result) => {
         if (result.isConfirmed) {
-          this.$router.push("/OfficerPetitionManagement");
+          this.$router.push("/ChiefPetitionManagement");
         }
       });
     },
@@ -497,10 +492,9 @@ export default {
                   this.$swal({
                     icon: "success",
                     title: "เพิ่มหมวดหมู่สำเร็จ",
-                    text: "เพิ่ม " + this.tag_form + " สำเร็จ",
+                    text: "เพิ่ม" + this.tag_form + "สำเร็จ ",
                     timer: 2000,
                   });
-                  this.$router.go();
                 } else {
                   this.$swal({
                     icon: "error",
@@ -578,8 +572,6 @@ export default {
     },
 
     nextstep3() {
-      this.approver = false;
-
       Object.keys(this.Selectionapprover).forEach((f) => {
         if (this.listapprover >= 0) {
           this.$swal({
@@ -597,10 +589,12 @@ export default {
       });
     },
 
-    createpetition() {
+    editpetition() {
+      if (this.forms[0].specifics == false) {
+        this.title = [];
+      }
       axios
-        .post(process.env.VUE_APP_URL + "insertforms", {
-          users_id: this.$store.getters.getUser.user_id,
+        .patch(process.env.VUE_APP_URL + "forms/" + this.$route.params.id, {
           form_name: this.forms.title,
           form_specific: this.title,
           approval_name: this.listapprover,
@@ -621,14 +615,22 @@ export default {
               text: "คำร้องของท่านมีในระบบอยู่เเล้ว",
               timer: 2000,
             });
-          } else {
+          } else if (response.data == "แก้ไขคำร้องใหม่สำเร็จ") {
             this.$swal({
               icon: "success",
-              title: "สร้างคำร้องเสร็จสิ้น",
-              text: "ยินดีด้วยคุณสร้างคำร้อง " + this.forms.title + " สำเร็จ",
+              title: "แก้ไขคำร้องสำเร็จ",
+              text: "ยินดีด้วยคุณแก้ไขคำร้อง " + this.forms.title + " สำเร็จ",
               timer: 2000,
             });
-            this.$router.push("/OfficerPetitionManagement");
+            this.$router.push("/ChiefPetitionManagement");
+          } else {
+            this.$swal({
+              icon: "error",
+              title: "เกิดข้อผิดพลาด",
+              text: "เกิดข้อผิดพลาดในการแก้ไขคำร้อง" + this.forms.title,
+              timer: 2000,
+            });
+            this.$router.push("/ChiefPetitionManagement");
           }
         })
         .catch((error) => {
@@ -652,6 +654,7 @@ export default {
           console.log(error);
         });
     },
+
     gettagsbyagency() {
       axios
         .post(process.env.VUE_APP_URL + "tagsbyagency", {
@@ -660,6 +663,33 @@ export default {
         .then((response) => {
           // handle success
           this.tag = response.data;
+        })
+        .catch((error) => {
+          // handle error
+          console.log(error);
+        });
+    },
+
+    getformbyid() {
+      axios
+        .get(process.env.VUE_APP_URL + "forms/" + this.$route.params.id)
+        .then((response) => {
+          // handle success
+          this.forms.title = response.data.form_name;
+          this.title = response.data.form_specific;
+          this.title = JSON.parse(this.title);
+          this.form_detail = response.data.form_detail;
+          this.tag_form = {
+            tag_id: response.data.tag_id,
+            tag_name: response.data.tag_name,
+          };
+          this.listapprover = response.data.approval_name;
+          this.listapprover = JSON.parse(this.listapprover);
+          if (response.data.form_specific == "[]") {
+            this.forms[0].specifics = false;
+          } else {
+            this.forms[0].specifics = true;
+          }
         })
         .catch((error) => {
           // handle error
@@ -680,6 +710,7 @@ export default {
     },
   },
   mounted() {
+    this.getformbyid();
     this.getchieflist();
     this.gettagsbyagency();
   },
