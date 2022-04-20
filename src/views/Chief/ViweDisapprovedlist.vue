@@ -330,10 +330,19 @@ export default {
                 .then((response) => {
                   //handle success
                   if (response.data == "Approve petition successful") {
-                    alert("อนุมัติคำร้องสำเร็จ");
+                    this.$swal({
+                      icon: "success",
+                      title: "อนุมัติคำร้องสำเร็จ",
+                      timer: 2000,
+                    });
                     this.$router.push("/ChiefCheckapprovedlist");
                   } else {
-                    alert("อนุมัติคำร้องไม่สำเร็จ!");
+                    this.$swal({
+                      icon: "error",
+                      title: "อนุมัติคำร้องไม่สำเร็จ!",
+                      text: "เกิดข้อผิดพลาดในการอนุมัติคำร้อง",
+                      timer: 2000,
+                    });
                   }
                 })
                 .catch((error) => {
@@ -373,10 +382,20 @@ export default {
                 .then((response) => {
                   //handle success
                   if (response.data == "Approve petition successful") {
-                    alert("ปฏิเสธคำร้องสำเร็จ");
+                    this.$swal({
+                      icon: "success",
+                      title: "อนุมัติคำร้องสำเร็จ",
+                      text: "เกิดข้อผิดพลาดในการอนุมัติคำร้อง",
+                      timer: 2000,
+                    });
                     this.$router.push("/ChiefCheckapprovedlist");
                   } else {
-                    alert("ปฏิเสธคำร้องไม่สำเร็จ!");
+                    this.$swal({
+                      icon: "error",
+                      title: "อนุมัติคำร้องไม่สำเร็จ!",
+                      text: "เกิดข้อผิดพลาดในการอนุมัติคำร้อง",
+                      timer: 2000,
+                    });
                   }
                 })
                 .catch((error) => {

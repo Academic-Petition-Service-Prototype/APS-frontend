@@ -5,7 +5,7 @@
 
     <v-card class="cardshow">
       <h1>
-        ข้อมูลผู้ใช้งาน
+        ข้อมูลผู้ยื่นคำร้อง
         <v-divider></v-divider>
       </h1>
 

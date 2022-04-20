@@ -7,107 +7,104 @@
         <v-spacer></v-spacer>
       </v-toolbar>
 
-      <v-data-iterator
-        :items="requests"
-        :items-per-page.sync="itemsPerPage"
-        :page.sync="page"
-        :search="search"
-        :sort-by="sortBy.toLowerCase()"
-        :sort-desc="sortDesc"
-        hide-default-footer
-        class="text-center"
-      >
-        <template v-slot:header>
-          <v-row>
-            <v-col align="right"></v-col>
-          </v-row>
-          <v-row>
-            <v-col>
-              <v-text-field
-                prepend-inner-icon="mdi-magnify"
-                label="ชื่อการร้องขอคำร้องเพิ่มเติม"
-                placeholder="ชื่อการร้องขอคำร้องเพิ่มเติม"
-                filled
-                rounded
-                dense
-                v-model="search"
-                class="cardshow"
-              >
-              </v-text-field>
-              <template v-if="$vuetify.breakpoint.mdAndUp"> </template>
-            </v-col>
-          </v-row>
-        </template>
-
-        <template v-slot:default="props">
-          <v-row class="text-center">
-            <v-col class="h3">ลำดับ</v-col>
-            <v-col class="h3">รายการ</v-col>
-            <v-col class="h3">วันที่สร้าง</v-col>
-            <v-col class="h3">สถานะ</v-col>
-          </v-row>
-
-          <v-row v-for="(item, index) in props.items" :key="index">
-            <v-card-title>
-              <v-row class="text-center" align="center">
-                <v-col> {{ index + 1 }} </v-col>
-                <v-col> {{ item.request_title }} </v-col>
-                <v-col>{{ item.request_created }}</v-col>
-                <v-col>
-                  <v-btn @click="chageState(item.request_id)">
-                    <div v-if="item.request_state == 'read'">
-                      อ่านเเล้ว
-                    </div>
-                    <div v-else-if="item.request_state == 'unread'">
-                      ยังไม่ได้อ่าน
-                    </div>
-                  </v-btn>
-                </v-col>
-              </v-row>
-            </v-card-title>
-            <v-divider style="margin: 0px 10px 0px 10px;"></v-divider>
-          </v-row>
-        </template>
-
-        <template v-slot:footer>
-          <v-row class="mt-2" align="center" justify="center">
-            <v-menu offset-y> </v-menu>
-
-            <v-spacer></v-spacer>
+      <v-container>
+        <v-data-iterator
+          :items="requests"
+          :items-per-page.sync="itemsPerPage"
+          :page.sync="page"
+          :search="search"
+          :sort-by="sortBy.toLowerCase()"
+          :sort-desc="sortDesc"
+          hide-default-footer
+          class="text-center"
+        >
+          <template v-slot:header>
             <v-row>
-              <v-col align="center">
-                <span class="mr-4 grey--text">
-                  Page {{ page }} of {{ numberOfPages }}
-                </span>
+              <v-col>
+                <v-text-field
+                  prepend-inner-icon="mdi-magnify"
+                  label="รายการร้องขอคำร้อง / วันที่"
+                  placeholder="รายการร้องขอคำร้อง / วันที่"
+                  filled
+                  rounded
+                  dense
+                  v-model="search"
+                  class="cardshow"
+                >
+                </v-text-field>
+                <template v-if="$vuetify.breakpoint.mdAndUp"> </template>
               </v-col>
             </v-row>
-          </v-row>
-          <v-row>
-            <v-col align="center">
-              <v-btn
-                fab
-                dark
-                icon
-                color="#8BC34A"
-                class="mr-1"
-                @click="formerPage"
-              >
-                <v-icon>mdi-chevron-left</v-icon>
-              </v-btn>
-              <v-btn
-                fab
-                dark
-                icon
-                color="#8BC34A"
-                class="ml-1"
-                @click="nextPage"
-              >
-                <v-icon>mdi-chevron-right</v-icon>
-              </v-btn>
-            </v-col>
-          </v-row>
-        </template>
-      </v-data-iterator>
+          </template>
+
+          <template v-slot:default="props">
+            <v-row class="text-center">
+              <v-col class="h3" md="5">รายการ</v-col>
+              <v-col class="h3" md="5">วันที่สร้าง</v-col>
+              <v-col class="h3" md="2">สถานะ</v-col>
+            </v-row>
+
+            <v-row v-for="(item, index) in props.items" :key="index">
+              <v-card-title>
+                <v-row class="text-center" align="center">
+                  <v-col md="5"> {{ item.request_title }} </v-col>
+                  <v-col md="5">{{ item.request_created }}</v-col>
+                  <v-col md="2">
+                    <v-btn @click="chageState(item.request_id)">
+                      <div v-if="item.request_state == 'read'">
+                        อ่านเเล้ว
+                      </div>
+                      <div v-else-if="item.request_state == 'unread'">
+                        ยังไม่ได้อ่าน
+                      </div>
+                    </v-btn>
+                  </v-col>
+                </v-row>
+              </v-card-title>
+              <v-divider style="margin: 0px 10px 0px 10px;"></v-divider>
+            </v-row>
+          </template>
+
+          <template v-slot:footer>
+            <v-row class="mt-2" align="center" justify="center">
+              <v-menu offset-y> </v-menu>
+
+              <v-spacer></v-spacer>
+              <v-row>
+                <v-col align="center">
+                  <span class="mr-4 grey--text">
+                    Page {{ page }} of {{ numberOfPages }}
+                  </span>
+                </v-col>
+              </v-row>
+            </v-row>
+            <v-row>
+              <v-col align="center">
+                <v-btn
+                  fab
+                  dark
+                  icon
+                  color="#8BC34A"
+                  class="mr-1"
+                  @click="formerPage"
+                >
+                  <v-icon>mdi-chevron-left</v-icon>
+                </v-btn>
+                <v-btn
+                  fab
+                  dark
+                  icon
+                  color="#8BC34A"
+                  class="ml-1"
+                  @click="nextPage"
+                >
+                  <v-icon>mdi-chevron-right</v-icon>
+                </v-btn>
+              </v-col>
+            </v-row>
+          </template>
+        </v-data-iterator>
+      </v-container>
     </v-card>
   </div>
 </template>
@@ -122,20 +119,23 @@ export default {
   },
   data() {
     return {
-      vitemsPerPageArray: [4, 8, 12],
       search: "",
       filter: {},
       sortDesc: false,
       page: 1,
-      itemsPerPage: 4,
+      itemsPerPage: 5,
       sortBy: "name",
       requests: [],
     };
   },
-  mounted() {
-    this.getrequest();
+  computed: {
+    numberOfPages() {
+      return Math.ceil(this.requests.length / this.itemsPerPage);
+    },
+    filteredKeys() {
+      return this.keys.filter((key) => key !== "Name");
+    },
   },
-
   methods: {
     getrequest() {
       axios
@@ -191,6 +191,9 @@ export default {
     updateItemsPerPage(number) {
       this.itemsPerPage = number;
     },
+  },
+  mounted() {
+    this.getrequest();
   },
 };
 </script>

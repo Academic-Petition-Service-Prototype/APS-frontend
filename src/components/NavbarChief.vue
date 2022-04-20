@@ -15,7 +15,7 @@
     <!-- Navbar -->
 
     <!-- Sidebar -->
-    <v-navigation-drawer v-model="drawer" app color="#424242" width="300">
+    <v-navigation-drawer v-model="drawer" app color="#424242" width="auto">
       <!-- ส่วนตัวเลือกเมนู -->
       <v-row>
         <v-col align="center">
@@ -23,7 +23,7 @@
             class="rounded-circle mt-15"
             width="150"
             height="150"
-            src="../assets/5074620687.jpg"
+            :src="url"
           >
           </v-img>
         </v-col>
@@ -32,7 +32,7 @@
       <v-row>
         <v-col class="text-white" align="center">
           ชื่อ : {{ firstname }} {{ lastname }}<br />
-          สถานะ : <v-if role="chief">หัวหน้าหน่วยงาน</v-if>
+          สถานะ : <span v-if="(role = 'chief')">หัวหน้าหน่วยงาน</span>
         </v-col>
       </v-row>
       <v-divider></v-divider>
@@ -60,11 +60,12 @@
 
 <script>
 import AuthService from "@/services/AuthService.js";
+
 export default {
   name: "NavbarChief",
   data: () => ({
     drawer: null,
-
+    url: null,
     firstname: "",
     lastname: "",
     role: "",
@@ -86,19 +87,19 @@ export default {
         menu: "3",
         text: "คำร้องที่รอการอนุมัติ",
         route: "/ChiefCheckapprovedlist",
-        icon: "file-document",
+        icon: "file-document-multiple",
       },
       {
         menu: "4",
         text: "คำร้องที่อนุมัติแล้ว",
         route: "/Approvedlist",
-        icon: "file-document",
+        icon: "note-check",
       },
       {
         menu: "5",
         text: "คำร้องที่ไม่อนุมัติ",
         route: "/Disapprovedlist",
-        icon: "file-document",
+        icon: "note-remove",
       },
       {
         menu: "6",
@@ -110,27 +111,27 @@ export default {
         menu: "7",
         text: "การร้องขอคำร้องเพิ่มเติม",
         route: "/ChiefRequest",
-        icon: "alert-octagon",
+        icon: "dots-horizontal-circle-outline",
       },
 
       {
         menu: "8",
-        text: "ติดตามสถานะการร้องขอคำร้องเพิ่มเติม",
+        text: "ติดตามสถานะคำร้อง",
         route: "/ChiefTracking",
         icon: "marker-check",
       },
 
       {
         menu: "9",
-        text: "จัดการ Secretary",
+        text: "จัดการเลขานุการ",
         route: "/ChiefSecretaryManagement",
-        icon: "bullseye-arrow",
+        icon: "account-multiple-plus",
       },
       {
         menu: "10",
-        text: "จัดการ Officer",
+        text: "จัดการพนักงาน",
         route: "/ChiefOfficerManagement",
-        icon: "bullseye-arrow",
+        icon: "account-multiple-plus",
       },
       {
         menu: "11",
@@ -148,6 +149,7 @@ export default {
     this.lastname = this.$store.getters.getUser.l_name;
     this.role = this.$store.getters.getUser.role;
     this.lastlogin = this.$store.getters.getUser.last_login;
+    this.url = process.env.VUE_APP_CHIEF_IMG + this.$store.getters.getUser.img;
     this.secretMessage = await AuthService.getSecretContent();
     this.lastlogin = new Date(this.lastlogin);
     this.lastlogin = this.lastlogin.toLocaleDateString("th-TH", {
@@ -173,7 +175,7 @@ export default {
             icon: "success",
             title: "ขอบคุณ",
             text: "ท่านออกจากระบบสำเร็จ",
-            timer: 1500,
+            timer: 2000,
           });
           localStorage.clear();
           this.$store.dispatch("logout");

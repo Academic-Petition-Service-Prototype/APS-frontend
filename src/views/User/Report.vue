@@ -119,11 +119,12 @@ export default {
               icon: "success",
               title: "รายงานปัญหาสำเร็จ",
               text: "ส่งรายงาน " + this.report_title + " สำเร็จ ",
-              timer: 1500,
+              timer: 2000,
             });
 
             this.report_title = "";
             this.report_detail = "";
+            this.$router.push("/UserReportTracking");
           } else {
             this.$swal({
               icon: "error",

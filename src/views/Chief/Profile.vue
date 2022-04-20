@@ -4,7 +4,7 @@
     <NavbarChief />
     <v-card class="cardshow">
       <h1>
-        ข้อมูลผู้ใช้งาน
+        ข้อมูลหัวหน้าหน่วยงาน
         <v-divider></v-divider>
       </h1>
       <v-row>

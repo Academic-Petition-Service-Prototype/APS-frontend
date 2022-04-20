@@ -11,7 +11,7 @@
         เข้าสู่ระบบครั้งสุดท้ายเมื่อ {{ lastlogin }}
       </div>
       <v-btn elevation="2" color="error" @click="logout()">
-        Logout
+        ออกจากระบบ
       </v-btn>
     </v-app-bar>
     <!-- Navbar -->
@@ -25,7 +25,7 @@
             class="rounded-circle mt-15"
             width="150"
             height="150"
-            src="../assets/5074620687.jpg"
+            :src="url"
           >
           </v-img>
         </v-col>
@@ -34,7 +34,7 @@
       <v-row>
         <v-col class="text-white" align="center">
           ชื่อ : {{ firstname }} {{ lastname }}<br />
-          สถานะ : {{ role }}
+          สถานะ : <span v-if="(role = 'admin')">ผู้ดูแลระบบ</span>
         </v-col>
       </v-row>
       <v-divider></v-divider>
@@ -66,7 +66,7 @@ export default {
   name: "NavbarAdmin",
   data: () => ({
     drawer: null,
-
+    url: null,
     firstname: "",
     lastname: "",
     role: "",
@@ -74,19 +74,19 @@ export default {
     menu: [
       {
         menu: "1",
-        text: "Dashboard",
+        text: "หน้าแรก",
         route: "/AdminDashboard",
         icon: "home",
       },
       {
         menu: "2",
-        text: "ติดตามสถานะคำร้อง/ปัญหา",
+        text: "ติดตามสถานะคำร้อง",
         route: "/AdminTracking",
         icon: "marker-check",
       },
       {
         menu: "3",
-        text: "การอนุมัติ",
+        text: "การอนุมัติคำร้อง",
         route: "/AdminViewApproval",
         icon: "text-box-check",
       },
@@ -97,43 +97,55 @@ export default {
         icon: "alert-octagon",
       },
       {
-        menu: "4",
-        text: "การรายงานการร้องขอ",
+        menu: "5",
+        text: "การร้องขอคำร้องเพิ่มเติม",
         route: "/AdminViwerequestlist",
-        icon: "alert-octagon",
+        icon: "dots-horizontal-circle-outline",
       },
       {
-        menu: "5",
-        text: "จัดการ Chief",
+        menu: "6",
+        text: "จัดการหัวหน้าหน่วยงาน",
         route: "/AdminChiefManagement",
         icon: "account-star",
       },
 
       {
-        menu: "6",
-        text: "จัดการ Secretary",
+        menu: "7",
+        text: "จัดการเลขานุการ",
         route: "/AdminSecretaryManagement",
         icon: "book-account",
       },
       {
-        menu: "7",
-        text: "จัดการ Officer",
+        menu: "8",
+        text: "จัดการพนักงาน",
         route: "/AdminOfficerManagement",
         icon: "account-tie",
       },
       {
-        menu: "8",
-        text: "จัดการ User",
+        menu: "9",
+        text: "จัดการผู้ยื่นคำร้อง",
         route: "/AdminUserManagement",
         icon: "account-multiple",
       },
       {
-        menu: "9",
-        text: "จัดการ Agency",
+        menu: "10",
+        text: "จัดการหน่วยงาน",
         route: "/AdminAgencyManagement",
         icon: "home-group",
       },
-      { menu: "9", text: "โปรไฟล์", route: "/AdminProfile", icon: "account" },
+      {
+        menu: "11",
+        text: "จัดการหมวดหมู่คำร้อง",
+        route: "/AdminTagManagement",
+        icon: "format-list-bulleted-type",
+      },
+      {
+        menu: "12",
+        text: "จัดการผู้ดูแลระบบ",
+        route: "/AdminAdminManagement",
+        icon: "account-star-outline",
+      },
+      { menu: "13", text: "โปรไฟล์", route: "/AdminProfile", icon: "account" },
     ],
   }),
   async created() {
@@ -144,6 +156,7 @@ export default {
     this.lastname = this.$store.getters.getUser.l_name;
     this.role = this.$store.getters.getUser.role;
     this.lastlogin = this.$store.getters.getUser.last_login;
+    this.url = process.env.VUE_APP_ADMIN_IMG + this.$store.getters.getUser.img;
     this.secretMessage = await AuthService.getSecretContent();
     this.lastlogin = new Date(this.lastlogin);
     this.lastlogin = this.lastlogin.toLocaleDateString("th-TH", {
@@ -169,7 +182,7 @@ export default {
             icon: "success",
             title: "ขอบคุณ",
             text: "ท่านออกจากระบบสำเร็จ",
-            timer: 1500,
+            timer: 2000,
           });
           localStorage.clear();
           this.$store.dispatch("logout");

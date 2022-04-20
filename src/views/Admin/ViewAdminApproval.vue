@@ -5,107 +5,104 @@
     <v-card class="cardshow">
       <v-toolbar dark prominent color="#00B8D4">
         <h1 class="text-center pa-5">การอนุมัติคำร้อง</h1>
-      
         <v-spacer></v-spacer>
       </v-toolbar>
-   
-      <v-data-iterator
-        :items="petitionListById"
-        :items-per-page.sync="itemsPerPage"
-        :page.sync="page"
-        :search="search"
-        :sort-by="sortBy.toLowerCase()"
-        :sort-desc="sortDesc"
-        hide-default-footer
-        class="text-center"
-      >
-        <template v-slot:header>
-          <v-row>
-            <v-col>
-              <v-text-field
-                prepend-inner-icon="mdi-magnify"
-                label="ชื่อคำร้อง / ยื่นเรื่อง"
-                placeholder="ชื่อคำร้อง / ยื่นเรื่อง"
-                filled
-                rounded
-                dense
-                v-model="search"
-                class="cardshow"
-              >
-              </v-text-field>
-              <template v-if="$vuetify.breakpoint.mdAndUp"> </template>
-            </v-col>
-          </v-row>
-        </template>
 
-        <template v-slot:default="props">
-          <v-row class="text-center">
-            <v-col> ลำดับ </v-col>
-            <v-col> รายการ </v-col>
-            <v-col> ผู้ยื่นคำร้อง </v-col>
-            <v-col> วันที่ยื่นคำร้อง </v-col>
-            <v-col> สถานะ </v-col>
-          </v-row>
-
-          <v-row v-for="item in props.items" :key="item.text">
-            <v-card-title>
-              <v-row class="text-center" align="center">
-                <v-col> {{ item.submit_id }} </v-col>
-                <v-col> {{ item.form_name }} </v-col>
-                <v-col> {{ item.fullname }}</v-col>
-                <v-col> {{ item.submit_date }} </v-col>
-                <v-col>
-                  <v-btn @click="selectApprovaldetaill(item.submit_id)" color="green">
-                    <h5>
-                      ดูรายละเอียด
-                    </h5>
-                  </v-btn>
-                </v-col>
-              </v-row>
-            </v-card-title>
-            <v-divider style="margin: 0px 10px 0px 10px"></v-divider>
-          </v-row>
-        </template>
-
-        <template v-slot:footer>
-          <v-row class="mt-2" align="center" justify="center">
-            <v-menu offset-y> </v-menu>
-
-            <v-spacer></v-spacer>
+      <v-container>
+        <v-data-iterator
+          :items="petitionListById"
+          :items-per-page.sync="itemsPerPage"
+          :page.sync="page"
+          :search="search"
+          :sort-by="sortBy.toLowerCase()"
+          :sort-desc="sortDesc"
+          hide-default-footer
+          class="text-center"
+        >
+          <template v-slot:header>
             <v-row>
-              <v-col align="center">
-                <span class="mr-4 grey--text">
-                  Page {{ page }} of {{ numberOfPages }}
-                </span>
+              <v-col>
+                <v-text-field
+                  prepend-inner-icon="mdi-magnify"
+                  label="รายการคำร้อง / ผู้ยื่นคำร้อง"
+                  placeholder="รายการคำร้อง / ผู้ยื่นคำร้อง"
+                  filled
+                  rounded
+                  dense
+                  v-model="search"
+                  class="cardshow"
+                >
+                </v-text-field>
+                <template v-if="$vuetify.breakpoint.mdAndUp"></template>
               </v-col>
             </v-row>
-          </v-row>
-          <v-row>
-            <v-col align="center">
-              <v-btn
-                fab
-                dark
-                icon
-                color="#00B8D4"
-                class="mr-1"
-                @click="formerPage"
-              >
-                <v-icon>mdi-chevron-left</v-icon>
-              </v-btn>
-              <v-btn
-                fab
-                dark
-                icon
-                color="#00B8D4"
-                class="ml-1"
-                @click="nextPage"
-              >
-                <v-icon>mdi-chevron-right</v-icon>
-              </v-btn>
-            </v-col>
-          </v-row>
-        </template>
-      </v-data-iterator>
+          </template>
+
+          <template v-slot:default="props">
+            <v-row class="text-center">
+              <v-col class="h3" md="4"> รายการ </v-col>
+              <v-col class="h3" md="3"> ผู้ยื่นคำร้อง </v-col>
+              <v-col class="h3" md="3"> วันที่ยื่นคำร้อง </v-col>
+              <v-col class="h3" md="2"> การกระทำ </v-col>
+            </v-row>
+
+            <v-row v-for="(item, index) in props.items" :key="index">
+              <v-card-title>
+                <v-row class="text-center" align="center">
+                  <v-col md="4"> {{ item.form_name }} </v-col>
+                  <v-col md="3"> {{ item.fullname }}</v-col>
+                  <v-col md="3"> {{ item.submit_date }} </v-col>
+                  <v-col md="2">
+                    <v-btn disabled>
+                      ดูรายละเอียด
+                    </v-btn>
+                  </v-col>
+                </v-row>
+              </v-card-title>
+              <v-divider style="margin: 0px 10px 0px 10px"></v-divider>
+            </v-row>
+          </template>
+
+          <template v-slot:footer>
+            <v-row class="mt-2" align="center" justify="center">
+              <v-menu offset-y> </v-menu>
+
+              <v-spacer></v-spacer>
+              <v-row>
+                <v-col align="center">
+                  <span class="mr-4 grey--text">
+                    Page {{ page }} of {{ numberOfPages }}
+                  </span>
+                </v-col>
+              </v-row>
+            </v-row>
+            <v-row>
+              <v-col align="center">
+                <v-btn
+                  fab
+                  dark
+                  icon
+                  color="#00B8D4"
+                  class="mr-1"
+                  @click="formerPage"
+                >
+                  <v-icon>mdi-chevron-left</v-icon>
+                </v-btn>
+                <v-btn
+                  fab
+                  dark
+                  icon
+                  color="#00B8D4"
+                  class="ml-1"
+                  @click="nextPage"
+                >
+                  <v-icon>mdi-chevron-right</v-icon>
+                </v-btn>
+              </v-col>
+            </v-row>
+          </template>
+        </v-data-iterator>
+      </v-container>
     </v-card>
   </div>
   <!-- ส่วนจัดเเสดง -->
@@ -126,14 +123,20 @@ export default {
       filter: {},
       sortDesc: false,
       page: 1,
-      itemsPerPage: 4,
+      itemsPerPage: 5,
       sortBy: "name",
       petitionListById: [],
       specifics: [],
-      
     };
   },
-
+  computed: {
+    numberOfPages() {
+      return Math.ceil(this.petitionListById.length / this.itemsPerPage);
+    },
+    filteredKeys() {
+      return this.keys.filter((key) => key !== "Name");
+    },
+  },
   methods: {
     getpetition() {
       axios
@@ -165,16 +168,12 @@ export default {
               minute: "numeric",
             });
             // date format
-            
           }
         })
         .catch((error) => {
           // handle error
           console.log(error);
         });
-    },
-    selectApprovaldetaill(submit_id) {
-      this.$router.push("/AdminViewApproval/" + submit_id);
     },
     nextPage() {
       if (this.page + 1 <= this.numberOfPages) this.page += 1;
