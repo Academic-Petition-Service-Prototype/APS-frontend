@@ -19,7 +19,7 @@ pipeline {
         
         stage('Deploy on web server') {
             steps {
-                sh 'sudo cp -R dist/. /var/www/20.213.8.209/html/'
+                sh 'sudo cp -R dist/. /var/www/159.223.71.2/html/'
             }
         }
         
