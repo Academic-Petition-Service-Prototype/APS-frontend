@@ -115,7 +115,7 @@
                             v-for="(approval_order, n) in item.approval_order"
                           >
                             <v-stepper-content
-                              :step="n + 2"
+                              :step="n + 1"
                               :key="approval_order"
                             >
                               <v-card
