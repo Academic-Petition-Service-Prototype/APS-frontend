@@ -270,7 +270,6 @@ export default {
             this.approver_detail = JSON.parse(
               JSON.stringify(this.submition_detail)
             );
-            // console.log(typeof )
             for (
               let j = 0;
               j < this.approver_detail[i].approval_order.length;

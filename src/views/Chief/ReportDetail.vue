@@ -6,10 +6,10 @@
         <h1>รายละเอียดการรายงานปัญหา</h1>
       </v-toolbar>
       <v-form>
-        <v-container class="text-center">
+        <v-container>
           <v-row>
             <v-col cols="12">
-              <v-card outlined class="p-4 ">
+              <!-- <v-card outlined class="p-4 ">
                 <h3>หัวข้อการร้องขอคำร้อง</h3>
                 <v-divider></v-divider>
                 <p class="h5">{{ report_title }}</p>
@@ -18,6 +18,17 @@
                 <h3>รายละเอียดการร้องขอคำร้อง</h3>
                 <v-divider></v-divider>
                 <p class="h5">{{ report_detail }}</p>
+              </v-card> -->
+              <v-card outlined class="p-4 ">
+                <h3 class="text-center">{{ report_title }}</h3>
+                <v-divider></v-divider>
+                <p class="h5">{{ report_detail }}</p>
+                <p class="h6 text-right">
+                  วันและเวลาที่เกิดเหตุ
+                </p>
+                <p class="h6 text-right">
+                  {{ report_occur }}
+                </p>
               </v-card>
             </v-col>
             <v-col cols="12" class="text-center">
@@ -43,6 +54,7 @@ export default {
     return {
       report_title: "",
       report_detail: "",
+      report_occur: "",
     };
   },
   methods: {
@@ -56,6 +68,16 @@ export default {
           // handle success
           this.report_title = response.data.report_title;
           this.report_detail = response.data.report_detail;
+          this.report_occur = response.data.report_occur;
+          this.report_occur = new Date(this.report_occur);
+          this.report_occur = this.report_occur.toLocaleDateString("th-TH", {
+            hour: "numeric",
+            minute: "numeric",
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+            weekday: "long",
+          });
         })
         .catch((error) => {
           // handle error

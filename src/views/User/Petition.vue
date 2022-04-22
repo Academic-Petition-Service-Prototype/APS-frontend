@@ -176,13 +176,6 @@ export default {
         .then((response) => {
           // handle success
           this.petitionList = response.data;
-          for (let i = 0; i < this.petitionList.length; i++) {
-            console.log(this.petitionList[i].tags_id);
-          }
-
-          for (let j = 0; j < this.tag.length; j++) {
-            console.log("ฟอมเเทค" + this.tag[j]);
-          }
         })
         .catch((error) => {
           // handle error

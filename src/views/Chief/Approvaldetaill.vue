@@ -168,8 +168,6 @@
           <v-card align="center">
             <h1>รายละเอียด</h1>
             <h3>กรุณาใส่เหตุผลที่ไม่อนุมัติ</h3>
-
-            {{ getdisapproveddetail }}
             <v-textarea
               v-model="getdisapproveddetail"
               auto-grow
@@ -270,7 +268,6 @@ export default {
             this.approver_detail = JSON.parse(
               JSON.stringify(this.submition_detail)
             );
-            // console.log(typeof )
             for (
               let j = 0;
               j < this.approver_detail[i].approval_order.length;

@@ -324,7 +324,7 @@ const routes = [
   },
   {
     path: '/ChiefRequestDetail/:id',
-    name: 'ChiefRequestDetail',
+    name: 'รายละเอียดการร้องขอคำร้องเพิ่มเติม',
     component: ChiefRequestDetail 
   },
   
@@ -415,7 +415,7 @@ const routes = [
   },
   {
     path: '/AdminProfile',
-    name: 'AdminProfile',
+    name: 'โปรไฟล์',
     component: AdminProfile 
   },
   {
@@ -478,8 +478,6 @@ const routes = [
     name: 'จัดการหมวดหมู่คำร้อง',
     component: AdminTagManagement 
   },
-  
-  
   //Admin
 
   //Other
@@ -489,8 +487,6 @@ const routes = [
     component: PageNotFound
   },
   //Other
-
-  
 ]
 
 const router = new VueRouter({

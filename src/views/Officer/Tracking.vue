@@ -115,7 +115,7 @@
                             v-for="(approval_order, n) in item.approval_order"
                           >
                             <v-stepper-content
-                              :step="n + 2"
+                              :step="n + 1"
                               :key="approval_order"
                             >
                               <v-card
@@ -219,8 +219,8 @@ export default {
   methods: {
     getpetition() {
       axios
-        .post(process.env.VUE_APP_URL + "getsubmitformsbyagency", {
-          agency_id: this.$store.getters.getUser.agencies_id,
+        .post(process.env.VUE_APP_URL + "getsubmitformsbyofficer", {
+          user_id: this.$store.getters.getUser.user_id,
         })
         .then((response) => {
           //handle success

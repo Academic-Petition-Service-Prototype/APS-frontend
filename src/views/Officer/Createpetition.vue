@@ -416,10 +416,8 @@ export default {
             this.listapprover[i].approver_name[i].l_name ==
               this.newapproverText.l_name
           ) {
-            console.log("if ddf");
             ifdup = true;
           } else {
-            console.log("else");
             ifdup = false;
           }
         }
@@ -546,7 +544,6 @@ export default {
 
                 this.formHasErrors = true;
                 this.$refs[f].validate(true);
-                console.log(this.newtitleText);
               } else {
                 this.stepprocess = 2;
               }
@@ -555,7 +552,6 @@ export default {
             this.stepprocess = 2;
           }
         }
-        console.log(this.form);
       });
     },
     nextstepsecond() {
@@ -593,7 +589,6 @@ export default {
         } else {
           this.stepprocess = 4;
         }
-        console.log(this.Selectionapprover);
       });
     },
 
