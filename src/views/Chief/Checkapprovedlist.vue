@@ -219,28 +219,15 @@ export default {
                   ) {
                     this.listapproval.push(this.petitionListById[i]);
                   }
-
-                  console.log(this.petitionListById[i]);
-                  console.log("เงื่อนไข1");
-                } else if (
-                  this.petitionListById[i].approval_order[j].approver_state ==
-                  "อนุมัติแล้ว"
-                ) {
-                  console.log("เงื่อนไข2");
-                } else if (
+                }
+                else if (
                   this.petitionListById[i].approval_order[j - 1]
                     .approver_state == "อนุมัติแล้ว" &&
                   this.petitionListById[i].approval_order[j].approver_state ==
                     "ยังไม่ได้อนุมัติ"
                 ) {
-                  console.log("เงื่อนไขภ3");
-
                   this.listapproval.push(this.petitionListById[i]);
-                } else {
-                  console.log("else");
                 }
-              } else {
-                console.log("error0.0");
               }
             }
           }

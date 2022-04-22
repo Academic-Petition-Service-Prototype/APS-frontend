@@ -51,17 +51,18 @@
 
           <template v-slot:default="props">
             <v-row class="text-center">
-              <v-col class="h3" md="4"> รายการ </v-col>
-              <v-col class="h3" md="3"> เปิด/ปิดคำร้อง </v-col>
-              <v-col class="h3" md="3"> วันที่สร้าง </v-col>
-              <v-col class="h3" md="2"> การกระทำ </v-col>
+              <v-col class="h4" md="2"> รายการ </v-col>
+              <v-col class="h4" md="3"> เปิด/ปิดคำร้อง </v-col>
+              <v-col class="h4 text-left" md="2"> ผู้สร้าง </v-col>
+              <v-col class="h4" md="3"> วันที่สร้าง </v-col>
+              <v-col class="h4" md="2"> การกระทำ </v-col>
             </v-row>
 
             <v-row v-for="(item, index) in props.items" :key="index">
               <v-card-title>
-                <v-row class="text-center" align="center">
-                  <v-col md="4"> {{ item.form_name }} </v-col>
-                  <v-col md="3">
+                <v-row class="text-center">
+                  <v-col md="3"> {{ item.form_name }} </v-col>
+                  <v-col md="1">
                     <v-switch
                       inset
                       v-model="item.form_status"
@@ -75,6 +76,8 @@
                       style="margin: 0px 0px 0px 40%;"
                     ></v-switch>
                   </v-col>
+                  <v-col md="3"> {{ item.fullname }} </v-col>
+
                   <v-col md="3">
                     <p>{{ item.created_date }}</p>
                   </v-col>

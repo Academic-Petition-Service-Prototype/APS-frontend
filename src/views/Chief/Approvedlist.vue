@@ -200,9 +200,6 @@ export default {
               minute: "numeric",
             });
             // date format
-
-            console.log(this.petitionListById[i].form_name);
-            console.log(this.stong);
             for (
               let j = 0;
               j < this.petitionListById[i].approval_order.length;
@@ -219,11 +216,7 @@ export default {
                     "อนุมัติแล้ว"
                 ) {
                   this.listapproval.push(this.petitionListById[i]);
-                } else {
-                  //   h
                 }
-              } else {
-                console.log("error0.0");
               }
             }
           }

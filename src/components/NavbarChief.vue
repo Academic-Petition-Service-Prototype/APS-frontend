@@ -5,10 +5,14 @@
       <v-app-bar-nav-icon @click="drawer = !drawer">
         <v-icon color="#FFFFFF"> mdi-menu </v-icon>
       </v-app-bar-nav-icon>
-      <div class="text-white title ml-4">{{ $route.name }}</div>
+      <div class="text-white title ml-4">
+        <span>{{ $route.name }}</span>
+      </div>
       <v-spacer></v-spacer>
       <div class="text-white subtitle-1 mr-4">
-        เข้าสู่ระบบครั้งสุดท้ายเมื่อ {{ lastlogin }}
+        <span v-if="this.$store.getters.getUser.last_login != null"
+          >เข้าสู่ระบบครั้งสุดท้ายเมื่อ {{ lastlogin }}</span
+        >
       </div>
       <v-btn elevation="2" color="error" @click="logout()"> ออกจากระบบ </v-btn>
     </v-app-bar>

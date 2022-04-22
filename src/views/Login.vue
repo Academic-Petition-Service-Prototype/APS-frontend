@@ -17,7 +17,8 @@
                 <v-col>
                   <v-text-field
                     v-model="email"
-                    label="Email"
+                    label="อีเมล"
+                    placeholder="อีเมล"
                     type="email"
                     class="textfield-margin"
                     :rules="email_rules"
@@ -42,7 +43,8 @@
                   <v-text-field
                     v-model="password"
                     :rules="password_rules"
-                    label="Password"
+                    label="รหัสผ่าน"
+                    placeholder="รหัสผ่าน"
                     type="password"
                     class="textfield-margin"
                     required
@@ -71,65 +73,11 @@
                   </v-btn>
                 </v-col>
               </v-row>
-
-              <v-row>
-                <v-col align="center">
-                  ท่านลืมรหัสผ่านหรือเปล่า?
-
-                  <v-btn
-                    text
-                    color="error"
-                    @click="dialogforgot = !dialogforgot"
-                  >
-                    ลืมรหัสผ่าน
-                  </v-btn>
-                </v-col>
-              </v-row>
             </v-form>
           </v-col>
         </v-row>
       </v-col>
     </v-row>
-
-    <!-- dialog ลืมรหัสผ่าน -->
-
-    <v-dialog v-model="dialogforgot" persistent width="500">
-      <v-card align="center">
-        <br />
-        <h1 class="h1-forgot">ลืมรหัสผ่าน</h1>
-        <v-img width="500px" src="../assets/iforgotpass.png"></v-img>
-
-        <v-text-field
-          v-model="forgotEmail"
-          label="ใส่ E-mail ที่ท่านลงทะเบียน"
-          type="E-mail"
-          class="email-forgot-margin"
-        >
-          <template v-slot:prepend>
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on }">
-                <v-icon v-on="on"> mdi-lock </v-icon>
-              </template>
-              ใส่ E-mail ที่ท่านลงทะเบียน
-            </v-tooltip>
-          </template>
-        </v-text-field>
-
-        <v-divider></v-divider>
-        <v-btn color="green darken-1" text @click="submit">
-          ตกลง
-        </v-btn>
-        <v-btn color="red darken-1" text @click="dialogforgot = false">
-          ฉันพอเริ่มจำรหัสผ่านได้เเล้ว!
-        </v-btn>
-      </v-card>
-    </v-dialog>
-
-    <v-snackbar v-model="snackbar" :timeout="timeout" color="#2E7D32">
-      ส่งลิงค์เเก้ไขรหัสผ่านไปยังที่ E-mailที่ท่านเเจ้งมาเเล้ว ☺
-    </v-snackbar>
-
-    <!-- dialog ลืมรหัสผ่าน -->
   </v-main>
 </template>
 
@@ -141,7 +89,7 @@ export default {
   data() {
     return {
       email: "",
-      password: "123456",
+      password: "",
       msg: "",
       forgotEmail: "",
       snackbar: false,

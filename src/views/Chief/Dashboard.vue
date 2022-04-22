@@ -8,17 +8,17 @@
         <v-spacer></v-spacer>
       </v-toolbar>
 
-            <!-- ตอนเช้า -->
+      <!-- ตอนเช้า -->
       <v-card
         height="200px"
         v-if="
           d == '5' ||
-          d == '6' ||
-          d == '7' ||
-          d == '8' ||
-          d == '9' ||
-          d == '10' ||
-          d == '11'
+            d == '6' ||
+            d == '7' ||
+            d == '8' ||
+            d == '9' ||
+            d == '10' ||
+            d == '11'
         "
       >
         <v-img
@@ -116,15 +116,15 @@
         height="200px"
         v-if="
           d == '19' ||
-          d == '20' ||
-          d == '21' ||
-          d == '22' ||
-          d == '23' ||
-          d == '0' ||
-          d == '1' ||
-          d == '2' ||
-          d == '3' ||
-          d == '4'
+            d == '20' ||
+            d == '21' ||
+            d == '22' ||
+            d == '23' ||
+            d == '0' ||
+            d == '1' ||
+            d == '2' ||
+            d == '3' ||
+            d == '4'
         "
       >
         <v-img
@@ -201,7 +201,7 @@
       </v-row>
 
       <v-row>
-      <v-col>
+        <v-col>
           <!-- รายงานเอกสารที่ทำไป -->
 
           <b-card
@@ -235,29 +235,24 @@
           <!-- รายงานเอกสารที่ทำไป -->
         </v-col>
       </v-row>
-
-
-
     </v-card>
   </div>
   <!-- ส่วนจัดเเสดง -->
 </template>
 
 <script>
-
 import NavbarChief from "../../components/NavbarChief.vue";
 import axios from "axios";
 export default {
   name: "ChiefDashboard",
   components: {
     NavbarChief,
-    
   },
   data() {
     return {
       petitionList: [],
-      petitionListById:[],
-      petitionListByIdcheck:[],
+      petitionListById: [],
+      petitionListByIdcheck: [],
       listapproval: [],
       reports: [],
       reportsunread: [],
@@ -275,11 +270,9 @@ export default {
           role: this.$store.getters.getUser.role,
         },
       ],
-     
-      
     };
   },
-  methods:{
+  methods: {
     getpetition() {
       axios
         .post(process.env.VUE_APP_URL + "getforms", {
@@ -306,8 +299,7 @@ export default {
               minute: "numeric",
             });
             // date format
-            this.countpetitionList = this.petitionList.length
-            
+            this.countpetitionList = this.petitionList.length;
           }
         })
         .catch((error) => {
@@ -348,7 +340,7 @@ export default {
               minute: "numeric",
             });
             // date format
-            this.countpetitionListById = this.petitionListById.length
+            this.countpetitionListById = this.petitionListById.length;
           }
         })
         .catch((error) => {
@@ -369,7 +361,9 @@ export default {
           this.petitionListByIdcheck = response.data;
 
           for (let i = 0; i < this.petitionListByIdcheck.length; i++) {
-            this.tmp = JSON.stringify(this.petitionListByIdcheck[i].approval_order);
+            this.tmp = JSON.stringify(
+              this.petitionListByIdcheck[i].approval_order
+            );
             this.tmp = this.tmp.replace(/\\/g, "");
             this.specifics = this.tmp.replace(/\\/g, "");
 
@@ -381,7 +375,9 @@ export default {
             this.petitionListByIdcheck[i].submit_date = new Date(
               this.petitionListByIdcheck[i].submit_date
             );
-            this.petitionListByIdcheck[i].submit_date = this.petitionListByIdcheck[
+            this.petitionListByIdcheck[
+              i
+            ].submit_date = this.petitionListByIdcheck[
               i
             ].submit_date.toLocaleDateString("th-TH", {
               year: "numeric",
@@ -411,33 +407,20 @@ export default {
                     .user_id == this.$store.getters.getUser.user_id
                 ) {
                   if (
-                    this.petitionListByIdcheck[i].approval_order[j].approver_state ==
-                    "ยังไม่ได้อนุมัติ"
+                    this.petitionListByIdcheck[i].approval_order[j]
+                      .approver_state == "ยังไม่ได้อนุมัติ"
                   ) {
                     this.listapproval.push(this.petitionListByIdcheck[i]);
                   }
-
-                  console.log(this.petitionListByIdcheck[i]);
-                  console.log("เงื่อนไข1");
-                } else if (
-                  this.petitionListByIdcheck[i].approval_order[j].approver_state ==
-                  "อนุมัติแล้ว"
-                ) {
-                  console.log("เงื่อนไข2");
-                } else if (
+                }
+                else if (
                   this.petitionListByIdcheck[i].approval_order[j - 1]
                     .approver_state == "อนุมัติแล้ว" &&
-                  this.petitionListByIdcheck[i].approval_order[j].approver_state ==
-                    "ยังไม่ได้อนุมัติ"
+                  this.petitionListByIdcheck[i].approval_order[j]
+                    .approver_state == "ยังไม่ได้อนุมัติ"
                 ) {
-                  console.log("เงื่อนไขภ3");
-
                   this.listapproval.push(this.petitionListByIdcheck[i]);
-                } else {
-                  console.log("else");
                 }
-              } else {
-                console.log("error0.0");
               }
             }
           }
@@ -473,14 +456,12 @@ export default {
             });
             // date format
 
-
-            if (this.reports[i].report_state == 'unread') {
-                this.reportsunread.push(this.reports[i]);
+            if (this.reports[i].report_state == "unread") {
+              this.reportsunread.push(this.reports[i]);
             } else {
               // อิอิ
             }
           }
-          
         })
         .catch((error) => {
           // handle error
@@ -513,8 +494,8 @@ export default {
             });
             // date format
 
-            if (this.requests[i].request_state == 'unread') {
-                this.requestsunread.push(this.requests[i]);
+            if (this.requests[i].request_state == "unread") {
+              this.requestsunread.push(this.requests[i]);
             } else {
               // อิอิ
             }
@@ -525,7 +506,6 @@ export default {
           console.log(error);
         });
     },
-
   },
   mounted() {
     this.getpetition();
