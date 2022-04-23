@@ -11,115 +11,73 @@
 
           <v-col class="bg-color-logo-formslogin">
             <h1 class="margin-login">เข้าสู่ระบบ</h1>
+            <v-form v-model="isValid" @submit.prevent="login()">
+              <!-- ช่อง Email -->
+              <v-row>
+                <v-col>
+                  <v-text-field
+                    v-model="email"
+                    label="อีเมล"
+                    placeholder="อีเมล"
+                    type="email"
+                    class="textfield-margin"
+                    :rules="email_rules"
+                    required
+                  >
+                    <template v-slot:prepend>
+                      <v-tooltip bottom>
+                        <template v-slot:activator="{ on }">
+                          <v-icon v-on="on"> mdi-account </v-icon>
+                        </template>
+                        ใส่อีเมลล์
+                      </v-tooltip>
+                    </template>
+                  </v-text-field>
+                </v-col>
+              </v-row>
+              <!-- ช่อง Email -->
 
-            <!-- ช่อง Email -->
-            <v-row>
-              <v-col>
-                <v-text-field
-                  v-model="email"
-                  label="Email"
-                  type="email"
-                  class="textfield-margin"
-                  :rules="rules.email"
-                  required
-                >
-                  <template v-slot:prepend>
-                    <v-tooltip bottom>
-                      <template v-slot:activator="{ on }">
-                        <v-icon v-on="on"> mdi-account </v-icon>
-                      </template>
-                      ใส่รหัสผ่านตามที่หน่วยงานของท่านได้เเจ้งไว้!
-                    </v-tooltip>
-                  </template>
-                </v-text-field>
-              </v-col>
-            </v-row>
-            <!-- ช่อง U-id -->
-
-            <!-- ช่อง pass -->
-            <v-row>
-              <v-col>
-                <v-text-field
-                  v-model="password"
-                  :rules="rules.email"
-                  label="Password"
-                  type="password"
-                  class="textfield-margin"
-                  required
-                >
-                  <template v-slot:prepend>
-                    <v-tooltip bottom>
-                      <template v-slot:activator="{ on }">
-                        <v-icon v-on="on"> mdi-lock </v-icon>
-                      </template>
-                      ใส่รหัสผ่าน
-                    </v-tooltip>
-                  </template>
-                </v-text-field>
-              </v-col>
-            </v-row>
-            <!-- ช่อง pass -->
-            <v-row>
-              <v-col align="center">
-                <v-btn color="primary" @click="login" width="300" right dark>
-                  เข้าสู่ระบบ
-                </v-btn>
-              </v-col>
-            </v-row>
-
-            <v-row>
-              <v-col align="center">
-                ท่านลืมรหัสผ่านหรือเปล่า?
-
-                <v-btn text color="error" @click="dialogforgot = !dialogforgot">
-                  ลืมรหัสผ่าน
-                </v-btn>
-              </v-col>
-            </v-row>
+              <!-- ช่อง password -->
+              <v-row>
+                <v-col>
+                  <v-text-field
+                    v-model="password"
+                    :rules="password_rules"
+                    label="รหัสผ่าน"
+                    placeholder="รหัสผ่าน"
+                    type="password"
+                    class="textfield-margin"
+                    required
+                  >
+                    <template v-slot:prepend>
+                      <v-tooltip bottom>
+                        <template v-slot:activator="{ on }">
+                          <v-icon v-on="on"> mdi-lock </v-icon>
+                        </template>
+                        ใส่รหัสผ่าน
+                      </v-tooltip>
+                    </template>
+                  </v-text-field>
+                </v-col>
+              </v-row>
+              <!-- ช่อง password -->
+              <v-row>
+                <v-col align="center">
+                  <v-btn
+                    color="primary"
+                    type="submit"
+                    :disabled="!isValid"
+                    width="300"
+                  >
+                    เข้าสู่ระบบ
+                  </v-btn>
+                </v-col>
+              </v-row>
+            </v-form>
           </v-col>
         </v-row>
       </v-col>
     </v-row>
-
-    <!-- dialog ลืมรหัสผ่าน -->
-
-    <v-dialog v-model="dialogforgot" persistent width="500">
-      <v-card align="center">
-        <br />
-        <h1 class="h1-forgot">ลืมรหัสผ่าน</h1>
-        <v-img width="500px" src="../assets/iforgotpass.png"></v-img>
-
-        <v-text-field
-          v-model="forgotEmail"
-          label="ใส่ E-mail ที่ท่านลงทะเบียน"
-          type="E-mail"
-          class="email-forgot-margin"
-        >
-          <template v-slot:prepend>
-            <v-tooltip bottom>
-              <template v-slot:activator="{ on }">
-                <v-icon v-on="on"> mdi-lock </v-icon>
-              </template>
-              ใส่ E-mail ที่ท่านลงทะเบียน
-            </v-tooltip>
-          </template>
-        </v-text-field>
-
-        <v-divider></v-divider>
-        <v-btn color="green darken-1" text @click="submit">
-          ตกลง
-        </v-btn>
-        <v-btn color="red darken-1" text @click="dialogforgot = false">
-          ฉันพอเริ่มจำรหัสผ่านได้เเล้ว!
-        </v-btn>
-      </v-card>
-    </v-dialog>
-
-    <v-snackbar v-model="snackbar" :timeout="timeout" color="#2E7D32">
-      ส่งลิงค์เเก้ไขรหัสผ่านไปยังที่ E-mailที่ท่านเเจ้งมาเเล้ว ☺
-    </v-snackbar>
-
-    <!-- dialog ลืมรหัสผ่าน -->
   </v-main>
 </template>
 
@@ -137,9 +95,16 @@ export default {
       snackbar: false,
       dialogforgot: false,
       timeout: 2000,
-      rules: {
-        email: [(val) => (val || "").length > 0 || "This field is required"],
-      },
+      isValid: true,
+      // rules
+      email_rules: [
+        (value) => !!value || "จำเป็น",
+        (value) => {
+          const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          return pattern.test(value) || "รูปแบบอีเมลผิด";
+        },
+      ],
+      password_rules: [(value) => !!value || "จำเป็น"],
     };
   },
   components: {
@@ -154,7 +119,11 @@ export default {
         };
         const response = await AuthService.login(credentials);
         this.msg = response.message;
-        alert(this.msg);
+        this.$swal({
+          icon: "success",
+          title: "เข้าสู่ระบบสำเร็จ",
+          timer: 2000,
+        });
         const token = response.token;
         const user = response.user;
         this.$store.dispatch("login", { token, user });
@@ -172,7 +141,12 @@ export default {
         localStorage.setItem("token", token);
         localStorage.setItem("UserData", JSON.stringify(user));
       } catch (error) {
-        alert("Login failed");
+        this.$swal({
+          icon: "error",
+          title: "เข้าสู่ระบบไม่สำเร็จ",
+          text: "เกิดข้อผิดพลาดในการเข้าสู่ระบบ",
+          timer: 2000,
+        });
         this.msg = error.response.data.message;
       }
     },

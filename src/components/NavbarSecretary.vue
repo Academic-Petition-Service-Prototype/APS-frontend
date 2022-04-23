@@ -1,19 +1,23 @@
 <template>
   <div id="NavbarSecretary">
     <!-- Navbar -->
-    <v-app-bar color="#FFA726">
+    <v-app-bar color="#8BC34A">
       <v-app-bar-nav-icon @click="drawer = !drawer">
         <v-icon color="#FFFFFF">
           mdi-menu
         </v-icon>
       </v-app-bar-nav-icon>
-      <v-btn icon disabled>
-        <v-img height="160px" width="160px" src="../assets/logo.png"> </v-img>
-      </v-btn>
+      <div class="text-white title ml-4">
+        <span>{{ $route.name }}</span>
+      </div>
       <v-spacer></v-spacer>
-      <div class="text-white subtitle-1 mr-4">Last login: {{ lastlogin }}</div>
-      <v-btn elevation="2" color="error" @click="slideexit = !slideexit">
-        Logout
+      <div class="text-white subtitle-1 mr-4">
+        <span v-if="this.$store.getters.getUser.last_login != null"
+          >เข้าสู่ระบบครั้งสุดท้ายเมื่อ {{ lastlogin }}</span
+        >
+      </div>
+      <v-btn elevation="2" color="error" @click="logout()">
+        ออกจากระบบ
       </v-btn>
     </v-app-bar>
     <!-- Navbar -->
@@ -23,22 +27,20 @@
       <!-- ส่วนตัวเลือกเมนู -->
       <v-row>
         <v-col align="center">
-          <v-btn fab width="auto" height="auto" class="mt-15">
-            <v-img
-              class="rounded-circle"
-              width="150"
-              height="150"
-              src="../assets/5074620687.jpg"
-            >
-            </v-img>
-          </v-btn>
+          <v-img
+            class="rounded-circle mt-15"
+            width="150"
+            height="150"
+            :src="url"
+          >
+          </v-img>
         </v-col>
       </v-row>
 
       <v-row>
         <v-col class="text-white" align="center">
           ชื่อ : {{ firstname }} {{ lastname }}<br />
-          สถานะ : {{ role }}
+          สถานะ : <span v-if="(role = 'secretary')">เลขานุการ</span>
         </v-col>
       </v-row>
       <v-divider></v-divider>
@@ -61,28 +63,6 @@
       <!-- ส่วนตัวเลือกเมนู -->
     </v-navigation-drawer>
     <!-- Sidebar -->
-
-    <!-- Dialog confirm -->
-    <v-dialog v-model="slideexit" width="700">
-      <v-card align="center" class="pa-10">
-        <h1>ออกจากระบบ</h1>
-        <v-divider></v-divider>
-        <h3>กด "ตกลง" เพื่อยืนยันการออกจากระบบ</h3>
-        <v-divider></v-divider>
-        <v-btn color="green darken-1" class="text-white mr-5" @click="logout">
-          ตกลง
-        </v-btn>
-
-        <v-btn
-          color="red darken-1"
-          class="text-white"
-          @click="slideexit = false"
-        >
-          ยกเลิก
-        </v-btn>
-      </v-card>
-    </v-dialog>
-    <!-- Dialog confirm -->
   </div>
 </template>
 
@@ -92,7 +72,7 @@ export default {
   name: "NavbarSecretary",
   data: () => ({
     drawer: null,
-    slideexit: false,
+    url: null,
     firstname: "",
     lastname: "",
     role: "",
@@ -100,13 +80,13 @@ export default {
     menu: [
       {
         menu: "1",
-        text: "Dashboard",
+        text: "หน้าแรก",
         route: "/SecretaryDashboard",
         icon: "home",
       },
       {
         menu: "2",
-        text: "ติดตามสถานะคำร้อง/ปัญหา",
+        text: "ติดตามสถานะคำร้อง",
         route: "/SecretaryTracking",
         icon: "marker-check",
       },
@@ -124,14 +104,16 @@ export default {
       },
       {
         menu: "5",
+        text: "การร้องขอคำร้องเพิ่มเติม",
+        route: "/Secretaryrequestlist",
+        icon: "dots-horizontal-circle-outline",
+      },
+      {
+        menu: "6",
         text: "โปรไฟล์",
         route: "/SecretaryProfile",
         icon: "account",
       },
-    ],
-    menuseting: [
-      { menu: "1", text: "เกี่ยวกับ", route: "/aboutme" },
-      { menu: "2", text: "ตั้งค่า", route: "/seting" },
     ],
   }),
   async created() {
@@ -142,13 +124,40 @@ export default {
     this.lastname = this.$store.getters.getUser.l_name;
     this.role = this.$store.getters.getUser.role;
     this.lastlogin = this.$store.getters.getUser.last_login;
+    this.url =
+      process.env.VUE_APP_SECRETARY_IMG + this.$store.getters.getUser.img;
     this.secretMessage = await AuthService.getSecretContent();
+    this.lastlogin = new Date(this.lastlogin);
+    this.lastlogin = this.lastlogin.toLocaleDateString("th-TH", {
+      year: "numeric",
+      month: "numeric",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+    });
   },
   methods: {
     logout() {
-      localStorage.clear();
-      this.$store.dispatch("logout");
-      this.$router.push("/login");
+      this.$swal({
+        title: "ท่านกำลังจะออกจากระบบ?",
+        text: "ท่านเเน่ใจว่าต้องการออกจากระบบ!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "ตกลง",
+        cancelButtonText: "ยกเลิก",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$swal({
+            icon: "success",
+            title: "ขอบคุณ",
+            text: "ท่านออกจากระบบสำเร็จ",
+            timer: 2000,
+          });
+          localStorage.clear();
+          this.$store.dispatch("logout");
+          this.$router.push("/login");
+        }
+      });
     },
   },
 };

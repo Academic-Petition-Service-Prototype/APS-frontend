@@ -5,19 +5,14 @@
 
     <v-card class="cardshow">
       <h1>
-        ข้อมูลผู้ใช้งาน
+        ข้อมูลผู้ยื่นคำร้อง
         <v-divider></v-divider>
       </h1>
 
       <v-row>
         <v-col align="center">
           <v-btn fab width="auto" height="auto" class="">
-            <v-img
-              class="rounded-circle"
-              width="150"
-              height="150"
-              src="../../assets/5074620687.jpg"
-            >
+            <v-img class="rounded-circle" width="150" height="150" :src="url">
             </v-img>
           </v-btn>
         </v-col>
@@ -75,7 +70,7 @@
           <v-row>
             <v-col>
               <v-text-field
-                v-model="profile.num_tel"
+                v-model="profile.tel_num"
                 label="เบอร์โทร"
                 readonly
               ></v-text-field>
@@ -109,7 +104,7 @@ export default {
   },
   data() {
     return {
-      detail: "",
+      url: process.env.VUE_APP_USER_IMG + this.$store.getters.getUser.img,
       profile: [
         {
           f_name: this.$store.getters.getUser.f_name,

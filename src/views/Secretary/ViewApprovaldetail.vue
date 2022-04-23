@@ -1,12 +1,10 @@
 <template>
   <div id="SecretaryApprovaldetail">
     <NavbarSecretary />
-    
-
     <v-card class="cardshow">
       <v-row>
         <v-col>
-          <v-btn class="ma-2" outlined color="error" @click="back">
+          <v-btn class="ma-2" outlined color="secondary" @click="back">
             ย้อนกลับ
           </v-btn>
         </v-col>
@@ -110,12 +108,43 @@
                   v-for="(approver_display, index) in approver_display"
                   :key="index"
                 >
-                  <h4>{{ approver_display.approver_name.f_name }} {{ approver_display.approver_name.l_name }}</h4>
+                  <h4>
+                    {{ approver_display.approver_name.f_name }}
+                    {{ approver_display.approver_name.l_name }}
+                  </h4>
 
                   <v-col align="center">
                     <b-card class="text-center">
                       <div>
-                        {{ approver_display.approver_state }}
+                        <!-- {{ approver_display.approver_state }} -->
+                        <v-btn
+                          v-if="
+                            approver_display.approver_state ==
+                              'ยังไม่ได้อนุมัติ'
+                          "
+                          color="warning"
+                          block
+                        >
+                          ยังไม่ได้อนุมัติ
+                        </v-btn>
+
+                        <v-btn
+                          v-if="
+                            approver_display.approver_state == 'อนุมัติแล้ว'
+                          "
+                          color="green"
+                          block
+                        >
+                          อนุมัติแล้ว
+                        </v-btn>
+
+                        <v-btn
+                          v-if="approver_display.approver_state == 'ไม่อนุมัติ'"
+                          color="error"
+                          block
+                        >
+                          ไม่อนุมัติ
+                        </v-btn>
                       </div>
                     </b-card>
                   </v-col>
@@ -190,9 +219,6 @@ export default {
             this.titlespecifics = temp;
           }
 
-
-          
-
           // approval_order
           this.submition_detail = response.data;
           for (let i = 0; i < this.submition_detail.length; i++) {
@@ -218,7 +244,19 @@ export default {
 </script>
 
 <style scoped>
-.cardmargin {
+.bg-color {
+  background: #f0f0f0;
+  height: 100%;
+}
+
+.cardshow {
   margin: 2%;
+}
+h1 {
+  font-size: 50px;
+  padding: 2% 0% 0% 0%;
+}
+p {
+  font-size: 20px;
 }
 </style>

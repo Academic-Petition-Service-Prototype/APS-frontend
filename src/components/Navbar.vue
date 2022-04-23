@@ -10,7 +10,7 @@
       >
         <v-list>
           <v-list-item
-            v-for="item in menuItems"
+            v-for="item in CheckSession"
             :key="item.title"
             :to="item.path"
           >
@@ -44,11 +44,12 @@
           </v-btn>
         </div>
       </v-toolbar-title>
+
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-xs-only">
         <v-btn
           plain
-          v-for="item in menuItems"
+          v-for="item in CheckSession"
           :key="item.title"
           :to="item.path"
         >
@@ -66,12 +67,143 @@ export default {
   data() {
     return {
       sidebar: false,
-      menuItems: [
-        { title: "Home", path: "/", icon: "mdi-home" },
-        { title: "About", path: "/About", icon: "mdi-information-outline" },
-        { title: "Log In", path: "/Login", icon: "mdi-login" },
-      ],
+      // menuItems: [
+      //   { title: "Home", path: "/", icon: "mdi-home" },
+      //   { title: "About", path: "/About", icon: "mdi-information-outline" },
+      //   { title: "Log In", path: "/Login", icon: "mdi-login" },
+      // ],
     };
+  },
+  methods: {
+    // CheckSession() {
+    //   if (window.localStorage.getItem("UserData") != null) {
+    //     if (this.$store.getters.getUser.role == "admin") {
+    //       this.menuItems = [
+    //         { title: "Home", path: "/", icon: "mdi-home" },
+    //         { title: "About", path: "/About", icon: "mdi-information-outline" },
+    //         {
+    //           title: "Dashboard",
+    //           path: "/AdminDashboard",
+    //           icon: "mdi-login",
+    //         },
+    //       ];
+    //     } else if (this.$store.getters.getUser.role == "user") {
+    //       this.menuItems = [
+    //         { title: "Home", path: "/", icon: "mdi-home" },
+    //         { title: "About", path: "/About", icon: "mdi-information-outline" },
+    //         {
+    //           title: "Dashboard",
+    //           path: "/UserDashboard",
+    //           icon: "mdi-login",
+    //         },
+    //       ];
+    //     } else if (this.$store.getters.getUser.role == "officer") {
+    //       this.menuItems = [
+    //         { title: "Home", path: "/", icon: "mdi-home" },
+    //         { title: "About", path: "/About", icon: "mdi-information-outline" },
+    //         {
+    //           title: "Dashboard",
+    //           path: "/OfficerDashboard",
+    //           icon: "mdi-login",
+    //         },
+    //       ];
+    //     } else if (this.$store.getters.getUser.role == "chief") {
+    //       this.menuItems = [
+    //         { title: "Home", path: "/", icon: "mdi-home" },
+    //         { title: "About", path: "/About", icon: "mdi-information-outline" },
+    //         {
+    //           title: "Dashboard",
+    //           path: "/ChiefDashboard",
+    //           icon: "mdi-login",
+    //         },
+    //       ];
+    //     } else if (this.$store.getters.getUser.role == "secretary") {
+    //       this.menuItems = [
+    //         { title: "Home", path: "/", icon: "mdi-home" },
+    //         { title: "About", path: "/About", icon: "mdi-information-outline" },
+    //         {
+    //           title: "Dashboard",
+    //           path: "/SecretaryDashboard",
+    //           icon: "mdi-login",
+    //         },
+    //       ];
+    //     }
+    //   }
+    // },
+  },
+
+  // mounted() {
+  //   this.CheckSession();
+  // },
+  computed: {
+    CheckSession() {
+      if (window.localStorage.getItem("UserData") != null) {
+        if (this.$store.getters.getUser.role == "admin") {
+          var menuItems = [
+            { title: "Home", path: "/", icon: "mdi-home" },
+            { title: "About", path: "/About", icon: "mdi-information-outline" },
+            {
+              title: "Dashboard",
+              path: "/AdminDashboard",
+              icon: "mdi-login",
+            },
+          ];
+        } else if (this.$store.getters.getUser.role == "user") {
+          menuItems = [
+            { title: "Home", path: "/", icon: "mdi-home" },
+            { title: "About", path: "/About", icon: "mdi-information-outline" },
+            {
+              title: "Dashboard",
+              path: "/UserDashboard",
+              icon: "mdi-login",
+            },
+          ];
+        } else if (this.$store.getters.getUser.role == "officer") {
+          menuItems = [
+            { title: "Home", path: "/", icon: "mdi-home" },
+            { title: "About", path: "/About", icon: "mdi-information-outline" },
+            {
+              title: "Dashboard",
+              path: "/OfficerDashboard",
+              icon: "mdi-login",
+            },
+          ];
+        } else if (this.$store.getters.getUser.role == "chief") {
+          menuItems = [
+            { title: "Home", path: "/", icon: "mdi-home" },
+            { title: "About", path: "/About", icon: "mdi-information-outline" },
+            {
+              title: "Dashboard",
+              path: "/ChiefDashboard",
+              icon: "mdi-login",
+            },
+          ];
+        } else if (this.$store.getters.getUser.role == "secretary") {
+          menuItems = [
+            { title: "Home", path: "/", icon: "mdi-home" },
+            { title: "About", path: "/About", icon: "mdi-information-outline" },
+            {
+              title: "Dashboard",
+              path: "/SecretaryDashboard",
+              icon: "mdi-login",
+            },
+          ];
+        } else {
+          menuItems = [
+            { title: "Home", path: "/", icon: "mdi-home" },
+            { title: "About", path: "/About", icon: "mdi-information-outline" },
+            { title: "Log In", path: "/Login", icon: "mdi-login" },
+          ];
+        }
+      } else {
+        menuItems = [
+          { title: "Home", path: "/", icon: "mdi-home" },
+          { title: "About", path: "/About", icon: "mdi-information-outline" },
+          { title: "Log In", path: "/Login", icon: "mdi-login" },
+        ];
+      }
+      return menuItems;
+    },
   },
 };
 </script>

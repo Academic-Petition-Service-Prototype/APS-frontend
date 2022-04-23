@@ -6,7 +6,6 @@
         <h1 class="text-center pa-5">รายงานปัญหาไม่ระบุตัวตน</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
-
       <v-form>
         <v-container>
           <v-row>
@@ -17,6 +16,47 @@
                 v-model="report_title"
               ></v-text-field>
             </v-col>
+            <v-col>
+              <div>
+                <label for="example-datepicker">กรุณาเลือกวันเกิดเหตุ</label>
+                <b-form-datepicker
+                  id="example-datepicker"
+                  v-model="date"
+                  class="mb-2"
+                ></b-form-datepicker>
+              </div>
+            </v-col>
+            <v-col>
+              <v-menu
+                ref="menu"
+                v-model="menu2"
+                :close-on-content-click="false"
+                :nudge-right="40"
+                :return-value.sync="time"
+                transition="scale-transition"
+                offset-y
+                max-width="290px"
+                min-width="290px"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-text-field
+                    v-model="time"
+                    label="กรุณาเลือกเวลาเกิดเหตุ"
+                    prepend-icon="mdi-clock-time-four-outline"
+                    readonly
+                    v-bind="attrs"
+                    v-on="on"
+                  ></v-text-field>
+                </template>
+                <v-time-picker
+                  v-if="menu2"
+                  v-model="time"
+                  full-width
+                  @click:minute="$refs.menu.save(time)"
+                ></v-time-picker>
+              </v-menu>
+            </v-col>
+
             <v-col cols="12">
               <v-textarea
                 solo
@@ -34,11 +74,6 @@
         </v-container>
       </v-form>
     </v-card>
-    <!-- ป้ายเเจ้งเตือน -->
-    <v-snackbar v-model="snackbar" :timeout="timeout" :color="colorsnackbar">
-      {{ textsnackbar }}
-    </v-snackbar>
-    <!-- ป้ายเเจ้งเตือน -->
   </div>
 </template>
 
@@ -54,10 +89,12 @@ export default {
     return {
       report_title: "",
       report_detail: "",
-      colorsnackbar: "",
-      textsnackbar: "",
-      snackbar: false,
       timeout: 2000,
+      time: "",
+      date: "",
+      menu2: false,
+      menu1: false,
+      dateFormatted: null,
     };
   },
   methods: {
@@ -67,25 +104,51 @@ export default {
           users_id: this.$store.getters.getUser.user_id,
           report_title: this.report_title,
           report_detail: this.report_detail,
+          report_occur: this.date + " " + this.time,
         })
         .then((response) => {
           if (response.data == "Please fill your information") {
-            this.textsnackbar = "กรุณากรอกข้อมูลให้ครบ";
-            this.colorsnackbar = "#DB4437";
-            this.snackbar = true;
+            this.$swal({
+              icon: "warning",
+              title: "เกิดข้อผิดพลาดในการส่งรายงาน",
+              text: "กรุณากรอกข้อมูลให้ครบ",
+              timer: 2000,
+            });
           } else if (response.data == "Sent report successful") {
-            this.textsnackbar = "รายงานปัญหาสำเร็จ";
-            this.colorsnackbar = "#2E7D32";
-            this.snackbar = true;
+            this.$swal({
+              icon: "success",
+              title: "รายงานปัญหาสำเร็จ",
+              text: "ส่งรายงาน " + this.report_title + " สำเร็จ ",
+              timer: 2000,
+            });
+
             this.report_title = "";
             this.report_detail = "";
+            this.$router.push("/UserReportTracking");
           } else {
-            alert("เกิดข้อผิดพลาดในการส่งรายงาน");
+            this.$swal({
+              icon: "error",
+              title: "เกิดข้อผิดพลาดในการส่งรายงาน",
+              text: "การส่งรายงานเกิดความผิดพลาด",
+              timer: 2000,
+            });
           }
         })
         .catch((error) => {
           console.log(error);
         });
+    },
+    formatDate(date) {
+      if (!date) return null;
+
+      const [year, month, day] = date.split("-");
+      return `${month}/${day}/${year}`;
+    },
+    parseDate(date) {
+      if (!date) return null;
+
+      const [month, day, year] = date.split("/");
+      return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
     },
   },
 };

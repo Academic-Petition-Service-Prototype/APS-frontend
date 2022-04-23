@@ -3,12 +3,10 @@
     <NavbarUser />
     <v-card class="cardmargin">
       <v-toolbar dark prominent color="#FFAB40">
-        <h1>เลือกแบบคำร้อง / ยื่นเรื่อง</h1>
+        <h1 class="text-center pa-5">เลือกแบบคำร้อง</h1>
         <v-spacer></v-spacer>
       </v-toolbar>
-      <!-- <h6>
-        {{ petitionList }}
-      </h6> -->
+
       <v-data-iterator
         :items="petitionList"
         :items-per-page.sync="itemsPerPage"
@@ -26,33 +24,64 @@
             filled
             rounded
             label="ค้นหาคำร้อง"
-            class="cardshow magintextfind"
+            clearable
+            class="cardmargin"
           ></v-text-field>
+
+          <h3 class="textleft">ค้นหาตามหมวดหมู่</h3>
+          <v-select
+            v-model="search"
+            :items="tag"
+            :item-text="(item) => item.tag_name"
+            label="กรุณาเลือกหมวดหมู่"
+            outlined
+            class="cardmargin"
+          ></v-select>
         </template>
 
-        <template v-slot:default="name">
-          <v-row
-            v-for="item in name.items"
-            :key="item.name"
-            class="petitiontitle"
-          >
-            <v-col v-if="item.form_status == 'active'">
-              <v-btn
-                outlined
-                block
-                height="100"
-                router
-                :to="item.route"
-                @click="sentPetition(item.form_id)"
+        <template v-slot:default="prop">
+          <v-container>
+            <v-row>
+              <v-col align="left"> </v-col>
+            </v-row>
+            <v-row>
+              <v-col
+                v-for="item in prop.items"
+                :key="item.name"
+                cols="12"
+                md="4"
               >
-                <v-row>
-                  <v-col align="center">
-                    <h2>{{ item.form_name }}</h2>
-                  </v-col>
-                </v-row>
-              </v-btn>
-            </v-col>
-          </v-row>
+                <v-item>
+                  <v-card
+                    color="#385F73"
+                    dark
+                    max-width="500"
+                    :to="item.route"
+                    @click="sentPetition(item.form_id)"
+                    v-if="item.form_status == 1"
+                  >
+                    <v-img
+                      class="white--text align-end"
+                      src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
+                      gradient="to top right, rgba(100,115,201,.33), rgba(25,32,72,.7)"
+                    >
+                      <v-card-title class="text-h5">
+                        <h5>{{ item.form_name }}</h5>
+                      </v-card-title>
+
+                      <v-card-subtitle
+                        ><h5>{{ item.form_detail }}</h5></v-card-subtitle
+                      >
+
+                      <v-card-actions>
+                        <v-btn text> #{{ item.tag_name }}</v-btn>
+                      </v-card-actions>
+                    </v-img>
+                  </v-card>
+                </v-item>
+              </v-col>
+            </v-row>
+          </v-container>
         </template>
 
         <template v-slot:footer>
@@ -112,10 +141,11 @@ export default {
       filter: {},
       sortDesc: false,
       page: 1,
-      itemsPerPage: 4,
+      itemsPerPage: 5,
       sortBy: "name",
       keys: ["Name"],
       petitionList: [],
+      tag: [],
     };
   },
   computed: {
@@ -155,9 +185,24 @@ export default {
     sentPetition(form_id) {
       this.$router.push("/UserSentpetition/" + form_id);
     },
+    gettagsbyagency() {
+      axios
+        .post(process.env.VUE_APP_URL + "tagsbyagency", {
+          agency_id: this.$store.getters.getUser.agencies_id,
+        })
+        .then((response) => {
+          // handle success
+          this.tag = response.data;
+        })
+        .catch((error) => {
+          // handle error
+          console.log(error);
+        });
+    },
   },
   mounted() {
     this.getpetition();
+    this.gettagsbyagency();
   },
 };
 </script>
@@ -177,8 +222,29 @@ h1 {
   font-size: 50px;
   padding: 2% 0% 0% 0%;
 }
+.textleft {
+  text-align: left;
+  margin: 2%;
+}
 
 .petitiontitle {
   padding: 0px 30px 0px 30px;
+}
+.bottom-gradient {
+  background-image: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.4) 0%,
+    transparent 72px
+  );
+}
+
+.repeating-gradient {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(255, 0, 0, 0.25),
+    rgba(255, 0, 0, 0.25) 5px,
+    rgba(0, 0, 255, 0.25) 5px,
+    rgba(0, 0, 255, 0.25) 10px
+  );
 }
 </style>
