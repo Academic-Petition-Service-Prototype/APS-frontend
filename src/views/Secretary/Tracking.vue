@@ -145,7 +145,7 @@
                                 </p>
                               </v-card>
                             </v-stepper-content>
-                            <v-stepper-content
+                            <!-- <v-stepper-content
                               :step="n + 2"
                               :key="approval_order"
                             >
@@ -163,7 +163,7 @@
                                   {{ item.submit_refuse }}
                                 </p>
                               </v-card>
-                            </v-stepper-content>
+                            </v-stepper-content> -->
                           </template>
                         </v-stepper-items>
                       </v-stepper>
