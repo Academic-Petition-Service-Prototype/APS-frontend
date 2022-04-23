@@ -415,12 +415,13 @@ export default {
           axios
             .delete(process.env.VUE_APP_URL + "users/" + user_id, {
               data: {
+                user_id: this.$store.getters.getUser.user_id,
                 role: "officer",
               },
             })
             .then((response) => {
               // handle success
-              if (response.data == "ลบ officer สำเร็จ") {
+              if (response.data == "ลบผู้พนักงานสำเร็จ") {
                 this.$swal({
                   icon: "success",
                   title: "ลบพนักงานสำเร็จ",
