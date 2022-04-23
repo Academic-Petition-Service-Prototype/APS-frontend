@@ -1,22 +1,22 @@
 <template>
   <!-- ส่วนจัดเเสดง -->
-  <div id="AdminEditAgency">
+  <div id="AdminEditTag">
     <NavbarAdmin />
     <v-card class="cardshow">
       <h1>
-        แก้ไขข้อมูลหน่วยงาน
+        แก้ไขหมวดหมู่
         <v-divider></v-divider>
       </h1>
 
-      <v-form v-model="isValid" @submit.prevent="editagency()">
+      <v-form v-model="isValid" @submit.prevent="edittag()">
         <v-container>
           <v-row>
             <v-col cols="12" md="12">
               <v-text-field
-                v-model="agency_name"
-                :rules="agency_rules"
+                v-model="tag_name"
+                :rules="tag_rules"
                 type="text"
-                label="ชื่อหน่วยงาน"
+                label="ชื่อหมวดหมู่"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -40,26 +40,26 @@
 import NavbarAdmin from "../../components/NavbarAdmin.vue";
 import axios from "axios";
 export default {
-  name: "AdminEditAgency",
+  name: "AdminEditTag",
   components: {
     NavbarAdmin,
   },
   data() {
     return {
-      agency_name: "",
+      tag_name: "",
       isValid: true,
       url: null,
-      agencylist: [],
-      agency_rules: [(value) => !!value || "จำเป็น"],
+      taglist: [],
+      tag_rules: [(value) => !!value || "จำเป็น"],
     };
   },
   methods: {
-    getagencybyid() {
+    gettagbyid() {
       axios
-        .get(process.env.VUE_APP_URL + "agency/" + this.$route.params.id)
+        .get(process.env.VUE_APP_URL + "tags/" + this.$route.params.id)
         .then((response) => {
           // handle success
-          this.agency_name = response.data.agency_name;
+          this.tag_name = response.data.tag_name;
         })
         .catch((error) => {
           // handle error
@@ -67,11 +67,11 @@ export default {
         });
     },
 
-    editagency() {
+    edittag() {
       axios
-        .patch(process.env.VUE_APP_URL + "agency/" + this.$route.params.id, {
+        .patch(process.env.VUE_APP_URL + "tag/" + this.$route.params.id, {
           data: {
-            agency_name: this.agency_name,
+            tag_name: this.tag_name,
           },
         })
         .then((response) => {
@@ -87,29 +87,26 @@ export default {
               title: "อีเมลนี้มีอยู่ในระบบแล้ว!",
               timer: 2000,
             });
-          } else if (response.data == "อัพเดตหน่วยงานสำเร็จ") {
+          } else if (response.data == "อัพเดตหมวดหมู่สำเร็จ") {
             this.$swal({
               icon: "success",
-              title: "แก้ไขข้อมูลหน่วยงาน",
-              text:
-                "ยินดีด้วยคุณแก้ไขข้อมูลหน่วยงาน " +
-                this.agency_name +
-                " สำเร็จ",
+              title: "แก้ไขหมวดหมู่",
+              text: "ยินดีด้วยคุณแก้ไขหมวดหมู่ " + this.tag_name + " สำเร็จ",
               timer: 2000,
             });
-            this.$router.push("/AdminAgencyManagement");
+            this.$router.push("/AdminTagManagement");
           } else {
             this.$swal({
               icon: "error",
               title: "เกิดข้อผิดพลาด",
               text:
-                "เกิดข้อผิดพลาดในการแก้ไขข้อมูล " +
+                "เกิดข้อผิดพลาดในการแก้ไข " +
                 this.form.f_name +
                 " " +
                 this.form.l_name,
               timer: 2000,
             });
-            this.$router.push("/AdminAgencyManagement");
+            this.$router.push("/AdminTagManagement");
           }
         })
         .catch((error) => {
@@ -119,8 +116,8 @@ export default {
 
     cancel() {
       this.$swal({
-        title: "ท่านกำลังจะออกจากหน้าแก้ไขหน่วยงาน?",
-        text: "ท่านเเน่ใจว่าต้องการออกจากหน้าแก้ไขหน่วยงาน!",
+        title: "ท่านกำลังจะออกจากหน้าแก้ไขหมวดหมู่?",
+        text: "ท่านเเน่ใจว่าต้องการออกจากหน้าแก้ไขหมวดหมู่!",
         icon: "warning",
         width: 650,
         showCancelButton: true,
@@ -128,13 +125,13 @@ export default {
         cancelButtonText: "ยกเลิก",
       }).then((result) => {
         if (result.isConfirmed) {
-          this.$router.push("/AdminAgencyManagement");
+          this.$router.push("/AdminTagManagement");
         }
       });
     },
   },
   mounted() {
-    this.getagencybyid();
+    this.gettagbyid();
   },
 };
 </script>
