@@ -166,6 +166,19 @@
                               </v-card>
                             </v-stepper-content> -->
                           </template>
+                          <v-card>
+                            <v-row>
+                              <v-col>
+                                <v-btn
+                                  class="cardshow"
+                                  @click="selecttrackingdetaill(item.submit_id)"
+                                  color="info"
+                                >
+                                  ดูรายละเอียดคำร้อง
+                                </v-btn>
+                              </v-col>
+                            </v-row>
+                          </v-card>
                         </v-stepper-items>
                       </v-stepper>
                     </v-container>
@@ -251,6 +264,9 @@ export default {
     },
   },
   methods: {
+    selecttrackingdetaill(submit_id) {
+      this.$router.push("/ChiefTrackingdetail/" + submit_id);
+    },
     isApprove() {
       this.petitionListById.forEach((petition) => {
         petition.approval_order.forEach((petitionList, index) => {
