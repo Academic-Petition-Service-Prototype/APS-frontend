@@ -89,6 +89,7 @@ import AdminAgencyEdit from '../views/Admin/Editagency.vue'
 import AdminViwerequestlist from '../views/Admin/AdminViwerequestlist.vue'
 import AdminViewApprovaldetail from '../views/Admin/ViewAdminApprovaldetail.vue'
 import AdminTagManagement from '../views/Admin/TagManagement.vue'
+import AdminTagEdit from '../views/Admin/Edittag.vue'
 //Admin
 
 Vue.use(VueRouter)
@@ -475,8 +476,13 @@ const routes = [
   },
   {
     path: '/AdminTagManagement',
-    name: 'จัดการหมวดหมู่คำร้อง',
+    name: 'แก้ไขหมวดหมู่คำร้อง',
     component: AdminTagManagement 
+  },
+  {
+    path: '/AdminTagEdit/:id',
+    name: 'จัดการหมวดหมู่คำร้อง',
+    component: AdminTagEdit 
   },
   //Admin
 

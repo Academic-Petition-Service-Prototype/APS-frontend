@@ -245,7 +245,7 @@ export default {
               text: "หน่วยงาน " + this.agency_name + " มีอยู่ในระบบแล้ว",
               timer: 2000,
             });
-          } else if (response.data == "เพิ่มหน่วยงานสำเสร็จ") {
+          } else if (response.data == "เพิ่มหน่วยงานสำเร็จ") {
             this.$swal({
               icon: "success",
               title: "เพิ่มหน่วยงานสำเร็จ",
@@ -316,7 +316,7 @@ export default {
             .delete(process.env.VUE_APP_URL + "agency/" + agency_id)
             .then((response) => {
               // handle success
-              if (response.data == "ลบหน่วยงานสำเสร็จ") {
+              if (response.data == "ลบหน่วยงานสำเร็จ") {
                 this.$swal({
                   icon: "success",
                   title: "ลบหน่วยงานสำเร็จ",
