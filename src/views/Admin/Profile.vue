@@ -51,6 +51,7 @@
                 v-model="profile.role"
                 label="สถานะผู้ใช้งาน"
                 readonly
+                v-if="(role = 'admin')"
               ></v-text-field>
             </v-col>
           </v-row>
@@ -108,7 +109,7 @@ export default {
           email: this.$store.getters.getUser.email,
           tel_num: this.$store.getters.getUser.tel_num,
           address: this.$store.getters.getUser.address,
-          role: this.$store.getters.getUser.role,
+          role: "ผู้ดูแลระบบ",
         },
       ],
     };

@@ -113,11 +113,12 @@ export default {
           email: this.$store.getters.getUser.email,
           tel_num: this.$store.getters.getUser.tel_num,
           address: this.$store.getters.getUser.address,
-          role: this.$store.getters.getUser.role,
+          role: "ผู้ยื่นคำร้อง",
         },
       ],
     };
   },
+  computed: {},
 };
 </script>
 
