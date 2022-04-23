@@ -51,7 +51,7 @@
             >
               <v-expansion-panels>
                 <v-expansion-panel>
-                  <v-expansion-panel-header color="primary"  @click="isApprove">
+                  <v-expansion-panel-header color="primary" @click="isApprove">
                     <v-row class="text-center">
                       <v-col>
                         <h4>{{ item.form_name }}</h4>
@@ -60,8 +60,16 @@
                         <h4>{{ item.fullname }}</h4>
                       </v-col>
                       <v-col>
-                        <h4>{{ item.submit_refuse }}</h4>
+                        <h4>
+                          <p v-if="item.submit_refuse === null">
+                            กำลังดำเนิการ
+                          </p>
+                          <p v-if="item.submit_refuse !== null">
+                            {{ item.submit_refuse }}
+                          </p>
+                        </h4>
                       </v-col>
+                                      
                       <v-col>
                         <h4>{{ item.submit_date }}</h4>
                       </v-col>
@@ -82,7 +90,6 @@
                             :complete="item.submit_state >= 1"
                             step=""
                             color="green"
-                            
                           >
                             รับเรื่องคำร้องเเล้ว
                           </v-stepper-step>
@@ -130,7 +137,26 @@
                                 height="200px"
                               >
                                 <h2 class="cardshow">รายละเอียด</h2>
-                                
+
+                                <p v-if="item.submit_refuse === null">
+                                  กำลังดำเนิการ
+                                </p>
+                                <p v-if="item.submit_refuse !== null">
+                                  {{ item.submit_refuse }}
+                                </p>
+                              </v-card>
+                            </v-stepper-content>
+                            <v-stepper-content
+                              :step="n + 2"
+                              :key="approval_order"
+                            >
+                              <v-card
+                                class="mb-12"
+                                color="grey lighten-2"
+                                height="200px"
+                              >
+                                <h2 class="cardshow">รายละเอียด</h2>
+
                                 <p v-if="item.submit_refuse === null">
                                   กำลังดำเนิการ
                                 </p>
@@ -225,18 +251,17 @@ export default {
     },
   },
   methods: {
-     isApprove() {
+    isApprove() {
       this.petitionListById.forEach((petition) => {
         petition.approval_order.forEach((petitionList, index) => {
-          if(petitionList.approver_state == "ไม่อนุมัติ") {
-            this.stepApprove[index] = false
+          if (petitionList.approver_state == "ไม่อนุมัติ") {
+            this.stepApprove[index] = false;
+          } else {
+            this.stepApprove[index] = true;
           }
-          else {
-            this.stepApprove[index] = true
-          }
-        })
-      })
-        },
+        });
+      });
+    },
     getpetition() {
       axios
         .post(process.env.VUE_APP_URL + "getsubmitformsbyagency", {

@@ -60,7 +60,14 @@
                         <h4>{{ item.fullname }}</h4>
                       </v-col>
                       <v-col>
-                        <h4>{{ item.submit_refuse }}</h4>
+                        <h4>
+                          <p v-if="item.submit_refuse === null">
+                            กำลังดำเนิการ
+                          </p>
+                          <p v-if="item.submit_refuse !== null">
+                            {{ item.submit_refuse }}
+                          </p>
+                        </h4>
                       </v-col>
                       <v-col>
                         <h4>{{ item.submit_date }}</h4>
@@ -130,6 +137,25 @@
                                 height="200px"
                               >
                                 <h2 class="cardshow">รายละเอียด</h2>
+                                <p v-if="item.submit_refuse === null">
+                                  กำลังดำเนิการ
+                                </p>
+                                <p v-if="item.submit_refuse !== null">
+                                  {{ item.submit_refuse }}
+                                </p>
+                              </v-card>
+                            </v-stepper-content>
+                            <v-stepper-content
+                              :step="n + 2"
+                              :key="approval_order"
+                            >
+                              <v-card
+                                class="mb-12"
+                                color="grey lighten-2"
+                                height="200px"
+                              >
+                                <h2 class="cardshow">รายละเอียด</h2>
+
                                 <p v-if="item.submit_refuse === null">
                                   กำลังดำเนิการ
                                 </p>
