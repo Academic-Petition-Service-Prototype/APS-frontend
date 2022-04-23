@@ -38,9 +38,10 @@
           </template>
           <template v-slot:default="props">
             <v-row class="text-center">
-              <v-col align="center" class="h3">รายการ</v-col>
-              <v-col align="center" class="h3">ผู้ยื่นคำร้อง</v-col>
-              <v-col align="center" class="h3">วันที่ยื่นคำร้อง</v-col>
+              <v-col class="h3">รายการ</v-col>
+              <v-col align="center" class="h3">ผู้ส่งคำร้อง</v-col>
+              <v-col align="center" class="h3">สถานะคำร้อง</v-col>
+              <v-col class="h3">เวลา</v-col>
             </v-row>
 
             <v-row
@@ -50,13 +51,16 @@
             >
               <v-expansion-panels>
                 <v-expansion-panel>
-                  <v-expansion-panel-header color="#00B8D4">
+                  <v-expansion-panel-header color="#00B8D4"  @click="isApprove">
                     <v-row class="text-center">
                       <v-col>
                         <h4>{{ item.form_name }}</h4>
                       </v-col>
                       <v-col>
                         <h4>{{ item.fullname }}</h4>
+                      </v-col>
+                      <v-col>
+                        <h4>{{ item.submit_refuse }}</h4>
                       </v-col>
                       <v-col>
                         <h4>{{ item.submit_date }}</h4>
@@ -91,6 +95,7 @@
                               :complete="item.submit_state > n + 1"
                               step=""
                               color="green"
+                              :rules="[() => stepApprove[n]]"
                             >
                               {{ item.approval_order[n].approver_name.f_name }}
 
@@ -206,6 +211,7 @@ export default {
       itemsPerPage: 5,
       sortBy: "name",
       petitionListById: [],
+      stepApprove: [],
     };
   },
   computed: {
@@ -217,6 +223,18 @@ export default {
     },
   },
   methods: {
+    isApprove() {
+      this.petitionListById.forEach((petition) => {
+        petition.approval_order.forEach((petitionList, index) => {
+          if(petitionList.approver_state == "ไม่อนุมัติ") {
+            this.stepApprove[index] = false
+          }
+          else {
+            this.stepApprove[index] = true
+          }
+        })
+      })
+        },
     getpetition() {
       axios
         .get(process.env.VUE_APP_URL + "getsubmitforms")
