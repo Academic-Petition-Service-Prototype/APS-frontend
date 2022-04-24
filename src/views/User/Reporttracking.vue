@@ -220,8 +220,8 @@ export default {
   methods: {
     getreport() {
       axios
-        .post(process.env.VUE_APP_URL + "agencyreports", {
-          agency_id: this.$store.getters.getUser.agencies_id,
+        .post(process.env.VUE_APP_URL + "userreports", {
+          user_id: this.$store.getters.getUser.user_id,
         })
         .then((response) => {
           // handle success
