@@ -42,9 +42,6 @@
         <template v-slot:default="prop">
           <v-container>
             <v-row>
-              <v-col align="left"> </v-col>
-            </v-row>
-            <v-row>
               <v-col
                 v-for="item in prop.items"
                 :key="item.name"
@@ -53,7 +50,6 @@
               >
                 <v-item>
                   <v-card
-                    color="#385F73"
                     dark
                     max-width="500"
                     :to="item.route"
@@ -61,20 +57,20 @@
                     v-if="item.form_status == 1"
                   >
                     <v-img
-                      class="white--text align-end"
                       src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
                       gradient="to top right, rgba(100,115,201,.33), rgba(25,32,72,.7)"
                     >
-                      <v-card-title class="text-h5">
-                        <h5>{{ item.form_name }}</h5>
+                      <v-card-title>
+                        {{ item.form_name }}
                       </v-card-title>
-
-                      <v-card-subtitle
-                        ><h5>{{ item.form_detail }}</h5></v-card-subtitle
-                      >
-
-                      <v-card-actions>
-                        <v-btn text> #{{ item.tag_name }}</v-btn>
+                      <v-divider class="mx-4"></v-divider>
+                      <v-card-subtitle class="text-left">
+                        {{ item.form_detail }}
+                      </v-card-subtitle>
+                      <v-card-actions class="justify-end">
+                        <v-btn rounded color="warning">
+                          {{ item.tag_name }}
+                        </v-btn>
                       </v-card-actions>
                     </v-img>
                   </v-card>
