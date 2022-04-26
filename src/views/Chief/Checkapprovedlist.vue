@@ -62,7 +62,7 @@
                           >
                             <!-- {{ item.approval_order[n].approver_name.user_id}} -->
 
-                            <h5
+                            <div
                               :key="n"
                               v-if="
                                 item.approval_order[n].approver_name.user_id ==
@@ -70,7 +70,7 @@
                               "
                             >
                               {{ item.approval_order[n].approver_state }}
-                            </h5>
+                            </div>
                           </template>
                         </v-btn>
                       </v-col>
@@ -219,8 +219,7 @@ export default {
                   ) {
                     this.listapproval.push(this.petitionListById[i]);
                   }
-                }
-                else if (
+                } else if (
                   this.petitionListById[i].approval_order[j - 1]
                     .approver_state == "อนุมัติแล้ว" &&
                   this.petitionListById[i].approval_order[j].approver_state ==
