@@ -86,7 +86,7 @@
           </v-row>
 
           <v-row v-for="heard in heard" :key="heard">
-            <v-col align="center" v-if="heard.hasSpecificsDetail">
+            <v-col v-if="heard.hasSpecificsDetail">
               <v-row
                 v-for="(form_specific, index) in petitionListById.form_specific"
                 :key="form_specific.id"
@@ -100,8 +100,6 @@
                     :rules="data_rules"
                   >
                   </v-text-field>
-
-                  <!-- {{ form_value }} -->
                 </v-col>
               </v-row>
             </v-col>

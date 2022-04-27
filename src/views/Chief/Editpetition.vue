@@ -160,10 +160,9 @@
             <v-card class="mb-12" color="#ECEFF1">
               <v-row>
                 <v-col class="cardshow">
-                  <h1>เพิ่มผู้อนุมัติ</h1>
+                  <h1>แก้ไขผู้อนุมัติ</h1>
                 </v-col>
               </v-row>
-
               <v-row>
                 <!-- ส่วนของเพิ่มหน้าผู้อนุมัติ -->
                 <div>
@@ -176,7 +175,7 @@
                           () => !!approverlist || 'กรุณาเลือกผู้อนุมัติ',
                         ]"
                         :items="approverlist"
-                        :item-text="(item) => item.f_name + ' - ' + item.l_name"
+                        :item-text="(item) => item.f_name + ' ' + item.l_name"
                         item-value="user_id"
                         return-object
                         label="เลือกผู้อนุมัติ"
@@ -588,6 +587,7 @@ export default {
       if (this.forms[0].specifics == false) {
         this.title = [];
       }
+
       axios
         .patch(process.env.VUE_APP_URL + "forms/" + this.$route.params.id, {
           form_name: this.forms.title,
