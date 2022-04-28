@@ -26,6 +26,7 @@ import guiderequest from '../views/User/guiderequest.vue'
 //Officer
 import OfficerDashboard from '../views/Officer/Dashboard.vue'
 import OfficerPetitionManagement from '../views/Officer/PetitionManagement.vue'
+import OfficerEditPetition from '../views/Officer/Editpetition.vue'
 import OfficerProfile from '../views/Officer/Profile.vue'
 import OfficerTracking from '../views/Officer/Tracking.vue'
 import OfficerTrackingdetail from '../views/Officer/Trackingdetail.vue'
@@ -197,6 +198,11 @@ const routes = [
     path: '/OfficerPetitionManagement',
     name: 'จัดการคำร้อง',
     component: OfficerPetitionManagement
+  },
+  {
+    path: '/OfficerEditPetition/:id',
+    name: 'แก้ไขคำร้อง',
+    component: OfficerEditPetition 
   },
   {
     path: '/OfficerProfile',

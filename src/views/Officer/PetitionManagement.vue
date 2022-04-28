@@ -79,10 +79,14 @@
                     <p>{{ item.created_date }}</p>
                   </v-col>
                   <v-col md="2">
-                    <v-btn icon
+                    <v-btn icon @click="editpetition(item.form_id)"
                       ><v-icon color="yellow">mdi-pencil</v-icon></v-btn
                     >
-                    <v-btn icon><v-icon color="red">mdi-delete</v-icon></v-btn>
+                    <v-btn
+                      icon
+                      @click="deletepetition(item.form_id, item.form_name)"
+                      ><v-icon color="red">mdi-delete</v-icon></v-btn
+                    >
                   </v-col>
                 </v-row>
               </v-card-title>
@@ -197,6 +201,7 @@ export default {
           console.log(error);
         });
     },
+
     chagestatusform(form_id, form_status, form_name) {
       axios
         .put(process.env.VUE_APP_URL + "changestatusforms", {
@@ -226,6 +231,51 @@ export default {
           // handle error
           console.log(error);
         });
+    },
+
+    editpetition(form_id) {
+      this.$router.push("/OfficerEditpetition/" + form_id);
+    },
+
+    deletepetition(form_id, form_name) {
+      this.$swal({
+        title: "ท่านแน่ใจหรือว่าต้องการจะลบแบบคำร้อง?",
+        text:
+          "หากทำการลบแบบคำร้องจะทำให้ข้อมูลที่ผู้ยื่นคำร้องยื่นมาในคำร้องนี้ถูกลบด้วยทั้งหมด!",
+        icon: "warning",
+        width: 700,
+        showCancelButton: true,
+        confirmButtonText: "ตกลง",
+        cancelButtonText: "ยกเลิก",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          axios
+            .delete(process.env.VUE_APP_URL + "forms/" + form_id)
+            .then((response) => {
+              // handle success
+              if (response.data == "Delete petition success") {
+                this.$swal({
+                  icon: "success",
+                  title: "ลบแบบคำร้องสำเร็จ",
+                  text: "ลบแบบคำร้อง " + form_name + " สำเร็จ",
+                  timer: 2000,
+                });
+                this.$router.go();
+              } else {
+                this.$swal({
+                  icon: "error",
+                  title: "ลบแบบคำร้องไม่สำเร็จ",
+                  text: "เกิดข้อผิดพลาดในการลบแบบคำร้อง",
+                  timer: 2000,
+                });
+              }
+            })
+            .catch((error) => {
+              // handle error
+              console.log(error);
+            });
+        }
+      });
     },
   },
   computed: {

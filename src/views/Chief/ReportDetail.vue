@@ -9,16 +9,6 @@
         <v-container>
           <v-row>
             <v-col cols="12">
-              <!-- <v-card outlined class="p-4 ">
-                <h3>หัวข้อการร้องขอคำร้อง</h3>
-                <v-divider></v-divider>
-                <p class="h5">{{ report_title }}</p>
-              </v-card>
-              <v-card outlined class="p-4 mt-2">
-                <h3>รายละเอียดการร้องขอคำร้อง</h3>
-                <v-divider></v-divider>
-                <p class="h5">{{ report_detail }}</p>
-              </v-card> -->
               <v-card outlined class="p-4 ">
                 <h3 class="text-center">{{ report_title }}</h3>
                 <v-divider></v-divider>
