@@ -81,92 +81,121 @@
                   <v-expansion-panel-content>
                     <!-- เเสดงเนื้อหาข้างใน -->
 
-                    <v-container id="inspire">
-                      <v-stepper alt-labels v-model="item.submit_state">
-                        <v-stepper-header>
-                          <v-divider></v-divider>
-                          <v-stepper-step
-                            :complete="item.submit_state >= 1"
-                            step=""
-                            color="green"
-                          >
-                            รับเรื่องคำร้องเเล้ว
-                          </v-stepper-step>
-                          <v-divider></v-divider>
+                    <v-card>
+                      <v-row>
+                        <v-col>
+                          <v-btn fab width="30" height="30" color="green" icon>
+                            <v-icon dark> mdi-check </v-icon>
+                          </v-btn>
+                          <br />
+                          รับเรื่องคำร้องเเล้ว
+                        </v-col>
 
-                          <template
-                            v-for="(approval_order, n) in item.approval_order"
-                          >
-                            <v-stepper-step
-                              :key="n"
-                              :complete="item.submit_state > n + 1"
-                              step=""
-                              color="green"
-                              :rules="[() => stepApprove[n]]"
-                            >
-                              {{ item.approval_order[n].approver_name.f_name }}
-
-                              {{ item.approval_order[n].approver_name.l_name }}
-                            </v-stepper-step>
-                            <v-divider :key="approval_order"></v-divider>
-                          </template>
-
-                          <v-stepper-step
-                            :complete="
-                              item.submit_state > item.approval_order.length
+                        <v-col
+                          v-for="(approval_order, n) in item.approval_order"
+                          :key="approval_order"
+                        >
+                          <v-btn
+                            fab
+                            width="30"
+                            height="30"
+                            color="yellow"
+                            disabled
+                            v-if="
+                              item.approval_order[n].approver_state ==
+                              'ยังไม่ได้อนุมัติ'
                             "
-                            step=""
+                          >
+                          </v-btn>
+                          <v-btn
+                            fab
+                            width="30"
+                            height="30"
                             color="green"
+                            icon
+                            v-if="
+                              item.approval_order[n].approver_state ==
+                              'อนุมัติแล้ว'
+                            "
                           >
-                            ยื่นคำร้องสำเร็จ
-                          </v-stepper-step>
-                          <v-divider></v-divider>
-                        </v-stepper-header>
-
-                        <v-stepper-items>
-                          <template
-                            v-for="(approval_order, n) in item.approval_order"
+                            <v-icon dark> mdi-radiobox-marked </v-icon>
+                          </v-btn>
+                          <v-btn
+                            fab
+                            width="30"
+                            height="30"
+                            color="red"
+                            icon
+                            v-if="
+                              item.approval_order[n].approver_state ==
+                              'ไม่อนุมัติ'
+                            "
                           >
-                            <v-stepper-content
-                              :step="n + 1"
-                              :key="approval_order"
-                            >
-                              <v-card
-                                class="mb-12"
-                                color="grey lighten-2"
-                                height="200px"
-                              >
-                                <h2 class="cardshow">รายละเอียด</h2>
-                                <p v-if="item.submit_refuse === null">
-                                  กำลังดำเนิการ
-                                </p>
-                                <p v-if="item.submit_refuse !== null">
-                                  {{ item.submit_refuse }}
-                                </p>
-                              </v-card>
-                            </v-stepper-content>
-                            <!-- <v-stepper-content
-                              :step="n + 2"
-                              :key="approval_order"
-                            >
-                              <v-card
-                                class="mb-12"
-                                color="grey lighten-2"
-                                height="200px"
-                              >
-                                <h2 class="cardshow">รายละเอียด</h2>
+                            <v-icon dark> mdi-alert-circle-outline </v-icon>
+                          </v-btn>
 
-                                <p v-if="item.submit_refuse === null">
-                                  กำลังดำเนิการ
-                                </p>
-                                <p v-if="item.submit_refuse !== null">
-                                  {{ item.submit_refuse }}
-                                </p>
-                              </v-card>
-                            </v-stepper-content> -->
-                          </template>
-                        </v-stepper-items>
-                      </v-stepper>
+                          <br />
+                          {{ item.approval_order[n].approver_name.f_name }}
+
+                          {{ item.approval_order[n].approver_name.l_name }}
+                        </v-col>
+                        <v-col>
+                          <v-btn
+                            fab
+                            width="30"
+                            height="30"
+                            color="green"
+                            disabled
+                            v-if="
+                              item.submit_state != item.approval_order.length
+                            "
+                          >
+                          </v-btn>
+
+                          <v-btn
+                            fab
+                            width="30"
+                            height="30"
+                            color="green"
+                            icon
+                            v-if="
+                              item.submit_state == item.approval_order.length
+                            "
+                          >
+                            <v-icon dark> mdi-check </v-icon>
+                          </v-btn>
+                          <br />
+                          ยื่นคำร้องสำเร็จ
+                        </v-col>
+                      </v-row>
+                    </v-card>
+
+                    <v-container id="inspire">
+                      <v-card
+                        class="mb-12"
+                        color="grey lighten-2"
+                        height="200px"
+                      >
+                        <h2 class="cardshow">รายละเอียด</h2>
+                        <p v-if="item.submit_refuse === null">กำลังดำเนิการ</p>
+                        <p v-if="item.submit_refuse !== null">
+                          {{ item.submit_refuse }}
+                        </p>
+                      </v-card>
+
+                      <v-card>
+                        <v-row>
+                          <v-col>
+                            <v-btn
+                              class="cardshow"
+                              @click="selecttrackingdetaill(item.submit_id)"
+                              color="info"
+                            >
+                              ดูรายละเอียดคำร้อง
+                            </v-btn>
+                          </v-col>
+                        </v-row>
+                      </v-card>
                     </v-container>
 
                     <!-- เเสดงเนื้อหาข้างใน -->
@@ -250,18 +279,17 @@ export default {
     },
   },
   methods: {
-        isApprove() {
+    isApprove() {
       this.petitionListById.forEach((petition) => {
         petition.approval_order.forEach((petitionList, index) => {
-          if(petitionList.approver_state == "ไม่อนุมัติ") {
-            this.stepApprove[index] = false
+          if (petitionList.approver_state == "ไม่อนุมัติ") {
+            this.stepApprove[index] = false;
+          } else {
+            this.stepApprove[index] = true;
           }
-          else {
-            this.stepApprove[index] = true
-          }
-        })
-      })
-        },
+        });
+      });
+    },
     getpetition() {
       axios
         .post(process.env.VUE_APP_URL + "getsubmitformsbyagency", {
