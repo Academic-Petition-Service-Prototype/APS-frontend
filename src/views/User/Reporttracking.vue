@@ -92,7 +92,7 @@
                             step="2"
                             color="green"
                           >
-                            รับคำร้องเข้าระบบ
+                            รับทราบปัญหาแล้ว
                           </v-stepper-step>
                         </v-stepper-header>
                         <v-stepper-items>
