@@ -13,12 +13,12 @@
         height="200px"
         v-if="
           d == '5' ||
-            d == '6' ||
-            d == '7' ||
-            d == '8' ||
-            d == '9' ||
-            d == '10' ||
-            d == '11'
+          d == '6' ||
+          d == '7' ||
+          d == '8' ||
+          d == '9' ||
+          d == '10' ||
+          d == '11'
         "
       >
         <v-img
@@ -116,15 +116,15 @@
         height="200px"
         v-if="
           d == '19' ||
-            d == '20' ||
-            d == '21' ||
-            d == '22' ||
-            d == '23' ||
-            d == '0' ||
-            d == '1' ||
-            d == '2' ||
-            d == '3' ||
-            d == '4'
+          d == '20' ||
+          d == '21' ||
+          d == '22' ||
+          d == '23' ||
+          d == '0' ||
+          d == '1' ||
+          d == '2' ||
+          d == '3' ||
+          d == '4'
         "
       >
         <v-img
@@ -235,6 +235,25 @@
           <!-- รายงานเอกสารที่ทำไป -->
         </v-col>
       </v-row>
+      <v-row>
+        <v-col >
+          <v-toolbar dark prominent color="#00B8D4">
+            <h1>ข้อมูลภาพรวม</h1>
+            <v-spacer></v-spacer>
+          </v-toolbar>
+          <v-col align="center">
+          <GChart
+            type="PieChart"
+            :data="PieChart"
+            :options="PieChartOptions2"
+            style="width: 600px; height: 300px;"
+            
+          />
+          </v-col>
+          
+        </v-col>
+        
+      </v-row>
     </v-card>
   </div>
   <!-- ส่วนจัดเเสดง -->
@@ -243,10 +262,12 @@
 <script>
 import NavbarChief from "../../components/NavbarChief.vue";
 import axios from "axios";
+import { GChart } from "vue-google-charts";
 export default {
   name: "ChiefDashboard",
   components: {
     NavbarChief,
+    GChart,
   },
   data() {
     return {
@@ -270,6 +291,20 @@ export default {
           role: this.$store.getters.getUser.role,
         },
       ],
+      PieChart: [],
+      PieChartOptions2: {
+        chart: {
+          title: "Company Performance",
+          
+        },
+        colors: ["#d06cf3", "#ff2b2b", "#ff7b2b", "#E91E63"],
+        bars: "horizontal",
+        pieHole: 0.5,
+         pieSliceTextStyle: {
+            color: 'black',
+          },
+          
+      },
     };
   },
   methods: {
@@ -283,6 +318,7 @@ export default {
         .then((response) => {
           // handle success
           this.petitionList = response.data;
+          // console.log(response.data)
           for (let i = 0; i < this.petitionList.length; i++) {
             // date format
             this.petitionList[i].created_date = new Date(
@@ -299,8 +335,13 @@ export default {
               minute: "numeric",
             });
             // date format
-            this.countpetitionList = this.petitionList.length;
+            
           }
+          this.countpetitionList = this.petitionList.length;
+            this.PieChart.push(
+              ["name", "value"],
+              ["จำนวนคำร้องที่สร้างเข้ามาทั้งหมด", this.countpetitionList]
+            );
         })
         .catch((error) => {
           // handle error
@@ -340,8 +381,13 @@ export default {
               minute: "numeric",
             });
             // date format
-            this.countpetitionListById = this.petitionListById.length;
+            
           }
+          this.countpetitionListById = this.petitionListById.length;
+            this.PieChart.push(
+              
+              ["จำนวนคำร้องที่ส่งเข้ามาทั้งหมด", this.countpetitionListById]
+            );
         })
         .catch((error) => {
           // handle error
@@ -375,18 +421,18 @@ export default {
             this.petitionListByIdcheck[i].submit_date = new Date(
               this.petitionListByIdcheck[i].submit_date
             );
-            this.petitionListByIdcheck[
-              i
-            ].submit_date = this.petitionListByIdcheck[
-              i
-            ].submit_date.toLocaleDateString("th-TH", {
-              year: "numeric",
-              month: "numeric",
-              day: "numeric",
-              weekday: "short",
-              hour: "numeric",
-              minute: "numeric",
-            });
+            this.petitionListByIdcheck[i].submit_date =
+              this.petitionListByIdcheck[i].submit_date.toLocaleDateString(
+                "th-TH",
+                {
+                  year: "numeric",
+                  month: "numeric",
+                  day: "numeric",
+                  weekday: "short",
+                  hour: "numeric",
+                  minute: "numeric",
+                }
+              );
             // date format
 
             for (
@@ -412,8 +458,7 @@ export default {
                   ) {
                     this.listapproval.push(this.petitionListByIdcheck[i]);
                   }
-                }
-                else if (
+                } else if (
                   this.petitionListByIdcheck[i].approval_order[j - 1]
                     .approver_state == "อนุมัติแล้ว" &&
                   this.petitionListByIdcheck[i].approval_order[j]
@@ -423,6 +468,7 @@ export default {
                 }
               }
             }
+            
           }
         })
         .catch((error) => {
@@ -458,10 +504,13 @@ export default {
 
             if (this.reports[i].report_state == "unread") {
               this.reportsunread.push(this.reports[i]);
-            } else {
-              // อิอิ
-            }
+            } 
           }
+          this.reports = this.reports.length;
+            this.PieChart.push(
+              
+              ["จำนวนรายงายที่ส่งเข้ามาทั้งหมด", this.reports]
+            );
         })
         .catch((error) => {
           // handle error
@@ -500,12 +549,19 @@ export default {
               // อิอิ
             }
           }
+          this.requests = this.requests.length;
+            this.PieChart.push(
+              ["คำร้องเพิ่มเติมที่ส่งเข้ามาทั้งหมด", this.requests]
+            );
+            // console.log(this.PieChart)
+
         })
         .catch((error) => {
           // handle error
           console.log(error);
         });
     },
+    
   },
   mounted() {
     this.getpetition();
@@ -513,6 +569,7 @@ export default {
     this.getpetitioncheck();
     this.getreport();
     this.getrequest();
+    
   },
 };
 </script>
