@@ -1,10 +1,10 @@
 <template>
   <!-- ส่วนจัดเเสดง -->
-  <div id="UserSentpetition">
+  <div id="UserEditSentpetition">
     <NavbarUser />
     <v-card class="cardshow">
       <h1>
-        แบบคำร้อง
+        แก้ไขการส่งคำร้อง
         <v-divider></v-divider>
       </h1>
 
@@ -104,7 +104,6 @@
               </v-row>
             </v-col>
           </v-row>
-
           <v-row>
             <v-col align="center">
               <v-btn
@@ -118,7 +117,7 @@
             </v-col>
 
             <v-col align="center">
-              <v-btn class="ma-2" outlined color="error" to="/UserPetition">
+              <v-btn class="ma-2" outlined color="error" @click="back()">
                 ย้อนกลับ
               </v-btn>
             </v-col>
@@ -134,7 +133,7 @@
 import NavbarUser from "../../components/NavbarUser.vue";
 import axios from "axios";
 export default {
-  name: "UserSentpetition",
+  name: "UserEditSentpetition",
   components: {
     NavbarUser,
   },
@@ -165,14 +164,16 @@ export default {
     };
   },
   methods: {
-    getpetitionbyid() {
+    getsubmitformsbyid() {
       axios
-        .get(process.env.VUE_APP_URL + "forms/" + this.$route.params.id)
+        .get(
+          process.env.VUE_APP_URL + "getsubmitforms/" + this.$route.params.id
+        )
         .then((response) => {
           // handle success
 
           // form_specific
-          this.petitionListById = response.data;
+          this.petitionListById = response.data[0];
           this.tmp = JSON.stringify(this.petitionListById.form_specific);
           this.tmp = this.tmp.replace(/\\/g, "");
           this.specifics = this.tmp.replace(/\\/g, "");
@@ -181,42 +182,59 @@ export default {
           temp = JSON.parse(temp);
           this.petitionListById.form_specific = temp;
 
-          //approval_name
-          this.petitionListById = response.data;
-          this.tmp = JSON.stringify(this.petitionListById.approval_name);
+          //approval_order
+          this.petitionListById = response.data[0];
+          this.tmp = JSON.stringify(this.petitionListById.approval_order);
           this.tmp = this.tmp.replace(/\\/g, "");
           this.specifics = this.tmp.replace(/\\/g, "");
 
           temp = this.specifics.slice(1, -1);
           temp = JSON.parse(temp);
           this.petitionListById.approval_name = temp;
+
+          //form_value
+          this.tmp = JSON.parse(response.data[0].form_value);
+          for (let i = 0; i < this.tmp.length; i++) {
+            this.form_value.push(this.tmp[i]);
+          }
         })
         .catch((error) => {
           // handle error
           console.log(error);
         });
     },
+
     sentpetition() {
+      this.approval_order = JSON.parse(this.petitionListById.approval_order);
+      for (let i = 0; i < this.approval_order.length; i++) {
+        if (this.approval_order[i].approver_state == "ไม่อนุมัติ") {
+          this.approval_order[i].approver_state = "ยังไม่ได้อนุมัติ";
+        }
+      }
       axios
-        .post(process.env.VUE_APP_URL + "submitforms", {
-          users_id: this.$store.getters.getUser.user_id,
-          forms_id: this.petitionListById.form_id,
-          approval_order: this.petitionListById.approval_name,
+        .post(process.env.VUE_APP_URL + "approvepetition", {
+          submit_id: this.petitionListById.submit_id,
+          submit_state: this.petitionListById.submit_state,
+          approval_order: this.approval_order,
           form_value: this.form_value,
+          submit_refuse: null,
         })
         .then((response) => {
-          if (response.data == "Sent petition successful") {
+          if (response.data == "Approve petition successful") {
             this.$swal({
               icon: "success",
-              title: "การส่งคำร้องสำเร็จ",
-              text: "ส่งคำร้อง " + this.petitionListById.form_name + " สำเร็จ ",
+              title: "แก้ไขการส่งคำร้องสำเร็จ",
+              text:
+                "แก้ไขการส่งคำร้อง " +
+                this.petitionListById.form_name +
+                " สำเร็จ ",
               timer: 2000,
             });
-            this.$router.push("/UserPetition");
+            this.$router.push("/UserTracking");
           } else {
             this.$swal({
               icon: "warning",
-              title: "เกิดข้อผิดพลาดในการส่งคำร้อง",
+              title: "เกิดข้อผิดพลาดในแก้ไขการส่งคำร้อง",
               timer: 2000,
             });
           }
@@ -225,9 +243,25 @@ export default {
           console.log(error);
         });
     },
+
+    back() {
+      this.$swal({
+        title: "ท่านกำลังจะออกจากหน้าแก้ไขการส่งคำร้อง?",
+        text: "ท่านเเน่ใจว่าต้องการออกจากหน้าแก้ไขคำร้อง!",
+        icon: "warning",
+        width: 650,
+        showCancelButton: true,
+        confirmButtonText: "ตกลง",
+        cancelButtonText: "ยกเลิก",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$router.push("/Trackingdetail/" + this.$route.params.id);
+        }
+      });
+    },
   },
   mounted() {
-    this.getpetitionbyid();
+    this.getsubmitformsbyid();
   },
 };
 </script>

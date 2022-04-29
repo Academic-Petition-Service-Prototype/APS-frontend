@@ -1,7 +1,7 @@
 <template>
   <!-- ส่วนจัดเเสดง -->
-  <div id="AdminEditTag">
-    <NavbarAdmin />
+  <div id="ChiefEditTag">
+    <NavbarChief />
     <v-card class="cardshow">
       <h1>
         แก้ไขหมวดหมู่
@@ -37,12 +37,12 @@
   </div>
 </template>
 <script>
-import NavbarAdmin from "../../components/NavbarAdmin.vue";
+import NavbarChief from "../../components/NavbarChief.vue";
 import axios from "axios";
 export default {
-  name: "AdminEditTag",
+  name: "ChiefEditTag",
   components: {
-    NavbarAdmin,
+    NavbarChief,
   },
   data() {
     return {
@@ -80,7 +80,7 @@ export default {
               text: "ยินดีด้วยคุณแก้ไขหมวดหมู่ " + this.tag_name + " สำเร็จ",
               timer: 2000,
             });
-            this.$router.push("/AdminTagManagement");
+            this.$router.push("/ChiefTagMenagement");
           } else {
             this.$swal({
               icon: "error",
@@ -92,7 +92,7 @@ export default {
                 this.form.l_name,
               timer: 2000,
             });
-            this.$router.push("/AdminTagManagement");
+            this.$router.push("/ChiefTagManagement");
           }
         })
         .catch((error) => {
@@ -111,7 +111,7 @@ export default {
         cancelButtonText: "ยกเลิก",
       }).then((result) => {
         if (result.isConfirmed) {
-          this.$router.push("/AdminTagManagement");
+          this.$router.push("/ChiefTagManagement");
         }
       });
     },

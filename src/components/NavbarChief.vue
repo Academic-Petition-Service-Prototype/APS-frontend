@@ -127,18 +127,26 @@ export default {
 
       {
         menu: "9",
+        text: "จัดการหมวดหมู่คำร้อง",
+        route: "/ChiefTagMenagement",
+        icon: "bookmark",
+      },
+
+      {
+        menu: "10",
         text: "จัดการเลขานุการ",
         route: "/ChiefSecretaryManagement",
         icon: "account-multiple-plus",
       },
+
       {
-        menu: "10",
+        menu: "11",
         text: "จัดการพนักงาน",
         route: "/ChiefOfficerManagement",
         icon: "account-multiple-plus",
       },
       {
-        menu: "11",
+        menu: "12",
         text: "โปรไฟล์",
         route: "/ChiefProfile",
         icon: "account",

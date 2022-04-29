@@ -4,10 +4,7 @@
     <!-- สถานะคำร้อง -->
     <v-card class="cardshow">
       <v-toolbar dark prominent color="#FFAB40">
-        <h1
-          class="text-center pa-5"
-          style="font-size: 50px; padding: 2% 0% 0% 0%"
-        >
+        <h1 class="text-center pa-5">
           สถานะคำร้อง
         </h1>
         <v-spacer></v-spacer>
@@ -44,8 +41,8 @@
           </template>
           <template v-slot:default="props">
             <v-row class="text-center">
-              <v-col class="h3" md="6">รายการ</v-col>
-              <v-col class="h3" md="2">สถานะคำร้อง</v-col>
+              <v-col class="h3" md="5">รายการ</v-col>
+              <v-col class="h3" md="3">สถานะคำร้อง</v-col>
               <v-col class="h3" md="4">วันที่ส่งคำร้อง</v-col>
             </v-row>
 
@@ -58,17 +55,17 @@
                 <v-expansion-panel>
                   <v-expansion-panel-header color="#FFAB40">
                     <v-row class="text-center">
-                      <v-col md="6">
+                      <v-col md="5">
                         <h4>{{ item.form_name }}</h4>
                       </v-col>
 
-                      <v-col md="2">
+                      <v-col md="3">
                         <h4>
                           <p v-if="item.submit_refuse === null">
                             กำลังดำเนิการ
                           </p>
                           <p v-if="item.submit_refuse !== null">
-                            {{ item.submit_refuse }}
+                            ไม่อนุมัติ
                           </p>
                         </h4>
                       </v-col>
@@ -101,11 +98,10 @@
                             fab
                             width="30"
                             height="30"
-                            color="yellow"
                             disabled
                             v-if="
                               item.approval_order[n].approver_state ==
-                              'ยังไม่ได้อนุมัติ'
+                                'ยังไม่ได้อนุมัติ'
                             "
                           >
                           </v-btn>
@@ -117,10 +113,10 @@
                             icon
                             v-if="
                               item.approval_order[n].approver_state ==
-                              'อนุมัติแล้ว'
+                                'อนุมัติแล้ว'
                             "
                           >
-                          <v-icon dark> mdi-radiobox-marked </v-icon>
+                            <v-icon dark> mdi-radiobox-marked </v-icon>
                           </v-btn>
                           <v-btn
                             fab
@@ -130,7 +126,7 @@
                             icon
                             v-if="
                               item.approval_order[n].approver_state ==
-                              'ไม่อนุมัติ'
+                                'ไม่อนุมัติ'
                             "
                           >
                             <v-icon dark> mdi-alert-circle-outline </v-icon>
@@ -164,7 +160,7 @@
                               item.submit_state == item.approval_order.length
                             "
                           >
-                          <v-icon dark> mdi-check </v-icon>
+                            <v-icon dark> mdi-check </v-icon>
                           </v-btn>
                           <br />
                           ยื่นคำร้องสำเร็จ
