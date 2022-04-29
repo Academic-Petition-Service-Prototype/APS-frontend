@@ -11,7 +11,17 @@
         <v-col align="center">
           <h2>{{ submition_detail[0].form_name }}</h2>
         </v-col>
-        <v-col></v-col>
+        <v-col align="right">
+          <v-btn
+            class="ma-2"
+            outlined
+            color="warning"
+            @click="editsentpetition($route.params.id)"
+            v-if="submition_detail[0].submit_refuse !== null"
+          >
+            แก้ไขการส่งคำร้อง
+          </v-btn>
+        </v-col>
       </v-row>
 
       <v-divider></v-divider>
@@ -148,6 +158,7 @@ export default {
     back() {
       this.$router.push("/UserTracking");
     },
+
     getapprovaldetaillbyid() {
       axios
         .get(
@@ -197,6 +208,10 @@ export default {
           // handle error
           console.log(error);
         });
+    },
+
+    editsentpetition(submit_id) {
+      this.$router.push("/UserEditSentpetition/" + submit_id);
     },
   },
   mounted() {

@@ -15,6 +15,7 @@ import UserReport from '../views/User/Report.vue'
 import UserReportTracking from '../views/User/Reporttracking.vue'
 import UserTracking from '../views/User/Tracking.vue'
 import UserSentpetition from '../views/User/Sentpetition.vue'
+import UserEditSentpetition from '../views/User/Editsentpetition.vue'
 import UserRequest from '../views/User/Request.vue'
 import UserRequestTracking from '../views/User/Requesttracking.vue'
 import Trackingdetail from '../views/User/Trackingdetail.vue'
@@ -43,6 +44,8 @@ import ChiefProfile from '../views/Chief/Profile.vue'
 import ChiefReport from '../views/Chief/Report.vue'
 import ChiefSecretaryManagement from '../views/Chief/SecretaryManagement.vue'
 import ChiefSecretaryEdit from '../views/Chief/Editsecretary.vue'
+import ChiefTagMenagement from '../views/Chief/TagManagement.vue'
+import ChiefTagEdit from '../views/Chief/Edittag.vue'
 import ChiefTracking from '../views/Chief/Tracking.vue'
 import ChiefReportDetail from '../views/Chief/ReportDetail.vue'
 import Approvaldetaill from '../views/Chief/Approvaldetaill.vue'
@@ -150,6 +153,11 @@ const routes = [
     path: '/UserSentpetition/:id',
     name: 'ส่งคำร้อง',
     component: UserSentpetition 
+  },
+  {
+    path: '/UserEditSentpetition/:id',
+    name: 'แก้ไขการส่งคำร้อง',
+    component: UserEditSentpetition 
   },
   {
     path: '/UserRequestTracking',
@@ -334,7 +342,16 @@ const routes = [
     name: 'รายละเอียดการร้องขอคำร้องเพิ่มเติม',
     component: ChiefRequestDetail 
   },
-  
+  {
+    path: '/ChiefTagMenagement',
+    name: 'จัดการหมวดหมู่คำร้อง',
+    component: ChiefTagMenagement 
+  },
+  {
+    path: '/ChiefTagEdit/:id',
+    name: 'แก้ไขหมวดหมู่คำร้อง',
+    component: ChiefTagEdit 
+  },
 
   //Chief
 

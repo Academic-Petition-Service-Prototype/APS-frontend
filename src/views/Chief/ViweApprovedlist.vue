@@ -325,6 +325,7 @@ export default {
                   approval_order: this.submition_detail[i].approval_order,
                   submit_state: this.submition_detail[i].submit_state,
                   submit_refuse: this.getdisapproveddetail,
+                  form_value: this.submition_detail[i].form_value,
                 })
                 .then((response) => {
                   //handle success
@@ -377,6 +378,7 @@ export default {
                   approval_order: this.submition_detail[i].approval_order,
                   submit_state: this.submition_detail[i].submit_state,
                   submit_refuse: this.getdisapproveddetail,
+                  form_value: this.submition_detail[i].form_value,
                 })
                 .then((response) => {
                   //handle success
