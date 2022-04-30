@@ -24,7 +24,7 @@
       >
         <v-img
           height="200px"
-          src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
+          :src="require('../../assets/Day.png')"
         >
           <!-- <div class="fill-height repeating-gradient"></div> -->
           <v-row>
@@ -48,7 +48,7 @@
       <v-card height="200px" v-if="d == '12'">
         <v-img
           height="200px"
-          src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
+          :src="require('../../assets/Daytime.png')"
         >
           <!-- <div class="fill-height repeating-gradient"></div> -->
           <v-row>
@@ -71,7 +71,7 @@
       <v-card height="200px" v-if="d == '13' || d == '14' || d == '15'">
         <v-img
           height="200px"
-          src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
+          :src="require('../../assets/Afternoon.png')"
         >
           <!-- <div class="fill-height repeating-gradient"></div> -->
           <v-row>
@@ -94,7 +94,7 @@
       <v-card height="200px" v-if="d == '16' || d == '17' || d == '18'">
         <v-img
           height="200px"
-          src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
+          :src="require('../../assets/Evening.png')"
         >
           <!-- <div class="fill-height repeating-gradient"></div> -->
           <v-row>
@@ -131,7 +131,7 @@
       >
         <v-img
           height="200px"
-          src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
+          :src="require('../../assets/night.png')"
         >
           <!-- <div class="fill-height repeating-gradient"></div> -->
           <v-row>
@@ -335,11 +335,13 @@ h1 {
   font-size: 80px;
   padding: 10%;
   margin: -25px -100px -50px 50px;
+  color: #f0f0f0;
 }
 .banneruserf_name {
   font-size: 25px;
   margin: -50px 100px -50px 50px;
   padding: 15%;
   font-size: 21px;
+  color: #f0f0f0;
 }
 </style>

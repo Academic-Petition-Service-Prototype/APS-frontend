@@ -4,7 +4,9 @@
     <NavbarUser />
     <v-card class="cardshow">
       <!-- ตอนเช้า -->
-      <v-card height="300px" 
+      <v-card 
+      height="300px" 
+      
       v-if="
           d == '5' 
           || d == '6'
@@ -17,7 +19,7 @@
           ">
         <v-img
           height="300px"
-          src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
+          :src="require('../../assets/Day.png')"
         >
           <v-row>
             <v-col>
@@ -43,7 +45,7 @@
           ">
         <v-img
           height="300px"
-          src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
+          :src="require('../../assets/Daytime.png')"
         >
           <v-row>
             <v-col>
@@ -70,7 +72,7 @@
           ">
         <v-img
           height="300px"
-          src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
+          :src="require('../../assets/Afternoon.png')"
         >
           <v-row>
             <v-col>
@@ -98,7 +100,7 @@
           ">
         <v-img
           height="300px"
-          src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
+          :src="require('../../assets/Evening.png')"
         >
           <v-row>
             <v-col>
@@ -135,11 +137,11 @@
           ">
         <v-img
           height="300px"
-          src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
+          :src="require('../../assets/night.png')"
         >
           <v-row>
             <v-col>
-              <p class="banneruser">สวัสดี !</p>
+              <p class="banneruser">ราตรีสวัสดิ์ !</p>
             </v-col>
             <v-col align="center">
               <p class="banneruserf_name">
@@ -258,11 +260,13 @@ h3 {
   font-size: 80px;
   padding: 10%;
   margin: 25px -100px -50px 50px;
+  color: #f0f0f0;
 }
 .banneruserf_name {
   font-size: 25px;
   margin: -20px 100px -50px 50px;
   padding: 15%;
+  color: #f0f0f0;
 }
 .text-warp {
   word-break: break-all;
