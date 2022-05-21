@@ -55,6 +55,15 @@ npm run serve
 npm run build
 ```
 
+## ⛏️ .ENV File Using <a name = "built_using"></a>
+
+    VUE_APP_URL
+    VUE_APP_CHIEF_IMG
+    VUE_APP_SECRETARY_IMG
+    VUE_APP_OFFICER_IMG
+    VUE_APP_USER_IMG
+    VUE_APP_ADMIN_IMG
+
 ## 🧰 Usage <a name="usage"></a>
 
 - HTML
